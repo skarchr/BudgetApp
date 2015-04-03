@@ -191,6 +191,7 @@
     <Content Include="Content\Site.css" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="PrivateSettings.config" />
     <None Include="Properties\PublishProfiles\MvcP.pubxml" />
     <None Include="Properties\PublishProfiles\MvcPWy.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
