@@ -27,25 +27,18 @@
 
                 <div class="form-group input-box">
                     <div class="col-md-12">
-                        @Html.TextBoxFor(m => m.Email, new { @class = "form-control", @placeholder = "Email", @style = "margin-left:auto;margin-right:auto;", @autocomplete = "off" })
+                        @Html.TextBoxFor(m => m.Email, new { @class = "form-control center", @placeholder = "Email", @autocomplete = "off" })
                         @Html.ValidationMessageFor(m => m.Email)
                     </div>
                 </div>
                 <div class="form-group input-box">
                     <div class="col-md-12">
-                        @Html.PasswordFor(m => m.Password, new { @class = "form-control", @placeholder = "Password", @style = "margin-left:auto;margin-right:auto;" })
+                        @Html.PasswordFor(m => m.Password, new { @class = "form-control center", @placeholder = "Password" })
                         @Html.ValidationMessageFor(m => m.Password)
                     </div>
                 </div>
-                @*<div class="form-group">
-                    <div class="col-md-12">
-                        <div class="checkbox" style="width:280px;margin-left: auto;margin-right: auto;">
-                            <label style="width:280px;float:left; text-align: left;">@Html.CheckBoxFor(m => m.RememberMe) Remember me</label>
-                        </div>
-                    </div>
-                </div>*@
                 <div class="form-group">
-                    <div class="col-md-12" style="width: 280px;margin-left: auto;margin-right: auto;padding:0;">
+                    <div class="col-md-12 center" style="width: 280px;padding:0;">
                         
                         @Html.ActionLink("Forgot your password?", "ForgotPassword", null, new { @class = "btn btn-link", @style = "float:left;padding-left:0;" })
 
@@ -74,9 +67,9 @@
 {
     <style>
         .see {
-            -ms-transform: scale(0.1, 0.1);
-            -webkit-transform: scale(0.1, 0.1);
-            transform: scale(0.05, 0.05);
+            -ms-transform: scale(0.7, 0.7);
+            -webkit-transform: scale(0.7, 0.7);
+            transform: scale(0.7, 0.7);
             position: absolute;
             z-index: 1000;
             -webkit-transition: -webkit-transform 0.2s ease-out;
@@ -86,7 +79,7 @@
         }
 
         .see-after {
-            opacity: 0;
+            display: none;
         }
     </style>
 
@@ -95,16 +88,13 @@
 
             $('.see')
                 .velocity({
-                    scale: 1.5
-                })
-                .velocity({
                     scale: 1.00,
                     marginTop: 0
                 });
 
             $('.see-after')
-                .delay(1000)
-                .velocity('fadeIn', {
+                .delay(300)
+                .velocity('slideDown', {
                     duration: 500
                 });
         })();
