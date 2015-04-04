@@ -77,3 +77,4 @@ ignore.txt
 *.mdf
 *.ldf
 PrivateSettings.config
+bower_components

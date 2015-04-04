@@ -1,0 +1,13 @@
+{
+  "name": "BudgetApp",
+  "version": "0.1.0",
+  "homepage": "https://github.com/skarchr/BudgetApp",
+  "authors": [
+    "Christian Skar <skarchr@gmail.com>"
+  ],
+  "description": "Experimental",
+  "license": "MIT",
+  "dependencies": {
+    "velocity": "~1.2.2"
+  }
+}
