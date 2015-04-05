@@ -7,7 +7,7 @@
 @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
 {
     @Html.AntiForgeryToken()
-    @Html.ValidationSummary("", new { @class = "text-danger" })
+    
     <div class="row" style="margin-top: 20px;">
         
         <div class="col-md-12 text-center">
@@ -56,6 +56,9 @@
                     @Html.ActionLink("Abort", "Login", "Account", new { @class = "btn btn-link" })
                 </div>
             </div>
+            
+            @Html.ValidationSummary("", new { @class = "text-danger" })
+
         </div>
     </div>
 
@@ -63,21 +66,21 @@
 }
 
 <script>
-        (function () {
+    (function() {
 
-            $('.see')
-                .delay(300)
-                .velocity({
-                    scale: 0.70,
-                    marginTop: 0
-                });
+        $('.see')
+            .delay(300)
+            .velocity({
+                scale: 0.70,
+                marginTop: 0
+            });
 
-            $('.see-after')
-                .delay(300)
-                .velocity('slideDown', {
-                    duration: 500
-                });
-        })();
+        $('.see-after')
+            .delay(300)
+            .velocity('slideDown', {
+                duration: 500
+            });
+    })();
 </script>
 
 @section Scripts {
