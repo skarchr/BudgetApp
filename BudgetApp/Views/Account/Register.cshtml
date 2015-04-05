@@ -7,11 +7,11 @@
 @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
 {
     @Html.AntiForgeryToken()
-    
-    <div class="row" style="margin-top: 20px;">
-        
+
+    <div class="row" style="margin-top: 20px;" ng-controller="loginController">
+
         <div class="col-md-12 text-center">
-            
+
 
             <svg data-logo data-from="1.0" data-to="0.7" xmlns="http://www.w3.org/2000/svg" version="1.0" width="200" height="200" viewBox="0 0 200 200" preserveAspectRatio="xMidYMid meet">
                 <g class="pig-color" transform="translate(0.000000,200.000000) scale(0.100000,-0.100000)" fill="#296ad4" stroke="none">
@@ -19,7 +19,6 @@
                 </g>
             </svg>
         </div>
-
         <div data-slide-down class="col-md-12">
 
             <h4 class="text-center">Register</h4>
@@ -32,7 +31,7 @@
 
             <div class="form-group">
                 <div class="col-md-12">
-                    @Html.TextBoxFor(m => m.Country, new { @class = "form-control center", @placeholder = "Country" })
+                    <input class="form-control center" autocomplete="off" id="Country" name="Country" placeholder="Country" type="text" ng-model="country" typeahead="state as state.name for state in countries | filter:$viewValue | limitTo:8">
                 </div>
             </div>
 

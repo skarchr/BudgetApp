@@ -1,7 +1,7 @@
 ﻿(function() {
     'use strict';
 
-    angular.module('budgetApp', []);
+    angular.module('budgetApp', ['ui.bootstrap']);
 
 
 })();

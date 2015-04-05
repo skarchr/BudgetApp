@@ -18,8 +18,6 @@
                         var from = scope.reload === "False" ? 1.0 : scope.from === undefined ? 0.7 : scope.from;
                         var to = scope.to === undefined ? 1.0 : scope.to;
 
-                        console.log("from: " + from + ', to: ' + to);
-
                         $(elem[0]).css({
                             '-ms-transform': 'scale(' + from + ', ' + from + ')',
                             '-webkit-transform': 'scale(' + from + ', ' + from + ')',
@@ -40,7 +38,6 @@
                                     marginTop: 0
                                 });
                         }, 100);
-
 
                     }
                 };
