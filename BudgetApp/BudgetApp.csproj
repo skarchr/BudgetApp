@@ -184,6 +184,10 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="bower_components\angular\angular-csp.css" />
+    <Content Include="bower_components\angular\angular.js" />
+    <Content Include="bower_components\angular\angular.min.js" />
+    <Content Include="bower_components\angular\index.js" />
     <Content Include="bower_components\jquery\dist\jquery.js" />
     <Content Include="bower_components\jquery\dist\jquery.min.js" />
     <Content Include="bower_components\jquery\MIT-LICENSE.txt" />
@@ -299,6 +303,12 @@
     <Content Include="bower_components\jquery\src\sizzle\dist\sizzle.min.map" />
     <Content Include="bower_components\velocity\.bower.json" />
     <Content Include="bower_components\velocity\bower.json" />
+    <Content Include="bower_components\angular\.bower.json" />
+    <Content Include="bower_components\angular\angular.min.js.gzip" />
+    <Content Include="bower_components\angular\angular.min.js.map" />
+    <Content Include="bower_components\angular\bower.json" />
+    <Content Include="bower_components\angular\package.json" />
+    <Content Include="bower_components\angular\README.md" />
     <None Include="Properties\PublishProfiles\MvcP.pubxml" />
     <None Include="Properties\PublishProfiles\MvcPWy.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />

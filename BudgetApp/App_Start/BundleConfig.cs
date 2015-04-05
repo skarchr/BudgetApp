@@ -20,8 +20,9 @@ namespace BudgetApp
 
          bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
                    "~/Scripts/bootstrap.js",
-                   "~/bower_components/velocity/velocity.js",
-                   "~/bower_components/velocity/velocity.ui.js",
+                   "~/bower_components/angular/angular.min.js",
+                   "~/bower_components/velocity/velocity.min.js",
+                   "~/bower_components/velocity/velocity.ui.min.js",
                    "~/Scripts/respond.js"));
 
          bundles.Add(new StyleBundle("~/Content/css").Include(
