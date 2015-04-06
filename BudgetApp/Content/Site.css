@@ -61,3 +61,28 @@ input[type="checkbox"].input-validation-error {
     margin-right: auto;
     margin-left: auto;
 }
+
+.strength-1:before {
+    content: "Weak!";
+    font-weight: normal;
+    color: pink;
+}
+
+.strength-2:before {
+    content: "OK!";
+    font-weight: normal;
+    color: #f8efc0;
+}
+
+.strength-3:before {
+    content: "Strong!";
+    font-weight: normal;
+    color: #c8e5bc ;
+}
+
+.strength-4:before {
+    content: "Very strong!";
+    font-weight: normal;
+    color: #3c763d ;
+    margin-left: 40px;
+}

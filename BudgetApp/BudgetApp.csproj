@@ -319,6 +319,7 @@
     <None Include="js\resources\countries.json" />
     <Content Include="bower_components\angular-bootstrap\.bower.json" />
     <Content Include="bower_components\angular-bootstrap\bower.json" />
+    <Content Include="js\resources\currencies.json" />
     <None Include="Properties\PublishProfiles\MvcP.pubxml" />
     <None Include="Properties\PublishProfiles\MvcPWy.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />

@@ -84,9 +84,9 @@ namespace BudgetApp
          {
              RequiredLength = 6,
              //RequireNonLetterOrDigit = true,
-             RequireDigit = true,
+             //RequireDigit = true,
              RequireLowercase = true,
-             RequireUppercase = true,
+             //RequireUppercase = true,
          };
 
          // Configure user lockout defaults
