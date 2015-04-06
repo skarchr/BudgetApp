@@ -15,8 +15,8 @@
                     },
                     link: function(scope, elem) {
 
-                        var from = scope.reload === "False" ? 1.0 : scope.from === undefined ? 0.7 : scope.from;
                         var to = scope.to === undefined ? 1.0 : scope.to;
+                        var from = scope.reload === "False" ? scope.to : scope.from === undefined ? 0.7 : scope.from;
 
                         $(elem[0]).css({
                             '-ms-transform': 'scale(' + from + ', ' + from + ')',

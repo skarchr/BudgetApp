@@ -1,40 +1,24 @@
 ﻿(function() {
     'use strict';
 
-    angular.module('budgetApp').controller('loginController', ['$scope', '$http', function($scope, $http) {
+    angular.module('budgetApp').controller('loginController', ['$scope', '$http', 'loginModel', function ($scope, $http, loginModel) {
+
+        $scope.model = loginModel.model;
 
         $scope.countries = [];
         $scope.currencies = [];
-        $scope.country = '';
-        $scope.currency = '';
-
-
+        $scope.Country = '';
+        $scope.Currency = '';
         $scope.passwordStrength = '';
 
-
-        $scope.$watch('password', function(newVal, oldVal) {
-
-            if (newVal !== oldVal) {
-
-                var strength = (newVal.length >= 6 ? 1 : 0);
-
-                if (strength > 0) {
-                    strength += containsCapitalLetter($scope.password) + containsNumber($scope.password) + (newVal.length >= 8 ? 1 : 0);
-                }
-
-                $scope.passwordStrength = strength;
-            }
-           
-        });
-
-        var containsCapitalLetter = function(input) {
+        var containsCapitalLetter = function (input) {
 
             for (var i = 0; i < input.length; i++) {
 
                 if (input[i].match(/^[A-Z]/))
                     return 1;
 
-            }                        
+            }
             return 0;
         }
 
@@ -49,6 +33,29 @@
             return 0;
         }
 
+        var evaluatePasswordStrength = function (input) {
+            var strength = (input.length >= 6 ? 1 : 0);
+
+            if (strength > 0) {
+                strength += containsCapitalLetter($scope.model.Password) + containsNumber($scope.model.Password) + (input.length >= 8 ? 1 : 0);
+            }
+
+            $scope.passwordStrength = strength;
+        }
+
+        if (loginModel.model !== null && loginModel.model.hasOwnProperty('Password')) {
+            evaluatePasswordStrength(loginModel.model.Password);
+        }
+
+
+        $scope.$watch('model.Password', function(newVal, oldVal) {
+
+            if (newVal !== oldVal) {
+
+                evaluatePasswordStrength(newVal);
+            }
+           
+        });
 
         $http.get('/js/resources/countries.json')
             .success(function (data) {

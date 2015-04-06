@@ -98,7 +98,7 @@ public async Task<ActionResult> Login(LoginViewModel model, string returnUrl)
          return RedirectToAction("SendCode", new { ReturnUrl = returnUrl, RememberMe = model.RememberMe });
       case SignInStatus.Failure:
       default:
-         ModelState.AddModelError("", "Invalid login attempt.");
+         ModelState.AddModelError("", "Wrong email and/or password");
          return View(model);
    }
 }

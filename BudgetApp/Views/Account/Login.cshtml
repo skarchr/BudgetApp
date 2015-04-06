@@ -20,7 +20,7 @@
 
     <div data-slide-down data-prevent="@Html.ViewData.ModelState.IsValid" class="col-md-12 text-center">
         <section id="loginForm">
-            @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+            @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form", @name="loginForm" }))
             {
                 @Html.AntiForgeryToken()
 
@@ -28,14 +28,12 @@
 
                 <div class="form-group input-box">
                     <div class="col-md-12">
-                        @Html.TextBoxFor(m => m.Email, new { @class = "form-control center", @placeholder = "Email", @autocomplete = "off" })
-                        @Html.ValidationMessageFor(m => m.Email)
+                        @Html.TextBoxFor(m => m.Email, new { @class = "form-control center", @placeholder = "Email", @autocomplete = "off", @required="required", @ng_model="model.Email" })
                     </div>
                 </div>
                 <div class="form-group input-box">
                     <div class="col-md-12">
-                        @Html.PasswordFor(m => m.Password, new { @class = "form-control center", @placeholder = "Password" })
-                        @Html.ValidationMessageFor(m => m.Password)
+                        @Html.PasswordFor(m => m.Password, new { @class = "form-control center", @placeholder = "Password", @required = "required", @ng_model = "model.Password" })
                     </div>
                 </div>
                 <div class="form-group">
@@ -43,7 +41,7 @@
 
                         @Html.ActionLink("Forgot your password?", "ForgotPassword", null, new { @class = "btn btn-link", @style = "float:left;padding-left:0;" })
 
-                        <input type="submit" value="Log in" style="float:right;" class="btn btn-primary" />
+                        <input type="submit" value="Log in" style="float:right;" class="btn btn-primary" ng-disabled="loginForm.$invalid" />
 
                     </div>
                 </div>
@@ -73,6 +71,4 @@
     </script>
 }
 
-@section Scripts {
-   @Scripts.Render("~/bundles/jqueryval")
-}
+@Html.Partial("_LoginModel", Html.Raw(Model.ToJson()))

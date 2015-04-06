@@ -71,7 +71,7 @@ input[type="checkbox"].input-validation-error {
 .strength-2:before {
     content: "OK!";
     font-weight: normal;
-    color: #f8efc0;
+    color: #f5e79e;
 }
 
 .strength-3:before {
@@ -85,4 +85,11 @@ input[type="checkbox"].input-validation-error {
     font-weight: normal;
     color: #3c763d ;
     margin-left: 40px;
+}
+
+.label-validator {
+    margin-right: auto !important;
+    margin-left: auto;
+    text-align: center !important;
+    position: absolute !important;
 }

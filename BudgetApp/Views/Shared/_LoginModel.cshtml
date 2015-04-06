@@ -1,0 +1,15 @@
+﻿@using BudgetApp.Extensions
+@model HtmlString
+
+<script>
+    (function() {
+        'use strict';
+
+        angular.module('budgetApp').factory('loginModel', function() {
+            return {
+                model:@Model
+            };
+        });
+
+    })();
+</script>

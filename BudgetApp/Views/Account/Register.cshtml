@@ -1,10 +1,11 @@
-﻿@model BudgetApp.Models.RegisterViewModel
+﻿@using BudgetApp.Extensions
+@model BudgetApp.Models.RegisterViewModel
 @{
     ViewBag.Title = "Register";
 }
 
 
-@using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+@using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form", @name = "registerform" }))
 {
     @Html.AntiForgeryToken()
 
@@ -19,53 +20,62 @@
                 </g>
             </svg>
         </div>
-        <div data-slide-down class="col-md-12">
+        <div data-slide-down data-prevent="@Html.ViewData.ModelState.IsValid" class="col-md-12">
 
             <h4 class="text-center">Register</h4>
+            
+            <div class="text-center">
+                @Html.MyValidationSummary()
+            </div>
 
-            <div class="form-group">
+            <div class="form-group input-box">
+                <label class="control-label col-xs-12 label-validator text-danger" ng-show="registerform.Email.$invalid && registerform.Email.$touched && model.Email !== null" style="margin-left: 160px;">X</label>
+                <label class="control-label col-xs-12 label-validator text-success" ng-show="registerform.Email.$valid" style="margin-left: 160px;">V</label>
                 <div class="col-md-12">
-                    @Html.TextBoxFor(m => m.Email, new { @class = "form-control center", @placeholder = "Email" })
+                    @Html.TextBoxFor(m => m.Email, new { @class = "form-control center", @placeholder = "Email", @ng_model = "model.Email", @required = "required", @type = "email" })
                 </div>
             </div>
 
             <div class="form-group">
+                <label class="control-label col-xs-12 label-validator text-danger" ng-show="registerform.Country.$invalid && registerform.Country.$touched" style="margin-left: 160px;">X</label>
+                <label class="control-label col-xs-12 label-validator text-success" ng-show="registerform.Country.$valid" style="margin-left: 160px;">V</label>
                 <div class="col-md-12">
-                    <select class="form-control center" id="Country" name="Country" ng-model="country">
-                        <option value="">-- Select country --</option>
+                    <select class="form-control center" id="Country" name="Country" ng-model="model.Country" required>
                         <option ng-repeat="country in countries" value="{{country.name}}">{{country.name}}</option>
                     </select>
                 </div>
             </div>
 
             <div class="form-group">
-                <div class="col-md-12">                    
-                    <select class="form-control center" id="Currency" name="Currency" ng-model="currency">
-                        <option value="">-- Select currency --</option>
+                <label class="control-label col-xs-12 label-validator text-danger" ng-show="registerform.Currency.$invalid && registerform.Currency.$touched" style="margin-left: 160px;">X</label>
+                <label class="control-label col-xs-12 label-validator text-success" ng-show="registerform.Currency.$valid" style="margin-left: 160px;">V</label>
+                <div class="col-md-12">
+                    <select class="form-control center" id="Currency" name="Currency" ng-model="model.Currency" required>
                         <option ng-repeat="currency in currencies" value="{{currency.cc}}" title="{{currency.name}}">{{currency.cc}}</option>
                     </select>
                 </div>
             </div>
 
             <div class="form-group">
+                <label class="control-label col-xs-12 label-validator text-danger" ng-show="registerform.Password.$invalid && registerform.Password.$touched" style="margin-left: 160px;">X</label>
                 <label class="control-label col-xs-12 center strength-{{passwordStrength}}" style="text-align: center;position: absolute;margin-left: 170px;"></label>
                 <div class="col-md-12">
-                    @Html.PasswordFor(m => m.Password, new { @class = "form-control center", @placeholder = "Password", @ng_model="password" })                    
+                    @Html.PasswordFor(m => m.Password, new { @class = "form-control center", @placeholder = "Password", @ng_model = "model.Password", @required = "required" })
                 </div>
             </div>
             <div class="form-group">
+                <label class="control-label col-xs-12 label-validator text-danger" ng-show="model.ConfirmPassword !== model.Password && registerform.ConfirmPassword.$touched && registerform.Password.$dirty" style="margin-left: 160px;">X</label>
+                <label class="control-label col-xs-12 label-validator text-success" ng-show="model.ConfirmPassword === model.Password && model.ConfirmPassword !== undefined" style="margin-left: 160px;">V</label>
                 <div class="col-md-12">
-                    @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control center", @placeholder = "Confirm password" })
+                    @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control center", @placeholder = "Confirm password", @ng_model = "model.ConfirmPassword", @required = "required" })
                 </div>
             </div>
             <div class="form-group">
                 <div class="col-md-12 text-center">
-                    <input type="submit" class="btn btn-primary" value="Register" />
+                    <input type="submit" ng-disabled="registerform.$invalid || (model.Password !== model.ConfirmPassword)" class="btn btn-primary" value="Register" />
                     @Html.ActionLink("Cancel", "Login", "Account", new { @class = "btn btn-link" })
                 </div>
             </div>
-
-            @Html.ValidationSummary("", new { @class = "text-danger" })
 
         </div>
     </div>
@@ -73,6 +83,18 @@
 
 }
 
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
+@if (!Html.ViewData.ModelState.IsValid)
+{
+    <script>
+        (function () {
+
+            $('.notification-warnings').velocity("transition.slideUpIn", 1250);
+
+            $('.input-box').velocity('callout.shake');
+
+        })();
+    </script>
 }
+
+@Html.Partial("_LoginModel", Html.Raw(Model.ToJson()))
+
