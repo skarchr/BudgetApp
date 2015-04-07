@@ -72,6 +72,7 @@ input[type="checkbox"].input-validation-error {
     content: "OK!";
     font-weight: normal;
     color: #f5e79e;
+    margin-left: -15px;
 }
 
 .strength-3:before {
@@ -100,4 +101,11 @@ input[type="checkbox"].input-validation-error {
 
 .label-validator.text-success::after {
     content: url('images/success.svg');
+}
+
+.label-validator.text-danger.ng-hide-remove, .label-validator.text-success.ng-hide-remove {
+    animation: zoomIn 0.5s;
+    -moz-animation: zoomIn 0.5s;
+    -ms-animation: zoomIn 0.5s;
+    -webkit-animation: zoomIn 0.5s;
 }

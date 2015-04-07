@@ -26,6 +26,7 @@ namespace BudgetApp
                    "~/bower_components/velocity/velocity.min.js",
                    "~/bower_components/velocity/velocity.ui.min.js",
                    "~/bower_components/angular/angular.min.js",
+                   "~/bower_components/angular-animate/angular-animate.js",
                    "~/bower_components/angular-bootstrap/ui-bootstrap.min.js",
                    "~/bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js"));
 
@@ -36,6 +37,7 @@ namespace BudgetApp
 
          bundles.Add(new StyleBundle("~/Content/css").Include(
                    "~/Content/bootstrap.css",
+                   "~/bower_components/animate.css/animate.css",
                    "~/Content/site.css"));
 
          // Set EnableOptimizations to false for debugging. For more information,
