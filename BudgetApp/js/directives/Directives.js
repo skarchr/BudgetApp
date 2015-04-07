@@ -66,7 +66,7 @@
                         $(elem[0])
                             .delay(300)
                             .velocity('slideDown', {
-                                duration: 500
+                                duration: 300
                             });
                     }
                 };
@@ -95,7 +95,7 @@
                         $(elem[0])
                             .delay(300)
                             .velocity('fadeIn', {
-                                duration: 500
+                                duration: 300
                             });
                     }
                 };

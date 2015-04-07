@@ -28,16 +28,16 @@
                 @Html.MyValidationSummary()
             </div>
             <div class="form-group input-box">
-                <label class="control-label col-xs-12 label-validator text-danger" ng-show="registerform.Email.$invalid && registerform.Email.$touched && model.Email !== null" style="margin-left: 160px;">X</label>
-                <label class="control-label col-xs-12 label-validator text-success" ng-show="registerform.Email.$valid" style="margin-left: 160px;">V</label>
+                <label class="control-label col-xs-12 label-validator text-danger" ng-show="registerform.Email.$invalid && registerform.Email.$touched && model.Email !== null" style="margin-left: 160px;"></label>
+                <label class="control-label col-xs-12 label-validator text-success" ng-show="registerform.Email.$valid" style="margin-left: 160px;"></label>
                 <div class="col-md-12">
                     @Html.TextBoxFor(m => m.Email, new { @class = "form-control center", @placeholder = "Email", @ng_model = "model.Email", @required = "required", @type = "email" })
                 </div>
             </div>
 
             <div class="form-group">
-                <label class="control-label col-xs-12 label-validator text-danger" ng-show="registerform.Country.$invalid && registerform.Country.$touched" style="margin-left: 160px;">X</label>
-                <label class="control-label col-xs-12 label-validator text-success" ng-show="registerform.Country.$valid" style="margin-left: 160px;">V</label>
+                <label class="control-label col-xs-12 label-validator text-danger" ng-show="registerform.Country.$invalid && registerform.Country.$touched" style="margin-left: 160px;"></label>
+                <label class="control-label col-xs-12 label-validator text-success" ng-show="registerform.Country.$valid" style="margin-left: 160px;"></label>
                 <div class="col-md-12">
                     <select class="form-control center" id="Country" name="Country" ng-model="model.Country" required>
                         <option ng-repeat="country in countries" value="{{country.name}}">{{country.name}}</option>
@@ -46,8 +46,8 @@
             </div>
 
             <div class="form-group">
-                <label class="control-label col-xs-12 label-validator text-danger" ng-show="registerform.Currency.$invalid && registerform.Currency.$touched" style="margin-left: 160px;">X</label>
-                <label class="control-label col-xs-12 label-validator text-success" ng-show="registerform.Currency.$valid" style="margin-left: 160px;">V</label>
+                <label class="control-label col-xs-12 label-validator text-danger" ng-show="registerform.Currency.$invalid && registerform.Currency.$touched" style="margin-left: 160px;"></label>
+                <label class="control-label col-xs-12 label-validator text-success" ng-show="registerform.Currency.$valid" style="margin-left: 160px;"></label>
                 <div class="col-md-12">
                     <select class="form-control center" id="Currency" name="Currency" ng-model="model.Currency" required>
                         <option ng-repeat="currency in currencies" value="{{currency.cc}}" title="{{currency.name}}">{{currency.cc}}</option>

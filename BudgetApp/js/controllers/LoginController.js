@@ -33,7 +33,14 @@
             return 0;
         }
 
-        var evaluatePasswordStrength = function (input) {
+        var evaluatePasswordStrength = function(input) {
+
+            if (input === undefined || input.length <= 5) {
+                $scope.passwordStrength = 0;
+                return;
+            }
+
+
             var strength = (input.length >= 6 ? 1 : 0);
 
             if (strength > 0) {
@@ -41,7 +48,7 @@
             }
 
             $scope.passwordStrength = strength;
-        }
+        };
 
         if (loginModel.model !== null && loginModel.model.hasOwnProperty('Password')) {
             evaluatePasswordStrength(loginModel.model.Password);

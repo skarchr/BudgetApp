@@ -93,3 +93,11 @@ input[type="checkbox"].input-validation-error {
     text-align: center !important;
     position: absolute !important;
 }
+
+.label-validator.text-danger::after {            
+    content: url('images/danger.svg');
+}
+
+.label-validator.text-success::after {
+    content: url('images/success.svg');
+}
