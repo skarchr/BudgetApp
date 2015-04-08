@@ -24,12 +24,11 @@
         <div data-slide-down data-prevent="@Html.ViewData.ModelState.IsValid" class="col-md-12">
             <h4 class="text-center">You've successfully authenticated with <strong>@ViewBag.LoginProvider</strong></h4>
 
-            <div class="text-center">
-                @Html.MyValidationSummary()
-            </div>
-            <div class="form-group input-box">
-                <label class="control-label col-xs-12 label-validator text-danger" ng-show="registerform.Email.$invalid && registerform.Email.$touched && model.Email !== null" style="margin-left: 160px;"></label>
-                <label class="control-label col-xs-12 label-validator text-success" ng-show="registerform.Email.$valid" style="margin-left: 160px;"></label>
+            <div class="form-group">
+                <label class="control-label col-xs-12 label-validator text-danger" ng-show="registerform.Email.$invalid && registerform.Email.$touched && model.Email !== null && !loading" style="margin-left: 160px;"></label>
+                <label class="control-label col-xs-12 label-validator user-exist" ng-show="userExist === 'True' && registerform.Email.$valid" style="margin-left: 160px;"></label>
+                <label class="control-label col-xs-12 label-validator text-success" ng-show="registerform.Email.$valid && !loading && userExist === 'False'" style="margin-left: 160px;"></label>
+                <label class="control-label col-xs-12 label-validator text-info" ng-show="loading" style="margin-left: 160px;"></label>
                 <div class="col-md-12">
                     @Html.TextBoxFor(m => m.Email, new { @class = "form-control center", @placeholder = "Email", @ng_model = "model.Email", @required = "required", @type = "email" })
                 </div>
@@ -57,7 +56,7 @@
 
             <div class="form-group">
                 <div class="col-xs-12 text-center">
-                    <input type="submit" ng-disabled="registerform.$invalid" class="btn btn-primary" value="Register" />
+                    <input type="submit" ng-disabled="registerform.$invalid || userExist === 'True'" class="btn btn-primary" value="Register" />
                     @Html.ActionLink("Cancel", "Login", "Account", new { @class = "btn btn-link" })
                 </div>
             </div>

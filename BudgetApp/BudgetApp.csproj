@@ -375,7 +375,9 @@
     <Content Include="bower_components\velocity\velocity.ui.min.js" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\images\stop.svg" />
     <Content Include="Content\images\danger.svg" />
+    <Content Include="Content\images\loading.svg" />
     <Content Include="Content\images\success.svg" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />

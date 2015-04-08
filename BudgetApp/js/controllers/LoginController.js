@@ -1,7 +1,7 @@
 ﻿(function() {
     'use strict';
 
-    angular.module('budgetApp').controller('loginController', ['$scope', '$http', 'loginModel', function ($scope, $http, loginModel) {
+    angular.module('budgetApp').controller('loginController', ['$scope', '$http', '$timeout', 'loginModel', function ($scope, $http, $timeout, loginModel) {
 
         $scope.model = loginModel.model;
 
@@ -10,6 +10,25 @@
         $scope.Country = '';
         $scope.Currency = '';
         $scope.passwordStrength = '';
+        $scope.userExist = false;
+        $scope.loading = false;
+
+        var checkEmail = function () {            
+
+            setTimeout(function() {
+                $http.get(loginModel.action.checkIfUserExist, { params: { id: $scope.model.Email } })
+                    .success(function(data) {
+                        $scope.userExist = data;
+                        $scope.loading = false;
+                    })
+                    .error(function(data) {
+                        console.log('CheckIfUserAlreadyExist: Failed');
+                        $scope.loading = false;
+                    });
+            }, 500);
+            
+        };
+
 
         var containsCapitalLetter = function (input) {
 
@@ -64,6 +83,24 @@
            
         });
 
+        var timeoutPromise;
+        $scope.$watch('model.Email', function (newVal, oldVal) {
+
+            $scope.loading = true;
+
+            if (newVal !== undefined) {
+
+                $timeout.cancel(timeoutPromise); //does nothing, if timeout alrdy done
+                timeoutPromise = $timeout(function() { //Set timeout                    
+                    checkEmail();
+                }, 500);
+
+            } else {
+                $scope.loading = false;
+                $scope.userExist = 'False';
+            }
+        });
+
         $http.get('/js/resources/countries.json')
             .success(function (data) {
                 $scope.countries = data;
@@ -79,6 +116,8 @@
             .error(function (data) {
                 $scope.currencies = [];
             });
+
+      
 
     }]);
 

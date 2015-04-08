@@ -103,6 +103,14 @@ input[type="checkbox"].input-validation-error {
     content: url('images/success.svg');
 }
 
+.label-validator.text-info::after {
+    content: url('images/loading.svg');
+}
+
+.label-validator.user-exist::after {
+    content: url('images/stop.svg');    
+}
+
 .label-validator.text-danger.ng-hide-remove, .label-validator.text-success.ng-hide-remove {
     animation: zoomIn 0.5s;
     -moz-animation: zoomIn 0.5s;
