@@ -68,7 +68,7 @@
             </div>
             <div class="form-group">
                 <div class="col-md-12 text-center">
-                    <input type="submit" ng-disabled="registerform.$invalid || (model.Password !== model.ConfirmPassword) || userExist === 'True'" class="btn btn-primary" value="Register" />
+                    <input type="submit" ng-disabled="registerform.$invalid || (model.Password !== model.ConfirmPassword) || userExist === 'True' || loading" class="btn btn-primary" value="Register" />
                     @Html.ActionLink("Cancel", "Login", "Account", new { @class = "btn btn-link" })
                 </div>
             </div>           
