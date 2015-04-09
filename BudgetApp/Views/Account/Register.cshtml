@@ -54,9 +54,10 @@
 
             <div class="form-group">
                 <label class="control-label col-xs-12 label-validator text-danger" ng-show="registerform.Password.$invalid && registerform.Password.$touched" style="margin-left: 160px;"></label>
-                <label class="control-label col-xs-12 center strength-{{passwordStrength}}" style="text-align: center;position: absolute;margin-left: 170px;"></label>
+                <label class="control-label col-xs-12 label-validator text-success" ng-show="registerform.Password.$valid && registerform.Password.$touched" style="margin-left: 160px;"></label>
+                <label class="control-label col-xs-12 center strength-{{passwordStrength}}" style="text-align: center;position: absolute;margin-left: 170px;padding-top: 3px;"></label>
                 <div class="col-md-12">
-                    @Html.PasswordFor(m => m.Password, new { @class = "form-control center", @placeholder = "Password", @ng_model = "model.Password", @required = "required", @ng_minlength = "6" })
+                    @Html.PasswordFor(m => m.Password, new { @class = "form-control center", @placeholder = "Password", @ng_model = "model.Password", @required = "required", @ng_minlength = "6", @style="background:none;" })
                 </div>
             </div>
             <div class="form-group">

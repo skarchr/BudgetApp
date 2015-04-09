@@ -375,6 +375,12 @@
     <Content Include="bower_components\velocity\velocity.ui.min.js" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\images\gears.svg" />
+    <Content Include="Content\images\github.svg" />
+    <Content Include="Content\images\strength_2.svg" />
+    <Content Include="Content\images\strength_4.svg" />
+    <Content Include="Content\images\strength_3.svg" />
+    <Content Include="Content\images\strength_1.svg" />
     <Content Include="Content\images\stop.svg" />
     <Content Include="Content\images\danger.svg" />
     <Content Include="Content\images\loading.svg" />

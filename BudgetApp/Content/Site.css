@@ -63,29 +63,23 @@ input[type="checkbox"].input-validation-error {
 }
 
 .strength-1:before {
-    content: "Weak!";
-    font-weight: normal;
-    color: pink;
+    content: url('images/strength_1.svg');
+    margin-left: -77px;
 }
 
 .strength-2:before {
-    content: "OK!";
-    font-weight: normal;
-    color: #f5e79e;
-    margin-left: -15px;
+    content: url('images/strength_2.svg');
+    margin-left: -77px;
 }
 
 .strength-3:before {
-    content: "Strong!";
-    font-weight: normal;
-    color: #c8e5bc ;
+    content: url('images/strength_3.svg');
+    margin-left: -77px;
 }
 
 .strength-4:before {
-    content: "Very strong!";
-    font-weight: normal;
-    color: #3c763d ;
-    margin-left: 40px;
+    content: url('images/strength_4.svg');
+    margin-left: -77px;
 }
 
 .label-validator {
@@ -104,7 +98,7 @@ input[type="checkbox"].input-validation-error {
 }
 
 .label-validator.text-info::after {
-    content: url('images/loading.svg');
+    content: url('images/gears.svg');
 }
 
 .label-validator.user-exist::after {
@@ -116,4 +110,21 @@ input[type="checkbox"].input-validation-error {
     -moz-animation: zoomIn 0.5s;
     -ms-animation: zoomIn 0.5s;
     -webkit-animation: zoomIn 0.5s;
+}
+
+
+.checkmark {
+  stroke: green;
+  stroke-dashoffset: 745.74853515625;
+  stroke-dasharray: 745.74853515625;
+  animation: dash 2s ease-out forwards infinite;
+}
+
+@keyframes dash {
+  0% {
+    stroke-dashoffset: 745.74853515625;
+  }
+  100% {
+    stroke-dashoffset: 0;
+  }
 }
