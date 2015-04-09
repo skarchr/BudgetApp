@@ -79,6 +79,7 @@
                 return {
                     restrict: 'A',
                     scope: {
+                        fadeIn:'@',
                         slideDown: '@',
                         prevent: '@'
                     },
@@ -93,7 +94,7 @@
                         });
 
                         $(elem[0])
-                            .delay(300)
+                            .delay(scope.fadeIn === undefined ? 300 : scope.fadeIn)
                             .velocity('fadeIn', {
                                 duration: 300
                             });

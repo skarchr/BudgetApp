@@ -38,7 +38,7 @@
         }
         <div class="container body-content" ng-cloak>
             @RenderBody()
-            <footer>
+            <footer data-fade-in="600" class="text-center" style="margin-top:100px; ">
                 @{
                     if (!String.IsNullOrEmpty(ViewBag.Link))
                     {
@@ -53,6 +53,11 @@
                         </p>
                     }
                 }
+
+                <a href="https://github.com/skarchr/BudgetApp" target="_blank">
+                    <img src="~/Content/images/github.svg" height="32" />
+                </a>
+
             </footer>
 
         </div>
