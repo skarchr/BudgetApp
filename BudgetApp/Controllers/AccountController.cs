@@ -82,7 +82,7 @@ namespace BudgetApp.Controllers
             var result =
                 await
                     SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe,
-                        shouldLockout: false);
+                        shouldLockout: true);
             switch (result)
             {
                 case SignInStatus.Success:
