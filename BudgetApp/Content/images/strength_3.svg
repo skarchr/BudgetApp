@@ -4,30 +4,10 @@
         <title>Password strength: Strong</title>
         <rect width="7" height="32" style="fill:rgb(255,255,255);stroke-width:1;stroke:rgb(255,255,255)" />
 
-        <rect x="0" y="0" width="7" height="7" style="fill:rgb(255,255,255);stroke-width:1;stroke:rgb(199,199,199)">
-            <animate attributeName="opacity"
-                     begin="0"
-                     dur="1.9s"
-                     values="0; 1; 1" />
-        </rect>
-        <rect x="0" y="7" width="7" height="7" style="fill:rgb(214,233,198);stroke-width:1;stroke:rgb(236,247,231)">
-            <animate attributeName="opacity"
-                     begin="0"
-                     dur="1.6s"
-                     values="0; 1; 1" />
-        </rect>
-        <rect x="0" y="14" width="7" height="7" style="fill:rgb(214,233,198);stroke-width:1;stroke:rgb(236,247,231)">
-            <animate attributeName="opacity"
-                     begin="0"
-                     dur="1.3s"
-                     values="0; 1; 1" />
-        </rect>
-        <rect x="0" y="21" width="7" height="7" style="fill:rgb(214,233,198);stroke-width:1;stroke:rgb(236,247,231)">
-            <animate attributeName="opacity"
-                     begin="0"
-                     dur="1s"
-                     values="0; 1; 1" />
-        </rect>
+        <rect x="0" y="0" width="7" height="7" style="fill:rgb(255,255,255);stroke-width:1;stroke:rgb(199,199,199)"/>
+        <rect x="0" y="7" width="7" height="7" style="fill:rgb(214,233,198);stroke-width:1;stroke:rgb(236,247,231)"/>
+        <rect x="0" y="14" width="7" height="7" style="fill:rgb(214,233,198);stroke-width:1;stroke:rgb(236,247,231)"/>
+        <rect x="0" y="21" width="7" height="7" style="fill:rgb(214,233,198);stroke-width:1;stroke:rgb(236,247,231)"/>
     </g>
 
 </svg>
