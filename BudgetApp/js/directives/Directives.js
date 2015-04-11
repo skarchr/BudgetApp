@@ -8,35 +8,25 @@
                 return {
                     restrict: 'A',
                     scope: {
-                        logo: '@',
-                        from: '@',
-                        to: '@',
-                        reload: '@'
+                        logo: '@'
                     },
                     link: function(scope, elem) {
 
-                        var to = scope.to === undefined ? 1.0 : scope.to;
-                        var from = scope.reload === "False" ? scope.to : scope.from === undefined ? 0.7 : scope.from;
+                        var to = scope.logo === undefined ? '30' : scope.logo;
 
                         $(elem[0]).css({
-                            '-ms-transform': 'scale(' + from + ', ' + from + ')',
-                            '-webkit-transform': 'scale(' + from + ', ' + from + ')',
-                            'transform': 'scale(' + from + ', ' + from + ')',
+                            '-webkit-transition': 'all 0.5s ease-in-out',
+                            '-moz-transition': 'all 0.5s ease-in-out',
+                            '-o-transition': 'all 0.5s ease-in-out',
+                            'transition': 'all 0.5s ease-in-out'
                         });
 
                         setTimeout(function() {
-                            $(elem[0]).css({
-                                '-webkit-transition': '-webkit-transform 0.2s ease-out',
-                                '-moz-transition': '-moz-transform 0.2s ease-out',
-                                'transition': 'transform 0.2s ease-out',
+                            $(elem[0]).css({                                
+                                'width':to + '%',
                                 'position': 'inherit'
                             });
 
-                            $(elem[0])
-                                .velocity({
-                                    scale: to,
-                                    marginTop: 0
-                                });
                         }, 100);
 
                     }
@@ -64,7 +54,7 @@
                         });
 
                         $(elem[0])
-                            .delay(300)
+                            .delay(600)
                             .velocity('slideDown', {
                                 duration: 300
                             });
@@ -94,7 +84,7 @@
                         });
 
                         $(elem[0])
-                            .delay(scope.fadeIn === undefined ? 300 : scope.fadeIn)
+                            .delay(scope.fadeIn === undefined ? 600 : scope.fadeIn)
                             .velocity('fadeIn', {
                                 duration: 300
                             });

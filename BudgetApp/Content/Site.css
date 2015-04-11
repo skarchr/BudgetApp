@@ -128,3 +128,9 @@ input[type="checkbox"].input-validation-error {
     stroke-dashoffset: 0;
   }
 }
+
+#icon {
+    width: 30%;
+    margin: auto;
+    display: block;
+}
