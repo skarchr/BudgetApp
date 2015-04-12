@@ -39,6 +39,7 @@
                 <label class="control-label col-xs-12 label-validator text-success" ng-show="registerform.Country.$valid" style="margin-left: 160px;"></label>
                 <div class="col-md-12">
                     <select class="form-control center" id="Country" name="Country" ng-model="model.Country" required>
+                        <option class="text-muted" value="">-- Country --</option>
                         <option ng-repeat="country in countries" value="{{country.name}}">{{country.name}}</option>
                     </select>
                 </div>
@@ -49,6 +50,7 @@
                 <label class="control-label col-xs-12 label-validator text-success" ng-show="registerform.Currency.$valid" style="margin-left: 160px;"></label>
                 <div class="col-md-12">
                     <select class="form-control center" id="Currency" name="Currency" ng-model="model.Currency" required>
+                        <option class="text-muted" value="">-- Currency --</option>
                         <option ng-repeat="currency in currencies" value="{{currency.cc}}" title="{{currency.name}}">{{currency.cc}}</option>
                     </select>
                 </div>
