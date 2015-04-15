@@ -33,6 +33,7 @@ namespace BudgetApp
          bundles.Add(new ScriptBundle("~/bundles/angular").Include(
                    "~/js/app/BudgetApp.js",
                    "~/js/directives/Directives.js",
+                   "~/js/controllers/TransactionController.js",
                    "~/js/controllers/LoginController.js"));
 
          bundles.Add(new StyleBundle("~/Content/css").Include(

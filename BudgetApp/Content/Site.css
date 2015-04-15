@@ -134,3 +134,40 @@ input[type="checkbox"].input-validation-error {
     margin: auto;
     display: block;
 }
+
+.navbar-brand {
+    padding-top: 0;
+    padding-bottom: 0;
+}
+
+.navbar-brand > img {
+    height: 50px;
+    width: auto;    
+}
+
+.navbar-inverse {
+  background-color: #296ad4;
+  border: 0;
+}
+
+.nav > li > a {
+    color: white !important;
+}
+
+.navbar-inverse .navbar-nav > .active > a, .navbar-inverse .navbar-nav > .active > a:hover, .navbar-inverse .navbar-nav > .active > a:focus, .navbar-brand.active, .navbar-brand.active:hover  {
+    color: #296ad4 !important;
+    background-color: white;
+}
+
+.container > .row {
+    margin-top: 60px;
+}
+
+.btn-xlg {
+    font-size: 30px;
+    margin-top: 10%;
+    width: 100%;
+    padding-bottom: 2%;
+    padding-top: 2%;
+}
+

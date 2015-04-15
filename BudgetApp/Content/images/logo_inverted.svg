@@ -5,17 +5,17 @@
         <style type="text/css">
 
             #circle, #pig > path,ellipse, #pigDetails, #pigDetails > polyline,line,path,ellipse {
-                stroke:#296ad4;
+                stroke:white;
             }
 
             #pigDetails > path, polyline, line{                
-                stroke:#296ad4;
+                stroke:white;
             }
             #tail, #coinslot, .fillers{
-                fill:#296ad4;
+                fill:white;
             }
             #text > g > path, #arrows > line, #arrows > path{
-                stroke:white;
+                stroke:#296ad4;
                 stroke-width:1.5;
             }
 
@@ -26,7 +26,7 @@
                 #pigDetails, #text, #arrows, #cross {
                     display:none;
                 }
-                #pig > path, #pig > ellipse { stroke-width:2; fill: #296ad4}
+                #pig > path, #pig > ellipse { stroke-width:2; fill: white}
                 #circle { stroke-width:20; }                 
                 #budgetAppLogo { min-width:220px !important; }
                 
@@ -34,8 +34,8 @@
 
             @media only screen and (max-width:50px){
 
-                #pig > path, #pig > ellipse { stroke-width:0; fill: white}                
-                #circle {stroke:white;}
+                #pig > path, #pig > ellipse { stroke-width:0; fill: #296ad4}                
+                #circle {stroke:#296ad4;}
                 
             }
 

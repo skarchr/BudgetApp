@@ -1,0 +1,74 @@
+﻿@using BudgetApp.Extensions
+@model IEnumerable<BudgetApp.Models.Transaction>
+
+@{
+    ViewBag.Title = "Transactions";
+}
+
+
+
+<div class="row" ng-controller="transactionController">
+    
+    <p>
+        @Html.ActionLink("Create New", "Create")
+    </p>
+
+
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Amount)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Category)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Description)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TransactionDate)
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Amount)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Category)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Description)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TransactionDate)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.TransactionId }) |
+                    @Html.ActionLink("Details", "Details", new { id = item.TransactionId }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.TransactionId })
+                </td>
+            </tr>
+        }
+
+    </table>
+</div>
+<script>
+
+    (function() {
+        'use strict';
+
+        angular.module('budgetApp').factory('transactionModel', function() {
+
+            return {
+                model: @Html.Raw(Model.ToJson())
+            };
+
+        });
+
+    })();
+
+</script>

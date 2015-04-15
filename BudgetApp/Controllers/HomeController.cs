@@ -1,4 +1,5 @@
-﻿using System.Web.Helpers;
+﻿using System.Linq;
+using System.Web.Helpers;
 using System.Web.Mvc;
 using BudgetApp.Models;
 
@@ -7,27 +8,16 @@ namespace BudgetApp.Controllers
     [Authorize]
     public class HomeController : Controller
     {
+        private ApplicationDbContext db = new ApplicationDbContext();
+
         public ActionResult Index()
         {
             ViewBag.Link = TempData["ViewBagLink"];
 
 
 
-            return View("Index", new Transaction());
+            return View("Index", db.Transactions.Where(s => s.UserName == User.Identity.Name).ToList());
         }
 
-        public ActionResult About()
-        {
-            ViewBag.Message = "Your application description page.";
-
-            return View();
-        }
-
-        public ActionResult Contact()
-        {
-            ViewBag.Message = "Your contact page.";
-
-            return View();
-        }
     }
 }
