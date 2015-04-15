@@ -22,8 +22,8 @@
                         });
 
                         setTimeout(function() {
-                            $(elem[0]).css({                                
-                                'width':to + '%',
+                            $(elem[0]).css({
+                                'width': to + '%',
                                 'position': 'inherit'
                             });
 
@@ -69,7 +69,7 @@
                 return {
                     restrict: 'A',
                     scope: {
-                        fadeIn:'@',
+                        fadeIn: '@',
                         slideDown: '@',
                         prevent: '@'
                     },

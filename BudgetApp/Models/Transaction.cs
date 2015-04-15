@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Web;
 
@@ -11,7 +12,7 @@ namespace BudgetApp.Models
 
         public double Amount { get; set; }
 
-        public Category Category { get; set; }
+        public Category? Category { get; set; }
         public string Description { get; set; }
         public DateTime Created { get; set; }
         public DateTime Date { get; set; }
@@ -19,11 +20,22 @@ namespace BudgetApp.Models
 
     public enum Category
     {
+        #region Income
+        
+        Salary,
+
+        [Description("Other income")]
+        OtherIncome,
+        
+        #endregion
+
         #region Food
 
         Groceries,
         Restaurant,
         Treats,
+
+        [Description("Other food")]
         OtherFood,
 
         #endregion
@@ -35,7 +47,8 @@ namespace BudgetApp.Models
         Rent,
         Mortgage,
         Utilities,
-        RenovationRepairsMaintenance,
+
+        [Description("Other shelter")]
         OtherShelter,
 
         #endregion
@@ -47,8 +60,14 @@ namespace BudgetApp.Models
         Repairs,
         Maintenance,
         Parts,
-        Plane,
+
+        [Description("Parking fee")]
+        ParkingFees,
+
+        [Description("Collective transport")]
         CollectiveTransport,
+
+        [Description("Other transport")]
         OtherTransportation,
 
         #endregion
@@ -57,10 +76,13 @@ namespace BudgetApp.Models
         
         Phone,
         Hobby,
-        Vacation,
-        Clothes,
+        Travel,
         Entertainment,
         Subscriptions,
+        Gifts,
+        Appearance,
+
+        [Description("Other personal")]
         OtherPersonal,
 
         #endregion
@@ -70,8 +92,12 @@ namespace BudgetApp.Models
         Insurance,
         Medical,
         Dental,
+
+        [Description("Debt reduction")]
         DebtReduction,
-        Other
+
+        [Description("Other fixed")]
+        OtherFixed
 
         #endregion
 

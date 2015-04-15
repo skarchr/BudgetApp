@@ -1,5 +1,6 @@
 ﻿using System.Web.Helpers;
 using System.Web.Mvc;
+using BudgetApp.Models;
 
 namespace BudgetApp.Controllers
 {
@@ -9,7 +10,10 @@ namespace BudgetApp.Controllers
         public ActionResult Index()
         {
             ViewBag.Link = TempData["ViewBagLink"];
-            return View();
+
+
+
+            return View("Index", new Transaction());
         }
 
         public ActionResult About()
