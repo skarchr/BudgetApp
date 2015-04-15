@@ -1,0 +1,84 @@
+﻿@model IEnumerable<BudgetApp.Models.Mapping>
+
+@{
+    ViewBag.Title = "Mappings";
+}
+
+<div class="row">
+    
+    @if (!Model.Any())
+    {
+
+        <div class="jumbotron" fade-in="100">
+
+            <div id="icon" style="width: 30%;">
+                <object>
+                    <img src="~/Content/images/logo_pig.svg" id="svg" />
+                </object>
+            </div>
+
+            <h1 class="hidden-xs hidden-sm text-center" style="margin-top: -40px;">You have no mappgings registered</h1>
+            <h2 class="visible-xs visible-sm text-center">You have no mappings registered</h2>
+
+            <div class="row">
+                <div class="col-xs-12 text-center">
+                    @Html.ActionLink("Add mapping", "Create", null, new { @class="btn btn-primary btn-xlg" })
+                </div>
+            </div>
+
+        </div>
+
+
+    }
+    else
+    {
+
+        <table class="table">
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.UserName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Category)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.TextDescription)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Created)
+                </th>
+                <th></th>
+            </tr>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.UserName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Category)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TextDescription)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Created)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Edit", "Edit", new { id = item.MappingId }) |
+                        @Html.ActionLink("Details", "Details", new { id = item.MappingId }) |
+                        @Html.ActionLink("Delete", "Delete", new { id = item.MappingId })
+                    </td>
+                </tr>
+            }
+
+        </table>
+    }
+
+
+
+
+</div>
+
+

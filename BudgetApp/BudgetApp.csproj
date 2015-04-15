@@ -177,6 +177,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\MappingsController.cs" />
     <Compile Include="Controllers\TransactionsController.cs" />
     <Compile Include="Extensions\Dropdownlist.cs" />
     <Compile Include="Extensions\Serialization.cs" />
@@ -191,6 +192,10 @@
     <Compile Include="Migrations\201504151824336_AddedSets.cs" />
     <Compile Include="Migrations\201504151824336_AddedSets.Designer.cs">
       <DependentUpon>201504151824336_AddedSets.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201504152113204_Second.cs" />
+    <Compile Include="Migrations\201504152113204_Second.Designer.cs">
+      <DependentUpon>201504152113204_Second.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -498,6 +503,11 @@
     <Content Include="Views\Transactions\Details.cshtml" />
     <Content Include="Views\Transactions\Edit.cshtml" />
     <Content Include="Views\Transactions\Index.cshtml" />
+    <Content Include="Views\Mappings\Create.cshtml" />
+    <Content Include="Views\Mappings\Delete.cshtml" />
+    <Content Include="Views\Mappings\Details.cshtml" />
+    <Content Include="Views\Mappings\Edit.cshtml" />
+    <Content Include="Views\Mappings\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -515,6 +525,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201504151824336_AddedSets.resx">
       <DependentUpon>201504151824336_AddedSets.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201504152113204_Second.resx">
+      <DependentUpon>201504152113204_Second.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
