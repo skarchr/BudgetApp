@@ -178,7 +178,7 @@ input[type="checkbox"].input-validation-error {
 }
 
 .label-big {
-    font-size: 25px;
+    font-size: 20px;
 }
 
 .placeholder {
@@ -199,4 +199,25 @@ input[type="checkbox"].input-validation-error {
     cursor: pointer;
     color: #313131;
     border-color: #313131;
+}
+
+.link {
+    padding: 5px 5px;
+}
+
+.table-same-width > thead > tr > th:first-child, .table-same-width > tbody > tr > td:first-child {
+    text-align: left;
+}
+
+.table-same-width > thead > tr > th:last-child, .table-same-width > tbody > tr > td:last-child {
+    text-align: right;
+}
+
+.table-same-width > thead > tr > th, .table-same-width > tbody > tr > td {
+    width: 20px;
+    text-align: center;
+}
+
+.delete-link:hover {
+    color: red;
 }

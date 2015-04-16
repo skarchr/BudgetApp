@@ -5,6 +5,8 @@
 
         $scope.model = transactionModel.model;
 
+        $scope.urls = transactionModel.urls;
+
     }]);
 
 })();

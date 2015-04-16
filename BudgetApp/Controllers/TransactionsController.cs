@@ -40,6 +40,8 @@ namespace BudgetApp.Controllers
             return View(model);
         }
 
+        #region ModelBuilder
+
         private List<RangeViewer> GetWeek()
         {
             var model = new List<RangeViewer>();
@@ -163,8 +165,8 @@ namespace BudgetApp.Controllers
 
             }
             return model;
-        } 
-
+        }
+        #endregion
 
         // GET: Transactions/Details/5
         public ActionResult Details(int? id)
