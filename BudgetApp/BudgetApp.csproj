@@ -42,6 +42,12 @@
     <Reference Include="DropDownList_Optgroup">
       <HintPath>..\packages\DropDownList.Optgroup.MVC.1.0.0\lib\net40\DropDownList_Optgroup.dll</HintPath>
     </Reference>
+    <Reference Include="Excel">
+      <HintPath>..\packages\ExcelDataReader.2.1.2.3\lib\net45\Excel.dll</HintPath>
+    </Reference>
+    <Reference Include="ICSharpCode.SharpZipLib">
+      <HintPath>..\packages\SharpZipLib.0.86.0\lib\20\ICSharpCode.SharpZipLib.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="RestSharp">
       <HintPath>..\packages\RestSharp.104.4.0\lib\net4\RestSharp.dll</HintPath>
@@ -185,6 +191,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Importer\ExcelReader.cs" />
     <Compile Include="Migrations\201504031719274_InitialCreate.cs" />
     <Compile Include="Migrations\201504031719274_InitialCreate.Designer.cs">
       <DependentUpon>201504031719274_InitialCreate.cs</DependentUpon>
@@ -196,6 +203,10 @@
     <Compile Include="Migrations\201504152113204_Second.cs" />
     <Compile Include="Migrations\201504152113204_Second.Designer.cs">
       <DependentUpon>201504152113204_Second.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201504161653213_Third.cs" />
+    <Compile Include="Migrations\201504161653213_Third.Designer.cs">
+      <DependentUpon>201504161653213_Third.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -518,9 +529,11 @@
     <Content Include="Views\Mappings\Details.cshtml" />
     <Content Include="Views\Mappings\Edit.cshtml" />
     <Content Include="Views\Mappings\Index.cshtml" />
+    <Content Include="Views\Transactions\Upload.cshtml" />
+    <Content Include="Views\Transactions\Import.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="App_Data\" />
+    <Folder Include="App_Data\uploads\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
@@ -538,6 +551,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201504152113204_Second.resx">
       <DependentUpon>201504152113204_Second.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201504161653213_Third.resx">
+      <DependentUpon>201504161653213_Third.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

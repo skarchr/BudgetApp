@@ -14,7 +14,8 @@ namespace BudgetApp.Models
         public Category? Category { get; set; }
         public string Description { get; set; }
         
-        public DateTime TransactionDate { get; set; }
+        public DateTime Date { get; set; }
         public DateTime Created { get; set; }
+        public bool Import { get; set; }
     }
 }

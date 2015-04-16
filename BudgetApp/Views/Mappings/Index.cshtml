@@ -4,8 +4,8 @@
     ViewBag.Title = "Mappings";
 }
 
-<div class="row">
-    
+<div style="margin-top: 60px;">
+
     @if (!Model.Any())
     {
 
@@ -22,7 +22,7 @@
 
             <div class="row">
                 <div class="col-xs-12 text-center">
-                    @Html.ActionLink("Add mapping", "Create", null, new { @class="btn btn-primary btn-xlg" })
+                    @Html.ActionLink("Add mapping", "Create", null, new { @class = "btn btn-primary btn-xlg" })
                 </div>
             </div>
 
@@ -32,53 +32,63 @@
     }
     else
     {
+        <div class="row" >
+            <div class="col-xs-12 col-md-4">
+                <a href="@Url.Action("Create")" class="btn btn-default" title="Add transaction">
+                    <i class="glyphicon glyphicon-plus-sign"></i>
+                </a>
+            </div>
 
-        <table class="table">
-            <tr>
-                <th>
-                    @Html.DisplayNameFor(model => model.UserName)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Category)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.TextDescription)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Created)
-                </th>
-                <th></th>
-            </tr>
+            <div class="col-xs-12 col-md-4">
 
-            @foreach (var item in Model)
-            {
-                <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.UserName)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Category)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.TextDescription)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Created)
-                    </td>
-                    <td>
-                        @Html.ActionLink("Edit", "Edit", new { id = item.MappingId }) |
-                        @Html.ActionLink("Details", "Details", new { id = item.MappingId }) |
-                        @Html.ActionLink("Delete", "Delete", new { id = item.MappingId })
-                    </td>
-                </tr>
-            }
+            </div>
 
-        </table>
+            <div class="col-xs-12 col-md-4">
+
+            </div>
+
+        </div>
+
+        <div class="row" style="margin-top: 30px;">
+            <div class="col-xs-12">
+                <table class="table">
+                    <tr>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Category)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.TextDescription)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Created)
+                        </th>
+                        <th></th>
+                    </tr>
+
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Category)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.TextDescription)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Created)
+                            </td>
+                            <td>
+                                @Html.ActionLink("Edit", "Edit", new { id = item.MappingId }) |
+                                @Html.ActionLink("Details", "Details", new { id = item.MappingId }) |
+                                @Html.ActionLink("Delete", "Delete", new { id = item.MappingId })
+                            </td>
+                        </tr>
+                    }
+
+                </table>
+            </div>
+        </div>
     }
-
-
-
-
 </div>
 
 

@@ -2,10 +2,12 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using BudgetApp.Importer;
 using BudgetApp.Models;
 
 namespace BudgetApp.Controllers
@@ -47,7 +49,7 @@ namespace BudgetApp.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "TransactionId,Amount,Category,Description,TransactionDate,Created")] Transaction transaction)
+        public ActionResult Create([Bind(Include = "TransactionId,Amount,Category,Description,Date,Created")] Transaction transaction)
         {
             if (ModelState.IsValid)
             {
@@ -82,7 +84,7 @@ namespace BudgetApp.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "TransactionId,UserName,Amount,Category,Description,TransactionDate,Created")] Transaction transaction)
+        public ActionResult Edit([Bind(Include = "TransactionId,UserName,Amount,Category,Description,Date,Created")] Transaction transaction)
         {
             if (ModelState.IsValid)
             {
@@ -127,5 +129,88 @@ namespace BudgetApp.Controllers
             }
             base.Dispose(disposing);
         }
+
+        public ActionResult Upload()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult Upload(HttpPostedFileBase file)
+        {
+            if (file != null && file.ContentLength > 0)
+            {
+                var fileName = Path.GetFileName(file.FileName);
+
+                if (fileName == null)
+                {
+                    ViewBag.Error = "Something went wrong!";
+
+                    return View("Index");
+                }
+
+                var path = Path.Combine(Server.MapPath("~/App_Data/uploads"), fileName);
+
+                file.SaveAs(path);
+
+                int found;
+
+                var model = ExcelReader.ReadFile(path, User.Identity.Name, out found);
+
+                ViewBag.Info = string.Format("Found {0} new transactions", found);
+
+                if (model.Count == 0)
+                    return View("Index", db.Transactions.Where(s => s.UserName == User.Identity.Name).ToList());
+
+                return View("Import", model);
+            }
+
+            ViewBag.Error = "Please select an excel file!";
+
+            return View("Index");
+        }
+
+        [HttpPost]
+        public ActionResult Import(List<Transaction> transactions)
+        {
+
+            for (int i = 0; i < transactions.Count(); i++)
+            {
+                if (!transactions[i].Import)
+                {
+                    ModelState["[" + i + "].Category"].Errors.Clear();
+                    try
+                    {
+                        ModelState["[" + i + "].Description"].Errors.Clear();
+                        ModelState["[" + i + "].Amount"].Errors.Clear();
+                    }
+                    catch (Exception)
+                    {
+
+                    }
+
+                }
+            }
+
+            if (ModelState.IsValid)
+            {
+                foreach (var transaction in transactions.Where(s => s.Import))
+                {
+                    db.Transactions.Add(transaction);
+                    db.SaveChanges();
+                }
+
+                TempData["Success"] = string.Format("{0} transaction{1} added!", transactions.Count(s => s.Import), transactions.Count(s => s.Import).Equals(1) ? " was" : "s were");
+
+                return RedirectToAction("Index", db.Transactions.Where(s => s.UserName == User.Identity.Name).ToList());
+            }
+
+            ViewBag.Error = "Please fill in all mandatory fields";
+
+            return View("Import", transactions);
+        }
+
+
+
     }
 }
