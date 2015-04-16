@@ -27,6 +27,7 @@ namespace BudgetApp
                    "~/bower_components/velocity/velocity.ui.min.js",
                    "~/bower_components/angular/angular.min.js",
                    "~/bower_components/angular-animate/angular-animate.js",
+                   "~/bower_components/angular-gravatar/build/angular-gravatar.min.js",
                    "~/bower_components/angular-bootstrap/ui-bootstrap.min.js",
                    "~/bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js"));
 

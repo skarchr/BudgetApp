@@ -171,3 +171,8 @@ input[type="checkbox"].input-validation-error {
     padding-top: 2%;
 }
 
+.square {
+    color: #777;
+    min-height: 230px;
+    border: 1px solid #ececec;
+}

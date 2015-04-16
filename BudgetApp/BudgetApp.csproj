@@ -215,6 +215,9 @@
     <Content Include="bower_components\angular-bootstrap\ui-bootstrap-tpls.min.js" />
     <Content Include="bower_components\angular-bootstrap\ui-bootstrap.js" />
     <Content Include="bower_components\angular-bootstrap\ui-bootstrap.min.js" />
+    <Content Include="bower_components\angular-gravatar\.gitignore" />
+    <Content Include="bower_components\angular-gravatar\build\angular-gravatar.js" />
+    <Content Include="bower_components\angular-gravatar\build\angular-gravatar.min.js" />
     <Content Include="bower_components\angular\angular-csp.css" />
     <Content Include="bower_components\angular\angular.js" />
     <Content Include="bower_components\angular\angular.min.js" />
@@ -444,6 +447,13 @@
     <Content Include="bower_components\angular-animate\bower.json" />
     <Content Include="bower_components\angular-animate\package.json" />
     <Content Include="bower_components\angular-animate\README.md" />
+    <Content Include="bower_components\angular-gravatar\.bower.json" />
+    <Content Include="bower_components\angular-gravatar\.bowerrc" />
+    <Content Include="bower_components\angular-gravatar\.jshintrc" />
+    <Content Include="bower_components\angular-gravatar\.travis.yml" />
+    <Content Include="bower_components\angular-gravatar\bower.json" />
+    <Content Include="bower_components\angular-gravatar\LICENSE" />
+    <Content Include="bower_components\angular-gravatar\README.md" />
     <None Include="js\resources\countries.json" />
     <Content Include="bower_components\angular-bootstrap\.bower.json" />
     <Content Include="bower_components\angular-bootstrap\bower.json" />
