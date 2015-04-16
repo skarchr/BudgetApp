@@ -1,0 +1,64 @@
+﻿@using BudgetApp.Extensions
+@using BudgetApp.Models
+@model List<BudgetApp.Models.Transaction>
+
+
+@{
+    ViewBag.Title = "Transactions";
+}
+
+<div style="margin-top: 60px;">
+
+    <div class="row">
+        <div class="col-xs-12">
+
+
+            @using (Html.BeginForm("Import", "Transactions", FormMethod.Post))
+            {
+
+                <table class="table table-condensed">
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th class="text-center">Date</th>
+                            <th class="text-center" style="width: 500px;">Description</th>
+                            <th class="text-center" style="width: 80px;">Amount</th>
+                            <th class="text-center">Category</th>
+                            <th class="text-center">Import</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        @for (var i = 0; i < Model.Count; i++)
+                        {
+
+                            <tr id="@("row_"+i)" class="@(Model[i].Category == null ? "missing":"")">
+                                <td class="text-center"></td>
+                                <td style="padding-top:12px;" class="text-center">@Html.HiddenFor(m => Model[i].Date) @Model[i].Date.ToString("dd.MM.yyyy")</td>
+                                <td class="text-center">@Html.TextBoxFor(m => Model[i].Description, new { @class = "inline-edit", @style = "width:500px;max-width:500px;" })</td>
+                                <td class="text-center">@Html.TextBoxFor(m => Model[i].Amount, new { @class = "inline-edit center", @style = "width:80px;max-width:80px;" })</td>
+                                <td class="text-center">
+                                    @Html.DropDownGroupListFor(model => model[i].Category, Dropdownlist.GroupedCategories(Model != null ? Model[i].Category.ToString() : ""), " ", new { @class = "form-control" })
+                                </td>
+                                <td class="text-center">
+
+                                    @Html.CheckBoxFor(m => Model[i].Import, new { @data_pointer = "row_" + i, @class = "import-checkbox", @type = "checkbox" })
+
+                                    @Html.HiddenFor(m => Model[i].Created)
+                                    @Html.HiddenFor(m => Model[i].UserName)
+                                </td>
+                            </tr>
+                        }
+
+                    </tbody>
+                </table>
+
+
+                <input type="submit" class="btn btn-primary btn-lg @(Model.Count > 0 ? "":"hidden")" value="Import" />
+                @Html.ActionLink("Cancel", "Index", "Home", new { @class = "btn btn-link" })
+
+
+            }
+        </div>
+    </div>
+</div>

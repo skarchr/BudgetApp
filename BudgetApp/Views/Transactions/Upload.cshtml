@@ -1,0 +1,33 @@
+﻿@{
+    ViewBag.Title = "Transactions";
+}
+
+<div style="margin-top: 60px;">
+    <div class="row">
+        <div class="col-xs-12 col-md-4">
+            <a href="@Url.Action("Create")" class="btn btn-default" title="Add transaction">
+                <i class="glyphicon glyphicon-plus-sign"></i>
+            </a>
+            <a href="@Url.Action("Upload")" class="btn btn-default active" title="Import transactions">
+                <i class="glyphicon glyphicon-import"></i>
+            </a>
+
+        </div>
+    </div>
+    <div class="row" style="margin-top: 30px;">
+        <div class="col-xs-12">
+
+            @using (Html.BeginForm("Upload", "Transactions", FormMethod.Post, new { enctype = "multipart/form-data" }))
+            {
+
+                <div class="form-group">
+                    <label for="exampleInputEmail1">Excelfile</label>
+                    <input type="file" name="file" id="file" class="form-control" style="max-width: 500px;" />
+                </div>
+
+                <input type="submit" name="Submit" id="Submit" class="btn btn-primary" value="Upload" />
+                @Html.ActionLink("Cancel", "Index", "Transactions", null, new { @class = "btn btn-link" })
+            }
+        </div>
+    </div>
+</div>

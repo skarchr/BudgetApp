@@ -1,5 +1,6 @@
 ﻿@using BudgetApp.Extensions
-@model IEnumerable<BudgetApp.Models.Transaction>
+@using BudgetApp.Models
+@model List<RangeViewer>
 
 @{
     ViewBag.Title = "Transactions";
@@ -8,7 +9,7 @@
 
 
 <div style="margin-top: 60px;" ng-controller="transactionController">
-    
+
     @if (!Model.Any())
     {
 
@@ -25,13 +26,13 @@
 
             <div class="row">
                 <div class="col-xs-12 col-md-6 text-center">
-                    <button class="btn btn-primary btn-xlg" onclick=" location.href = '@Url.Action("Create", "Transactions")' ">
+                    <button class="btn btn-primary btn-xlg" onclick="location.href = '@Url.Action("Create", "Transactions")' ">
                         Add transaction
                     </button>
 
                 </div>
                 <div class="col-xs-12 col-md-6 text-center">
-                    <button class="btn btn-primary btn-xlg" onclick=" location.href = '@Url.Action("Upload", "Transactions")' ">
+                    <button class="btn btn-primary btn-xlg" onclick="location.href = '@Url.Action("Upload", "Transactions")' ">
                         Import transactions
                     </button>
                 </div>
@@ -43,92 +44,112 @@
     }
     else
     {
-        
-    
-    <div class="row">
-        <div class="col-xs-12 col-md-4">            
-            <a href="@Url.Action("Create")" class="btn btn-default" title="Add transaction">
-                <i class="glyphicon glyphicon-plus-sign"></i>
-            </a>
-            <a href="@Url.Action("Upload")" class="btn btn-default" title="Import transactions">
-                <i class="glyphicon glyphicon-import"></i>
-            </a>
+        <div fade-in="200">
 
-        </div>
-        
-        <div class="col-xs-12 col-md-4">
-            
-        </div>
-        
-        <div class="col-xs-12 col-md-4 text-right">
-            <a href="#" class="btn btn-default" title="Annual">
-                Annual
-            </a>
-            <a href="#" class="btn btn-default" title="Monthly">
-                Monthly
-            </a>
-            <a href="#" class="btn btn-default" title="Weekly">
-                Weekly
-            </a>
-            <a href="#" class="btn btn-default" title="Daily">
-                Daily
-            </a>
-        </div>
+            <div class="row">
+                <div class="col-xs-12 col-md-4">
+                    <a href="@Url.Action("Create")" class="btn btn-default" title="Add transaction">
+                        <i class="glyphicon glyphicon-plus-sign"></i>
+                    </a>
+                    <a href="@Url.Action("Upload")" class="btn btn-default" title="Import transactions">
+                        <i class="glyphicon glyphicon-import"></i>
+                    </a>
 
-    </div>
+                </div>
 
-        <div class="row" style="margin-top: 30px;">
-        
-            <div class="col-xs-12">
+                <div class="col-xs-12 col-md-4">
 
-                <table class="table">
-                    <tr>
-                        <th>
-                            @Html.DisplayNameFor(model => model.Amount)
-                        </th>
-                        <th>
-                            @Html.DisplayNameFor(model => model.Category)
-                        </th>
-                        <th>
-                            @Html.DisplayNameFor(model => model.Description)
-                        </th>
-                        <th>
-                            @Html.DisplayNameFor(model => model.Date)
-                        </th>
-                        <th></th>
-                    </tr>
+                </div>
 
-                    @foreach (var item in Model)
-                    {
-                        <tr>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Amount)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Category)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Description)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Date)
-                            </td>
-                            <td>
-                                @Html.ActionLink("Edit", "Edit", new { id = item.TransactionId }) |
-                                @Html.ActionLink("Details", "Details", new { id = item.TransactionId }) |
-                                @Html.ActionLink("Delete", "Delete", new { id = item.TransactionId })
-                            </td>
-                        </tr>
-                    }
-
-                </table>
+                <div class="col-xs-12 col-md-4 text-right">
+                    <a href="@Url.Action("Index", "Transactions", new { range = Range.Annual })" class="btn btn-default  @(Model[0].Range == Range.Annual ? "active" : "")" title="Annual">
+                        Annual
+                    </a>
+                    <a href="@Url.Action("Index", "Transactions", new { range = Range.Month })" class="btn btn-default  @(Model[0].Range == Range.Month ? "active" : "")" title="Monthly">
+                        Monthly
+                    </a>
+                    <a href="@Url.Action("Index", "Transactions", new { range = Range.Week })" class="btn btn-default  @(Model[0].Range == Range.Week ? "active" : "")" title="Weekly">
+                        Weekly
+                    </a>
+                </div>
 
             </div>
 
+            <div class="row" style="margin-top: 30px;">
+
+                <div class="col-xs-12" ng-repeat="range in model">
+
+
+                    <div class="panel panel-default">
+
+                        <div class="panel-body">
+
+                            <div class="row">
+
+                                <div class="col-xs-4">
+                                    <span class="label label-primary label-big">
+                                        {{range.Title @(Model[0].Range == Range.Month ? "| monthName" : "") }}
+                                    </span>
+                                </div>
+                                <div class="col-xs-4 text-center">
+                                    <span class="text-muted">
+                                        {{range.StartDate | date : 'dd.MM.yyyy'}} - {{range.EndDate | date: 'dd.MM.yyyy'}}
+                                    </span>
+                                </div>
+
+                                <div class="col-xs-4 text-right">
+                                    <span class="toggle-transactions" ng-click="range.$index = !range.$index">
+                                        <i class="glyphicon glyphicon-zoom-in" ng-hide="range.$index"></i>
+                                        <i class="glyphicon glyphicon-zoom-out" ng-show="range.$index"></i>
+                                        {{range.Transactions.length}}
+                                    </span>
+                                </div>
+
+                            </div>
+
+                            <div class="row">
+                                <div class="col-xs-12 placeholder">
+                                    <div id="icon" style="width: 30%;">
+                                        <object>
+                                            <img src="~/Content/images/logo_pig.svg" id="svg" />
+                                        </object>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <table class="table table-condensed" ng-show="range.$index">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Amount</th>
+                                    <th>Category</th>
+                                    <th>Description</th>
+                                    <th>Date</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="row in range.Transactions">
+                                    <td>{{$index + 1}}</td>
+                                    <td>{{row.Amount}}</td>
+                                    <td>{{row.Category}}</td>
+                                    <td>{{row.Description}}</td>
+                                    <td>{{row.Date | date}}</td>
+                                    <td></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+
+                </div>
+
+            </div>
         </div>
     }
 
-          
+
 </div>
 
 <script>
@@ -140,7 +161,7 @@
 
             return {
                 model: @Html.Raw(Model.ToJson())
-            };
+                };
 
         });
 

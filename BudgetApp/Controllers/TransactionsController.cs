@@ -7,6 +7,7 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using BudgetApp.Extensions;
 using BudgetApp.Importer;
 using BudgetApp.Models;
 
@@ -18,10 +19,152 @@ namespace BudgetApp.Controllers
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: Transactions
-        public ActionResult Index()
+        public ActionResult Index(Range range = Range.Month)
         {
-            return View(db.Transactions.Where(s => s.UserName == User.Identity.Name).ToList());
+            var model = new List<RangeViewer>();
+
+            switch (range)
+            {
+                case Range.Annual:
+                    model = GetAnnual();
+                    break;
+                case Range.Month:
+                    model = GetMonth();
+                    break;
+                case Range.Week:
+                    model = GetWeek();
+                    break;
+
+            }
+
+            return View(model);
         }
+
+        private List<RangeViewer> GetWeek()
+        {
+            var model = new List<RangeViewer>();
+            var dict = new Dictionary<int, Dictionary<int, List<Transaction>>>();
+
+            foreach (var expense in db.Transactions.Where(s => s.UserName == User.Identity.Name))
+            {
+                var year = expense.Date.Year;
+
+                if (!dict.ContainsKey(year))
+                {
+                    dict.Add(year, new Dictionary<int, List<Transaction>>());
+                }
+
+                var week = DateHelper.GetWeekNumber(expense.Date);
+
+                if (!dict[year].ContainsKey(week))
+                {
+                    dict[year].Add(week, new List<Transaction>());
+                }
+
+                dict[year][week].Add(expense);
+            }
+
+            foreach (var year in dict)
+            {
+                foreach (var week in year.Value)
+                {
+                    model.Add(new RangeViewer
+                    {
+                        Year = year.Key,
+                        Range = Range.Week,
+                        Title = week.Key.ToString(),
+                        StartDate = DateHelper.GetWeekStartDate(year.Key, week.Key),
+                        EndDate = DateHelper.GetWeekEndDate(year.Key, week.Key),
+                        Transactions = week.Value.OrderBy(s => s.Date).ToList(),
+                        Graph = ""
+                    });
+                }
+            }
+
+
+            return model;
+        }
+
+        private List<RangeViewer> GetMonth()
+        {
+            var model = new List<RangeViewer>();
+
+            var dict = new Dictionary<int, Dictionary<int, List<Transaction>>>();
+
+            foreach (var transaction in db.Transactions.Where(s => s.UserName == User.Identity.Name))
+            {
+                var year = transaction.Date.Year;
+
+                if (!dict.ContainsKey(year))
+                {
+                    dict.Add(year, new Dictionary<int, List<Transaction>>());
+                }
+
+                var month = transaction.Date.Month;
+
+                if (!dict[year].ContainsKey(month))
+                {
+                    dict[year].Add(month, new List<Transaction>());
+                }
+
+                dict[year][month].Add(transaction);
+            }
+
+            foreach (var year in dict)
+            {
+                foreach (var month in year.Value)
+                {
+                    model.Add(new RangeViewer
+                    {
+                        Year = year.Key,
+                        Range = Range.Month,
+                        Title = month.Key.ToString(),
+                        StartDate = new DateTime(year.Key, month.Key, 1),
+                        EndDate = new DateTime(year.Key, month.Key, DateTime.DaysInMonth(year.Key, month.Key)),
+                        Transactions = month.Value.OrderBy(s => s.Date).ToList(),
+                        Graph = ""
+                    });
+                }
+            }
+            return model;
+        }
+
+        private List<RangeViewer> GetAnnual()
+        {
+            var model = new List<RangeViewer>();
+
+            var dict = new Dictionary<int, List<Transaction>>();
+
+            foreach (var transaction in db.Transactions.Where(s => s.UserName == User.Identity.Name))
+            {
+                var year = transaction.Date.Year;
+
+                if (!dict.ContainsKey(year))
+                {
+                    dict.Add(year, new List<Transaction>());
+                }
+
+                dict[year].Add(transaction);
+            }
+
+            foreach (var year in dict)
+            {
+
+                    model.Add(new RangeViewer
+                    {
+                        Year = year.Key,
+                        Range = Range.Annual,
+                        Title = year.Key.ToString(),
+                        StartDate = new DateTime(year.Key,1,1),
+                        EndDate = new DateTime(year.Key, 12,31),
+                        Transactions = year.Value.OrderBy(s => s.Date).ToList(),
+                        Graph = ""
+                    });
+
+            }
+            return model;
+        } 
+
 
         // GET: Transactions/Details/5
         public ActionResult Details(int? id)
