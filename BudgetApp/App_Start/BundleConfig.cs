@@ -25,6 +25,7 @@ namespace BudgetApp
          bundles.Add(new ScriptBundle("~/bundles/bower").Include(
                    "~/bower_components/velocity/velocity.min.js",
                    "~/bower_components/velocity/velocity.ui.min.js",
+                   "~/bower_components/highstock-release/highstock.js",
                    "~/bower_components/angular/angular.min.js",
                    "~/bower_components/angular-animate/angular-animate.js",
                    "~/bower_components/angular-gravatar/build/angular-gravatar.min.js",

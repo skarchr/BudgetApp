@@ -78,7 +78,7 @@ namespace BudgetApp.Controllers
                         StartDate = DateHelper.GetWeekStartDate(year.Key, week.Key),
                         EndDate = DateHelper.GetWeekEndDate(year.Key, week.Key),
                         Transactions = week.Value.OrderBy(s => s.Date).ToList(),
-                        Graph = ""
+                        Graph = GraphBuilder.TransactionGraph(week.Value)
                     });
                 }
             }
@@ -124,7 +124,7 @@ namespace BudgetApp.Controllers
                         StartDate = new DateTime(year.Key, month.Key, 1),
                         EndDate = new DateTime(year.Key, month.Key, DateTime.DaysInMonth(year.Key, month.Key)),
                         Transactions = month.Value.OrderBy(s => s.Date).ToList(),
-                        Graph = ""
+                        Graph = GraphBuilder.TransactionGraph(month.Value)
                     });
                 }
             }
@@ -160,7 +160,7 @@ namespace BudgetApp.Controllers
                         StartDate = new DateTime(year.Key,1,1),
                         EndDate = new DateTime(year.Key, 12,31),
                         Transactions = year.Value.OrderBy(s => s.Date).ToList(),
-                        Graph = ""
+                        Graph = GraphBuilder.TransactionGraph(year.Value)
                     });
 
             }

@@ -92,6 +92,61 @@
                 };
 
             }
-        ]);
+        ])
+    .directive('highchart', function() {
+        return {
+            restrict: 'A',
+            scope: {
+                highchart: '@',
+                titletext: '@'
+            },
+            link: function(scope, elem, attrs) {
+
+                $(elem[0]).highcharts({
+                    chart: {
+                        plotBackgroundColor: null,
+                        plotBorderWidth: null,
+                        plotShadow: false
+                    },
+                    title: {
+                        text: scope.titletext
+                    },
+                    tooltip: {
+                        pointFormat: '{series.name}: <b>{point.y:.1f} </b>'
+                    },
+                    legend: {
+                        align: 'right',
+                        layout: 'vertical',
+                        y: -25
+                    },
+                    credits: false,
+                    plotOptions: {
+                        column: {
+                            showInLegend: false,
+                            colorByPoint: true
+                        }
+                    },
+                    xAxis: {
+                        categories: ['Fixed', 'Food', 'Income', 'Personal', 'Shelter', 'Transport'],
+                        labels: {
+                            rotation: -90
+                        }
+                    },
+                    yAxis: {
+                        title: {
+                            text: 'Amount'
+                        }
+                    },
+                    series: [
+                        {
+                            type: 'column',
+                            name: 'Category',
+                            data: JSON.parse(scope.highchart)
+                        }
+                    ]
+                });
+            }
+        }
+    });
 
 })();

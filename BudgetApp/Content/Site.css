@@ -182,9 +182,10 @@ input[type="checkbox"].input-validation-error {
 }
 
 .placeholder {
-    border: 1px solid #ececec;
-    background-color: #fafafa;
     min-width: 100%;
+    border-top: 1px solid #ececec;
+    background: white;
+    padding: 8px;
     height: 300px;
 }
 

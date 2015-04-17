@@ -72,12 +72,6 @@ namespace BudgetApp.Constants
                     "Transportation", new List<Category>
                     {
                         Category.Car,
-                        Category.Fuel,
-                        Category.Maintenance,
-                        Category.Parts,
-                        Category.ParkingFees,
-                        Category.Repairs,
-
                         Category.CollectiveTransport,
 
                         Category.OtherTransportation

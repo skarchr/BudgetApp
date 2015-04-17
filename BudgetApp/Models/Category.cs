@@ -40,14 +40,6 @@ namespace BudgetApp.Models
         #region Transportation
 
         Car,
-        Fuel,
-        Repairs,
-        Maintenance,
-        Parts,
-
-        [Description("Parking fee")]
-        ParkingFees,
-
         [Description("Collective transport")]
         CollectiveTransport,
 

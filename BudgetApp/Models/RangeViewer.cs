@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using BudgetApp.Constants;
 
 namespace BudgetApp.Models
 {
@@ -21,5 +22,21 @@ namespace BudgetApp.Models
 
         public List<Transaction> Transactions { get; set; }
         public string Graph { get; set; }
+
+        public double TotalExpenses
+        {
+            get
+            {
+                return Transactions.Where(s => Categories.GetMainCategory(s.Category.Value) != "Income").Sum(s => s.Amount);
+            }
+        }
+
+        public double TotalIncome
+        {
+            get
+            {
+                return Transactions.Where(s => Categories.GetMainCategory(s.Category.Value) == "Income").Sum(s => s.Amount);
+            }
+        }
     }
 }
