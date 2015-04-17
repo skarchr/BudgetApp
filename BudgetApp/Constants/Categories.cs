@@ -8,6 +8,12 @@ namespace BudgetApp.Constants
 {
     public static class Categories
     {
+
+        public static string GetMainCategory(Category category)
+        {
+            return (from key in Grouped where key.Value.Any(val => val == category) select key.Key).FirstOrDefault();
+        }
+
         public static readonly Dictionary<string, List<Category>> Grouped = new Dictionary<string, List<Category>>
             {
                 {
