@@ -15,13 +15,12 @@ namespace BudgetApp.Extensions
 
             var fix = SumCategory(transactions, "Fixed");
             var food = SumCategory(transactions, "Food");
-            var income = SumCategory(transactions, "Income");
             var personal = SumCategory(transactions, "Personal");
             var shelter = SumCategory(transactions, "Shelter");
             var trans = SumCategory(transactions, "Transportation");
 
 
-            return String.Format("[[\"Fixed\",{0}],[\"Food\",{1}],[\"Income\",{2}],[\"Personal\",{3}],[\"Shelter\",{4}],[\"Transportation\",{5}]]", fix, food, income, personal, shelter, trans);
+            return String.Format("[[\"Fixed\",{0}],[\"Food\",{1}],[\"Personal\",{2}],[\"Shelter\",{3}],[\"Transportation\",{4}]]", fix, food, personal, shelter, trans);
         }
 
         private static string SumCategory(IEnumerable<Transaction> transactions, string mainCategory)

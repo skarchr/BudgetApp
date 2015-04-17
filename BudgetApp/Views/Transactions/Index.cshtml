@@ -109,21 +109,16 @@
 
                             <div class="row">
                                 <div class="col-xs-12 placeholder">
-                                    <div class="col-xs-8">
-                                        <span class="hidden-xs" style="height: 300px;width:auto;" data-highchart="{{range.Graph}}"></span>
-                                    </div>
                                     
-                                    <div class="col-xs-4 text-right">
-                                        <div class="col-xs-12">
-                                            <h3>{{range.TotalIncome.toFixed(1)}}</h3>
-                                        </div>
-                                        <div class="col-xs-12">
-                                            <h3>-{{range.TotalExpenses.toFixed(1)}}</h3>
-                                        </div>
-                                        <div class="col-xs-12 {{(range.TotalIncome - range.TotalExpenses) > 0 ? 'text-success':'text-danger'}}">
-                                            <h1>= {{(range.TotalIncome - range.TotalExpenses).toFixed(1)}}</h1>
-                                        </div>
+                                    <div class="col-xs-6">
+                                        <span style="height:300px;" class="hidden-xs" data-highchart="{{range.Graph}}"></span>
                                     </div>
+                                    <div class="col-xs-6">
+                                        <span style="height:300px;width:auto;" data-gauge data-income="{{range.TotalIncome}}" data-expense="{{range.TotalExpenses}}"></span>
+                                    </div>
+
+                                                                        
+                                    
                                 </div>
                             </div>
 

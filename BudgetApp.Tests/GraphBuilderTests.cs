@@ -32,7 +32,7 @@ namespace BudgetApp.Tests
 
             var result = GraphBuilder.TransactionGraph(transactions);
 
-            result.Should().Be("[[\"Fixed\",0],[\"Food\",0],[\"Income\",0],[\"Personal\",0],[\"Shelter\",40],[\"Transportation\",60]]");
+            result.Should().Be("[[\"Fixed\",0],[\"Food\",0],[\"Personal\",0],[\"Shelter\",40],[\"Transportation\",60]]");
         }
 
     }
