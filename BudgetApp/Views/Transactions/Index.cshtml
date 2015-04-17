@@ -124,17 +124,15 @@
                                     <th>#</th>
                                     <th>Amount</th>
                                     <th>Category</th>
-                                    @*<th>Description</th>*@
                                     <th>Date</th>
                                     <th></th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr ng-repeat="row in range.Transactions" style="background-color: {{ row.Category === 0  || row.Category === 1 ? 'rgb(236, 253, 236)':'' }} ">
+                                <tr ng-repeat="row in range.Transactions">
                                     <td>{{$index + 1}}</td>
                                     <td>{{row.Amount}}</td>
-                                    <td>{{row.Category}}</td>
-                                    @*<td>{{row.Description}}</td>*@
+                                    <td>{{row.Category | camelCaseToNormal}}</td>
                                     <td>{{row.Date | date}}</td>
                                     <td class="text-right">
                                         <a class="link details-link" href="{{urls.details}}/{{row.TransactionId}}" title="Details"><i class="glyphicon glyphicon-zoom-in"></i></a>                                        

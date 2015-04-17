@@ -37,7 +37,7 @@ namespace BudgetApp.Controllers
 
             }
 
-            return View(model);
+            return View(model.OrderByDescending(s => s.Year).ThenByDescending(s => s.StartDate).ToList());
         }
 
         #region ModelBuilder

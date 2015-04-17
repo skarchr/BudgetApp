@@ -12,6 +12,17 @@
 
             }
 
-        });
+        })
+    .filter('camelCaseToNormal', function () {
+
+        return function (input) {
+
+            var result = input.replace(/([A-Z])/g, " $1");
+
+            return result.charAt(0).toUpperCase() + result.slice(1);
+
+        }
+
+    });
 
 })();

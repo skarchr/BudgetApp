@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 
 namespace BudgetApp.Models
 {
@@ -11,6 +13,8 @@ namespace BudgetApp.Models
         public string UserName { get; set; }
 
         public double Amount { get; set; }
+
+        [JsonConverter(typeof(StringEnumConverter))]
         public Category? Category { get; set; }
         public string Description { get; set; }
         

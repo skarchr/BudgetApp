@@ -207,6 +207,7 @@ input[type="checkbox"].input-validation-error {
 
 .table-same-width > thead > tr > th:first-child, .table-same-width > tbody > tr > td:first-child {
     text-align: left;
+    padding-left: 15px;
 }
 
 .table-same-width > thead > tr > th:last-child, .table-same-width > tbody > tr > td:last-child {
