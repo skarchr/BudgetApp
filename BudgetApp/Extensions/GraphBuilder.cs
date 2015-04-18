@@ -32,6 +32,7 @@ namespace BudgetApp.Extensions
         {
             var series = new List<Series>();
 
+            var mainIndex = 0;
             foreach (var mainCategory in Categories.Grouped.Keys.Where(s => s != "Income"))
             {
                 var data = new List<Data>();
@@ -40,7 +41,7 @@ namespace BudgetApp.Extensions
                 {
                     data.Add(new Data
                     {
-                        Color = "red",
+                        Color = HighchartUtilities.Colors[mainIndex],
                         Name = category.ToString(),
                         X = index,
                         Y = transactions.Where(s => s.Category == category).Sum(s => s.Amount)
@@ -48,6 +49,7 @@ namespace BudgetApp.Extensions
                     index++;
                 }
                 series.Add(new Series { Id = mainCategory.ToLower(), Name = mainCategory, Type = "column", Data = data});
+                mainIndex++;
             }
 
 
@@ -67,16 +69,13 @@ namespace BudgetApp.Extensions
 
         private static Series CreateMainCategorySeries(List<Transaction> transactions)
         {
-            var mainCategories = new List<string> { "Fixed", "Food", "Personal", "Shelter", "Transportation" };
-
-
             var data = new List<Data>();
             var index = 0;
-            foreach (var mainCategory in mainCategories)
+            foreach (var mainCategory in Categories.Grouped.Keys.Where(s => s != "Income"))
             {
                 data.Add(new Data
                 {
-                    Color = "red",
+                    Color = HighchartUtilities.Colors[index],
                     Drilldown = mainCategory.ToLower(),
                     Name = mainCategory,
                     X = index,
@@ -87,7 +86,7 @@ namespace BudgetApp.Extensions
 
             return new Series
             {
-                Name = "Main categories",
+                Name = "Expenses",
                 Type = "column",
                 Id = "mainCategories",
                 Data = data

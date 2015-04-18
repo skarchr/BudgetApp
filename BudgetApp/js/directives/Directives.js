@@ -135,7 +135,7 @@
                             type: 'category',
                             labels: {
                                 //formatter:function(){ return image based on this.value }
-                                rotation: -90
+                                rotation: -45
                             }
                         },
                         yAxis: {
