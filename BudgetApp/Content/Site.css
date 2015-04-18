@@ -223,3 +223,7 @@ input[type="checkbox"].input-validation-error {
 .delete-link:hover {
     color: red;
 }
+
+.highcharts-background {
+    fill: none !important;
+}

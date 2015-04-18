@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Web.UI.WebControls;
 
 namespace BudgetApp.Models
 {
@@ -38,5 +39,13 @@ namespace BudgetApp.Models
     public class Title
     {
         public string Text { get; set; }
+    }
+
+    public class Style
+    {
+        public string Color { get; set; }
+        public string FontSize { get; set; }
+        public string FontWeight { get; set; }
+        public string TextShadow { get; set; }
     }
 }

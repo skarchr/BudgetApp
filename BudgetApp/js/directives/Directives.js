@@ -146,6 +146,10 @@
                         series: model.series,
                         drilldown : model.drilldown
                     });
+
+                    setTimeout(function () {
+                        $(elem[0]).highcharts().reflow();
+                    }, 350);
                 }
             }
         })
@@ -255,6 +259,12 @@
                         }]
 
                     }));
+
+                    setTimeout(function() {
+                        $(elem[0]).highcharts().reflow();
+                    }, 400);
+
+                    
                 }
             }
 

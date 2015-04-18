@@ -30,6 +30,22 @@ namespace BudgetApp.Extensions
 
         public static Highchart TransactionDrilldownGraph(List<Transaction> transactions)
         {
+            return new Highchart
+            {
+                Title = new Title
+                {
+                    Text = "Expenses"
+                },
+                Series = new List<Series>
+                {
+                    CreateMainCategorySeries(transactions)
+                },
+                Drilldown = new Drilldown{Series = CreateDrilldownSeries(transactions) }
+            };
+        }
+
+        private static List<Series> CreateDrilldownSeries(List<Transaction> transactions)
+        {
             var series = new List<Series>();
 
             var mainIndex = 0;
@@ -48,23 +64,10 @@ namespace BudgetApp.Extensions
                     });
                     index++;
                 }
-                series.Add(new Series { Id = mainCategory.ToLower(), Name = mainCategory, Type = "column", Data = data});
+                series.Add(new Series {Id = mainCategory.ToLower(), Name = mainCategory, Type = "column", Data = data});
                 mainIndex++;
             }
-
-
-            return new Highchart
-            {
-                Title = new Title
-                {
-                    Text = "Expenses"
-                },
-                Series = new List<Series>
-                {
-                    CreateMainCategorySeries(transactions)
-                },
-                Drilldown = new Drilldown{Series = series }
-            };
+            return series;
         }
 
         private static Series CreateMainCategorySeries(List<Transaction> transactions)
