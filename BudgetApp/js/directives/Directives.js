@@ -101,6 +101,8 @@
                 },
                 link: function(scope, elem, attrs) {
 
+                    var model = JSON.parse(scope.highchart);
+
                     $(elem[0]).highcharts({
                         chart: {
                             plotBackgroundColor: null,
@@ -108,9 +110,10 @@
                             plotShadow: false
                         },
                         title: {
-                            text: 'Expenses',
+                            text: model.title.text,
                             style: {
-                                fontSize: '14px'
+                                fontSize: '14px',
+                                color:'#777'
                             }
                         },
                         tooltip: {
@@ -129,8 +132,9 @@
                             }
                         },
                         xAxis: {
-                            categories: ['Fixed', 'Food', 'Personal', 'Shelter', 'Transport'],
+                            type: 'category',
                             labels: {
+                                //formatter:function(){ return image based on this.value }
                                 rotation: -90
                             }
                         },
@@ -139,13 +143,8 @@
                                 text: 'Amount'
                             }
                         },
-                        series: [
-                            {
-                                type: 'column',
-                                name: 'Category',
-                                data: JSON.parse(scope.highchart)
-                            }
-                        ]
+                        series: model.series,
+                        drilldown : model.drilldown
                     });
                 }
             }

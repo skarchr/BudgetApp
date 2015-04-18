@@ -28,6 +28,7 @@ namespace BudgetApp
                    "~/bower_components/highstock-release/highstock.js",
                    "~/bower_components/highstock-release/highcharts-more.js",
                    "~/bower_components/highstock-release/modules/solid-gauge.js",
+                   "~/bower_components/highstock-release/modules/drilldown.js",
                    "~/bower_components/angular/angular.min.js",
                    "~/bower_components/angular-animate/angular-animate.js",
                    "~/bower_components/angular-gravatar/build/angular-gravatar.min.js",

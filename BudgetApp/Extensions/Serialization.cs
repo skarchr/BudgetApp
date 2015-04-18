@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Web;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 
 namespace BudgetApp.Extensions
 {
@@ -11,7 +12,7 @@ namespace BudgetApp.Extensions
     {
         public static string ToJson(this object obj)
         {
-            var js = JsonSerializer.Create(new JsonSerializerSettings { DateFormatHandling = DateFormatHandling.IsoDateFormat });
+            var js = JsonSerializer.Create(new JsonSerializerSettings { DateFormatHandling = DateFormatHandling.IsoDateFormat, ContractResolver = new CamelCasePropertyNamesContractResolver()});
             js.DateTimeZoneHandling = DateTimeZoneHandling.Local;
             js.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
 
