@@ -241,3 +241,9 @@ input.transaction-filter {
     -webkit-border-radius: 4px;
     -moz-border-radius: 4px;
 }
+
+.label-muted {
+    color: #777;
+    border: 1px solid #ececec;
+    margin-right: 5px;
+}

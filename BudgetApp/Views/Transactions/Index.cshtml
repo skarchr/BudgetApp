@@ -10,62 +10,64 @@
 
 <div style="margin-top: 60px;" ng-controller="transactionController">
 
-    @if (!Model.RangeViewers.Any())
-    {
 
-        <div class="jumbotron" fade-in="100">
+    <div fade-in="200">
+        @using (Html.BeginForm("Index", "Transactions", FormMethod.Post))
+        {
+            <div class="row">
+                <div class="col-xs-12 col-md-3">
+                    <a href="@Url.Action("Create")" class="btn btn-default" title="Add transaction">
+                        <i class="glyphicon glyphicon-plus-sign"></i>
+                    </a>
+                    <a href="@Url.Action("Upload")" class="btn btn-default" title="Import transactions">
+                        <i class="glyphicon glyphicon-import"></i>
+                    </a>
 
-            <div id="icon" style="width: 30%;">
-                <object>
-                    <img src="~/Content/images/logo_pig.svg" id="svg" />
-                </object>
+                </div>
+
+                <div class="col-xs-12 col-md-6 text-center">
+
+                    @Html.TextBoxFor(s => s.Filter.StartDate, new { @class = "transaction-filter", @required = "required", @type = "date", @ng_model = "startDate", @max = "{{endDate | date:'yyyy-MM-dd'}}" })
+                     - 
+                    @Html.TextBoxFor(s => s.Filter.EndDate, new { @type = "date", @class = "transaction-filter", @required = "required", @min = "{{startDate | date:'yyyy-MM-dd'}}", max = DateTime.Now.ToString("yyyy-MM-dd"), @ng_model = "endDate" })
+                </div>
+
+                <div class="col-xs-12 col-md-3 text-right">
+
+                    @Html.EnumDropDownListFor(s => s.Filter.Range, new { @class = "transaction-filter" })
+
+                    <button class="btn btn-primary">
+                        <i class="glyphicon glyphicon-filter"></i>
+                    </button>
+                </div>
+
+            </div>
+        }
+
+
+        @if (!Model.RangeViewers.Any())
+        {
+
+            <div class="jumbotron" fade-in="100" style="margin-top:30px;">
+
+                <div id="icon" style="width: 30%;">
+                    <object>
+                        <img src="~/Content/images/logo_pig.svg" id="svg" />
+                    </object>
+                </div>
+
+                <h3 class="text-center" style="margin-top: -40px;">No transactions registered between @Model.Filter.StartDate.ToShortDateString() and @Model.Filter.EndDate.ToShortDateString()</h3>
+
+
+
             </div>
 
-            <h3 class="text-center" style="margin-top: -40px;">No transactions registered between @Model.Filter.StartDate.ToShortDateString() and @Model.Filter.EndDate.ToShortDateString()</h3>
-            
 
-
-        </div>
-
-
-    }
-    else
-    {
-        <div fade-in="200">
-@using (Html.BeginForm("Index", "Transactions", FormMethod.Post))
-{
-    <div class="row">
-        <div class="col-xs-12 col-md-3">
-            <a href="@Url.Action("Create")" class="btn btn-default" title="Add transaction">
-                <i class="glyphicon glyphicon-plus-sign"></i>
-            </a>
-            <a href="@Url.Action("Upload")" class="btn btn-default" title="Import transactions">
-                <i class="glyphicon glyphicon-import"></i>
-            </a>
-
-        </div>
-
-        <div class="col-xs-12 col-md-6 text-center">
-            From           
-            @Html.TextBoxFor(s => s.Filter.StartDate, new { @class = "transaction-filter", @required = "required", @type = "date", @ng_model = "startDate" })
-            to
-            @Html.TextBoxFor(s => s.Filter.EndDate, new { @type = "date", @class = "transaction-filter", @required = "required", max = DateTime.Now.ToString("yyyy-MM-dd"), @ng_model="endDate" })            
-        </div>
-
-        <div class="col-xs-12 col-md-3 text-right">
-                        
-            @Html.EnumDropDownListFor(s => s.Filter.Range, new { @class="transaction-filter" })
-                                    
-            <button class="btn btn-primary">
-                <i class="glyphicon glyphicon-filter"></i>
-            </button>
-        </div>
-
-    </div>
-}
+        }
+        else
+        {
 
             <div class="row" style="margin-top: 30px;">
-
                 <div class="col-xs-12" ng-repeat="range in model">
 
 
@@ -74,15 +76,20 @@
                         <div class="panel-body">
 
                             <div class="row">
-
+                                
                                 <div class="col-xs-4">
-                                    <span class="label label-default" ng-show="range.year != range.title">
+                                    <span class="label label-big label-muted" ng-show="range.year != range.title">
                                         {{range.year }}
                                     </span>
+                                    
+                                    <span class="label label-big label-muted" ng-show="filter.range === 2">
+                                        {{range.startDate | monthName2 }}
+                                    </span>
+
                                     <span class="label label-primary label-big">
                                         {{range.title @(Model.RangeViewers[0].Range == Range.Month ? "| monthName" : "") }}
                                     </span>
-                                    
+
                                 </div>
                                 <div class="col-xs-4 text-center">
                                     <span class="text-muted">
@@ -151,9 +158,9 @@
                 </div>
 
             </div>
-        </div>
-    }
 
+        }
+    </div>
 
 </div>
 

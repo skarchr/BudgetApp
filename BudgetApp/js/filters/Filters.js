@@ -1,14 +1,23 @@
 ﻿(function() {
     'use strict';
 
+    var shortMonthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+
     angular.module('budgetApp')
         .filter('monthName', function () {
 
             return function (input) {
 
-                var shortMonthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-
                 return shortMonthNames[input - 1];
+
+            }
+
+        })
+        .filter('monthName2', function () {
+
+            return function (input) {
+
+                return shortMonthNames[new Date(input).getMonth()];
 
             }
 
