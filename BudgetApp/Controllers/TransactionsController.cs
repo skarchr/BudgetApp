@@ -19,35 +19,60 @@ namespace BudgetApp.Controllers
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: Transactions
-        public ActionResult Index(Range range = Range.Month)
+        public ActionResult Index()
         {
-            var model = new List<RangeViewer>();
 
-            switch (range)
+
+            var model = new TransactionsViewModel 
+            { 
+                RangeViewers = GetMonth(db.Transactions.Where(s => s.UserName == User.Identity.Name).ToList()), 
+                Filter = new Models.Filter
+                {
+                    Range = Range.Month, 
+                    StartDate = new DateTime(DateTime.Now.Year, 1, 1), 
+                    EndDate = DateTime.Now
+                } 
+            };
+
+
+            return View(model);
+        }
+
+        [HttpPost]
+        public ActionResult Index(TransactionsViewModel model)
+        {
+            var transactions = db.Transactions.Where(s => s.UserName == User.Identity.Name && s.Date >= model.Filter.StartDate && s.Date <= model.Filter.EndDate).ToList();
+
+            var rangeViewers = new List<RangeViewer>();
+
+            switch (model.Filter.Range)
             {
                 case Range.Annual:
-                    model = GetAnnual();
+                    rangeViewers = GetAnnual(transactions);
                     break;
                 case Range.Month:
-                    model = GetMonth();
+                    rangeViewers = GetMonth(transactions);
                     break;
                 case Range.Week:
-                    model = GetWeek();
+                    rangeViewers = GetWeek(transactions);
                     break;
 
             }
 
-            return View(model.OrderByDescending(s => s.Year).ThenByDescending(s => s.StartDate).ToList());
+            model.RangeViewers = rangeViewers;
+
+            return View(model);
         }
+
 
         #region ModelBuilder
 
-        private List<RangeViewer> GetWeek()
+        private List<RangeViewer> GetWeek(List<Transaction> transactions )
         {
             var model = new List<RangeViewer>();
             var dict = new Dictionary<int, Dictionary<int, List<Transaction>>>();
 
-            foreach (var expense in db.Transactions.Where(s => s.UserName == User.Identity.Name))
+            foreach (var expense in transactions)
             {
                 var year = expense.Date.Year;
 
@@ -87,13 +112,13 @@ namespace BudgetApp.Controllers
             return model;
         }
 
-        private List<RangeViewer> GetMonth()
+        private List<RangeViewer> GetMonth(List<Transaction> transactions)
         {
             var model = new List<RangeViewer>();
 
             var dict = new Dictionary<int, Dictionary<int, List<Transaction>>>();
 
-            foreach (var transaction in db.Transactions.Where(s => s.UserName == User.Identity.Name))
+            foreach (var transaction in transactions)
             {
                 var year = transaction.Date.Year;
 
@@ -131,13 +156,13 @@ namespace BudgetApp.Controllers
             return model;
         }
 
-        private List<RangeViewer> GetAnnual()
+        private List<RangeViewer> GetAnnual(List<Transaction> transactions)
         {
             var model = new List<RangeViewer>();
 
             var dict = new Dictionary<int, List<Transaction>>();
 
-            foreach (var transaction in db.Transactions.Where(s => s.UserName == User.Identity.Name))
+            foreach (var transaction in transactions)
             {
                 var year = transaction.Date.Year;
 

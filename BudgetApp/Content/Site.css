@@ -184,9 +184,9 @@ input[type="checkbox"].input-validation-error {
 .placeholder {
     min-width: 100%;
     border-top: 1px solid #ececec;
-    background: white;
+    background: #f9f9f9;
     padding: 8px;
-    height: 300px;
+    height: 350px;
 }
 
 .toggle-transactions {
@@ -226,4 +226,18 @@ input[type="checkbox"].input-validation-error {
 
 .highcharts-background {
     fill: none !important;
+}
+
+select.transaction-filter {
+    padding: 6px 6px 8px;
+    border-radius: 4px;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+}
+
+input.transaction-filter {
+    padding: 3px 6px 3px;
+    border-radius: 4px;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
 }

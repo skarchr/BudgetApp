@@ -1,6 +1,6 @@
 ﻿@using BudgetApp.Extensions
 @using BudgetApp.Models
-@model List<RangeViewer>
+@model TransactionsViewModel
 
 @{
     ViewBag.Title = "Transactions";
@@ -10,7 +10,7 @@
 
 <div style="margin-top: 60px;" ng-controller="transactionController">
 
-    @if (!Model.Any())
+    @if (!Model.RangeViewers.Any())
     {
 
         <div class="jumbotron" fade-in="100">
@@ -21,22 +21,9 @@
                 </object>
             </div>
 
-            <h1 class="hidden-xs hidden-sm text-center" style="margin-top: -40px;">You have no transactions registered</h1>
-            <h2 class="visible-xs visible-sm text-center">You have no transactions registered</h2>
+            <h3 class="text-center" style="margin-top: -40px;">No transactions registered between @Model.Filter.StartDate.ToShortDateString() and @Model.Filter.EndDate.ToShortDateString()</h3>
+            
 
-            <div class="row">
-                <div class="col-xs-12 col-md-6 text-center">
-                    <button class="btn btn-primary btn-xlg" onclick="location.href = '@Url.Action("Create", "Transactions")' ">
-                        Add transaction
-                    </button>
-
-                </div>
-                <div class="col-xs-12 col-md-6 text-center">
-                    <button class="btn btn-primary btn-xlg" onclick="location.href = '@Url.Action("Upload", "Transactions")' ">
-                        Import transactions
-                    </button>
-                </div>
-            </div>
 
         </div>
 
@@ -45,35 +32,37 @@
     else
     {
         <div fade-in="200">
+@using (Html.BeginForm("Index", "Transactions", FormMethod.Post))
+{
+    <div class="row">
+        <div class="col-xs-12 col-md-3">
+            <a href="@Url.Action("Create")" class="btn btn-default" title="Add transaction">
+                <i class="glyphicon glyphicon-plus-sign"></i>
+            </a>
+            <a href="@Url.Action("Upload")" class="btn btn-default" title="Import transactions">
+                <i class="glyphicon glyphicon-import"></i>
+            </a>
 
-            <div class="row">
-                <div class="col-xs-12 col-md-4">
-                    <a href="@Url.Action("Create")" class="btn btn-default" title="Add transaction">
-                        <i class="glyphicon glyphicon-plus-sign"></i>
-                    </a>
-                    <a href="@Url.Action("Upload")" class="btn btn-default" title="Import transactions">
-                        <i class="glyphicon glyphicon-import"></i>
-                    </a>
+        </div>
 
-                </div>
+        <div class="col-xs-12 col-md-6 text-center">
+            From           
+            @Html.TextBoxFor(s => s.Filter.StartDate, new { @class = "transaction-filter", @required = "required", @type = "date", @ng_model = "startDate" })
+            to
+            @Html.TextBoxFor(s => s.Filter.EndDate, new { @type = "date", @class = "transaction-filter", @required = "required", max = DateTime.Now.ToString("yyyy-MM-dd"), @ng_model="endDate" })            
+        </div>
 
-                <div class="col-xs-12 col-md-4">
+        <div class="col-xs-12 col-md-3 text-right">
+                        
+            @Html.EnumDropDownListFor(s => s.Filter.Range, new { @class="transaction-filter" })
+                                    
+            <button class="btn btn-primary">
+                <i class="glyphicon glyphicon-filter"></i>
+            </button>
+        </div>
 
-                </div>               
-
-                <div class="col-xs-12 col-md-4 text-right">
-                    <a href="@Url.Action("Index", "Transactions", new { range = Range.Annual })" class="btn btn-default  @(Model[0].Range == Range.Annual ? "active" : "")" title="Annual">
-                        Annual
-                    </a>
-                    <a href="@Url.Action("Index", "Transactions", new { range = Range.Month })" class="btn btn-default  @(Model[0].Range == Range.Month ? "active" : "")" title="Monthly">
-                        Monthly
-                    </a>
-                    <a href="@Url.Action("Index", "Transactions", new { range = Range.Week })" class="btn btn-default  @(Model[0].Range == Range.Week ? "active" : "")" title="Weekly">
-                        Weekly
-                    </a>
-                </div>
-
-            </div>
+    </div>
+}
 
             <div class="row" style="margin-top: 30px;">
 
@@ -87,9 +76,13 @@
                             <div class="row">
 
                                 <div class="col-xs-4">
-                                    <span class="label label-primary label-big">
-                                        {{range.title @(Model[0].Range == Range.Month ? "| monthName" : "") }}
+                                    <span class="label label-default" ng-show="range.year != range.title">
+                                        {{range.year }}
                                     </span>
+                                    <span class="label label-primary label-big">
+                                        {{range.title @(Model.RangeViewers[0].Range == Range.Month ? "| monthName" : "") }}
+                                    </span>
+                                    
                                 </div>
                                 <div class="col-xs-4 text-center">
                                     <span class="text-muted">
@@ -108,17 +101,20 @@
                             </div>
 
                             <div class="row">
-                                <div class="col-xs-12 placeholder">
-                                    
-                                    <div class="col-xs-6">
-                                        <span style="height:300px;width:auto;" class="hidden-xs" data-highchart="{{range.graph}}"></span>
-                                    </div>
-                                    <div class="col-xs-6">
-                                        <span style="height:300px;width:auto;" class="hidden-xs" data-gauge data-income="{{range.totalIncome}}" data-expense="{{range.totalExpenses}}"></span>
-                                    </div>                        
-                                    <div class="col-xs-12">
-                                        <span style="height:300px;width:auto;" class="visible-xs" data-gauge data-income="{{range.totalIncome}}" data-expense="{{range.totalExpenses}}"></span>
-                                    </div>
+                                <div class="col-xs-12 placeholder hidden-xs">
+
+                                    <span style="height:350px;width:1123px !important;" class="visible-lg" data-highchart="{{range.graph}}"></span>
+
+                                    <span style="height:350px;width:923px !important;" class="visible-md" data-highchart="{{range.graph}}"></span>
+
+                                    <span style="height:350px;width:703px !important;" class="visible-sm" data-highchart="{{range.graph}}"></span>
+
+                                    @*<div class="col-xs-2 hidden-xs hidden-sm">
+                                            <span style="height:300px;width:150px !important;" data-gauge data-income="{{range.totalIncome}}" data-expense="{{range.totalExpenses}}"></span>
+                                        </div>
+                                        <div class="col-xs-12 visible-xs visible-sm visible-md">
+                                            <span style="height:300px;width:auto;" class="visible-xs" data-gauge data-income="{{range.totalIncome}}" data-expense="{{range.totalExpenses}}"></span>
+                                        </div>*@
                                 </div>
                             </div>
 
@@ -140,7 +136,7 @@
                                     <td>{{row.category | camelCaseToNormal}}</td>
                                     <td>{{row.date | date}}</td>
                                     <td class="text-right">
-                                        <a class="link details-link" href="{{urls.details}}/{{row.transactionId}}" title="Details"><i class="glyphicon glyphicon-zoom-in"></i></a>                                        
+                                        <a class="link details-link" href="{{urls.details}}/{{row.transactionId}}" title="Details"><i class="glyphicon glyphicon-zoom-in"></i></a>
                                         <a class="link edit-link" href="{{urls.edit}}/{{row.transactionId}}" title="Edit"><i class="glyphicon glyphicon-pencil"></i></a>
                                         <a class="link delete-link" href="{{urls.del}}/{{row.transactionId}}" title="Delete">
                                             <i class="glyphicon glyphicon-trash"></i>
@@ -169,7 +165,8 @@
         angular.module('budgetApp').factory('transactionModel', function() {
 
             return {
-                model: @Html.Raw(Model.ToJson()),
+                filter : @Html.Raw(Model.Filter.ToJson()),
+                model: @Html.Raw(Model.RangeViewers.ToJson()),
                 urls: {
                     del: '@Url.Action("Delete")',
                     edit: '@Url.Action("Edit")',
