@@ -8,12 +8,18 @@
 
 
 
-<div style="margin-top: 60px;" ng-controller="transactionController">
+<div style="margin-top: 30px;" ng-controller="transactionController">
 
 
     <div fade-in="200">
         @using (Html.BeginForm("Index", "Transactions", FormMethod.Post))
         {
+            <div class="row" style="margin-bottom: 20px;">
+                <div class="col-xs-12 text-center">
+                    <span class="text-muted">Showing @Model.TransactionsDisplayed / @Model.TotalTransactions transactions</span>
+                </div>
+            </div>
+            
             <div class="row">
                 <div class="col-xs-12 col-md-3">
                     <a href="@Url.Action("Create")" class="btn btn-default" title="Add transaction">
@@ -36,7 +42,7 @@
 
                     @Html.EnumDropDownListFor(s => s.Filter.Range, new { @class = "transaction-filter" })
 
-                    <button class="btn btn-primary">
+                    <button class="btn btn-primary" title="Filter">
                         <i class="glyphicon glyphicon-filter"></i>
                     </button>
                 </div>

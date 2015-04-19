@@ -9,6 +9,8 @@ namespace BudgetApp.Models
 {
     public class TransactionsViewModel
     {
+        public int TransactionsDisplayed { get; set; }
+        public int TotalTransactions { get; set; }
         public Filter Filter { get; set; }
         public List<RangeViewer> RangeViewers { get; set; } 
     }

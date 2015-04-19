@@ -21,11 +21,18 @@ namespace BudgetApp.Controllers
         // GET: Transactions
         public ActionResult Index()
         {
+            var allTransactions = db.Transactions.Where(s => s.UserName == User.Identity.Name);
+
+            var ytd = new DateTime(DateTime.Now.Year, 1, 1);
+
+            var transactions = allTransactions.Where(s => s.Date >= ytd && s.Date <= DateTime.Now).ToList();
 
 
             var model = new TransactionsViewModel 
-            { 
-                RangeViewers = GetMonth(db.Transactions.Where(s => s.UserName == User.Identity.Name).ToList()), 
+            {
+                TotalTransactions = allTransactions.Count(),
+                TransactionsDisplayed = transactions.Count,
+                RangeViewers = GetMonth(transactions), 
                 Filter = new Models.Filter
                 {
                     Range = Range.Month, 
@@ -41,7 +48,9 @@ namespace BudgetApp.Controllers
         [HttpPost]
         public ActionResult Index(TransactionsViewModel model)
         {
-            var transactions = db.Transactions.Where(s => s.UserName == User.Identity.Name && s.Date >= model.Filter.StartDate && s.Date <= model.Filter.EndDate).ToList();
+            var allTransactions = db.Transactions.Where(s => s.UserName == User.Identity.Name);
+
+            var transactions = allTransactions.Where(s => s.Date >= model.Filter.StartDate && s.Date <= model.Filter.EndDate).ToList();
 
             var rangeViewers = new List<RangeViewer>();
 
@@ -60,6 +69,8 @@ namespace BudgetApp.Controllers
             }
 
             model.RangeViewers = rangeViewers;
+            model.TotalTransactions = allTransactions.Count();
+            model.TransactionsDisplayed = transactions.Count;
 
             return View(model);
         }
