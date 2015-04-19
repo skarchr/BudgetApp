@@ -135,7 +135,7 @@
                             type: 'category',
                             labels: {
                                 //formatter:function(){ return image based on this.value }
-                                rotation: -45
+                                //rotation: -45
                             }
                         },
                         yAxis: {
@@ -172,7 +172,7 @@
 
                         pane: {
                             center: ['50%', '85%'],
-                            size: '120%',
+                            size: '100%',
                             startAngle: -90,
                             endAngle: 90,
                             background: {

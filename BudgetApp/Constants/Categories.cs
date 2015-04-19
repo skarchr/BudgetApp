@@ -69,7 +69,7 @@ namespace BudgetApp.Constants
                     }
                 },
                 {
-                    "Transportation", new List<Category>
+                    "Transport", new List<Category>
                     {
                         Category.Car,
                         Category.CollectiveTransport,

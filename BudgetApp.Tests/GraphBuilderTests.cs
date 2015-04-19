@@ -40,14 +40,14 @@ namespace BudgetApp.Tests
 
             result.Series[0].Data[4].X.Should().Be(4);
             result.Series[0].Data[4].Y.Should().Be(100);
-            result.Series[0].Data[4].Drilldown.Should().Be("transportation");
+            result.Series[0].Data[4].Drilldown.Should().Be("transport");
 
             result.Drilldown.Series[0].Id.Should().Be("fixed");
             result.Drilldown.Series[0].Data[2].Name.Should().Be("Insurance");
             result.Drilldown.Series[0].Data[2].X.Should().Be(2);
             result.Drilldown.Series[0].Data[2].Y.Should().Be(200);
 
-            result.Drilldown.Series[4].Id.Should().Be("transportation");
+            result.Drilldown.Series[4].Id.Should().Be("transport");
             result.Drilldown.Series[4].Data[0].Name.Should().Be("Car");
             result.Drilldown.Series[4].Data[0].X.Should().Be(0);
             result.Drilldown.Series[4].Data[0].Y.Should().Be(60);
@@ -78,7 +78,7 @@ namespace BudgetApp.Tests
 
             var result = GraphBuilder.TransactionGraph(transactions);
 
-            result.Should().Be("[[\"Fixed\",0],[\"Food\",0],[\"Personal\",0],[\"Shelter\",40],[\"Transportation\",60]]");
+            result.Should().Be("[[\"Fixed\",0],[\"Food\",0],[\"Personal\",0],[\"Shelter\",40],[\"Transport\",60]]");
         }
 
     }

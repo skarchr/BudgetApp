@@ -114,9 +114,11 @@
                                         <span style="height:300px;width:auto;" class="hidden-xs" data-highchart="{{range.graph}}"></span>
                                     </div>
                                     <div class="col-xs-6">
-                                        <span style="height:300px;width:auto;" data-gauge data-income="{{range.totalIncome}}" data-expense="{{range.totalExpenses}}"></span>
+                                        <span style="height:300px;width:auto;" class="hidden-xs" data-gauge data-income="{{range.totalIncome}}" data-expense="{{range.totalExpenses}}"></span>
                                     </div>                        
-                                    
+                                    <div class="col-xs-12">
+                                        <span style="height:300px;width:auto;" class="visible-xs" data-gauge data-income="{{range.totalIncome}}" data-expense="{{range.totalExpenses}}"></span>
+                                    </div>
                                 </div>
                             </div>
 
@@ -124,7 +126,7 @@
                         <table class="table table-condensed table-same-width" ng-show="range.$index">
                             <thead>
                                 <tr>
-                                    <th>#</th>
+                                    <th class="hidden-xs">#</th>
                                     <th>Amount</th>
                                     <th>Category</th>
                                     <th>Date</th>
@@ -133,7 +135,7 @@
                             </thead>
                             <tbody>
                                 <tr ng-repeat="row in range.transactions">
-                                    <td>{{$index + 1}}</td>
+                                    <td class="hidden-xs">{{$index + 1}}</td>
                                     <td>{{row.amount}}</td>
                                     <td>{{row.category | camelCaseToNormal}}</td>
                                     <td>{{row.date | date}}</td>
