@@ -12,6 +12,7 @@
 
         $scope.urls = transactionModel.urls;
 
+        $scope.showBalance = false;
 
     }]);
 

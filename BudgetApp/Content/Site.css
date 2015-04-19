@@ -184,7 +184,7 @@ input[type="checkbox"].input-validation-error {
 .placeholder {
     min-width: 100%;
     border-top: 1px solid #ececec;
-    background: #f9f9f9;
+    background: white;
     padding: 8px;
     height: 350px;
 }
@@ -200,6 +200,10 @@ input[type="checkbox"].input-validation-error {
     cursor: pointer;
     color: #313131;
     border-color: #313131;
+}
+
+.toggle-transactions.active {
+    background: #ececec;
 }
 
 .link {
@@ -236,7 +240,7 @@ select.transaction-filter {
 }
 
 input.transaction-filter {
-    padding: 3px 6px 3px;
+    padding: 3px 6px 6px;
     border-radius: 4px;
     -webkit-border-radius: 4px;
     -moz-border-radius: 4px;

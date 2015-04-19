@@ -377,11 +377,12 @@
                             min: 0,
                             max: 100,
                             title: {
-                                y: -185,
-                                x:-6,
+                                y: -181,
+                                x:0,
                                 text: 'Balance',
                                 style: {
-                                    fontSize: '14px'
+                                    fontSize: '18px',
+                                    color: '#313131'
                                 }
                             }
                         },
@@ -390,7 +391,7 @@
                             name: ' ',
                             data: [exp],
                             dataLabels: {
-                                y:-150,
+                                y:-55,
                                 format: '<div style="text-align:center; background:white; z-index:110" >' +
                                             '<span style="font-size:22px;color:black" title="Expenses:   ' + parseFloat(scope.expense).toFixed(1) + '\nIncome:   ' + parseFloat(scope.income).toFixed(1) + '"> ' +
                                                 + tot +
