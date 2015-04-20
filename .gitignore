@@ -78,3 +78,4 @@ ignore.txt
 *.ldf
 PrivateSettings.config
 bower_components
+App_Data/uploads
