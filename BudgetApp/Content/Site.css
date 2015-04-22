@@ -82,11 +82,14 @@ input[type="checkbox"].input-validation-error {
     margin-left: -77px;
 }
 
+.form-control {
+    width: 300px;
+    background: none !important;    
+}
+
 .label-validator {
-    margin-right: auto !important;
-    margin-left: auto;
-    text-align: center !important;
-    position: absolute !important;
+    margin-top: 9px !important;
+    margin-left: 15px;
 }
 
 .label-validator.text-danger::after {            
@@ -157,10 +160,6 @@ input[type="checkbox"].input-validation-error {
 .navbar-inverse .navbar-nav > .active > a, .navbar-inverse .navbar-nav > .active > a:hover, .navbar-inverse .navbar-nav > .active > a:focus, .navbar-brand.active, .navbar-brand.active:hover  {
     color: #296ad4 !important;
     background-color: white;
-}
-
-.container > .row {
-    margin-top: 60px;
 }
 
 .btn-xlg {

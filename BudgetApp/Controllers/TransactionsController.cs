@@ -113,14 +113,14 @@ namespace BudgetApp.Controllers
                         Title = week.Key.ToString(),
                         StartDate = DateHelper.GetWeekStartDate(year.Key, week.Key),
                         EndDate = DateHelper.GetWeekEndDate(year.Key, week.Key),
-                        Transactions = week.Value.OrderBy(s => s.Date).ToList(),
+                        Transactions = week.Value.OrderByDescending(s => s.Date).ToList(),
                         Graph = GraphBuilder.TransactionDrilldownGraph(week.Value).ToJson()
                     });
                 }
             }
 
 
-            return model;
+            return model.OrderByDescending(s => s.StartDate).ToList();
         }
 
         private List<RangeViewer> GetMonth(List<Transaction> transactions)
@@ -159,12 +159,12 @@ namespace BudgetApp.Controllers
                         Title = month.Key.ToString(),
                         StartDate = new DateTime(year.Key, month.Key, 1),
                         EndDate = new DateTime(year.Key, month.Key, DateTime.DaysInMonth(year.Key, month.Key)),
-                        Transactions = month.Value.OrderBy(s => s.Date).ToList(),
+                        Transactions = month.Value.OrderByDescending(s => s.Date).ToList(),
                         Graph = GraphBuilder.TransactionDrilldownGraph(month.Value).ToJson()
                     });
                 }
             }
-            return model;
+            return model.OrderByDescending(s => s.StartDate).ToList();
         }
 
         private List<RangeViewer> GetAnnual(List<Transaction> transactions)
@@ -195,12 +195,12 @@ namespace BudgetApp.Controllers
                         Title = year.Key.ToString(),
                         StartDate = new DateTime(year.Key,1,1),
                         EndDate = new DateTime(year.Key, 12,31),
-                        Transactions = year.Value.OrderBy(s => s.Date).ToList(),
+                        Transactions = year.Value.OrderByDescending(s => s.Date).ToList(),
                         Graph = GraphBuilder.TransactionDrilldownGraph(year.Value).ToJson()
                     });
 
             }
-            return model;
+            return model.OrderByDescending(s => s.StartDate).ToList();
         }
         #endregion
 
