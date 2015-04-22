@@ -47,6 +47,7 @@ namespace BudgetApp
          bundles.Add(new StyleBundle("~/Content/css").Include(
                    "~/Content/bootstrap.css",
                    "~/bower_components/animate.css/animate.css",
+                   "~/Content/animations.css",
                    "~/Content/site.css"));
 
          // Set EnableOptimizations to false for debugging. For more information,

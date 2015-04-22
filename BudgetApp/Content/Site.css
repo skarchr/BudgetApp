@@ -256,3 +256,11 @@ input.transaction-filter {
     border: 1px solid #ececec;
     margin-right: 5px;
 }
+
+@media(max-width:703px) {
+    
+    .hide-xs {
+        display: none;
+    }
+
+}

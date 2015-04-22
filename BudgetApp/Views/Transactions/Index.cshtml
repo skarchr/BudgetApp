@@ -31,18 +31,28 @@
 
                 </div>
 
-                <div class="col-xs-12 col-md-9 text-right">
+                <div class="col-xs-12 col-md-6 text-center">                                        
 
-                    @Html.TextBoxFor(s => s.Filter.StartDate, new { @class = "transaction-filter", @required = "required", @type = "date", @ng_model = "startDate", @max = "{{endDate | date:'yyyy-MM-dd'}}" })
-                     - 
-                    @Html.TextBoxFor(s => s.Filter.EndDate, new { @type = "date", @class = "transaction-filter", @required = "required", @min = "{{startDate | date:'yyyy-MM-dd'}}", max = DateTime.Now.ToString("yyyy-MM-dd"), @ng_model = "endDate" })
-                                   
+                    <div class="filter" ng-show="filterToggle">                       
 
-                    @Html.EnumDropDownListFor(s => s.Filter.Range, new { @class = "transaction-filter" })
+                        @Html.TextBoxFor(s => s.Filter.StartDate, new { @class = "transaction-filter", @required = "required", @type = "date", @ng_model = "startDate", @max = "{{endDate | date:'yyyy-MM-dd'}}" })
+                        -
+                        @Html.TextBoxFor(s => s.Filter.EndDate, new { @type = "date", @class = "transaction-filter", @required = "required", @min = "{{startDate | date:'yyyy-MM-dd'}}", max = DateTime.Now.ToString("yyyy-MM-dd"), @ng_model = "endDate" })
 
-                    <button class="btn btn-primary" title="Filter">
+
+                        @Html.EnumDropDownListFor(s => s.Filter.Range, new { @class = "transaction-filter" })
+
+                        <button class="btn btn-primary" title="Filter">
+                            Filter
+                        </button>
+                    </div>
+
+                </div>
+                
+                <div class="col-xs-12 col-md-3 text-right">
+                    <div ng-click="filterToggle = !filterToggle" class="btn btn-default {{filterToggle ? 'active':''}}">
                         <i class="glyphicon glyphicon-filter"></i>
-                    </button>
+                    </div>
                 </div>
 
             </div>
@@ -82,7 +92,7 @@
                             <div class="row">
                                 
                                 <div class="col-xs-4">
-                                    <span class="label label-big label-muted" ng-show="range.year != range.title">
+                                    <span class="label label-big label-muted hide-xs" ng-show="range.year != range.title">
                                         {{range.year }}
                                     </span>
                                     
@@ -104,7 +114,7 @@
 
                                 <div class="col-xs-4 text-right">                                                                       
                                     
-                                    <span value="false" ng-model="showBalance.$index" ng-click="showBalance.$index = !showBalance.$index" style="min-height: 34px;" class="toggle-transactions {{showBalance.$index ? 'active':''}}"> Balance</span>
+                                    <span ng-model="showBalance.$index" ng-click="showBalance.$index = !showBalance.$index" style="min-height: 34px;" class="hide-xs toggle-transactions {{showBalance.$index ? 'active':''}}"> Balance</span>
 
                                     <span class="toggle-transactions {{range.$index ? 'active':''}}" ng-click="range.$index = !range.$index">
                                         <i class="glyphicon glyphicon-zoom-in" ng-hide="range.$index"></i>

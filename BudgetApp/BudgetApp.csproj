@@ -451,6 +451,7 @@
     <Content Include="bower_components\velocity\velocity.min.js" />
     <Content Include="bower_components\velocity\velocity.ui.js" />
     <Content Include="bower_components\velocity\velocity.ui.min.js" />
+    <Content Include="Content\animations.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\images\airplane73.png" />
