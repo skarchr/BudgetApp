@@ -57,6 +57,12 @@ namespace BudgetApp.Constants
                     }
                 },
                 {
+                    "Saving", new List<Category>
+                    {
+                        Category.Saving
+                    }
+                },
+                {
                     "Shelter", new List<Category>
                     {
                         Category.Furniture,
@@ -76,7 +82,7 @@ namespace BudgetApp.Constants
 
                         Category.OtherTransportation
                     }
-                }
+                }                
             };
     }
 }

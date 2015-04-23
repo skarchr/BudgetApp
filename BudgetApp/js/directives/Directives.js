@@ -194,6 +194,9 @@
                     case "OtherTransportation":
                         url = "../Content/images/map29.png";
                         break;
+                    case "Saving":
+                        url = "../Content/images/piggy9.png";
+                        break;
                     default:
                         return this.value;
                 }
@@ -413,6 +416,55 @@
                 }
             }
 
-        });
+        })
+    .directive('highstock', function () {
+        return {
+            restrict: 'A',
+            scope: {
+                highstock: '@'
+            },
+            link: function (scope, elem, attrs) {
+
+                var model = JSON.parse(scope.highstock);
+
+                console.log(model);
+
+                $(elem[0]).highcharts('StockChart', {
+                    chart: {
+                        type:'column'
+                    },
+                    title: {
+                        text: model.title.text
+                    },
+                    tooltip: {
+                        pointFormat: '{series.name}: <b>{point.y:.1f} </b>'
+                    },
+                    legend: {
+                        align: 'right',
+                        layout: 'vertical',
+                        y: -25
+                    },
+                    credits: false,
+                    plotOptions: {
+                        column: {
+                            showInLegend: false,
+                            colorByPoint: true
+                        }
+                    },
+                    xAxis: {
+                        ordinal:false,
+                        type: 'datetime'
+                    },
+                    yAxis: {
+                        opposite:false,
+                        title: {
+                            text: 'Amount'
+                        }
+                    },
+                    series: model.series
+                });
+            }
+        };
+    });
 
 })();

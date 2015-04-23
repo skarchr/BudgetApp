@@ -188,7 +188,9 @@
     <Compile Include="Controllers\TransactionsController.cs" />
     <Compile Include="Extensions\DateHelper.cs" />
     <Compile Include="Extensions\Dropdownlist.cs" />
-    <Compile Include="Extensions\GraphBuilder.cs" />
+    <Compile Include="Extensions\Graphs\DailyExpenses.cs" />
+    <Compile Include="Extensions\Graphs\GraphBuilder.cs" />
+    <Compile Include="Extensions\Graphs\TransactionDrilldown.cs" />
     <Compile Include="Extensions\Serialization.cs" />
     <Compile Include="Extensions\Validation.cs" />
     <Compile Include="Global.asax.cs">
@@ -215,6 +217,7 @@
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Category.cs" />
     <Compile Include="Models\Highchart.cs" />
+    <Compile Include="Models\HomeViewModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Mapping.cs" />
@@ -479,6 +482,7 @@
     <Content Include="Content\images\github.svg" />
     <Content Include="Content\images\map29.png" />
     <Content Include="Content\images\medical109.png" />
+    <Content Include="Content\images\piggy9.png" />
     <Content Include="Content\images\protection3.png" />
     <Content Include="Content\images\real-estate.png" />
     <Content Include="Content\images\rss22.png" />
@@ -504,6 +508,7 @@
     <Content Include="Content\Site.css" />
     <Content Include="js\app\BudgetApp.js" />
     <Content Include="js\controllers\AddTransactionController.js" />
+    <Content Include="js\controllers\HomeController.js" />
     <Content Include="js\controllers\LoginController.js" />
     <Content Include="js\controllers\TransactionController.js" />
     <Content Include="js\directives\Directives.js" />

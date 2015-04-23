@@ -41,6 +41,7 @@ namespace BudgetApp
                    "~/js/directives/Directives.js",
                    "~/js/filters/Filters.js",
                    "~/js/controllers/TransactionController.js",
+                   "~/js/controllers/HomeController.js",
                    "~/js/controllers/AddTransactionController.js",
                    "~/js/controllers/LoginController.js"));
 

@@ -1,35 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
 using System.Web;
 using BudgetApp.Constants;
 using BudgetApp.Models;
 
-namespace BudgetApp.Extensions
+namespace BudgetApp.Extensions.Graphs
 {
-    public class GraphBuilder
+    public static class TransactionDrilldown
     {
-        public static string TransactionGraph(List<Transaction> transactions)
+
+        public static Highchart CreateChart(List<Transaction> transactions)
         {
 
-            var fix = SumCategory(transactions, "Fixed");
-            var food = SumCategory(transactions, "Food");
-            var personal = SumCategory(transactions, "Personal");
-            var shelter = SumCategory(transactions, "Shelter");
-            var trans = SumCategory(transactions, "Transport");
-
-
-            return String.Format("[[\"Fixed\",{0}],[\"Food\",{1}],[\"Personal\",{2}],[\"Shelter\",{3}],[\"Transport\",{4}]]", fix, food, personal, shelter, trans);
-        }
-
-        private static string SumCategory(IEnumerable<Transaction> transactions, string mainCategory)
-        {
-            return transactions.Where(s => s.Category != null && Categories.GetMainCategory(s.Category.Value) == mainCategory).Sum(s => s.Amount).ToString(new CultureInfo("en-US"));
-        }
-
-        public static Highchart TransactionDrilldownGraph(List<Transaction> transactions)
-        {
             return new Highchart
             {
                 Title = new Title
@@ -40,7 +23,7 @@ namespace BudgetApp.Extensions
                 {
                     CreateMainCategorySeries(transactions)
                 },
-                Drilldown = new Drilldown{Series = CreateDrilldownSeries(transactions) }
+                Drilldown = new Drilldown { Series = CreateDrilldownSeries(transactions) }
             };
         }
 
@@ -64,7 +47,7 @@ namespace BudgetApp.Extensions
                     });
                     index++;
                 }
-                series.Add(new Series {Id = mainCategory.ToLower(), Name = mainCategory, Type = "column", Data = data});
+                series.Add(new Series { Id = mainCategory.ToLower(), Name = mainCategory, Type = "column", Data = data });
                 mainIndex++;
             }
             return series;
@@ -95,5 +78,6 @@ namespace BudgetApp.Extensions
                 Data = data
             };
         }
+
     }
 }

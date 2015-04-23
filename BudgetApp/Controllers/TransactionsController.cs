@@ -8,6 +8,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using BudgetApp.Extensions;
+using BudgetApp.Extensions.Graphs;
 using BudgetApp.Importer;
 using BudgetApp.Models;
 
