@@ -5,6 +5,7 @@ using System.Data.Entity;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Reflection;
 using System.Web;
 using System.Web.Mvc;
 using BudgetApp.Extensions;
@@ -337,14 +338,14 @@ namespace BudgetApp.Controllers
 
                 int found;
 
-                var model = ExcelReader.ReadFile(path, User.Identity.Name, out found);
+                var transactions = ExcelReader.ReadFile(path, User.Identity.Name, out found);
 
                 ViewBag.Info = string.Format("Found {0} new transactions", found);
 
-                if (model.Count == 0)
-                    return View("Index", db.Transactions.Where(s => s.UserName == User.Identity.Name).ToList());
+                if (transactions.Count == 0)
+                    return RedirectToAction("Upload");
 
-                return View("Import", model);
+                return View("Import", new ImportViewModel{Transactions = transactions, Mapping = new Mapping()});
             }
 
             ViewBag.Error = "Please select an excel file!";
@@ -352,7 +353,42 @@ namespace BudgetApp.Controllers
             return View("Index");
         }
 
-        [HttpPost]
+        [HttpParamAction]
+        [AcceptVerbs(HttpVerbs.Post)]
+        [ValidateAntiForgeryToken]
+        public ActionResult InlineMapping(ImportViewModel viewModel)
+        {
+
+            if (!db.Mappings.Any(s => s.TextDescription == viewModel.Mapping.TextDescription && s.UserName == User.Identity.Name))
+            {
+                viewModel.Mapping.UserName = User.Identity.Name;
+                viewModel.Mapping.Created = DateTime.Now;
+
+                db.Mappings.Add(viewModel.Mapping);
+                db.SaveChanges();
+            }            
+
+            viewModel.Mapping = new Mapping();
+            
+
+            var trans = new List<Transaction>();
+
+            foreach (var transaction in viewModel.Transactions)
+            {
+                var findCategory = ExcelReader.FindCategory(transaction.Description, User.Identity.Name);
+                if (findCategory != null)
+                    transaction.Category = findCategory.Value;
+
+                trans.Add(transaction);
+            }
+
+            viewModel.Transactions = trans;
+
+            return View("Import", viewModel);
+        }
+
+        [HttpParamAction]
+        [AcceptVerbs(HttpVerbs.Post)]
         public ActionResult Import(List<Transaction> transactions)
         {
 
@@ -384,7 +420,7 @@ namespace BudgetApp.Controllers
 
                 TempData["Success"] = string.Format("{0} transaction{1} added!", transactions.Count(s => s.Import), transactions.Count(s => s.Import).Equals(1) ? " was" : "s were");
 
-                return RedirectToAction("Index", db.Transactions.Where(s => s.UserName == User.Identity.Name).ToList());
+                return RedirectToAction("Index", "Home");
             }
 
             ViewBag.Error = "Please fill in all mandatory fields";
@@ -394,5 +430,20 @@ namespace BudgetApp.Controllers
 
 
 
+    }
+
+    public class HttpParamActionAttribute : ActionNameSelectorAttribute
+    {
+        public override bool IsValidName(ControllerContext controllerContext, string actionName, MethodInfo methodInfo)
+        {
+            if (actionName.Equals(methodInfo.Name, StringComparison.InvariantCultureIgnoreCase))
+                return true;
+
+            if (!actionName.Equals("Action", StringComparison.InvariantCultureIgnoreCase))
+                return false;
+
+            var request = controllerContext.RequestContext.HttpContext.Request;
+            return request[methodInfo.Name] != null;
+        }
     }
 }

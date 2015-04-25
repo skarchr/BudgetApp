@@ -43,6 +43,7 @@ namespace BudgetApp
                    "~/js/controllers/TransactionController.js",
                    "~/js/controllers/HomeController.js",
                    "~/js/controllers/AddTransactionController.js",
+                   "~/js/controllers/ImportController.js",
                    "~/js/controllers/LoginController.js"));
 
          bundles.Add(new StyleBundle("~/Content/css").Include(

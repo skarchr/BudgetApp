@@ -1,25 +1,24 @@
 ﻿@using BudgetApp.Extensions
 @using BudgetApp.Models
-@model List<BudgetApp.Models.Transaction>
+@model ImportViewModel
 
 
 @{
     ViewBag.Title = "Transactions";
 }
 
-<div style="margin-top: 60px;">
+<div style="margin-top: 60px;" ng-controller="importController">
 
     <div class="row">
         <div class="col-xs-12">
 
-
-            @using (Html.BeginForm("Import", "Transactions", FormMethod.Post))
+            @using (Html.BeginForm("Action", "Transactions", FormMethod.Post, new { @name="importForm" }))
             {
-
+                                
                 <table class="table table-condensed">
                     <thead>
                         <tr>
-                            <th></th>
+                            <th class="text-center">#</th>
                             <th class="text-center">Date</th>
                             <th class="text-center" style="width: 500px;">Description</th>
                             <th class="text-center" style="width: 80px;">Amount</th>
@@ -29,23 +28,27 @@
                     </thead>
                     <tbody>
 
-                        @for (var i = 0; i < Model.Count; i++)
+                        @for (var i = 0; i < Model.Transactions.Count; i++)
                         {
 
-                            <tr id="@("row_"+i)" class="@(Model[i].Category == null ? "missing":"")">
-                                <td class="text-center"></td>
-                                <td style="padding-top:12px;" class="text-center">@Html.HiddenFor(m => Model[i].Date) @Model[i].Date.ToString("dd.MM.yyyy")</td>
-                                <td class="text-center">@Html.TextBoxFor(m => Model[i].Description, new { @class = "inline-edit", @style = "width:500px;max-width:500px;" })</td>
-                                <td class="text-center">@Html.TextBoxFor(m => Model[i].Amount, new { @class = "inline-edit center", @style = "width:80px;max-width:80px;" })</td>
+                            <tr>
+                                <td class="text-center" style="padding-top:12px;">@(i + 1)</td>
+                                <td style="padding-top:12px;" class="text-center">@Html.HiddenFor(m => Model.Transactions[i].Date, new { @ng_required = "model[" + i + "].import", @ng_model = "model[" + i + "].date" }) @Model.Transactions[i].Date.ToString("dd.MM.yyyy")</td>
+                                <td class="text-center">@Html.TextBoxFor(m => Model.Transactions[i].Description, new { @class = "form-control", @style="max-width:100%;width:100%", @ng_required = "model[" + i + "].import", @ng_model = "model[" + i + "].description" })</td>
+                                <td class="text-center">@Html.TextBoxFor(m => Model.Transactions[i].Amount, new { @class = "form-control",@style="max-width:100%;width:100%", @ng_required = "model[" + i + "].import", @ng_pattern = "regexDouble" })</td>
                                 <td class="text-center">
-                                    @Html.DropDownGroupListFor(model => model[i].Category, Dropdownlist.GroupedCategories(Model != null ? Model[i].Category.ToString() : ""), " ", new { @class = "form-control" })
+                                    @Html.DropDownGroupListFor(model => model.Transactions[i].Category, Dropdownlist.GroupedCategories(Model != null ? Model.Transactions[i].Category.ToString() : ""), " ", new { @class = "form-control", @ng_required = "model[" + i + "].import", @ng_model = "model[" + i + "].category",@style="max-width:100%;width:100%", })
                                 </td>
-                                <td class="text-center">
+                                <td class="text-center">                                                                                                           
+                                    
+                                    <button class="btn btn-primary btn-xs" data-toggle="modal" data-target="#myModal" ng-click="mapping.textDescription = '@Model.Transactions[i].Description'; mapping.category = null;">
+                                        M
+                                    </button>
 
-                                    @Html.CheckBoxFor(m => Model[i].Import, new { @data_pointer = "row_" + i, @class = "import-checkbox", @type = "checkbox" })
+                                    @Html.CheckBoxFor(m => Model.Transactions[i].Import, new { @class = "import-checkbox", @type = "checkbox", @ng_model="model["+i+"].import" })
 
-                                    @Html.HiddenFor(m => Model[i].Created)
-                                    @Html.HiddenFor(m => Model[i].UserName)
+                                    @Html.HiddenFor(m => Model.Transactions[i].Created)
+                                    @Html.HiddenFor(m => Model.Transactions[i].UserName)
                                 </td>
                             </tr>
                         }
@@ -54,11 +57,71 @@
                 </table>
 
 
-                <input type="submit" class="btn btn-primary btn-lg @(Model.Count > 0 ? "":"hidden")" value="Import" />
+                <input type="submit" name="import" class="btn btn-primary" ng-disabled="importForm.$invalid" />
                 @Html.ActionLink("Cancel", "Index", "Home", new { @class = "btn btn-link" })
 
+
+
+
+                <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                <h4 class="modal-title" id="myModalLabel">Add mapping</h4>
+                            </div>
+                            <div class="modal-body">
+
+                                @Html.AntiForgeryToken()
+                                
+                                
+                                <div class="row form-member">
+                                    <div class="member-label col-xs-12">
+                                        <span>Category</span>
+                                    </div>
+                                    <div class="col-xs-10 member-control">
+                                        @Html.DropDownGroupListFor(model => model.Mapping.Category, Dropdownlist.GroupedCategories(""), " ", new { @class = "form-control", @ng_model = "mapping.category" })
+                                    </div>                                    
+                                </div>
+                                
+                                <div class="row form-member">
+                                    <div class="member-label col-xs-12">
+                                        <span>Description</span>
+                                    </div>
+                                    <div class="col-xs-10 member-control">
+                                        @Html.TextAreaFor(model => model.Mapping.TextDescription, new { @ng_model = "mapping.textDescription", @class="form-control" })
+                                    </div>
+                                </div>                                
+
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                <input type="submit" value="Save mapping" name="inlineMapping" class="btn btn-primary" ng-disabled="!mapping.category || !mapping.textDescription" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
             }
         </div>
     </div>
 </div>
+
+
+
+<script>
+    (function() {
+        'use strict';
+
+
+        angular.module('budgetApp').factory('importModel', function() {
+            return {
+                model: @Html.Raw(Model.Transactions.ToJson()),
+                mapping : @Html.Raw(Model.Mapping.ToJson())
+            };
+        });
+
+
+    })();
+
+</script>

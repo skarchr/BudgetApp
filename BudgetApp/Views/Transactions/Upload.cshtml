@@ -4,29 +4,40 @@
 
 <div style="margin-top: 60px;">
     <div class="row">
-        <div class="col-xs-12 col-md-4">
-            <a href="@Url.Action("Create")" class="btn btn-default" title="Add transaction">
-                <i class="glyphicon glyphicon-plus-sign"></i>
-            </a>
-            <a href="@Url.Action("Upload")" class="btn btn-default active" title="Import transactions">
-                <i class="glyphicon glyphicon-import"></i>
-            </a>
+        <div class="col-md-12 text-center">
+
+            <div id="icon" data-logo="18" style="width:18%; min-width: 220px;">
+                <object>
+                    <img src="~/Content/images/logo.svg" id="svg" />
+                </object>
+            </div>
 
         </div>
     </div>
     <div class="row" style="margin-top: 30px;">
         <div class="col-xs-12">
+            
+            <h2 class="text-center" style="margin-top: -50px;">Import transactions</h2>
 
             @using (Html.BeginForm("Upload", "Transactions", FormMethod.Post, new { enctype = "multipart/form-data" }))
             {
 
-                <div class="form-group">
-                    <label for="exampleInputEmail1">Excelfile</label>
-                    <input type="file" name="file" id="file" class="form-control" style="max-width: 500px;" />
+                <div class="row form-member">                    
+                    <div class="col-xs-12 member-control">
+                        <input type="file" name="file" id="file" class="form-control" style="max-width: 300px;" />
+                    </div>
+                </div>
+                
+                <div class="row form-member">                                           
+                    <div class="col-xs-12 member-control">
+
+                        <input type="submit" name="Submit" id="Submit" class="btn btn-primary" value="Upload" />
+                        @Html.ActionLink("Cancel", "Index", "Transactions", null, new { @class = "btn btn-link" })
+                    </div>
                 </div>
 
-                <input type="submit" name="Submit" id="Submit" class="btn btn-primary" value="Upload" />
-                @Html.ActionLink("Cancel", "Index", "Transactions", null, new { @class = "btn btn-link" })
+
+                
             }
         </div>
     </div>

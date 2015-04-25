@@ -41,7 +41,7 @@ namespace BudgetApp.Importer
                     Date = Convert.ToDateTime(excelReader.GetString(0), new CultureInfo("nb-NO")),
                     Description = excelReader.GetString(1),
                     Amount = Convert.ToDouble(excelReader.GetString(2) ?? excelReader.GetString(3)),
-                    Category = FindCategory(excelReader.GetString(1)),
+                    Category = FindCategory(excelReader.GetString(1), userName),
                     Created = DateTime.Now,
                     UserName = userName
                 };
@@ -70,9 +70,9 @@ namespace BudgetApp.Importer
             return false;
         }
 
-        private static Category? FindCategory(string descriptions)
+        public static Category? FindCategory(string descriptions, string userName)
         {
-            var mappings = Db.Mappings.ToList();
+            var mappings = Db.Mappings.Where(s => s.UserName == userName).ToList();
 
             foreach (var mapping in mappings)
             {

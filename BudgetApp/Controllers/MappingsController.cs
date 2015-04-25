@@ -61,6 +61,7 @@ namespace BudgetApp.Controllers
             return View(mapping);
         }
 
+
         // GET: Mappings/Edit/5
         public ActionResult Edit(int? id)
         {

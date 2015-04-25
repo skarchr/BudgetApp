@@ -219,6 +219,7 @@
     <Compile Include="Models\Highchart.cs" />
     <Compile Include="Models\HomeViewModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
+    <Compile Include="Models\ImportViewModel.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Mapping.cs" />
     <Compile Include="Models\RangeViewer.cs" />
@@ -509,6 +510,7 @@
     <Content Include="js\app\BudgetApp.js" />
     <Content Include="js\controllers\AddTransactionController.js" />
     <Content Include="js\controllers\HomeController.js" />
+    <Content Include="js\controllers\ImportController.js" />
     <Content Include="js\controllers\LoginController.js" />
     <Content Include="js\controllers\TransactionController.js" />
     <Content Include="js\directives\Directives.js" />
