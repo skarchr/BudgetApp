@@ -48,7 +48,7 @@ namespace BudgetApp.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "MappingId,Category,TextDescription")] Mapping mapping)
         {
-            if (ModelState.IsValid)
+            if (ModelState.IsValid && !db.Mappings.Any(s => s.TextDescription == mapping.TextDescription && s.UserName == User.Identity.Name))
             {
                 mapping.UserName = User.Identity.Name;
                 mapping.Created = DateTime.Now;

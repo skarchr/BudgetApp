@@ -21,6 +21,7 @@
                             <th class="text-center">#</th>
                             <th class="text-center">Date</th>
                             <th class="text-center" style="width: 500px;">Description</th>
+                            <th></th>
                             <th class="text-center" style="width: 80px;">Amount</th>
                             <th class="text-center">Category</th>
                             <th class="text-center">Import</th>
@@ -31,21 +32,26 @@
                         @for (var i = 0; i < Model.Transactions.Count; i++)
                         {
 
-                            <tr>
+                            <tr class="{{model[@i].import ? '':'not-included'}}">
                                 <td class="text-center" style="padding-top:12px;">@(i + 1)</td>
                                 <td style="padding-top:12px;" class="text-center">@Html.HiddenFor(m => Model.Transactions[i].Date, new { @ng_required = "model[" + i + "].import", @ng_model = "model[" + i + "].date" }) @Model.Transactions[i].Date.ToString("dd.MM.yyyy")</td>
-                                <td class="text-center">@Html.TextBoxFor(m => Model.Transactions[i].Description, new { @class = "form-control", @style="max-width:100%;width:100%", @ng_required = "model[" + i + "].import", @ng_model = "model[" + i + "].description" })</td>
-                                <td class="text-center">@Html.TextBoxFor(m => Model.Transactions[i].Amount, new { @class = "form-control",@style="max-width:100%;width:100%", @ng_required = "model[" + i + "].import", @ng_pattern = "regexDouble" })</td>
                                 <td class="text-center">
-                                    @Html.DropDownGroupListFor(model => model.Transactions[i].Category, Dropdownlist.GroupedCategories(Model != null ? Model.Transactions[i].Category.ToString() : ""), " ", new { @class = "form-control", @ng_required = "model[" + i + "].import", @ng_model = "model[" + i + "].category",@style="max-width:100%;width:100%", })
+                                    @Html.TextBoxFor(m => Model.Transactions[i].Description, new { @class = "form-control", @style = "max-width:100%;width:100%", @ng_required = "model[" + i + "].import", @ng_model = "model[" + i + "].description" })
                                 </td>
-                                <td class="text-center">                                                                                                           
-                                    
-                                    <button class="btn btn-primary btn-xs" data-toggle="modal" data-target="#myModal" ng-click="mapping.textDescription = '@Model.Transactions[i].Description'; mapping.category = null;">
+                                <td style="padding-top: 11px;">
+                                    <span class="btn btn-primary btn-xs" data-toggle="modal" data-target="#myModal" ng-click="mapping.textDescription = '@Model.Transactions[i].Description'; mapping.category = null;">
                                         M
-                                    </button>
+                                    </span>
+                                </td>
+                                <td class="text-center">@Html.TextBoxFor(m => Model.Transactions[i].Amount, new { @class = "form-control", @style = "max-width:100%;width:100%", @ng_required = "model[" + i + "].import", @ng_pattern = "regexDouble" })</td>
+                                <td class="text-center">
+                                    @Html.DropDownGroupListFor(model => model.Transactions[i].Category, Dropdownlist.GroupedCategories(Model != null ? Model.Transactions[i].Category.ToString() : ""), " ", new { @class = "form-control", @ng_required = "model[" + i + "].import", @ng_model = "model[" + i + "].category", @style = "max-width:100%;width:100%", })
+                                </td>
+                                <td class="text-center">
 
-                                    @Html.CheckBoxFor(m => Model.Transactions[i].Import, new { @class = "import-checkbox", @type = "checkbox", @ng_model="model["+i+"].import" })
+
+
+                                    @Html.CheckBoxFor(m => Model.Transactions[i].Import, new { @class = "import-checkbox", @type = "checkbox", @ng_model = "model[" + i + "].import" })
 
                                     @Html.HiddenFor(m => Model.Transactions[i].Created)
                                     @Html.HiddenFor(m => Model.Transactions[i].UserName)
@@ -57,7 +63,7 @@
                 </table>
 
 
-                <input type="submit" name="import" class="btn btn-primary" ng-disabled="importForm.$invalid" />
+                <input type="submit" name="import" value="Import" class="btn btn-primary" ng-disabled="importForm.$invalid" />
                 @Html.ActionLink("Cancel", "Index", "Home", new { @class = "btn btn-link" })
 
 

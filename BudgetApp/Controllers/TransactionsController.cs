@@ -375,10 +375,12 @@ namespace BudgetApp.Controllers
 
             foreach (var transaction in viewModel.Transactions)
             {
-                var findCategory = ExcelReader.FindCategory(transaction.Description, User.Identity.Name);
-                if (findCategory != null)
-                    transaction.Category = findCategory.Value;
-
+                if (transaction.Category == null) 
+                { 
+                    var findCategory = ExcelReader.FindCategory(transaction.Description, User.Identity.Name);
+                    if (findCategory != null)
+                        transaction.Category = findCategory.Value;
+                }
                 trans.Add(transaction);
             }
 
@@ -388,6 +390,7 @@ namespace BudgetApp.Controllers
         }
 
         [HttpParamAction]
+        [ValidateAntiForgeryToken]
         [AcceptVerbs(HttpVerbs.Post)]
         public ActionResult Import(List<Transaction> transactions)
         {
