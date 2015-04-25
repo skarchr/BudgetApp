@@ -6,10 +6,10 @@
     animation: zoomIn 0.8s;
 }
 
-.filter.ng-hide-add {
-    -webkit-animation: zoomOut 1s;
-    -moz-animation: zoomOut 1s;
-    -ms-animation: zoomOut 1s; 
-    -o-animation: zoomOut 1s;
-    animation: zoomOut 1s;
-}
+/*.filter.ng-hide-add {
+    -webkit-animation: zoomOut 0.1s;
+    -moz-animation: zoomOut 0.1s;
+    -ms-animation: zoomOut 0.1s; 
+    -o-animation: zoomOut 0.1s;
+    animation: zoomOut 0.1s;
+}*/

@@ -14,24 +14,24 @@
     <div fade-in="200">
         @using (Html.BeginForm("Index", "Transactions", FormMethod.Post))
         {
-            <div class="row" style="margin-bottom: 20px;">
-                <div class="col-xs-12 text-center">
-                    <span class="text-muted">Showing @Model.TransactionsDisplayed / @Model.TotalTransactions transactions</span>
-                </div>
-            </div>
-            
             <div class="row">
                 <div class="col-xs-12 col-md-3">
-                    <a href="@Url.Action("Create")" class="btn btn-default" title="Add transaction">
+                    <a href="@Url.Action("Create")" class="btn btn-default text-center" title="Add transaction" style="min-width: 67px;">
                         <i class="glyphicon glyphicon-plus-sign"></i>
+                        <br />
+                        Add
                     </a>
-                    <a href="@Url.Action("Upload")" class="btn btn-default" title="Import transactions">
+                    <a href="@Url.Action("Upload")" class="btn btn-default text-center" title="Import transactions" style="min-width: 67px;">
                         <i class="glyphicon glyphicon-import"></i>
+                        <br />
+                        Import
                     </a>
 
                 </div>
 
-                <div class="col-xs-12 col-md-6 text-center">                                        
+                <div class="col-xs-12 col-md-6 text-center" style="padding-top:20px;">                                        
+                    
+                    <span class="text-muted" ng-hide="filterToggle">Showing @Model.TransactionsDisplayed / @Model.TotalTransactions transactions</span>
 
                     <div class="filter" ng-show="filterToggle">                       
 
@@ -50,8 +50,10 @@
                 </div>
                 
                 <div class="col-xs-12 col-md-3 text-right">
-                    <div ng-click="filterToggle = !filterToggle" class="btn btn-default {{filterToggle ? 'active':''}}">
+                    <div ng-click="filterToggle = !filterToggle" class="btn btn-default text-center {{filterToggle ? 'active':''}}" style="min-width: 67px;">
                         <i class="glyphicon glyphicon-filter"></i>
+                        <br />
+                        Filter
                     </div>
                 </div>
 

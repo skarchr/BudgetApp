@@ -513,6 +513,7 @@
     <Content Include="js\controllers\TransactionController.js" />
     <Content Include="js\directives\Directives.js" />
     <Content Include="js\filters\Filters.js" />
+    <Content Include="js\templates\SelectCategory.html" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="PrivateSettings.config" />

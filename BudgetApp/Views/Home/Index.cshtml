@@ -4,7 +4,7 @@
     ViewBag.Title = "Home";
 }
 
-<div class="row" ng-controller="homeController">
+<div class="row" ng-controller="homeController" style="margin-top:30px;">
 
     @if (Model.Transactions.Count == 0)
     {
@@ -39,8 +39,15 @@
     }
     else
     {
-        <div class="col-xs-12">
-            <div style="height: 600px;" data-highstock="{{graphs.dailyExpenses}}"></div>
+        <div class="row">
+            <div class="col-xs-12">
+                <div style="height: 600px;" data-highstock="{{graphs.dailyExpenses}}"></div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12">
+                <div style="height: 600px;" data-highchart="{{graphs.drilldownGraph}}"></div>
+            </div>
         </div>
     }
 </div>
@@ -53,7 +60,8 @@
 
             return {
                 graphs: {
-                    dailyExpenses: @Html.Raw(Model.DailyExpensesGraph)
+                    dailyExpenses: @Html.Raw(Model.DailyExpensesGraph),
+                    drilldownGraph: @Html.Raw(Model.TransactionDrilldownGraph)
                 }
             };
 

@@ -264,3 +264,30 @@ input.transaction-filter {
     }
 
 }
+
+.panel-success  {
+    border:2px solid #d6e9c6;
+}
+
+.panel-danger {
+    border: 2px solid #eed3d7;
+}
+
+.form-member {
+    text-align: center;
+    max-width: 300px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.form-member > .member-label {
+    text-align: left;
+    padding-left: 0;
+    font-weight: bold;
+    margin-bottom: -8px; 
+}
+
+.form-member > .member-control {
+    padding: 10px;
+    padding-left: 0;
+}

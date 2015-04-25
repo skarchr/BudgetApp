@@ -21,7 +21,8 @@ namespace BudgetApp.Controllers
             var model = new HomeViewModel
             {
                 Transactions = transactions,
-                DailyExpensesGraph = GraphBuilder.DailyExpensesGraph(transactions).ToJson()
+                DailyExpensesGraph = GraphBuilder.DailyExpensesGraph(transactions).ToJson(),
+                TransactionDrilldownGraph = GraphBuilder.TransactionDrilldownGraph(transactions).ToJson()
             };
 
             return View("Index", model);
