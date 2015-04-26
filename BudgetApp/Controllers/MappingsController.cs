@@ -17,6 +17,9 @@ namespace BudgetApp.Controllers
         // GET: Mappings
         public ActionResult Index()
         {
+            ViewBag.Success = TempData["Success"];
+            ViewBag.Error = TempData["Error"];
+
             return View(db.Mappings.Where(s => s.UserName == User.Identity.Name).ToList());
         }
 
@@ -55,8 +58,13 @@ namespace BudgetApp.Controllers
 
                 db.Mappings.Add(mapping);
                 db.SaveChanges();
+
+                TempData["Success"] = "Mapping added";
+
                 return RedirectToAction("Index");
             }
+
+            ViewBag.Error = "Mapping not added";
 
             return View(mapping);
         }
@@ -88,8 +96,14 @@ namespace BudgetApp.Controllers
             {
                 db.Entry(mapping).State = EntityState.Modified;
                 db.SaveChanges();
+
+                TempData["Success"] = "Mapping edited";
+
                 return RedirectToAction("Index");
             }
+
+            ViewBag.Error = "Mapping was not edited";
+
             return View(mapping);
         }
 
@@ -116,6 +130,9 @@ namespace BudgetApp.Controllers
             Mapping mapping = db.Mappings.Find(id);
             db.Mappings.Remove(mapping);
             db.SaveChanges();
+
+            TempData["Success"] = "Mapping deleted";
+
             return RedirectToAction("Index");
         }
 

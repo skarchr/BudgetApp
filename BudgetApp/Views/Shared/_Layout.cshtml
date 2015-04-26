@@ -39,7 +39,8 @@
                 </div>
             </div>
         }
-        <div class="container body-content" ng-cloak>
+        <div class="container body-content" ng-cloak ng-controller="toastrController">            
+
             @RenderBody()
             <footer data-fade-in="600" class="text-center" style="margin-top:100px; ">
                 @{
@@ -59,10 +60,28 @@
 
                 <a href="https://github.com/skarchr/BudgetApp" target="_blank">
                     <img src="~/Content/images/github.svg" height="32" />
-                </a>                               
+                </a>
 
             </footer>
 
         </div>
+        <script>
+            (function() {
+                'use strict';
+
+                angular.module('budgetApp').factory('viewBags', function() {
+
+                    return {
+                        messages: {
+                            error: '@ViewBag.Error',
+                            success: '@ViewBag.Success',
+                            info: '@ViewBag.Info'
+                        }
+                    };
+
+                });
+            })();
+        </script>
+
     </body>
 </html>

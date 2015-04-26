@@ -43,6 +43,7 @@ namespace BudgetApp.Controllers
                 } 
             };
 
+            ViewBag.Success = TempData["Success"];
 
             return View(model);
         }
@@ -241,9 +242,12 @@ namespace BudgetApp.Controllers
 
                 db.Transactions.Add(transaction);
                 db.SaveChanges();
+
+                TempData["Success"] = "Transaction added";
+
                 return RedirectToAction("Index");
             }
-
+            ViewBag.Error = "Invalid input";
             return View(transaction);
         }
 
@@ -273,6 +277,9 @@ namespace BudgetApp.Controllers
             {
                 db.Entry(transaction).State = EntityState.Modified;
                 db.SaveChanges();
+
+                TempData["Success"] = "Transaction edited";
+
                 return RedirectToAction("Index");
             }
             return View(transaction);
@@ -301,6 +308,9 @@ namespace BudgetApp.Controllers
             Transaction transaction = db.Transactions.Find(id);
             db.Transactions.Remove(transaction);
             db.SaveChanges();
+
+            TempData["Success"] = "Transaction deleted";
+
             return RedirectToAction("Index");
         }
 
@@ -315,6 +325,8 @@ namespace BudgetApp.Controllers
 
         public ActionResult Upload()
         {
+            ViewBag.Error = TempData["Error"];
+
             return View();
         }
 
@@ -329,7 +341,7 @@ namespace BudgetApp.Controllers
                 {
                     ViewBag.Error = "Something went wrong!";
 
-                    return View("Index");
+                    return View("Upload");
                 }
 
                 var path = Path.Combine(Server.MapPath("~/App_Data/uploads"), fileName);
@@ -343,14 +355,17 @@ namespace BudgetApp.Controllers
                 ViewBag.Info = string.Format("Found {0} new transactions", found);
 
                 if (transactions.Count == 0)
+                {
+                    TempData["Error"] = "No transactions found";
                     return RedirectToAction("Upload");
+                }
 
                 return View("Import", new ImportViewModel{Transactions = transactions, Mapping = new Mapping()});
             }
 
             ViewBag.Error = "Please select an excel file!";
 
-            return View("Index");
+            return View("Upload");
         }
 
         [HttpParamAction]
@@ -423,7 +438,7 @@ namespace BudgetApp.Controllers
 
                 TempData["Success"] = string.Format("{0} transaction{1} added!", transactions.Count(s => s.Import), transactions.Count(s => s.Import).Equals(1) ? " was" : "s were");
 
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("Index", "Transactions");
             }
 
             ViewBag.Error = "Please fill in all mandatory fields";

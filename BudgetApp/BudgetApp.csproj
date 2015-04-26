@@ -239,6 +239,13 @@
     <Content Include="bower_components\angular-gravatar\.gitignore" />
     <Content Include="bower_components\angular-gravatar\build\angular-gravatar.js" />
     <Content Include="bower_components\angular-gravatar\build\angular-gravatar.min.js" />
+    <Content Include="bower_components\angular-toastr\dist\angular-toastr.css" />
+    <Content Include="bower_components\angular-toastr\dist\angular-toastr.js" />
+    <Content Include="bower_components\angular-toastr\dist\angular-toastr.min.css" />
+    <Content Include="bower_components\angular-toastr\dist\angular-toastr.min.js" />
+    <Content Include="bower_components\angular-toastr\dist\angular-toastr.tpls.js" />
+    <Content Include="bower_components\angular-toastr\dist\angular-toastr.tpls.min.js" />
+    <Content Include="bower_components\angular-toastr\gulpfile.js" />
     <Content Include="bower_components\angular\angular-csp.css" />
     <Content Include="bower_components\angular\angular.js" />
     <Content Include="bower_components\angular\angular.min.js" />
@@ -512,6 +519,7 @@
     <Content Include="js\controllers\HomeController.js" />
     <Content Include="js\controllers\ImportController.js" />
     <Content Include="js\controllers\LoginController.js" />
+    <Content Include="js\controllers\ToastrController.js" />
     <Content Include="js\controllers\TransactionController.js" />
     <Content Include="js\directives\Directives.js" />
     <Content Include="js\filters\Filters.js" />
@@ -551,6 +559,10 @@
     <Content Include="bower_components\highstock-release\.bower.json" />
     <Content Include="bower_components\highstock-release\bower.json" />
     <Content Include="bower_components\highstock-release\README.md" />
+    <Content Include="bower_components\angular-toastr\.bower.json" />
+    <Content Include="bower_components\angular-toastr\.npmignore" />
+    <Content Include="bower_components\angular-toastr\bower.json" />
+    <Content Include="bower_components\angular-toastr\README.md" />
     <None Include="js\resources\countries.json" />
     <Content Include="bower_components\angular-bootstrap\.bower.json" />
     <Content Include="bower_components\angular-bootstrap\bower.json" />

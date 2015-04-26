@@ -440,8 +440,6 @@
 
                 var model = JSON.parse(scope.highstock);
 
-                console.log(model);
-
                 $(elem[0]).highcharts('StockChart', {
                     chart: {
                         type:'column'

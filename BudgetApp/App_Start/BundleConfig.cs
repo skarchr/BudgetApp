@@ -33,6 +33,7 @@ namespace BudgetApp
                    "~/bower_components/angular/angular.min.js",
                    "~/bower_components/angular-animate/angular-animate.js",
                    "~/bower_components/angular-gravatar/build/angular-gravatar.min.js",
+                   "~/bower_components/angular-toastr/dist/angular-toastr.tpls.js",
                    "~/bower_components/angular-bootstrap/ui-bootstrap.min.js",
                    "~/bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js"));
 
@@ -42,6 +43,7 @@ namespace BudgetApp
                    "~/js/filters/Filters.js",
                    "~/js/controllers/TransactionController.js",
                    "~/js/controllers/HomeController.js",
+                   "~/js/controllers/ToastrController.js",
                    "~/js/controllers/AddTransactionController.js",
                    "~/js/controllers/ImportController.js",
                    "~/js/controllers/LoginController.js"));
@@ -49,6 +51,7 @@ namespace BudgetApp
          bundles.Add(new StyleBundle("~/Content/css").Include(
                    "~/Content/bootstrap.css",
                    "~/bower_components/animate.css/animate.css",
+                   "~/bower_components/angular-toastr/dist/angular-toastr.css",
                    "~/Content/animations.css",
                    "~/Content/site.css"));
 
