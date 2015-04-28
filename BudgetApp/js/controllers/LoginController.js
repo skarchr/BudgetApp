@@ -63,7 +63,7 @@
             var strength = (input.length >= 6 ? 1 : 0);
 
             if (strength > 0) {
-                strength += containsCapitalLetter($scope.model.Password) + containsNumber($scope.model.Password) + (input.length >= 8 ? 1 : 0);
+                strength += containsCapitalLetter($scope.model.Password) + containsNumber($scope.model.Password) + (input.length >= 12 ? 1 : 0);
             }
 
             $scope.passwordStrength = strength;
