@@ -1,5 +1,5 @@
 ﻿body {
-    padding-top: 50px;
+    padding-top: 80px;
     padding-bottom: 20px;
 }
 
@@ -140,26 +140,47 @@ input[type="checkbox"].input-validation-error {
 
 .navbar-brand {
     padding-top: 0;
-    padding-bottom: 0;
+    padding-bottom: 0;    
+}
+
+
+.navbar-brand.active, .navbar-brand.active:hover  {
+    border-bottom: 0;
+    background-color: #296ad4;
 }
 
 .navbar-brand > img {
-    height: 50px;
-    width: auto;    
+    height: 80px;
+    width: auto;     
+}
+
+.navbar-inverse .navbar-toggle:hover, .navbar-inverse .navbar-toggle:focus, .navbar-inverse .navbar-toggle{
+    background-color: #296ad4 !important;
+    border-color: white;
+    margin-top: 25px;
 }
 
 .navbar-inverse {
-  background-color: #296ad4;
-  border: 0;
+    background-color: white;
+    border: 0;
+    border-bottom: 1px solid #ececec;
+    -webkit-box-shadow: 1px 1px 6px #ececec;
+    -ms-box-shadow: 1px 1px 6px #ececec;
+    box-shadow: 1px 1px 6px #ececec;
 }
 
 .nav > li > a {
-    color: white !important;
+    height: 80px;
+    padding-top: 55px;
+    font-size: 16px;
+    border-bottom: 4px solid white;
+    color: #296ad4 !important;
 }
 
-.navbar-inverse .navbar-nav > .active > a, .navbar-inverse .navbar-nav > .active > a:hover, .navbar-inverse .navbar-nav > .active > a:focus, .navbar-brand.active, .navbar-brand.active:hover  {
+.navbar-inverse .navbar-nav > .active > a, .navbar-inverse .navbar-nav > .active > a:hover, .navbar-inverse .navbar-nav > .active > a:focus  {
     color: #296ad4 !important;
-    background-color: white;
+    background-color: white !important;
+    border-bottom: 4px solid #296ad4;
 }
 
 .btn-xlg {
@@ -261,6 +282,20 @@ input.transaction-filter {
     
     .hide-xs {
         display: none;
+    }
+
+    .navbar-inverse .navbar-collapse, .navbar-inverse .navbar-form {
+        border-width: 0;
+    }
+
+    .navbar-inverse .navbar-nav > .active > a, .navbar-inverse .navbar-nav > li > a {
+        height: 60px;
+        padding-top: 20px;
+    }
+
+    .navbar-inverse .navbar-nav > .active > a, .navbar-inverse .navbar-nav > .active > a:hover, .navbar-inverse .navbar-nav > .active > a:focus {
+        color: white !important;
+        background-color: #296ad4 !important;
     }
 
 }

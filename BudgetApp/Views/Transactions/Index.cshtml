@@ -107,11 +107,17 @@
                                     </span>
 
                                 </div>
-                                <div class="col-xs-4 text-center">
+
+                                <div class="col-xs-4 text-center hidden-xs">
                                     <span class="text-muted">
                                         {{range.startDate | date : 'dd.MM.yyyy'}} - {{range.endDate | date: 'dd.MM.yyyy'}}
                                     </span>
                                                                         
+                                </div>
+                                
+                                <div class="col-xs-4 text-center visible-xs">
+                                    <span class="label label-success" title="Income">{{range.totalIncome.toFixed(1)}}</span>
+                                    <span class="label label-danger" title="Expenses">{{range.totalExpenses.toFixed(1)}}</span>
                                 </div>
 
                                 <div class="col-xs-4 text-right">                                                                       
