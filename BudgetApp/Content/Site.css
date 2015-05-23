@@ -177,9 +177,21 @@ input[type="checkbox"].input-validation-error {
     color: #296ad4 !important;
 }
 
-.navbar-inverse .navbar-nav > .active > a, .navbar-inverse .navbar-nav > .active > a:hover, .navbar-inverse .navbar-nav > .active > a:focus  {
+.navbar-inverse .navbar-nav > li > a {
+    -webkit-transition: all 0.3s;
+    -moz-transition: all 0.3s;
+    -ms-transition: all 0.3s;
+    -o-transition: all 0.3s;
+    transition: all 0.3s;
+}
+
+.navbar-inverse .navbar-nav > .active > a, .navbar-inverse .navbar-nav > .active > a:hover, .navbar-inverse .navbar-nav > .active > a:focus {
     color: #296ad4 !important;
     background-color: white !important;
+    border-bottom: 4px solid #296ad4;    
+}
+
+.navbar-inverse .navbar-nav > li > a:hover {
     border-bottom: 4px solid #296ad4;
 }
 
@@ -193,7 +205,7 @@ input[type="checkbox"].input-validation-error {
 
 .square {
     color: #777;
-    min-height: 230px;
+    min-height: 260px;
     border: 1px solid #ececec;
 }
 
@@ -298,6 +310,9 @@ input.transaction-filter {
         background-color: #296ad4 !important;
     }
 
+        .navbar-inverse .navbar-nav > li > a:hover {
+            border-bottom: 4px solid white;
+        }
 }
 
 .panel-success  {

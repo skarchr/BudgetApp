@@ -16,6 +16,16 @@
 
         $scope.showBalance = false;
 
+        $scope.calcPercentage = function(target, other) {
+
+            var onePercent = (other + target)  / 100;
+
+            var result = target / onePercent;
+
+            return 'width:'+result.toFixed(0)+'%';
+
+        };
+
     }]);
 
 })();

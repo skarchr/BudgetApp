@@ -15,6 +15,11 @@
         @using (Html.BeginForm("Index", "Transactions", FormMethod.Post))
         {
             <div class="row">
+                <div class="col-xs-12 text-right">
+                    <span class="text-muted">Showing @Model.TransactionsDisplayed / @Model.TotalTransactions transactions</span>
+                </div>
+            </div>
+            <div class="row">
                 <div class="col-xs-12 col-md-3">
                     <a href="@Url.Action("Create")" class="btn btn-default text-center" title="Add transaction" style="min-width: 67px;">
                         <i class="glyphicon glyphicon-plus-sign"></i>
@@ -29,33 +34,22 @@
 
                 </div>
 
-                <div class="col-xs-12 col-md-6 text-center" style="padding-top:20px;">                                        
-                    
-                    <span class="text-muted" ng-hide="filterToggle">Showing @Model.TransactionsDisplayed / @Model.TotalTransactions transactions</span>
+                <div class="col-xs-12 col-md-9 text-right">                                                            
 
-                    <div class="filter" ng-show="filterToggle">                       
+                    @Html.TextBoxFor(s => s.Filter.StartDate, new { @class = "transaction-filter", @required = "required", @type = "date", @ng_model = "startDate", @max = "{{endDate | date:'yyyy-MM-dd'}}" })
+                    -
+                    @Html.TextBoxFor(s => s.Filter.EndDate, new { @type = "date", @class = "transaction-filter", @required = "required", @min = "{{startDate | date:'yyyy-MM-dd'}}", max = DateTime.Now.ToString("yyyy-MM-dd"), @ng_model = "endDate" })
 
-                        @Html.TextBoxFor(s => s.Filter.StartDate, new { @class = "transaction-filter", @required = "required", @type = "date", @ng_model = "startDate", @max = "{{endDate | date:'yyyy-MM-dd'}}" })
-                        -
-                        @Html.TextBoxFor(s => s.Filter.EndDate, new { @type = "date", @class = "transaction-filter", @required = "required", @min = "{{startDate | date:'yyyy-MM-dd'}}", max = DateTime.Now.ToString("yyyy-MM-dd"), @ng_model = "endDate" })
+                    @Html.EnumDropDownListFor(s => s.Filter.Range, new { @class = "transaction-filter" })
 
-
-                        @Html.EnumDropDownListFor(s => s.Filter.Range, new { @class = "transaction-filter" })
-
-                        <button class="btn btn-primary" title="Filter">
-                            Filter
-                        </button>
-                    </div>
-
-                </div>
-                
-                <div class="col-xs-12 col-md-3 text-right">
-                    <div ng-click="filterToggle = !filterToggle" class="btn btn-default text-center {{filterToggle ? 'active':''}}" style="min-width: 67px;">
+                    <button class="btn btn-primary" title="Filter">
                         <i class="glyphicon glyphicon-filter"></i>
                         <br />
                         Filter
-                    </div>
+                    </button>
+
                 </div>
+
 
             </div>
         }
@@ -87,7 +81,7 @@
                 <div class="col-xs-12" ng-repeat="range in model">
 
 
-                    <div class="panel {{(range.totalIncome - range.totalExpenses) > 0 ? 'panel-success':'panel-danger'}}">
+                    <div class="panel panel-default">
 
                         <div class="panel-body">
 
@@ -154,9 +148,18 @@
 
                                 </div>
                             </div>
-
+                            <div class="row hidden-xs" style="margin-bottom: -36px;">
+                                <div class="progress">
+                                    <div class="progress-bar progress-bar-success" style="{{calcPercentage(range.totalIncome, range.totalExpenses)}}">
+                                        <span>{{range.totalIncome.toFixed(1)}}</span>
+                                    </div>
+                                    <div class="progress-bar progress-bar-danger" style="{{calcPercentage(range.totalExpenses, range.totalIncome)}}">
+                                        <span>{{range.totalExpenses.toFixed(1)}}</span>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                        <table class="table table-condensed table-same-width" ng-show="range.$index">
+                        <table class="table table-condensed table-same-width table-hover" ng-show="range.$index">
                             <thead>
                                 <tr>
                                     <th class="hidden-xs">#</th>

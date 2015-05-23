@@ -6,12 +6,14 @@
 <p class="text-success">@ViewBag.StatusMessage</p>
 
 <div class="row" fade-in="500" style="margin-top:30px;">
-    <div class="col-xs-12 col-md-3 text-center">
-        <img gravatar-src="'@User.Identity.Name'" gravatar-size="200">
-        <h4>@User.Identity.Name</h4>
+    <div class="col-xs-12 col-md-6 text-center">
+        <div class="square">
+            <img gravatar-src="'@User.Identity.Name'" gravatar-size="200">
+            <h4>@User.Identity.Name</h4>
+        </div>
     </div>
             
-    <div class="col-xs-12 col-md-3 text-center">
+    <div class="col-xs-12 col-md-6 text-center">
         <div class="square">
             <h4>Password </h4>
             <div class="square-link">
@@ -27,7 +29,7 @@
         </div>
     </div>
 
-    <div class="col-xs-12 col-md-3 text-center">
+    <div class="col-xs-12 col-md-6 text-center">
         <div class="square">
             <h4>External logins</h4>
             <div class="square-link">
@@ -37,7 +39,7 @@
         </div>
     </div>
 
-    <div class="col-xs-12 col-md-3 text-center">
+    <div class="col-xs-12 col-md-6 text-center">
         <div class="square">
             <h4>Two-factor authentication</h4>
             <div class="square-link">
