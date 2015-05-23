@@ -1,10 +1,11 @@
-﻿@model IEnumerable<BudgetApp.Models.Mapping>
+﻿@using BudgetApp.Extensions
+@model IEnumerable<BudgetApp.Models.Mapping>
 
 @{
     ViewBag.Title = "Mappings";
 }
 
-<div style="margin-top: 30px;">
+<div style="margin-top: 30px;" ng-controller="mappingsController">
 
     @if (!Model.Any())
     {
@@ -31,8 +32,10 @@
 
     }
     else
-    {
-        <div class="row" >
+    {                
+        
+        <div class="row" >            
+
             <div class="col-xs-12 col-md-4">
                 <a href="@Url.Action("Create")" class="btn btn-default text-center" title="Add transaction" style="min-width: 67px;">
                     <i class="glyphicon glyphicon-plus-sign"></i>
@@ -50,47 +53,87 @@
             </div>
 
         </div>
+        
+        <div class="row">
+            <div class="col-xs-4 text-center">
+
+                <div class="panel panel-default">
+
+                    <div class="panel-body">
+                        @*<img src="{{getIcon(category)}}" alt="" />*@
+                        <span class="text-right">{{model.length}}</span>
+                        <h4>All</h4>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="col-xs-4 text-center" ng-repeat="category in categories">
+                
+                <div class="panel panel-default">
+
+                    <div class="panel-body">
+                        <span class="text-right">{{countCategory(category)}}</span>
+                        <img ng-src="{{getIcon(category)}}" alt="" />
+
+                        <h4>{{category | camelCaseToNormal }}</h4>
+                    </div>
+                </div>
+
+            </div>
+        </div>
 
         <div class="row" style="margin-top: 30px;">
             <div class="col-xs-12">
-                <table class="table">
-                    <tr>
-                        <th>
-                            @Html.DisplayNameFor(model => model.Category)
-                        </th>
-                        <th>
-                            @Html.DisplayNameFor(model => model.TextDescription)
-                        </th>
-                        <th>
-                            @Html.DisplayNameFor(model => model.Created)
-                        </th>
-                        <th></th>
-                    </tr>
-
-                    @foreach (var item in Model)
-                    {
+                
+                <table class="table table-condensed table-hover">
+                    <thead>
                         <tr>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Category)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.TextDescription)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Created)
-                            </td>
-                            <td>
-                                @Html.ActionLink("Edit", "Edit", new { id = item.MappingId }) |
-                                @Html.ActionLink("Details", "Details", new { id = item.MappingId }) |
-                                @Html.ActionLink("Delete", "Delete", new { id = item.MappingId })
+                            <th class="hidden-xs">#</th>
+                            <th>Category</th>
+                            <th>Text Description</th>
+                            <th>Created</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="row in model">
+                            <td class="hidden-xs">{{$index + 1}}</td>
+                            <td> {{row.category}}</td>
+                            <td>{{row.textDescription}}</td>
+                            <td>{{row.created | date}}</td>
+                            <td class="text-right">
+                                <a class="link details-link" href="{{urls.details}}/{{row.mappingId}}" tit title="Details"><i class="glyphicon glyphicon-zoom-in"></i></a>
+                                <a class="link edit-link" href="{{urls.edit}}/{{row.mappingId}}" tit title="Edit"><i class="glyphicon glyphicon-pencil"></i></a>
+                                <a class="link delete-link" href="{{urls.del}}/{{row.mappingId}}" tit title="Delete">
+                                    <i class="glyphicon glyphicon-trash"></i>
+                                </a>
                             </td>
                         </tr>
-                    }
-
+                    </tbody>
                 </table>
+
             </div>
         </div>
     }
 </div>
 
 
+<script>
+    (function() {
+        'use strict';
+
+        angular.module('budgetApp').factory('mappingModel', function() {
+            return {
+                model:@Html.Raw(Model.ToJson()),
+                urls: {
+                    del: '@Url.Action("Delete")',
+                    edit: '@Url.Action("Edit")',
+                    details: '@Url.Action("Details")'
+                },
+                categories : @Html.Raw(CategoryExtension.GetCategoryNames().ToJson())
+            };
+        });
+
+    })();
+</script>

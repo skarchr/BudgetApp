@@ -186,6 +186,7 @@
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\MappingsController.cs" />
     <Compile Include="Controllers\TransactionsController.cs" />
+    <Compile Include="Extensions\CategoryExtension.cs" />
     <Compile Include="Extensions\DateHelper.cs" />
     <Compile Include="Extensions\Dropdownlist.cs" />
     <Compile Include="Extensions\Graphs\DailyExpenses.cs" />
@@ -519,10 +520,12 @@
     <Content Include="js\controllers\HomeController.js" />
     <Content Include="js\controllers\ImportController.js" />
     <Content Include="js\controllers\LoginController.js" />
+    <Content Include="js\controllers\MappingsController.js" />
     <Content Include="js\controllers\ToastrController.js" />
     <Content Include="js\controllers\TransactionController.js" />
     <Content Include="js\directives\Directives.js" />
     <Content Include="js\filters\Filters.js" />
+    <Content Include="js\services\Services.js" />
     <Content Include="js\templates\SelectCategory.html" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />

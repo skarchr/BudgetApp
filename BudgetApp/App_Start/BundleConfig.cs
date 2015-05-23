@@ -39,11 +39,13 @@ namespace BudgetApp
 
          bundles.Add(new ScriptBundle("~/bundles/angular").Include(
                    "~/js/app/BudgetApp.js",
+                   "~/js/services/Services.js",
                    "~/js/directives/Directives.js",
                    "~/js/filters/Filters.js",
                    "~/js/controllers/TransactionController.js",
                    "~/js/controllers/HomeController.js",
                    "~/js/controllers/ToastrController.js",
+                   "~/js/controllers/MappingsController.js",
                    "~/js/controllers/AddTransactionController.js",
                    "~/js/controllers/ImportController.js",
                    "~/js/controllers/LoginController.js"));
