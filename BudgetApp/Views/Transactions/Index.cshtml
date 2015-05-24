@@ -77,8 +77,8 @@
         else
         {
 
-            <div class="row" style="margin-top: 30px;">
-                <div class="col-xs-12" ng-repeat="range in model">
+            <div class="row">
+                <div class="col-xs-12" style="margin-top:60px;" ng-repeat="range in model">
 
 
                     <div class="panel panel-default">
@@ -157,9 +157,10 @@
                                         <span>{{range.totalExpenses.toFixed(1)}}</span>
                                     </div>
                                 </div>
+                                <div class="balance"></div>
                             </div>
                         </div>
-                        <table class="table table-condensed table-same-width table-hover" ng-show="range.$index">
+                        <table class="table table-condensed table-same-width table-hover" ng-show="range.$index" style="margin-top: 18px;">
                             <thead>
                                 <tr>
                                     <th class="hidden-xs">#</th>

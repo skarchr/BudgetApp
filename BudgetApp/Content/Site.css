@@ -360,7 +360,7 @@ input.transaction-filter {
     border-radius: 4px;
 }
 
-.panel-default > .panel-body:hover {
+.panel-mapping > .panel-body:hover {
     background-color: #ececec;
     cursor: pointer;
 }
@@ -378,6 +378,38 @@ input.transaction-filter {
 
 @media (min-width: 992px) {
     .modal-lg {
-    width: 900px;
+        width: 900px;
     }
+}
+
+.progress-bar {
+    padding-top: 2px;
+    font-weight: bold;
+}
+
+.progress-bar-success {
+    background-color: #d6e9c6;
+    color: #3c763d;
+}
+
+.progress-bar-danger {
+    background-color: #eed3d7;
+    color: #a94442;
+}
+
+.balance::before {
+    content: '|';
+    opacity: 0.5;
+    color: darkgrey;
+    font-size: 20px;
+}
+
+.balance {
+    margin-top: -45px;
+    text-align: center;
+}
+.badge-mapping {
+    position: absolute;
+    margin-left: 8px;
+    background-color: #296ad4;
 }
