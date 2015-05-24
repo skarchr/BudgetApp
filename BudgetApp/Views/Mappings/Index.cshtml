@@ -34,41 +34,41 @@
     else
     {
 
+        @*<div class="row">
+
+                <div class="col-xs-12 col-md-4">
+                    <a href="@Url.Action("Create")" class="btn btn-default text-center" title="Add transaction" style="min-width: 67px;">
+                        <i class="glyphicon glyphicon-plus-sign"></i>
+                        <br />
+                        Add
+                    </a>
+                </div>
+
+                <div class="col-xs-12 col-md-4">
+
+                </div>
+
+                <div class="col-xs-12 col-md-4">
+
+                </div>
+
+            </div>*@
+
         <div class="row">
-
-            <div class="col-xs-12 col-md-4">
-                <a href="@Url.Action("Create")" class="btn btn-default text-center" title="Add transaction" style="min-width: 67px;">
-                    <i class="glyphicon glyphicon-plus-sign"></i>
-                    <br />
-                    Add
-                </a>
-            </div>
-
-            <div class="col-xs-12 col-md-4">
-
-            </div>
-
-            <div class="col-xs-12 col-md-4">
-
-            </div>
-
-        </div>
-
-        <div class="row">
-            <div class="col-xs-12 col-md-4 text-center" ng-click="filteredCategory = ''">
+            <div class="col-xs-12 col-md-4 text-center" ng-click="filteredCategory = 'All'" data-toggle="modal" data-target=".bs-example-modal-lg">
 
                 <div class="panel panel-default">
 
                     <div class="panel-body">
-                        @*<img src="{{getIcon(category)}}" alt="" />*@
-                        <span class="text-right">{{model.length}}</span>
+                        <img ng-src="{{getIcon('All')}}" alt="" />
                         <h4>All</h4>
+                        <span class="add" style="float:right" ng-click="go('All')"><i class="glyphicon glyphicon-plus"></i></span>
                     </div>
                 </div>
 
             </div>
 
-            <div class="col-xs-12 col-md-4 text-center" ng-repeat="category in categories" ng-click="setCategory(category)">
+            <div class="col-xs-12 col-md-4 text-center" ng-repeat="category in categories" ng-click="setCategory(category)" data-toggle="modal" data-target=".bs-example-modal-lg">
 
                 <div class="panel panel-default">
 
@@ -76,47 +76,72 @@
                         <img ng-src="{{getIcon(category)}}" alt="" />
 
                         <h4>{{category | camelCaseToNormal }}</h4>
-                        <span class="add" style="float:right" ng-click="addMapping(category)"><i class="glyphicon glyphicon-plus"></i></span>
+                        <span class="add" style="float:right" ng-click="go(category)"><i class="glyphicon glyphicon-plus"></i></span>
                     </div>
                 </div>
 
             </div>
         </div>
+        <div class="row">
+            <div class="col-xs-12">Icons made by <a href="http://www.flaticon.com/authors/freepik" title="Freepik">Freepik</a> from <a href="http://www.flaticon.com" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0">CC BY 3.0</a></div>
+        </div>
 
-        <div class="row" style="margin-top: 30px;">
-            <div class="col-xs-12">
-                
-                <input type="text" ng-model="filteredCategory" />
 
-                <table class="table table-condensed table-hover">
-                    <thead>
-                        <tr>
-                            <th class="hidden-xs">#</th>
-                            <th>Category</th>
-                            <th>Text Description</th>
-                            <th>Created</th>
-                            <th></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr ng-repeat="row in model | filter : filteredCategory">
-                            <td class="hidden-xs">{{$index + 1}}</td>
-                            <td> {{row.category}}</td>
-                            <td>{{row.textDescription}}</td>
-                            <td>{{row.created | date}}</td>
-                            <td class="text-right">
-                                <a class="link details-link" href="{{urls.details}}/{{row.mappingId}}" tit title="Details"><i class="glyphicon glyphicon-zoom-in"></i></a>
-                                <a class="link edit-link" href="{{urls.edit}}/{{row.mappingId}}" tit title="Edit"><i class="glyphicon glyphicon-pencil"></i></a>
-                                <a class="link delete-link" href="{{urls.del}}/{{row.mappingId}}" tit title="Delete">
-                                    <i class="glyphicon glyphicon-trash"></i>
-                                </a>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
+        <div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
 
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="myModalLabel">
+                            <img ng-src="{{getIcon(filteredCategory)}}"  height="24" />
+                            {{ filteredCategory !== '' ? (filteredCategory | camelCaseToNormal) : 'All'}}
+                        </h4>
+                    </div>
+                    <div class="modal-body">
+
+                        <table class="table table-condensed table-hover">
+                            <thead>
+                                <tr>
+                                    <th class="hidden-xs">#</th>
+                                    <th ng-show="filteredCategory === 'All'">Category</th>
+                                    <th>Text Description</th>
+                                    <th class="hidden-xs">Created</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="row in model | filter : (filteredCategory !== 'All' ? filteredCategory : '')">
+                                    <td class="hidden-xs">{{$index + 1}}</td>
+                                    <td ng-show="filteredCategory === 'All'"> {{row.category}}</td>
+                                    <td>{{row.textDescription}}</td>
+                                    <td class="hidden-xs">{{row.created | date}}</td>
+                                    <td class="text-right">
+                                        <a class="link details-link" href="{{urls.details}}/{{row.mappingId}}" tit title="Details"><i class="glyphicon glyphicon-zoom-in"></i></a>
+                                        <a class="link edit-link" href="{{urls.edit}}/{{row.mappingId}}" tit title="Edit"><i class="glyphicon glyphicon-pencil"></i></a>
+                                        <a class="link delete-link" href="{{urls.del}}/{{row.mappingId}}" tit title="Delete">
+                                            <i class="glyphicon glyphicon-trash"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="5" ng-show="(model | filter : (filteredCategory !== 'All' ? filteredCategory : '')).length === 0" class="text-warning">
+                                        No mappings created {{filteredCategory !== 'All' ? ' for "'+(filteredCategory | camelCaseToNormal)+'"' : ''}}
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-success pull-right" ng-click="go(filteredCategory)">Create Mapping</button>
+                    </div>
+
+                </div>
             </div>
         </div>
+
     }
 </div>
 

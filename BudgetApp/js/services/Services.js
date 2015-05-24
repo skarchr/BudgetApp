@@ -8,11 +8,14 @@
             var url = " ";
 
             switch (value) {
+                case "All":
+                    url = "../Content/images/for3.png";
+                    break;
                 case "Salary":
-                    url = "../Content/images/two123.png";
+                    url = "../Content/images/payment7.png";
                     break;
                 case "OtherIncome":
-                    url = "../Content/images/two123.png";
+                    url = "../Content/images/money132.png";
                     break;
                 case "Fixed":
                     url = "../Content/images/two123.png";

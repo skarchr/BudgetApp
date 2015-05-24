@@ -346,7 +346,7 @@ input.transaction-filter {
 }
 
 .panel-default > .panel-body > .add {
-        margin-top: -25px;
+    margin-top: -33px;
     transition: all 0.2s;
     font-size: 20px;
     text-align: center;
@@ -374,4 +374,10 @@ input.transaction-filter {
     background-color: green;
     cursor: pointer;
     border: 1px solid darkgreen;
+}
+
+@media (min-width: 992px) {
+    .modal-lg {
+    width: 900px;
+    }
 }

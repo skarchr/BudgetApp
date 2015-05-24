@@ -471,6 +471,7 @@
     <Content Include="Content\images\bus21.png" />
     <Content Include="Content\images\car95.png" />
     <Content Include="Content\images\currency2.png" />
+    <Content Include="Content\images\for3.png" />
     <Content Include="Content\images\fork28.png" />
     <Content Include="Content\images\gift2.png" />
     <Content Include="Content\images\halloween282.png" />
@@ -491,6 +492,8 @@
     <Content Include="Content\images\github.svg" />
     <Content Include="Content\images\map29.png" />
     <Content Include="Content\images\medical109.png" />
+    <Content Include="Content\images\money132.png" />
+    <Content Include="Content\images\payment7.png" />
     <Content Include="Content\images\piggy9.png" />
     <Content Include="Content\images\protection3.png" />
     <Content Include="Content\images\real-estate.png" />

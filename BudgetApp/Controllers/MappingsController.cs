@@ -39,8 +39,14 @@ namespace BudgetApp.Controllers
         }
 
         // GET: Mappings/Create
-        public ActionResult Create()
+        [HttpGet]
+        public ActionResult Create(string mapping = null)
         {
+            if (mapping != null)
+            {
+                return View(new Mapping { Category = (Category)Enum.Parse(typeof(Category), mapping) });
+            }            
+
             return View();
         }
 

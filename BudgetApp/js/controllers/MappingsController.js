@@ -1,10 +1,18 @@
 ﻿(function() {
     'use strict';
 
-    angular.module('budgetApp').controller('mappingsController', ['$scope', 'mappingModel', 'commonService', function ($scope, mappingModel, commonService) {
+    angular.module('budgetApp').controller('mappingsController', ['$scope', '$window', 'mappingModel', 'commonService', function ($scope, $window, mappingModel, commonService) {
 
         $scope.model = mappingModel.model;
         $scope.urls = mappingModel.urls;
+
+        $scope.go = function (path) {
+            if (path === 'All') {
+                $window.location.href = 'Mappings/Create';
+            } else {
+                $window.location.href = 'Mappings/Create?mapping=' + path;
+            }            
+        };
 
         $scope.filteredCategory = '';
 
@@ -15,10 +23,6 @@
         };
 
         $scope.categories = mappingModel.categories;
-
-        $scope.addMapping = function(category) {
-            alert('Helloooo');
-        };
 
         $scope.setCategory = function(category) {
             $scope.filteredCategory = category;
