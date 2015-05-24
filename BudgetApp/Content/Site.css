@@ -346,18 +346,10 @@ input.transaction-filter {
 }
 
 .panel-default > .panel-body > .add {
-    margin-top: -33px;
+    margin-top: -50px;
     transition: all 0.2s;
-    font-size: 20px;
-    text-align: center;
-    background-color: rgb(233, 249, 233);
-    color: white;
-    padding: 1px 5px 1px 6px; 
-    border: 1px solid lightgreen;
-    -ms-border-radius: 4px;
-    -webkit-border-radius: 4px;
-    -moz-border-radius: 4px;
-    border-radius: 4px;
+    font-size: 25px;
+    color: rgb(233, 249, 233);    
 }
 
 .panel-mapping > .panel-body:hover {
@@ -366,14 +358,12 @@ input.transaction-filter {
 }
 
 .panel-default > .panel-body:hover > .add {
-    background-color: lightgreen;
+    color: #3c763d;
 }
 
 .panel-default > .panel-body:hover > .add:hover {
     color: white;
-    background-color: green;
     cursor: pointer;
-    border: 1px solid darkgreen;
 }
 
 @media (min-width: 992px) {
@@ -411,5 +401,7 @@ input.transaction-filter {
 .badge-mapping {
     position: absolute;
     margin-left: 8px;
-    background-color: #296ad4;
+    background-color: white;
+    color: #313131;
+    border: 1px solid #313131;
 }
