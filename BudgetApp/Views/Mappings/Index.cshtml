@@ -32,9 +32,9 @@
 
     }
     else
-    {                
-        
-        <div class="row" >            
+    {
+
+        <div class="row">
 
             <div class="col-xs-12 col-md-4">
                 <a href="@Url.Action("Create")" class="btn btn-default text-center" title="Add transaction" style="min-width: 67px;">
@@ -53,9 +53,9 @@
             </div>
 
         </div>
-        
+
         <div class="row">
-            <div class="col-xs-4 text-center">
+            <div class="col-xs-12 col-md-4 text-center" ng-click="filteredCategory = ''">
 
                 <div class="panel panel-default">
 
@@ -68,15 +68,15 @@
 
             </div>
 
-            <div class="col-xs-4 text-center" ng-repeat="category in categories">
-                
+            <div class="col-xs-12 col-md-4 text-center" ng-repeat="category in categories" ng-click="setCategory(category)">
+
                 <div class="panel panel-default">
 
                     <div class="panel-body">
-                        <span class="text-right">{{countCategory(category)}}</span>
                         <img ng-src="{{getIcon(category)}}" alt="" />
 
                         <h4>{{category | camelCaseToNormal }}</h4>
+                        <span class="add" style="float:right" ng-click="addMapping(category)"><i class="glyphicon glyphicon-plus"></i></span>
                     </div>
                 </div>
 
@@ -86,6 +86,8 @@
         <div class="row" style="margin-top: 30px;">
             <div class="col-xs-12">
                 
+                <input type="text" ng-model="filteredCategory" />
+
                 <table class="table table-condensed table-hover">
                     <thead>
                         <tr>
@@ -97,7 +99,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr ng-repeat="row in model">
+                        <tr ng-repeat="row in model | filter : filteredCategory">
                             <td class="hidden-xs">{{$index + 1}}</td>
                             <td> {{row.category}}</td>
                             <td>{{row.textDescription}}</td>
@@ -132,7 +134,7 @@
                     details: '@Url.Action("Details")'
                 },
                 categories : @Html.Raw(CategoryExtension.GetCategoryNames().ToJson())
-            };
+                };
         });
 
     })();

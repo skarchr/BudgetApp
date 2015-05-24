@@ -344,3 +344,34 @@ input.transaction-filter {
 .not-included > td {
     background-color: #f5f5f5;
 }
+
+.panel-default > .panel-body > .add {
+        margin-top: -25px;
+    transition: all 0.2s;
+    font-size: 20px;
+    text-align: center;
+    background-color: rgb(233, 249, 233);
+    color: white;
+    padding: 1px 5px 1px 6px; 
+    border: 1px solid lightgreen;
+    -ms-border-radius: 4px;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+}
+
+.panel-default > .panel-body:hover {
+    background-color: #ececec;
+    cursor: pointer;
+}
+
+.panel-default > .panel-body:hover > .add {
+    background-color: lightgreen;
+}
+
+.panel-default > .panel-body:hover > .add:hover {
+    color: white;
+    background-color: green;
+    cursor: pointer;
+    border: 1px solid darkgreen;
+}
