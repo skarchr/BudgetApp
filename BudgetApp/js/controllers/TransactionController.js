@@ -40,5 +40,17 @@
 
     }]);
 
+    angular.module('budgetApp').controller('deleteTransactionController', ['$scope', 'deleteTransactionModel', 'commonService', function ($scope, deleteTransactionModel, commonService) {
+
+        $scope.model = deleteTransactionModel.model;
+
+        $scope.getIcon = function (input) {
+
+            return commonService.getIconUrl(input);
+
+        };
+
+    }]);
+
 
 })();
