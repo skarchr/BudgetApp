@@ -2,6 +2,27 @@
     'use strict';
 
     angular.module('budgetApp')
+
+        .directive('setRange', [function() {
+            return {
+                restrict: 'A',
+                scope: {
+                    setRange: '@'
+                },
+                link: function(scope, elem, attrs) {
+
+                    $(elem[0]).on('click', function() {
+                        
+                        $('#Range').val(scope.setRange);
+
+                        $('#submitBtn').trigger('click');
+
+                    });
+                    
+                }
+            };
+        }])
+
         .directive('selectCategories', [
             function() {
 

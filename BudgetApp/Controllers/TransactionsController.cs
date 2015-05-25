@@ -23,24 +23,14 @@ namespace BudgetApp.Controllers
         // GET: Transactions
         public ActionResult Index()
         {
-            var allTransactions = db.Transactions.Where(s => s.UserName == User.Identity.Name);
-
-            var ytd = new DateTime(DateTime.Now.Year, 1, 1);
-
-            var transactions = allTransactions.Where(s => s.Date >= ytd && s.Date <= DateTime.Now).ToList();
+            var allTransactions = db.Transactions.Where(s => s.UserName == User.Identity.Name).ToList();
 
 
             var model = new TransactionsViewModel 
             {
-                TotalTransactions = allTransactions.Count(),
-                TransactionsDisplayed = transactions.Count,
-                RangeViewers = GetMonth(transactions), 
-                Filter = new Models.Filter
-                {
-                    Range = Range.Month, 
-                    StartDate = new DateTime(DateTime.Now.Year, 1, 1), 
-                    EndDate = DateTime.Now
-                } 
+                TransactionsDisplayed = allTransactions.Count,
+                RangeViewers = GetMonth(allTransactions), 
+                Range = Range.Month
             };
 
             ViewBag.Success = TempData["Success"];
@@ -51,29 +41,26 @@ namespace BudgetApp.Controllers
         [HttpPost]
         public ActionResult Index(TransactionsViewModel model)
         {
-            var allTransactions = db.Transactions.Where(s => s.UserName == User.Identity.Name);
-
-            var transactions = allTransactions.Where(s => s.Date >= model.Filter.StartDate && s.Date <= model.Filter.EndDate).ToList();
+            var allTransactions = db.Transactions.Where(s => s.UserName == User.Identity.Name).ToList();
 
             var rangeViewers = new List<RangeViewer>();
 
-            switch (model.Filter.Range)
+            switch (model.Range)
             {
                 case Range.Annual:
-                    rangeViewers = GetAnnual(transactions);
+                    rangeViewers = GetAnnual(allTransactions);
                     break;
                 case Range.Month:
-                    rangeViewers = GetMonth(transactions);
+                    rangeViewers = GetMonth(allTransactions);
                     break;
                 case Range.Week:
-                    rangeViewers = GetWeek(transactions);
+                    rangeViewers = GetWeek(allTransactions);
                     break;
 
             }
 
             model.RangeViewers = rangeViewers;
-            model.TotalTransactions = allTransactions.Count();
-            model.TransactionsDisplayed = transactions.Count;
+            model.TransactionsDisplayed = allTransactions.Count;
 
             return View(model);
         }

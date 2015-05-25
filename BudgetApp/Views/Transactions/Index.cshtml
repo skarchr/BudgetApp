@@ -15,38 +15,35 @@
         @using (Html.BeginForm("Index", "Transactions", FormMethod.Post))
         {
             <div class="row">
-                <div class="col-xs-12 text-right">
-                    <span class="text-muted">Showing @Model.TransactionsDisplayed / @Model.TotalTransactions transactions</span>
-                </div>
-            </div>
-            <div class="row">
                 <div class="col-xs-12 col-md-3">
                     <a href="@Url.Action("Create")" class="btn btn-default text-center" title="Add transaction" style="min-width: 67px;">
-                        <i class="glyphicon glyphicon-plus-sign"></i>
-                        <br />
                         Add
                     </a>
                     <a href="@Url.Action("Upload")" class="btn btn-default text-center" title="Import transactions" style="min-width: 67px;">
-                        <i class="glyphicon glyphicon-import"></i>
-                        <br />
                         Import
                     </a>
 
                 </div>
 
-                <div class="col-xs-12 col-md-9 text-right">                                                            
+                <div class="col-xs-12 col-md-9 text-right">
+                                                                                
+                    @Html.HiddenFor(s => s.Range, new { @class = "transaction-filter" })                    
 
-                    @Html.TextBoxFor(s => s.Filter.StartDate, new { @class = "transaction-filter", @required = "required", @type = "date", @ng_model = "startDate", @max = "{{endDate | date:'yyyy-MM-dd'}}" })
-                    -
-                    @Html.TextBoxFor(s => s.Filter.EndDate, new { @type = "date", @class = "transaction-filter", @required = "required", @min = "{{startDate | date:'yyyy-MM-dd'}}", max = DateTime.Now.ToString("yyyy-MM-dd"), @ng_model = "endDate" })
+                    <div class="btn-group" role="group">
+                                                
 
-                    @Html.EnumDropDownListFor(s => s.Filter.Range, new { @class = "transaction-filter" })
-
-                    <button class="btn btn-primary" title="Filter">
-                        <i class="glyphicon glyphicon-filter"></i>
-                        <br />
-                        Filter
-                    </button>
+                        <button type="button" set-range="@Range.Annual" class="btn btn-default @(Model.Range == Range.Annual ? "active":"")">
+                            Annual
+                        </button>
+                        <button type="button" set-range="@Range.Month" class="btn btn-default @(Model.Range == Range.Month ? "active":"")">
+                            Monthly
+                        </button>
+                        <button type="button" set-range="@Range.Week" class="btn btn-default @(Model.Range == Range.Week ? "active":"")">
+                            Weekly
+                        </button>
+                    </div>
+                    
+                    <input type="submit" id="submitBtn" class="hidden" />
 
                 </div>
 
@@ -66,9 +63,7 @@
                     </object>
                 </div>
 
-                <h3 class="text-center" style="margin-top: -40px;">No transactions registered between @Model.Filter.StartDate.ToShortDateString() and @Model.Filter.EndDate.ToShortDateString()</h3>
-
-
+                <h3 class="text-center" style="margin-top: -40px;">No transactions registered</h3>
 
             </div>
 
@@ -78,7 +73,7 @@
         {
 
             <div class="row">
-                <div class="col-xs-12" style="margin-top:60px;" ng-repeat="range in model">
+                <div class="col-xs-12" style="margin-top:30px;" ng-repeat="range in model">
 
 
                     <div class="panel panel-default">
@@ -92,7 +87,7 @@
                                         {{range.year }}
                                     </span>
                                     
-                                    <span class="label label-big label-muted" ng-show="filter.range === 2">
+                                    <span class="label label-big label-muted" ng-show="filter === 2">
                                         {{range.startDate | monthName2 }}
                                     </span>
 
@@ -210,7 +205,7 @@
         angular.module('budgetApp').factory('transactionModel', function() {
 
             return {
-                filter : @Html.Raw(Model.Filter.ToJson()),
+                filter : @Html.Raw(Model.Range.ToJson()),
                 model: @Html.Raw(Model.RangeViewers.ToJson()),
                 urls: {
                     del: '@Url.Action("Delete")',
