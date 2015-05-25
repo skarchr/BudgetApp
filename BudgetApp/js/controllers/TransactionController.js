@@ -23,4 +23,22 @@
 
     }]);
 
+    angular.module('budgetApp').controller('addTransactionController', ['$scope', 'addTransactionModel', function ($scope, addTransactionModel) {
+
+        $scope.model = addTransactionModel.model;
+
+        $scope.regexDouble = /^(\d+(?:[\.\,]\d{1,2})?)$/;
+
+    }]);
+
+    angular.module('budgetApp').controller('editTransactionController', ['$scope', 'editTransactionModel', function ($scope, editTransactionModel) {
+
+        $scope.model = editTransactionModel.model;
+
+        $scope.model.date = new Date(editTransactionModel.model.date);
+
+
+    }]);
+
+
 })();

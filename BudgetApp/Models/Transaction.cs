@@ -17,7 +17,7 @@ namespace BudgetApp.Models
         [JsonConverter(typeof(StringEnumConverter))]
         public Category? Category { get; set; }
         public string Description { get; set; }
-        
+
         public DateTime Date { get; set; }
         public DateTime Created { get; set; }
         public bool Import { get; set; }

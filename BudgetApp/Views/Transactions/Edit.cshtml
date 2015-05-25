@@ -5,59 +5,104 @@
     ViewBag.Title = "Transactions";
 }
 
-<h2>Edit</h2>
+<div style="margin-top:30px;">
+    <div class="col-md-12 text-center">
 
-@using (Html.BeginForm())
-{
-    @Html.AntiForgeryToken()
-    
-    <div class="form-horizontal">
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        @Html.HiddenFor(model => model.TransactionId)
-        @Html.HiddenFor(model => model.UserName)
-        @Html.HiddenFor(model => model.Created)
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Amount, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Amount, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Amount, "", new { @class = "text-danger" })
-            </div>
+        <div id="icon" data-logo="18" style="width:18%; min-width: 220px;">
+            <object>
+                <img src="~/Content/images/logo.svg" id="svg" />
+            </object>
         </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Category, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownGroupListFor(model => model.Category, Dropdownlist.GroupedCategories(Model != null ? Model.Category.ToString() : ""), " ", new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.Category, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.TextAreaFor(model => model.Description, new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Date, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.TextBoxFor(model => model.Date, new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.Date, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-primary" />
-            </div>
-        </div>
     </div>
-}
+    <div class="row" style="margin-top: 40px;" ng-controller="editTransactionController">
+        @using (Html.BeginForm("Create", "Transactions", FormMethod.Post, new { name = "addForm" }))
+        {
+            @Html.AntiForgeryToken()
+            @Html.HiddenFor(model => model.TransactionId)
+            @Html.HiddenFor(model => model.UserName)
+            @Html.HiddenFor(model => model.Created)
+            <div class="col-xs-12">
 
-<div>
-    @Html.ActionLink("Back to List", "Index")
+                <h2 class="text-center" style="margin-top: -50px;">Edit transaction</h2>
+
+                <div class="row form-member">
+                    <div class="member-label col-xs-12">
+                        <span>Amount</span>
+                    </div>
+                    <div class="col-xs-10 member-control">
+                        @Html.TextBoxFor(m => m.Amount, new { @class = "form-control", @placeholder = "Amount", @ng_model = "model.amount", @required = "required", @ng_pattern = "regexDouble" })
+                    </div>
+                    <div class="col-xs-2">
+                        <label style="padding-top:6px;" class="control-label col-xs-12 label-validator text-danger" ng-show="addForm.Amount.$invalid && addForm.Amount.$touched"></label>
+                        <label style="padding-top:6px;" class="control-label col-xs-12 label-validator text-success" ng-show="addForm.Amount.$valid"></label>
+                    </div>
+                </div>
+
+                <div class="row form-member">
+                    <div class="col-xs-12 member-label">
+                        <span>Category</span>
+                    </div>
+                    <div class="col-xs-10 member-control">
+                        @Html.DropDownGroupListFor(model => model.Category, Dropdownlist.GroupedCategories(Model != null ? Model.Category.ToString() : ""), " ", new { @class = "form-control", @required = "required", @ng_model = "model.category" })
+                    </div>
+                    <div class="col-xs-2">
+                        <label style="padding-top:6px;" class="control-label col-xs-12 label-validator text-danger" ng-show="addForm.Category.$invalid && addForm.Category.$dirty"></label>
+                        <label style="padding-top:6px;" class="control-label col-xs-12 label-validator text-success" ng-show="addForm.Category.$valid"></label>
+                    </div>
+                </div>
+
+                <div class="row form-member">
+                    <div class="col-xs-12 member-label">
+                        <span>Description</span>
+                    </div>
+                    <div class="col-xs-10 member-control">
+                        @Html.TextAreaFor(model => model.Description, new { @class = "form-control", @required = "required", @ng_model = "model.description" })
+                    </div>
+                    <div class="col-xs-2">
+                        <label style="padding-top:6px;" class="control-label col-xs-12 label-validator text-danger" ng-show="addForm.Description.$invalid && addForm.Description.$touched"></label>
+                        <label style="padding-top:6px;" class="control-label col-xs-12 label-validator text-success" ng-show="addForm.Description.$valid"></label>
+                    </div>
+                </div>
+
+
+                <div class="row form-member">
+                    <div class="col-xs-12 member-label">
+                        <span>Date</span>
+                    </div>
+                    <div class="col-xs-10 member-control">
+                        @Html.TextBoxFor(model => model.Date, new { @class = "form-control", @required = "required", @ng_model = "model.date", max = DateTime.Now.ToString("yyyy-MM-dd"), @type = "date" })
+                    </div>
+                    <div class="col-xs-2">
+                        <label style="padding-top:6px;" class="control-label col-xs-12 label-validator text-danger" ng-show="addForm.Date.$invalid && addForm.Date.$touched"></label>
+                        <label style="padding-top:6px;" class="control-label col-xs-12 label-validator text-success" ng-show="addForm.Date.$valid"></label>
+                    </div>
+                </div>
+
+
+                <div class="row form-member">
+                    <div class="col-xs-12">
+                        <input type="submit" value="Edit" class="btn btn-primary" ng-disabled="addForm.$invalid" />
+                        @Html.ActionLink("Cancel", "Index", "Transactions", null, new { @clas = "btn btn-link" })
+                    </div>
+                </div>
+            </div>
+        }
+
+    </div>
 </div>
+
+<script>
+    (function() {
+        'use strict';
+
+        angular.module('budgetApp').factory('editTransactionModel', function() {
+
+            return {
+                model: @Html.Raw(Model.ToJson())
+            };
+
+        });
+
+    })();
+</script>

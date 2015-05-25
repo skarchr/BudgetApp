@@ -194,21 +194,6 @@ namespace BudgetApp.Controllers
         }
         #endregion
 
-        // GET: Transactions/Details/5
-        public ActionResult Details(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Transaction transaction = db.Transactions.Find(id);
-            if (transaction == null)
-            {
-                return HttpNotFound();
-            }
-            return View(transaction);
-        }
-
         // GET: Transactions/Create
         public ActionResult Create()
         {
