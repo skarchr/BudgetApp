@@ -1,56 +1,85 @@
-﻿@model BudgetApp.Models.Mapping
+﻿@using BudgetApp.Extensions
+@model BudgetApp.Models.Mapping
 
 @{
     ViewBag.Title = "Mappings";
 }
 
-<h2>Delete</h2>
+<div class="row" style="margin-top:30px;" ng-controller="deleteMappingController">
 
-<h3>Are you sure you want to delete this?</h3>
-<div>
-    <h4>Mapping</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.UserName)
-        </dt>
+    <div class="col-xs-12">
 
-        <dd>
-            @Html.DisplayFor(model => model.UserName)
-        </dd>
+        <div class="col-md-12 text-center">
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Category)
-        </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Category)
-        </dd>
+            <div id="icon" data-logo="18" style="width:18%; min-width: 220px;min-height:50px;">
 
-        <dt>
-            @Html.DisplayNameFor(model => model.TextDescription)
-        </dt>
+                <img class="mapping-image" src="/Content/images/currency.png" alt="transaction" title="Transaction" />
 
-        <dd>
-            @Html.DisplayFor(model => model.TextDescription)
-        </dd>
+                <img src="/Content/images/plugins.png" style="opacity: 0.1; margin-right: -5px; margin-left: -5px;" />
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Created)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Created)
-        </dd>
-
-    </dl>
-
-    @using (Html.BeginForm()) {
-        @Html.AntiForgeryToken()
-
-        <div class="form-actions no-color">
-            <input type="submit" value="Delete" class="btn btn-default" /> |
-            @Html.ActionLink("Back to List", "Index")
+                <img class="mapping-image" ng-src="{{getIcon('@Model.Category')}}" alt="mapping" title="{{model.category}}" />
+            </div>
         </div>
-    }
+
+        <h3 class="text-center">Are you sure you want to delete this mapping?</h3>
+        <div class="row text-center" style="margin-top: 40px;">
+
+            <div class="col-xs-12">
+
+                <div class="col-xs-6 col-lg-offset-3 well well-sm text-left">
+
+                    <strong>Created</strong>
+                    <br />
+                    {{model.created | date}}
+
+                    <br />
+                    <br />
+                    
+                    <strong>Category</strong>
+                    <br />
+                    <span>{{model.category | camelCaseToNormal}}</span>
+                    
+                    <br />
+                    <br />
+
+                    <strong>Text description</strong>
+                    <br />
+                    {{model.textDescription}}
+
+                </div>
+
+
+            </div>
+        </div>
+        <div class="row text-center">
+
+            <div class="col-xs-12">
+                @using (Html.BeginForm())
+                {
+                    @Html.AntiForgeryToken()
+                <input type="submit" value="Delete" class="btn btn-danger" />
+                @Html.ActionLink("Cancel", "Index")
+                }
+            </div>
+            
+        </div>
+    </div>
+
 </div>
+
+
+<script>
+    (function() {
+        'use strict';
+
+        angular.module('budgetApp').factory('deleteMappingModel', function() {
+
+            return {
+                model: @Html.Raw(Model.ToJson())
+            };
+
+        });
+
+    })();
+</script>

@@ -50,7 +50,7 @@
 
             </div>
 
-            <div class="col-xs-12 col-md-4 text-center" ng-repeat="category in categories" ng-click="setCategory(category)" data-toggle="modal" data-target=".bs-example-modal-lg">
+            <div class="col-xs-12 col-md-4 text-center" ng-repeat="category in categories | orderBy : category" ng-click="setCategory(category)" data-toggle="modal" data-target=".bs-example-modal-lg">
 
                 <div class="panel panel-default panel-mapping">
 
@@ -96,11 +96,10 @@
                             <tbody>
                                 <tr ng-repeat="row in model | filter : (filteredCategory !== 'All' ? filteredCategory : '')">
                                     <td class="hidden-xs">{{$index + 1}}</td>
-                                    <td ng-show="filteredCategory === 'All'"> {{row.category}}</td>
+                                    <td ng-show="filteredCategory === 'All'"> {{row.category | camelCaseToNormal}}</td>
                                     <td>{{row.textDescription}}</td>
                                     <td class="hidden-xs">{{row.created | date}}</td>
                                     <td class="text-right">
-                                        <a class="link details-link" href="{{urls.details}}/{{row.mappingId}}" tit title="Details"><i class="glyphicon glyphicon-zoom-in"></i></a>
                                         <a class="link edit-link" href="{{urls.edit}}/{{row.mappingId}}" tit title="Edit"><i class="glyphicon glyphicon-pencil"></i></a>
                                         <a class="link delete-link" href="{{urls.del}}/{{row.mappingId}}" tit title="Delete">
                                             <i class="glyphicon glyphicon-trash"></i>

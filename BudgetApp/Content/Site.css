@@ -405,3 +405,8 @@ input.transaction-filter {
     color: #313131;
     border: 1px solid #313131;
 }
+
+.mapping-image {
+    border: 1px solid #c0c0c0;
+    padding: 15px;
+}

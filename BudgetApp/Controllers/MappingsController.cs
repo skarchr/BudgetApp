@@ -23,21 +23,6 @@ namespace BudgetApp.Controllers
             return View(db.Mappings.Where(s => s.UserName == User.Identity.Name).ToList());
         }
 
-        // GET: Mappings/Details/5
-        public ActionResult Details(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Mapping mapping = db.Mappings.Find(id);
-            if (mapping == null)
-            {
-                return HttpNotFound();
-            }
-            return View(mapping);
-        }
-
         // GET: Mappings/Create
         [HttpGet]
         public ActionResult Create(string mapping = null)

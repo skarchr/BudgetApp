@@ -32,17 +32,49 @@
 
             var count = 0;
 
-            var cat1 = category.replace(/([A-Z])/g, " $1");
-
-            var cat2  = (cat1.charAt(0).toUpperCase() + cat1.slice(1)).trim();
-
             for (var i = 0; i < mappingModel.model.length; i++) {
-
-                if (mappingModel.model[i].category.trim() === cat2) {
+                
+                if (mappingModel.model[i].category.trim() === category) {
                     count += 1;
                 }
             }
             return count;
+
+        };
+
+    }]);
+
+    angular.module('budgetApp').controller('addMappingController', ['$scope', 'addMappingModel', 'commonService', function ($scope, addMappingModel, commonService) {
+
+        $scope.model = addMappingModel.model;
+
+        $scope.getIcon = function (input) {
+
+            return commonService.getIconUrl(input);
+
+        };
+
+    }]);
+
+    angular.module('budgetApp').controller('deleteMappingController', ['$scope', 'commonService', 'deleteMappingModel', function ($scope, commonService, deleteMappingModel) {
+
+        $scope.model = deleteMappingModel.model;
+
+        $scope.getIcon = function (input) {
+
+            return commonService.getIconUrl(input);
+
+        };
+
+    }]);
+
+    angular.module('budgetApp').controller('editMappingController', ['$scope', 'editMappingModel', 'commonService', function ($scope, editMappingModel, commonService) {
+
+        $scope.model = editMappingModel.model;
+
+        $scope.getIcon = function (input) {
+
+            return commonService.getIconUrl(input);
 
         };
 

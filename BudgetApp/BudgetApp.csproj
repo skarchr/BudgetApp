@@ -470,6 +470,7 @@
     <Content Include="Content\images\apple55.png" />
     <Content Include="Content\images\bus21.png" />
     <Content Include="Content\images\car95.png" />
+    <Content Include="Content\images\currency.png" />
     <Content Include="Content\images\currency2.png" />
     <Content Include="Content\images\for3.png" />
     <Content Include="Content\images\fork28.png" />
@@ -495,10 +496,13 @@
     <Content Include="Content\images\money132.png" />
     <Content Include="Content\images\payment7.png" />
     <Content Include="Content\images\piggy9.png" />
+    <Content Include="Content\images\plugins.png" />
     <Content Include="Content\images\protection3.png" />
+    <Content Include="Content\images\question30.png" />
     <Content Include="Content\images\real-estate.png" />
     <Content Include="Content\images\rss22.png" />
     <Content Include="Content\images\shopping82.png" />
+    <Content Include="Content\images\square131.png" />
     <Content Include="Content\images\strength_2.svg" />
     <Content Include="Content\images\strength_4.svg" />
     <Content Include="Content\images\strength_3.svg" />
@@ -629,7 +633,6 @@
     <Content Include="Views\Transactions\Edit.cshtml" />
     <Content Include="Views\Mappings\Create.cshtml" />
     <Content Include="Views\Mappings\Delete.cshtml" />
-    <Content Include="Views\Mappings\Details.cshtml" />
     <Content Include="Views\Mappings\Edit.cshtml" />
     <Content Include="Views\Mappings\Index.cshtml" />
     <Content Include="Views\Transactions\Upload.cshtml" />
