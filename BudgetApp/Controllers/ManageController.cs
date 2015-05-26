@@ -12,6 +12,8 @@ namespace BudgetApp.Controllers
     [Authorize]
     public class ManageController : Controller
     {
+        private ApplicationDbContext db = new ApplicationDbContext();
+
         public ManageController()
         {
         }
@@ -32,6 +34,55 @@ namespace BudgetApp.Controllers
             {
                 _userManager = value;
             }
+        }        
+
+        [HttpGet]
+        public ActionResult ManageAccount()
+        {
+            var user = db.Users.FirstOrDefault(s => s.UserName == User.Identity.Name);
+
+            if (user != null)
+            {
+                var model = new ManageAccountViewModel
+                {
+                    UserName = user.UserName,
+                    Currency = user.Currency,
+                    Country = user.Country,
+                    AccessFailedCount = user.AccessFailedCount
+                };
+
+                return View(model);
+            }
+
+            return RedirectToAction("Index", new { Message = ManageMessageId.Error });
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult ManageAccount(ManageAccountViewModel viewModel)
+        {
+            var user = db.Users.FirstOrDefault(s => s.UserName == User.Identity.Name);
+
+            if (user != null)
+            {
+                user.Country = viewModel.Country;
+                user.Currency = viewModel.Currency;
+                db.SaveChanges();
+
+                ViewBag.Success = "Account information saved";
+
+                var model = new ManageAccountViewModel
+                {
+                    UserName = user.UserName,
+                    Currency = user.Currency,
+                    Country = user.Country,
+                    AccessFailedCount = user.AccessFailedCount
+                };
+
+                return View(model);
+            }
+
+            return RedirectToAction("Index", new { Message = ManageMessageId.Error });
         }
 
         //

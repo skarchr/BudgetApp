@@ -1,0 +1,77 @@
+﻿@using BudgetApp.Extensions
+@model BudgetApp.Models.ManageAccountViewModel
+      
+@{
+    ViewBag.Title = "Manage";
+}
+     
+@using (Html.BeginForm("ManageAccount", "Manage", FormMethod.Post, new { @class = "form-horizontal", role = "form", @name = "registerform" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="row" ng-controller="currencyController" style="margin-top: 30px;">
+
+        <div class="col-md-12 text-center">
+
+            <div id="icon" data-logo="18" style="width:40%; min-width: 220px;">
+                <img gravatar-src="'@User.Identity.Name'" gravatar-size="200">
+            </div>
+
+        </div>
+        <div data-slide-down data-prevent="@Html.ViewData.ModelState.IsValid" class="col-xs-12">
+
+            <h4 class="text-center">Manage Account</h4>
+
+
+            <div class="row text-center" style="max-width: 300px; margin-left: auto;margin-right: auto;">
+
+                <div class="col-xs-10" style="padding:10px;">
+                    <select class="form-control center" id="Country" name="Country" ng-model="model.country" required>
+                        <option class="text-muted" value="">-- Country --</option>
+                        <option ng-repeat="country in countries" value="{{country.name}}">{{country.name}}</option>
+                    </select>
+                </div>
+                <div class="col-xs-2">
+                    <label class="control-label col-xs-12 label-validator text-danger" ng-show="registerform.Country.$invalid && registerform.Country.$dirty"></label>
+                    <label class="control-label col-xs-12 label-validator text-success" ng-show="registerform.Country.$valid && registerform.Country.$dirty"></label>
+                </div>
+            </div>
+
+            <div class="row text-center" style="max-width: 300px; margin-left: auto;margin-right: auto;">
+
+                <div class="col-xs-10" style="padding:10px;">
+                    <select class="form-control center" id="Currency" name="Currency" ng-model="model.currency" required>
+                        <option class="text-muted" value="">-- Currency --</option>
+                        <option ng-repeat="currency in currencies" value="{{currency.cc}}" title="{{currency.name}}">{{currency.cc}}</option>
+                    </select>
+                </div>
+                <div class="col-xs-2">
+                    <label class="control-label col-xs-12 label-validator text-danger" ng-show="registerform.Currency.$invalid && registerform.Currency.$dirty"></label>
+                    <label class="control-label col-xs-12 label-validator text-success" ng-show="registerform.Currency.$valid && registerform.Currency.$dirty"></label>
+                </div>
+            </div>
+
+
+            <div class="form-group">
+                <div class="col-md-12 text-center">
+                    <input type="submit" ng-disabled="registerform.$invalid  || !registerform.$dirty" class="btn btn-primary" value="Update" />
+                    @Html.ActionLink("Cancel", "Index", "Manage", new { @class = "btn btn-link" })
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+}
+
+<script>
+    (function() {
+        'use strict';
+        angular.module('budgetApp').factory('userModel', function() {
+            return {
+                model: @Html.Raw(Model.ToJson())
+            };
+        });
+
+    })();
+</script>

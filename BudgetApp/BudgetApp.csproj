@@ -221,6 +221,7 @@
     <Compile Include="Models\HomeViewModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ImportViewModel.cs" />
+    <Compile Include="Models\ManageAccountViewModel.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Mapping.cs" />
     <Compile Include="Models\RangeViewer.cs" />
@@ -523,6 +524,7 @@
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
     <Content Include="js\app\BudgetApp.js" />
+    <Content Include="js\controllers\CurrencyController.js" />
     <Content Include="js\controllers\HomeController.js" />
     <Content Include="js\controllers\ImportController.js" />
     <Content Include="js\controllers\LoginController.js" />
@@ -636,6 +638,7 @@
     <Content Include="Views\Transactions\Import.cshtml" />
     <Content Include="Views\Transactions\Index.cshtml" />
     <Content Include="Views\Transactions\Edit.cshtml" />
+    <Content Include="Views\Manage\ManageAccount.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\uploads\" />
