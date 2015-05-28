@@ -89,6 +89,7 @@ namespace BudgetApp.Controllers
         // GET: /Manage/Index
         public async Task<ActionResult> Index(ManageMessageId? message)
         {
+
             ViewBag.StatusMessage =
                 message == ManageMessageId.ChangePasswordSuccess ? "Your password has been changed."
                 : message == ManageMessageId.SetPasswordSuccess ? "Your password has been set."
@@ -105,6 +106,18 @@ namespace BudgetApp.Controllers
                 Logins = await UserManager.GetLoginsAsync(User.Identity.GetUserId()),
                 BrowserRemembered = await AuthenticationManager.TwoFactorBrowserRememberedAsync(User.Identity.GetUserId())
             };
+
+            var user = db.Users.FirstOrDefault(s => s.UserName == User.Identity.Name);
+
+            if (user != null)
+            {
+                model.Country = user.Country;
+                model.Currency = user.Currency;
+                model.TransactionCount = db.Transactions.Count(s => s.UserName == User.Identity.Name);
+                model.MappingCount = db.Mappings.Count(s => s.UserName == User.Identity.Name);
+                model.AccessFailedCount = user.AccessFailedCount;
+            }
+
             return View(model);
         }
 

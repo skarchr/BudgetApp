@@ -410,3 +410,17 @@ input.transaction-filter {
     border: 1px solid #c0c0c0;
     padding: 15px;
 }
+
+.no-input {
+    padding-left: 0;
+    border: 0;
+    -webkit-box-shadow: none;
+    -ms-box-shadow: none;
+    box-shadow: none;
+    font-size: 18px;
+}
+
+.control-label {
+    color: #777;
+    font-weight: normal;
+}

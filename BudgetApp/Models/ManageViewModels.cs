@@ -7,6 +7,12 @@ namespace BudgetApp.Models
 {
     public class IndexViewModel
     {
+        public string Currency { get; set; }
+        public string Country { get; set; }
+        public int TransactionCount { get; set; }
+        public int MappingCount { get; set; }
+        public int AccessFailedCount { get; set; }
+
         public bool HasPassword { get; set; }
         public IList<UserLoginInfo> Logins { get; set; }
         public bool TwoFactor { get; set; }

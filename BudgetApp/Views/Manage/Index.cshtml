@@ -6,76 +6,125 @@
 <p class="text-success">@ViewBag.StatusMessage</p>
 
 <div class="row" fade-in="500" style="margin-top:30px;">
-    <div class="col-xs-12 col-md-6 text-center">
-        <div class="square">
-            <img gravatar-src="'@User.Identity.Name'" gravatar-size="200">
-            <h4>@User.Identity.Name</h4>
-        </div>
+    
+    <div class="col-xs-12 col-md-2 text-center">
+        <img gravatar-src="'@User.Identity.Name'" gravatar-size="200">
     </div>
 
-    <div class="col-xs-12 col-md-6 text-center">
-        <div class="square">
-            <h4>Account</h4>
-            <div class="square-link">
-                @Html.ActionLink("Manage", "ManageAccount")
+
+
+    <div class="col-xs-12 col-md-10">        
+
+        <div class="form-horizontal">
+
+
+            <div class="form-group">
+                <label for="Username" class="control-label col-sm-4">Username</label>
+                <div class="col-sm-8">
+                    <input type="text" class="form-control no-input" value="@User.Identity.Name" readonly="readonly" />
+                </div>
             </div>
-        </div>
-    </div>
 
-    <div class="col-xs-12 col-md-6 text-center">
-        <div class="square">
-            <h4>Password </h4>
-            <div class="square-link">
-                @if (Model.HasPassword)
-                {
-                    @Html.ActionLink("Change your password", "ChangePassword")
-                }
-                else
-                {
-                    @Html.ActionLink("Create", "SetPassword")
-                }
+            <div class="form-group">
+                <label for="Currency" class="control-label col-sm-4">Currency</label>
+                <div class="col-sm-8">
+                    @Html.TextBoxFor(m => m.Currency, new { @class = "form-control no-input", @readonly = "readonly" })
+                    @Html.ActionLink("Change", "ManageAccount")
+                </div>
             </div>
-        </div>
-    </div>
 
-    <div class="col-xs-12 col-md-6 text-center">
-        <div class="square">
-            <h4>External logins</h4>
-            <div class="square-link">
-                @Model.Logins.Count [
-                @Html.ActionLink("Manage", "ManageLogins") ]
+            <div class="form-group">
+                <label for="Account" class="control-label col-sm-4">Country</label>
+                <div class="col-sm-8">
+                    @Html.TextBoxFor(m => m.Country, new { @class = "form-control no-input", @readonly = "readonly" })
+                    @Html.ActionLink("Change", "ManageAccount")
+                </div>
             </div>
-        </div>
-    </div>
+            <div class="form-group">
+                <label for="Password" class="control-label col-sm-4">Password</label>
 
-    <div class="col-xs-12 col-md-6 text-center">
-        <div class="square">
-            <h4>Two-factor authentication</h4>
-            <div class="square-link">
-                @if (Model.TwoFactor)
-                {
-                    using (Html.BeginForm("DisableTwoFactorAuthentication", "Manage", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+
+                <div class="col-sm-8">
+                    <input type="password" class="form-control no-input" value="@(Model.HasPassword ? "xxxxxxxxxxxxxx":"")" readonly="readonly" />
+                    @if (Model.HasPassword)
                     {
-                        @Html.AntiForgeryToken()
-                        <text>Enabled
-                            <input type="submit" value="Disable" class="btn btn-link" />
-                        </text>
+                        @Html.ActionLink("Change your password", "ChangePassword")
                     }
-                }
-                else
-                {
-                    using (Html.BeginForm("EnableTwoFactorAuthentication", "Manage", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                    else
                     {
-                        @Html.AntiForgeryToken()
-                        <text>Disabled
-                            <input type="submit" value="Enable" class="btn btn-link" />
-                        </text>
+                        @Html.ActionLink("Create password", "SetPassword")
                     }
-                }
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="External" class="control-label col-sm-4">External logins</label>
+                <div class="col-sm-8">
+                    @{
+                        foreach (var userLoginInfo in Model.Logins)
+                        {
+                            <input type="text" value="@userLoginInfo.LoginProvider" class="form-control no-input" readonly="readonly" />
+                            @Html.ActionLink("Manage", "ManageLogins")
+                        }
+
+                        if (Model.Logins.Count == 0)
+                        {
+                            <input type="text" value="None" class="form-control no-input" readonly="readonly" />
+                        }
+                    }
+
+                    @Html.ActionLink("Manage", "ManageLogins")
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label for="twoFactor" class="control-label col-sm-4">Two-factor authentication</label>
+                <div class="col-sm-8">
+                    @if (Model.TwoFactor)
+                    {
+                        using (Html.BeginForm("DisableTwoFactorAuthentication", "Manage", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                        {
+                            @Html.AntiForgeryToken()
+                            <text>Enabled
+                                <input type="submit" value="Disable" class="btn btn-link" />
+                            </text>
+                        }
+                    }
+                    else
+                    {
+                        using (Html.BeginForm("EnableTwoFactorAuthentication", "Manage", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                        {
+                            @Html.AntiForgeryToken()
+                            <text>Disabled
+                                <input type="submit" value="Enable" class="btn btn-link" />
+                            </text>
+                        }
+                    }
+                </div>
+            </div>
+            
+            <hr />
+            
+            <div class="form-group">
+                <label for="Transactions" class="control-label col-sm-4">Number of Transactions</label>
+                <div class="col-sm-8">
+                    @Html.TextBoxFor(m => m.TransactionCount, new { @class = "form-control no-input", @readonly = "readonly" })
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label for="Mappings" class="control-label col-sm-4">Number of Mappings</label>
+                <div class="col-sm-8">
+                    @Html.TextBoxFor(m => m.MappingCount, new { @class = "form-control no-input", @readonly = "readonly" })
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label for="Mappings" class="control-label col-sm-4">Access Failed Count</label>
+                <div class="col-sm-8">
+                    @Html.TextBoxFor(m => m.AccessFailedCount, new { @class = "form-control no-input", @readonly = "readonly" })
+                </div>
             </div>
         </div>
     </div>
-
-
 
 </div>
