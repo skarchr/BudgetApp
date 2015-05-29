@@ -1,6 +1,6 @@
 ﻿(function () {
     'use strict';
-    angular.module('budgetApp').controller('currencyController', ['$scope', '$http', 'userModel', function ($scope, $http, userModel) {
+    angular.module('budgetApp').controller('currencyController', ['$scope', '$http', 'toastr', 'userModel', function ($scope, $http, toastr, userModel) {
 
         $http.get('/js/resources/countries.json')
             .success(function (data) {
@@ -26,6 +26,24 @@
                 $scope.model = userModel.model;
 
         });
+
+
+        $scope.saveProfile = function() {
+            if ($scope.model.currency !== undefined && $scope.model.country !== undefined) {
+
+                $http.post('Manage/SaveProfile', { currency: $scope.model.currency, country: $scope.model.country })
+                    .success(function(data, status, headers, config) {
+                        toastr.success('Profile updated!');
+
+                    })
+                    .error(function (data, status, headers, config) {
+                        toastr.error('Something went wrong!');
+                    });
+            }
+
+        };
+
+        
 
 
     }]);

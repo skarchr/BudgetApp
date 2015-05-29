@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using Antlr.Runtime.Misc;
 using BudgetApp.Models;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
@@ -58,31 +59,20 @@ namespace BudgetApp.Controllers
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult ManageAccount(ManageAccountViewModel viewModel)
+        public JsonResult SaveProfile(IndexViewModel model)
         {
             var user = db.Users.FirstOrDefault(s => s.UserName == User.Identity.Name);
 
             if (user != null)
             {
-                user.Country = viewModel.Country;
-                user.Currency = viewModel.Currency;
+                user.Currency = model.Currency;
+                user.Country = model.Country;
                 db.SaveChanges();
-
-                ViewBag.Success = "Account information saved";
-
-                var model = new ManageAccountViewModel
-                {
-                    UserName = user.UserName,
-                    Currency = user.Currency,
-                    Country = user.Country,
-                    AccessFailedCount = user.AccessFailedCount
-                };
-
-                return View(model);
+                return Json("{ saved: true }");
             }
 
-            return RedirectToAction("Index", new { Message = ManageMessageId.Error });
+            return Json("{ saved: false }");
+
         }
 
         //

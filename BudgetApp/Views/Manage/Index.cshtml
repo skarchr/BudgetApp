@@ -1,4 +1,5 @@
-﻿@model BudgetApp.Models.IndexViewModel
+﻿@using BudgetApp.Extensions
+@model BudgetApp.Models.IndexViewModel
 @{
     ViewBag.Title = "Manage";
 }
@@ -15,7 +16,7 @@
 
     <div class="col-xs-12 col-md-10">        
 
-        <div class="form-horizontal">
+        <div class="form-horizontal" ng-controller="currencyController">
 
 
             <div class="form-group">
@@ -27,23 +28,26 @@
 
             <div class="form-group">
                 <label for="Currency" class="control-label col-sm-4">Currency</label>
-                <div class="col-sm-8">
-                    @Html.TextBoxFor(m => m.Currency, new { @class = "form-control no-input", @readonly = "readonly" })
-                    @Html.ActionLink("Change", "ManageAccount")
+                <div class="col-sm-8">                    
+                    <select class="form-control" id="Currency" name="Currency" ng-model="model.currency" required ng-change="saveProfile()">
+                        <option class="text-muted" value="">-- Currency --</option>
+                        <option ng-repeat="currency in currencies" value="{{currency.cc}}" title="{{currency.name}}">{{currency.cc}}</option>
+                    </select>
                 </div>
             </div>
 
             <div class="form-group">
                 <label for="Account" class="control-label col-sm-4">Country</label>
                 <div class="col-sm-8">
-                    @Html.TextBoxFor(m => m.Country, new { @class = "form-control no-input", @readonly = "readonly" })
-                    @Html.ActionLink("Change", "ManageAccount")
+                    <select class="form-control" id="Country" name="Country" ng-model="model.country" required ng-change="saveProfile()">
+                        <option class="text-muted" value="">-- Country --</option>
+                        <option ng-repeat="country in countries" value="{{country.name}}">{{country.name}}</option>
+                    </select>
                 </div>
             </div>
+
             <div class="form-group">
                 <label for="Password" class="control-label col-sm-4">Password</label>
-
-
                 <div class="col-sm-8">
                     <input type="password" class="form-control no-input" value="@(Model.HasPassword ? "xxxxxxxxxxxxxx":"")" readonly="readonly" />
                     @if (Model.HasPassword)
@@ -63,7 +67,7 @@
                         foreach (var userLoginInfo in Model.Logins)
                         {
                             <input type="text" value="@userLoginInfo.LoginProvider" class="form-control no-input" readonly="readonly" />
-                            @Html.ActionLink("Manage", "ManageLogins")
+
                         }
 
                         if (Model.Logins.Count == 0)
@@ -75,7 +79,7 @@
                     @Html.ActionLink("Manage", "ManageLogins")
                 </div>
             </div>
-            
+
             <div class="form-group">
                 <label for="twoFactor" class="control-label col-sm-4">Two-factor authentication</label>
                 <div class="col-sm-8">
@@ -101,25 +105,25 @@
                     }
                 </div>
             </div>
-            
+
             <hr />
-            
+
             <div class="form-group">
                 <label for="Transactions" class="control-label col-sm-4">Number of Transactions</label>
                 <div class="col-sm-8">
                     @Html.TextBoxFor(m => m.TransactionCount, new { @class = "form-control no-input", @readonly = "readonly" })
                 </div>
             </div>
-            
+
             <div class="form-group">
                 <label for="Mappings" class="control-label col-sm-4">Number of Mappings</label>
                 <div class="col-sm-8">
                     @Html.TextBoxFor(m => m.MappingCount, new { @class = "form-control no-input", @readonly = "readonly" })
                 </div>
             </div>
-            
+
             <div class="form-group">
-                <label for="Mappings" class="control-label col-sm-4">Access Failed Count</label>
+                <label for="Mappings" class="control-label col-sm-4">Failed Access Attempts</label>
                 <div class="col-sm-8">
                     @Html.TextBoxFor(m => m.AccessFailedCount, new { @class = "form-control no-input", @readonly = "readonly" })
                 </div>
@@ -128,3 +132,15 @@
     </div>
 
 </div>
+
+<script>
+    (function() {
+        'use strict';
+        angular.module('budgetApp').factory('userModel', function() {
+            return {
+                model: @Html.Raw(Model.ToJson())
+            };
+        });
+
+    })();
+</script>

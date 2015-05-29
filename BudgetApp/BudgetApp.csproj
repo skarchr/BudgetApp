@@ -638,7 +638,6 @@
     <Content Include="Views\Transactions\Import.cshtml" />
     <Content Include="Views\Transactions\Index.cshtml" />
     <Content Include="Views\Transactions\Edit.cshtml" />
-    <Content Include="Views\Manage\ManageAccount.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\uploads\" />
