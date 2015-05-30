@@ -49,14 +49,14 @@
             <div class="form-group">
                 <label for="Password" class="control-label col-sm-4">Password</label>
                 <div class="col-sm-8">
-                    <input type="password" class="form-control no-input" value="@(Model.HasPassword ? "xxxxxxxxxxxxxx":"")" readonly="readonly" />
+                    <input type="password" class="form-control" value="@(Model.HasPassword ? "xxxxxxxxxxxxxx":"")" readonly="readonly" />
                     @if (Model.HasPassword)
                     {
-                        @Html.ActionLink("Change your password", "ChangePassword")
+                        @Html.ActionLink("Change", "ChangePassword", null, new { @class="clingy"})                        
                     }
                     else
                     {
-                        @Html.ActionLink("Create password", "SetPassword")
+                        @Html.ActionLink("Create", "SetPassword", null, new { @class = "clingy" })
                     }
                 </div>
             </div>
@@ -64,19 +64,15 @@
                 <label for="External" class="control-label col-sm-4">External logins</label>
                 <div class="col-sm-8">
                     @{
-                        foreach (var userLoginInfo in Model.Logins)
-                        {
-                            <input type="text" value="@userLoginInfo.LoginProvider" class="form-control no-input" readonly="readonly" />
-
-                        }
-
-                        if (Model.Logins.Count == 0)
-                        {
-                            <input type="text" value="None" class="form-control no-input" readonly="readonly" />
-                        }
+                        <ul class="list-unstyled list-inline">
+                            @foreach (var userLoginInfo in Model.Logins)
+                            {
+                                <li><img ng-src="{{getIcon('@userLoginInfo.LoginProvider')}}" height="48" alt="social media" /></li>
+                            }
+                        </ul>
                     }
-
-                    @Html.ActionLink("Manage", "ManageLogins")
+                    
+                    @Html.ActionLink("Manage", "ManageLogins", null, new { @style="margin-top:7px;float:left;" })
                 </div>
             </div>
 

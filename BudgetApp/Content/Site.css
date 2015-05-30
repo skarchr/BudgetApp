@@ -424,3 +424,9 @@ input.transaction-filter {
     color: #777;
     font-weight: normal;
 }
+
+.clingy {
+    position: fixed;
+    margin-top: -27px;
+    margin-left: 220px;
+}

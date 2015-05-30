@@ -1,6 +1,6 @@
 ﻿(function () {
     'use strict';
-    angular.module('budgetApp').controller('currencyController', ['$scope', '$http', 'toastr', 'userModel', function ($scope, $http, toastr, userModel) {
+    angular.module('budgetApp').controller('currencyController', ['$scope', '$http', 'toastr', 'userModel', 'commonService', function ($scope, $http, toastr, userModel, commonService) {
 
         $http.get('/js/resources/countries.json')
             .success(function (data) {
@@ -10,7 +10,11 @@
                 $scope.countries = [];
             });
 
+        $scope.getIcon = function (input) {
 
+            return commonService.getIconUrl(input);
+
+        };
 
         $http.get('/js/resources/currencies.json')
             .success(function (data) {

@@ -8,6 +8,15 @@
             var imageName = "";
 
             switch (value) {
+                case "Google":
+                    imageName = "googleplus.png";
+                    break;
+                case "Twitter":
+                    imageName = "twitter.png";
+                    break;
+                case "Facebook":
+                    imageName = "facebook.png";
+                    break;
                 case "All":
                     imageName = "for3.png";
                     break;

@@ -37,27 +37,6 @@ namespace BudgetApp.Controllers
             }
         }        
 
-        [HttpGet]
-        public ActionResult ManageAccount()
-        {
-            var user = db.Users.FirstOrDefault(s => s.UserName == User.Identity.Name);
-
-            if (user != null)
-            {
-                var model = new ManageAccountViewModel
-                {
-                    UserName = user.UserName,
-                    Currency = user.Currency,
-                    Country = user.Country,
-                    AccessFailedCount = user.AccessFailedCount
-                };
-
-                return View(model);
-            }
-
-            return RedirectToAction("Index", new { Message = ManageMessageId.Error });
-        }
-
         [HttpPost]
         public JsonResult SaveProfile(IndexViewModel model)
         {

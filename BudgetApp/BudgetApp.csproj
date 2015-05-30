@@ -473,9 +473,11 @@
     <Content Include="Content\images\car95.png" />
     <Content Include="Content\images\currency.png" />
     <Content Include="Content\images\currency2.png" />
+    <Content Include="Content\images\facebook.png" />
     <Content Include="Content\images\for3.png" />
     <Content Include="Content\images\fork28.png" />
     <Content Include="Content\images\gift2.png" />
+    <Content Include="Content\images\googleplus.png" />
     <Content Include="Content\images\halloween282.png" />
     <Content Include="Content\images\home168.png" />
     <Content Include="Content\images\hot51.png" />
@@ -516,6 +518,7 @@
     <Content Include="Content\images\teeth.png" />
     <Content Include="Content\images\temple18.png" />
     <Content Include="Content\images\tribal.png" />
+    <Content Include="Content\images\twitter.png" />
     <Content Include="Content\images\two123.png" />
     <Content Include="Content\images\user91.png" />
     <Content Include="Content\images\videogame.png" />
