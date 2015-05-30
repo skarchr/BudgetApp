@@ -7,6 +7,7 @@ namespace BudgetApp.Models
 {
     public class IndexViewModel
     {
+        public Range Range { get; set; }
         public string Currency { get; set; }
         public string Country { get; set; }
         public int TransactionCount { get; set; }

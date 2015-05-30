@@ -25,12 +25,15 @@ namespace BudgetApp.Controllers
         {
             var allTransactions = db.Transactions.Where(s => s.UserName == User.Identity.Name).ToList();
 
+            var user = db.Users.FirstOrDefault(s => s.UserName == User.Identity.Name);
+
+            var range = user != null ? user.Range : Range.Annual;
 
             var model = new TransactionsViewModel 
             {
                 TransactionsDisplayed = allTransactions.Count,
                 RangeViewers = GetMonth(allTransactions), 
-                Range = Range.Month
+                Range = range
             };
 
             ViewBag.Success = TempData["Success"];

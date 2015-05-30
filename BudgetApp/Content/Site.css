@@ -426,7 +426,13 @@ input.transaction-filter {
 }
 
 .clingy {
-    position: fixed;
+    position: absolute;
     margin-top: -27px;
     margin-left: 220px;
+}
+
+.btn-empty {
+    border: 0;
+    background-color: white;
+    padding: 0 !important;
 }

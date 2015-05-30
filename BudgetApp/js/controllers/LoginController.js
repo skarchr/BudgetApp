@@ -1,7 +1,7 @@
 ﻿(function() {
     'use strict';
 
-    angular.module('budgetApp').controller('loginController', ['$scope', '$http', '$timeout', 'loginModel', function ($scope, $http, $timeout, loginModel) {
+    angular.module('budgetApp').controller('loginController', ['$scope', '$http', '$timeout', 'loginModel', 'commonService', function ($scope, $http, $timeout, loginModel, commonService) {
 
         $scope.model = loginModel.model;
 
@@ -12,6 +12,12 @@
         $scope.passwordStrength = '';
         $scope.userExist = false;
         $scope.loading = false;
+
+        $scope.getIcon = function (input) {
+
+            return commonService.getIconUrl(input);
+
+        };
 
         var checkEmail = function () {            
 

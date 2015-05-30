@@ -214,6 +214,10 @@
     <Compile Include="Migrations\201504161653213_Third.Designer.cs">
       <DependentUpon>201504161653213_Third.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201505301702385_Range.cs" />
+    <Compile Include="Migrations\201505301702385_Range.Designer.cs">
+      <DependentUpon>201505301702385_Range.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Category.cs" />
@@ -221,7 +225,6 @@
     <Compile Include="Models\HomeViewModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ImportViewModel.cs" />
-    <Compile Include="Models\ManageAccountViewModel.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Mapping.cs" />
     <Compile Include="Models\RangeViewer.cs" />
@@ -664,6 +667,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201504161653213_Third.resx">
       <DependentUpon>201504161653213_Third.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201505301702385_Range.resx">
+      <DependentUpon>201505301702385_Range.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

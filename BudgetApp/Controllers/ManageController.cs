@@ -46,6 +46,7 @@ namespace BudgetApp.Controllers
             {
                 user.Currency = model.Currency;
                 user.Country = model.Country;
+                user.Range = model.Range;
                 db.SaveChanges();
                 return Json("{ saved: true }");
             }
@@ -82,6 +83,7 @@ namespace BudgetApp.Controllers
             {
                 model.Country = user.Country;
                 model.Currency = user.Currency;
+                model.Range = user.Range;
                 model.TransactionCount = db.Transactions.Count(s => s.UserName == User.Identity.Name);
                 model.MappingCount = db.Mappings.Count(s => s.UserName == User.Identity.Name);
                 model.AccessFailedCount = user.AccessFailedCount;
