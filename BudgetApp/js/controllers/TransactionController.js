@@ -7,9 +7,38 @@
 
         $scope.model = transactionModel.model;
 
-        $scope.urls = transactionModel.urls;
+        $scope.urls = transactionModel.urls;        
 
         $scope.showBalance = false;
+
+        $scope.findMax = function(list) {
+
+            var array = [];
+
+
+            var index = 0;
+
+            for (var i = 0; i < list.length; i++) {
+
+                if (list[i].category !== 'Salary' && list[i].category !== 'OtherIncome' ) {
+                    array[index] = list[i].amount;
+                    index++;
+                }
+            }
+
+            return Math.max.apply(Math, array);
+
+        };
+
+        $scope.calcRowPercentage = function (target, other) {
+
+            var onePercent = (other + target) / 100;
+
+            var result = target / onePercent;
+
+            return result.toFixed(0) * 10;
+
+        };
 
         $scope.calcPercentage = function(target, other) {
 

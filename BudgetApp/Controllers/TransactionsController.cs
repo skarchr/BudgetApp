@@ -49,7 +49,8 @@ namespace BudgetApp.Controllers
             {
                 TransactionsDisplayed = allTransactions.Count,
                 RangeViewers = rangeViewers, 
-                Range = range
+                Range = range,
+                Currency = user.Currency
             };
 
             ViewBag.Success = TempData["Success"];
@@ -81,6 +82,7 @@ namespace BudgetApp.Controllers
             }
 
             model.RangeViewers = rangeViewers;
+            model.Currency = currency;
             model.TransactionsDisplayed = allTransactions.Count;
 
             return View(model);

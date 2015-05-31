@@ -427,8 +427,7 @@ input.transaction-filter {
 
 .clingy {
     position: absolute;
-    margin-top: -27px;
-    margin-left: 220px;
+    margin-top: 6px;
 }
 
 .btn-empty {
@@ -442,4 +441,11 @@ input.transaction-filter {
     margin-top: -27px;
     margin-left: 240px;
     color: #c0c0c0;
+}
+
+.percentage-row {
+    float: left;
+    position: absolute;
+    margin-top: -5px;
+    margin-left: -15px;
 }

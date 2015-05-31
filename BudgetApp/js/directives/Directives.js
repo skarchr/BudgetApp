@@ -3,6 +3,20 @@
 
     angular.module('budgetApp')
 
+        .directive('setWidth', [function() {
+            
+            return {
+                restrict: 'A',
+                scope: {
+                    setWidth:'@'
+                },
+                link: function(scope, elem) {
+                    $(elem[0]).attr('width', scope.setWidth);
+                }
+            }
+
+        }])
+
         .directive('setRange', [function() {
             return {
                 restrict: 'A',
@@ -381,7 +395,7 @@
                     yAxis: {
                         opposite:false,
                         title: {
-                            text: 'Amount'
+                            text: model.currency
                         }
                     },
                     series: model.series

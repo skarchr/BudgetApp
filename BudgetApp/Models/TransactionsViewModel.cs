@@ -11,7 +11,8 @@ namespace BudgetApp.Models
     {
         public int TransactionsDisplayed { get; set; }
         public Range Range { get; set; }
-        public List<RangeViewer> RangeViewers { get; set; } 
+        public List<RangeViewer> RangeViewers { get; set; }
+        public string Currency { get; set; }
     }
 
 }

@@ -10,6 +10,8 @@
 
 <div style="margin-top: 30px;" ng-controller="transactionController">
 
+    
+    {{window}}
 
     <div fade-in="200">
         @using (Html.BeginForm("Index", "Transactions", FormMethod.Post))
@@ -73,6 +75,7 @@
         {
 
             <div class="row">
+
                 <div class="col-xs-12" style="margin-top:30px;" ng-repeat="range in model">
 
 
@@ -159,15 +162,24 @@
                             <thead>
                                 <tr>
                                     <th class="hidden-xs">#</th>
-                                    <th>Amount</th>
+                                    <th>Amount (@Model.Currency)</th>
                                     <th>Category</th>
                                     <th>Date</th>
                                     <th></th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr ng-repeat="row in range.transactions">
-                                    <td class="hidden-xs">{{$index + 1}}</td>
+                                <tr ng-repeat="row in range.transactions | orderBy : 'amount' : true">
+                                    <td class="hidden-xs">
+
+                                        <span class="percentage-row" ng-show="row.category !== 'Salary' && row.category !== 'OtherIncome'">
+                                            <svg set-width="{{calcRowPercentage(row.amount, findMax(range.transactions))}}" height="30">
+                                                <rect set-width="{{calcRowPercentage(row.amount, findMax(range.transactions))}}" height="30" style="stroke-width:0;fill:rgba(41,106,212, 0.2)" />
+                                            </svg>
+                                        </span>
+
+                                        {{ $index + 1 }}
+                                    </td>
                                     <td>{{row.amount}}</td>
                                     <td>{{row.category | camelCaseToNormal}}</td>
                                     <td>{{row.date | date}}</td>
