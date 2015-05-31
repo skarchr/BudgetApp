@@ -2,6 +2,8 @@
     'use strict';
     angular.module('budgetApp').controller('currencyController', ['$scope', '$http', 'toastr', 'userModel', 'commonService', function ($scope, $http, toastr, userModel, commonService) {
 
+        $scope.dirty = false;
+
         $http.get('/js/resources/countries.json')
             .success(function (data) {
                 $scope.countries = data;
@@ -35,10 +37,10 @@
         $scope.saveProfile = function() {
             if ($scope.model.currency !== undefined && $scope.model.country !== undefined) {
 
-                $http.post('Manage/SaveProfile', { currency: $scope.model.currency, country: $scope.model.country })
+                $http.post('../Manage/SaveProfile', { currency: $scope.model.currency, country: $scope.model.country, range : $scope.model.range })
                     .success(function(data, status, headers, config) {
                         toastr.success('Profile updated!');
-
+                        $scope.dirty = false;
                     })
                     .error(function (data, status, headers, config) {
                         toastr.error('Something went wrong!');

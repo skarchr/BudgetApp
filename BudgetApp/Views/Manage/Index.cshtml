@@ -8,146 +8,180 @@
 <p class="text-success">@ViewBag.StatusMessage</p>
 
 <div class="row" fade-in="500" style="margin-top:30px;">
-    
-    <div class="col-xs-12">        
 
-        <div class="form-horizontal" ng-controller="currencyController">
+    <div class="col-xs-12" ng-controller="currencyController">
+
+        <div class="form-horizontal">
             
-            <div class="form-group">
-                <label for="picture" class="control-label col-sm-4"></label>
-                <div class="col-sm-8">
-                    <img gravatar-src="'@User.Identity.Name'" gravatar-size="200">
-                </div>                
-            </div>
-
-            <div class="form-group">
-                <label for="Username" class="control-label col-sm-4">Username</label>
-                <div class="col-sm-8">
-                    <input type="text" class="form-control no-input" value="@User.Identity.Name" readonly="readonly" />
-                </div>
-            </div>
-            
-            <hr />
-
-            <div class="form-group">
-                <label for="Username" class="control-label col-sm-4">Default Range</label>
-                <div class="col-sm-8">
-                    <div class="btn-group" role="group">
-                        <button type="button" set-range-manage="@Range.Annual" class="btn btn-default {{model.range == '0' ? 'active':''}}" ng-click="model.range = '0'">
-                            Annual
-                        </button>
-                        <button type="button" set-range-manage="@Range.Month" class="btn btn-default {{model.range == '1' ? 'active':''}}" ng-click="model.range = '1'">
-                            Monthly
-                        </button>
-                        <button type="button" set-range-manage="@Range.Week" class="btn btn-default {{model.range == '2' ? 'active':''}}" ng-click="model.range = '2'">
-                            Weekly
-                        </button>
+            <div class="col-md-6">
+                
+                <div class="form-group">
+                    <label for="picture" class="control-label col-sm-5"></label>
+                    <div class="col-sm-7">
+                        <img gravatar-src="'@User.Identity.Name'" gravatar-size="200">
                     </div>
                 </div>
-            </div>
-            
 
-            <div class="form-group">
-                <label for="Currency" class="control-label col-sm-4">Currency</label>
-                <div class="col-sm-8">                    
-                    <select class="form-control" id="Currency" name="Currency" ng-model="model.currency" required ng-change="saveProfile()">
-                        <option class="text-muted" value="">-- Currency --</option>
-                        <option ng-repeat="currency in currencies" value="{{currency.cc}}" title="{{currency.name}}">{{currency.cc}}</option>
-                    </select>
-                </div>
-            </div>
+                <div class="form-group">
+                    <label for="Username" class="control-label col-sm-5">Username</label>
+                    <div class="col-sm-7">
+                        <input type="text" class="form-control no-input" value="@User.Identity.Name" readonly="readonly" />
+                    </div>
+                </div>                
 
-            <div class="form-group">
-                <label for="Account" class="control-label col-sm-4">Country</label>
-                <div class="col-sm-8">
-                    <select class="form-control" id="Country" name="Country" ng-model="model.country" required ng-change="saveProfile()">
-                        <option class="text-muted" value="">-- Country --</option>
-                        <option ng-repeat="country in countries" value="{{country.name}}">{{country.name}}</option>
-                    </select>
-                </div>
-            </div>
-            
-            <hr />
+                <hr />
 
-            <div class="form-group">
-                <label for="Password" class="control-label col-sm-4">Password</label>
-                <div class="col-sm-8">
-                    <input type="password" class="form-control" value="@(Model.HasPassword ? "xxxxxxxxxxxxxx":"")" readonly="readonly" />
-                    @if (Model.HasPassword)
-                    {
-                        @Html.ActionLink("Change", "ChangePassword", null, new { @class="clingy"})                        
-                    }
-                    else
-                    {
-                        @Html.ActionLink("Create", "SetPassword", null, new { @class = "clingy" })
-                    }
-                </div>
-            </div>
-            
-            <div class="form-group">
-                <label for="twoFactor" class="control-label col-sm-4">Two-factor authentication</label>
-                <div class="col-sm-8">
-                    @if (Model.TwoFactor)
-                    {
-                        using (Html.BeginForm("DisableTwoFactorAuthentication", "Manage", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                <div class="form-group">
+                    <label for="Password" class="control-label col-sm-5">Password</label>
+                    <div class="col-sm-7">
+                        <input type="password" class="form-control" value="@(Model.HasPassword ? "xxxxxxxxxxxxxx":"")" readonly="readonly" />
+                        @if (Model.HasPassword)
                         {
-                            @Html.AntiForgeryToken()
-                            <text>Enabled
-                                <input type="submit" value="Disable" class="btn btn-link" />
-                            </text>
+                            @Html.ActionLink("Change", "ChangePassword", null, new { @class = "clingy" })
                         }
-                    }
-                    else
-                    {
-                        using (Html.BeginForm("EnableTwoFactorAuthentication", "Manage", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                        else
                         {
-                            @Html.AntiForgeryToken()
-                            <text>Disabled
-                                <input type="submit" value="Enable" class="btn btn-link" />
-                            </text>
+                            @Html.ActionLink("Create", "SetPassword", null, new { @class = "clingy" })
                         }
-                    }
+                    </div>
                 </div>
-            </div>
 
-            <div class="form-group">
-                <label for="External" class="control-label col-sm-4">External logins</label>
-                <div class="col-sm-8">
-                    @{
-                        <ul class="list-unstyled list-inline" style="margin-left: -5px;">
-                            @foreach (var userLoginInfo in Model.Logins)
+                <div class="form-group">
+                    <label for="twoFactor" class="control-label col-sm-5">Two-factor authentication</label>
+                    <div class="col-sm-7">
+                        @if (Model.TwoFactor)
+                        {
+                            using (Html.BeginForm("DisableTwoFactorAuthentication", "Manage", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
                             {
-                                <li><img ng-src="{{getIcon('@userLoginInfo.LoginProvider')}}" height="48" alt="social media" /></li>
+                                @Html.AntiForgeryToken()
+                                <text>Enabled
+                                    <input type="submit" value="Disable" class="btn btn-link" />
+                                </text>
                             }
-                        </ul>
-                    }
-                    
-                    @Html.ActionLink("Manage", "ManageLogins", null, new { @style="margin-top:-3px;float:left;" })
+                        }
+                        else
+                        {
+                            using (Html.BeginForm("EnableTwoFactorAuthentication", "Manage", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                            {
+                                @Html.AntiForgeryToken()
+                                <text>Disabled
+                                    <input type="submit" value="Enable" class="btn btn-link" />
+                                </text>
+                            }
+                        }
+                    </div>
                 </div>
+
+                <div class="form-group">
+                    <label for="External" class="control-label col-sm-5">External logins</label>
+                    <div class="col-sm-7">
+                        @{
+                            <ul class="list-unstyled list-inline" style="margin-left: -5px;">
+                                @foreach (var userLoginInfo in Model.Logins)
+                                {
+                                    <li><img ng-src="{{getIcon('@userLoginInfo.LoginProvider')}}" height="48" alt="social media" /></li>
+                                }
+                            </ul>
+                        }
+
+                        @Html.ActionLink("Manage", "ManageLogins", null, new { @style = "margin-top:-3px;float:left;" })
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="Transactions" class="control-label col-sm-5">Number of Transactions</label>
+                    <div class="col-sm-7">
+                        @Html.TextBoxFor(m => m.TransactionCount, new { @class = "form-control no-input", @readonly = "readonly" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="Mappings" class="control-label col-sm-5">Number of Mappings</label>
+                    <div class="col-sm-7">
+                        @Html.TextBoxFor(m => m.MappingCount, new { @class = "form-control no-input", @readonly = "readonly" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="Mappings" class="control-label col-sm-5">Failed Access Attempts</label>
+                    <div class="col-sm-7">
+                        @Html.TextBoxFor(m => m.AccessFailedCount, new { @class = "form-control no-input", @readonly = "readonly" })
+                    </div>
+                </div>
+
+            </div>
+            <div class="col-md-6">
+                
+                <h3>View settings</h3>
+                <hr />
+                <div class="form-group">
+                    <label for="Username" class="control-label col-sm-5">Default Range</label>
+                    <div class="col-sm-7">
+                        <div class="btn-group" role="group">
+                            <button type="button" class="btn btn-default {{model.range == '0' ? 'active':''}}" ng-click="model.range = '0'; dirty = true;">
+                                Annual
+                            </button>
+                            <button type="button" class="btn btn-default {{model.range == '1' ? 'active':''}}" ng-click="model.range = '1'; dirty = true;">
+                                Monthly
+                            </button>
+                            <button type="button" class="btn btn-default {{model.range == '2' ? 'active':''}}" ng-click="model.range = '2'; dirty = true;">
+                                Weekly
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="form-group">
+                    <label for="Currency" class="control-label col-sm-5">Currency</label>
+                    <div class="col-sm-7">
+                        <select class="form-control" id="Currency" name="Currency" ng-model="model.currency" required ng-change="dirty = true">
+                            <option class="text-muted" value="">-- Currency --</option>
+                            <option ng-repeat="currency in currencies" value="{{currency.cc}}" title="{{currency.name}}">{{currency.cc}}</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="Account" class="control-label col-sm-5">Country</label>
+                    <div class="col-sm-7">
+                        <select class="form-control" id="Country" name="Country" ng-model="model.country" required ng-change="dirty = true">
+                            <option class="text-muted" value="">-- Country --</option>
+                            <option ng-repeat="country in countries" value="{{country.name}}">{{country.name}}</option>
+                        </select>
+                    </div>
+                </div>
+                
+                
+                
+                <h3>Goals</h3>
+                <hr />
+                <div class="form-group">
+                    <label for="Transactions" class="control-label col-sm-5">Saving</label>
+                    <div class="col-sm-7">
+                        <input type="text" placeholder="How much do you want to save monthly" value="" class="form-control" />
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="Transactions" class="control-label col-sm-5">Expenses</label>
+                    <div class="col-sm-7">
+                        <input type="text" placeholder="Total" value="" class="form-control" />
+                        <input type="text" placeholder="CategoryItem" value="" class="form-control" />
+                        <input type="text" placeholder="CategoryItem" value="" class="form-control" />
+                    </div>
+                </div>
+                
+                <div>
+                    <div class="col-lg-offset-5 col-sm-7">
+                        <button class="btn btn-primary" ng-disabled="!dirty" ng-click="saveProfile()">Save changes</button>
+                    </div>                     
+                </div>
+
+
             </div>
 
-            <hr />
-
-            <div class="form-group">
-                <label for="Transactions" class="control-label col-sm-4">Number of Transactions</label>
-                <div class="col-sm-8">
-                    @Html.TextBoxFor(m => m.TransactionCount, new { @class = "form-control no-input", @readonly = "readonly" })
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label for="Mappings" class="control-label col-sm-4">Number of Mappings</label>
-                <div class="col-sm-8">
-                    @Html.TextBoxFor(m => m.MappingCount, new { @class = "form-control no-input", @readonly = "readonly" })
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label for="Mappings" class="control-label col-sm-4">Failed Access Attempts</label>
-                <div class="col-sm-8">
-                    @Html.TextBoxFor(m => m.AccessFailedCount, new { @class = "form-control no-input", @readonly = "readonly" })
-                </div>
-            </div>
+            
         </div>
     </div>
 

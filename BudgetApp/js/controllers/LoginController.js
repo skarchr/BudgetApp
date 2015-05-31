@@ -5,6 +5,7 @@
 
         $scope.model = loginModel.model;
 
+
         $scope.countries = [];
         $scope.currencies = [];
         $scope.Country = '';

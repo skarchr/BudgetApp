@@ -3,37 +3,6 @@
 
     angular.module('budgetApp')
 
-        .directive('setRangeManage', ['$http', 'toastr', function ($http, toastr) {
-            return {
-                restrict: 'A',
-                scope: {
-                    setRangeManage: '@'
-                },
-                link: function (scope, elem, attrs) {
-
-                    $(elem[0]).on('click', function () {
-
-                        console.log(scope.$parent.model.currency);
-                        console.log(scope.$parent.model.country);
-                        console.log(scope.setRangeManage);
-
-                        if (scope.$parent.model.currency !== undefined && scope.$parent.model.country !== undefined) {
-                            $http.post('Manage/SaveProfile', { currency: scope.$parent.model.currency, country: scope.$parent.model.country, range : scope.setRangeManage })
-                                .success(function(data, status, headers, config) {
-                                    toastr.success('Profile updated!');
-
-                                })
-                                .error(function(data, status, headers, config) {
-                                    toastr.error('Something went wrong!');
-                                });
-                        }
-
-                    });
-
-                }
-            };
-        }])
-
         .directive('setRange', [function() {
             return {
                 restrict: 'A',
