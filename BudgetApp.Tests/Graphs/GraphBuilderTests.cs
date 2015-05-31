@@ -14,8 +14,9 @@ namespace BudgetApp.Tests.Graphs
         public void TestDrilldownGraph()
         {
 
-            var result = GraphBuilder.TransactionDrilldownGraph(CreateTransactions());
+            var result = GraphBuilder.TransactionDrilldownGraph(CreateTransactions(), "NOK");
 
+            result.Currency.Should().Be("NOK");
             result.Series[0].Data[0].X.Should().Be(0);
             result.Series[0].Data[0].Y.Should().Be(200);
             result.Series[0].Data[0].Drilldown.Should().Be("fixed");
@@ -44,9 +45,9 @@ namespace BudgetApp.Tests.Graphs
         [Test]
         public void TestExpensesGraph_No_Transactions()
         {
-            var result = GraphBuilder.DailyExpensesGraph(new List<Transaction>());
+            var result = GraphBuilder.DailyExpensesGraph(new List<Transaction>(), "NOK");
 
-
+            result.Currency.Should().Be("NOK");
             result.Series[0].Data.Count.Should().Be(0);
 
         }

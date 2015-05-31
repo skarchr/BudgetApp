@@ -25,14 +25,30 @@ namespace BudgetApp.Controllers
         {
             var allTransactions = db.Transactions.Where(s => s.UserName == User.Identity.Name).ToList();
 
-            var user = db.Users.FirstOrDefault(s => s.UserName == User.Identity.Name);
+            var user = db.Users.First(s => s.UserName == User.Identity.Name);
 
             var range = user != null ? user.Range : Range.Annual;
+
+            var rangeViewers = new List<RangeViewer>();
+
+            switch (range)
+            {
+                case Range.Annual:
+                    rangeViewers = GetAnnual(allTransactions, user.Currency);
+                    break;
+                case Range.Month:
+                    rangeViewers = GetMonth(allTransactions, user.Currency);
+                    break;
+                case Range.Week:
+                    rangeViewers = GetWeek(allTransactions, user.Currency);
+                    break;
+
+            }
 
             var model = new TransactionsViewModel 
             {
                 TransactionsDisplayed = allTransactions.Count,
-                RangeViewers = GetMonth(allTransactions), 
+                RangeViewers = rangeViewers, 
                 Range = range
             };
 
@@ -46,18 +62,20 @@ namespace BudgetApp.Controllers
         {
             var allTransactions = db.Transactions.Where(s => s.UserName == User.Identity.Name).ToList();
 
+            var currency = db.Users.First(u => u.UserName == User.Identity.Name).Currency;
+
             var rangeViewers = new List<RangeViewer>();
 
             switch (model.Range)
             {
                 case Range.Annual:
-                    rangeViewers = GetAnnual(allTransactions);
+                    rangeViewers = GetAnnual(allTransactions, currency);
                     break;
                 case Range.Month:
-                    rangeViewers = GetMonth(allTransactions);
+                    rangeViewers = GetMonth(allTransactions, currency);
                     break;
                 case Range.Week:
-                    rangeViewers = GetWeek(allTransactions);
+                    rangeViewers = GetWeek(allTransactions, currency);
                     break;
 
             }
@@ -71,7 +89,7 @@ namespace BudgetApp.Controllers
 
         #region ModelBuilder
 
-        private List<RangeViewer> GetWeek(List<Transaction> transactions )
+        private List<RangeViewer> GetWeek(List<Transaction> transactions, string currency)
         {
             var model = new List<RangeViewer>();
             var dict = new Dictionary<int, Dictionary<int, List<Transaction>>>();
@@ -107,7 +125,7 @@ namespace BudgetApp.Controllers
                         StartDate = DateHelper.GetWeekStartDate(year.Key, week.Key),
                         EndDate = DateHelper.GetWeekEndDate(year.Key, week.Key),
                         Transactions = week.Value.OrderByDescending(s => s.Date).ToList(),
-                        Graph = GraphBuilder.TransactionDrilldownGraph(week.Value).ToJson()
+                        Graph = GraphBuilder.TransactionDrilldownGraph(week.Value, currency).ToJson()
                     });
                 }
             }
@@ -116,7 +134,7 @@ namespace BudgetApp.Controllers
             return model.OrderByDescending(s => s.StartDate).ToList();
         }
 
-        private List<RangeViewer> GetMonth(List<Transaction> transactions)
+        private List<RangeViewer> GetMonth(List<Transaction> transactions, string currency)
         {
             var model = new List<RangeViewer>();
 
@@ -153,14 +171,14 @@ namespace BudgetApp.Controllers
                         StartDate = new DateTime(year.Key, month.Key, 1),
                         EndDate = new DateTime(year.Key, month.Key, DateTime.DaysInMonth(year.Key, month.Key)),
                         Transactions = month.Value.OrderByDescending(s => s.Date).ToList(),
-                        Graph = GraphBuilder.TransactionDrilldownGraph(month.Value).ToJson()
+                        Graph = GraphBuilder.TransactionDrilldownGraph(month.Value, currency).ToJson()
                     });
                 }
             }
             return model.OrderByDescending(s => s.StartDate).ToList();
         }
 
-        private List<RangeViewer> GetAnnual(List<Transaction> transactions)
+        private List<RangeViewer> GetAnnual(List<Transaction> transactions, string currency)
         {
             var model = new List<RangeViewer>();
 
@@ -189,7 +207,7 @@ namespace BudgetApp.Controllers
                         StartDate = new DateTime(year.Key,1,1),
                         EndDate = new DateTime(year.Key, 12,31),
                         Transactions = year.Value.OrderByDescending(s => s.Date).ToList(),
-                        Graph = GraphBuilder.TransactionDrilldownGraph(year.Value).ToJson()
+                        Graph = GraphBuilder.TransactionDrilldownGraph(year.Value, currency).ToJson()
                     });
 
             }

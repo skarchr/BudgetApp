@@ -8,15 +8,15 @@ namespace BudgetApp.Extensions.Graphs
 {
     public static class GraphBuilder
     {
-        public static Highchart TransactionDrilldownGraph(List<Transaction> transactions)
+        public static Highchart TransactionDrilldownGraph(List<Transaction> transactions, string currency = "Amount")
         {
-            return TransactionDrilldown.CreateChart(transactions);
+            return TransactionDrilldown.CreateChart(transactions, currency);
         }
 
 
-        public static Highchart DailyExpensesGraph(List<Transaction> transactions)
+        public static Highchart DailyExpensesGraph(List<Transaction> transactions, string currency = "Amount")
         {
-            return DailyExpenses.CreateChart(transactions);
+            return DailyExpenses.CreateChart(transactions, currency);
         }
 
 

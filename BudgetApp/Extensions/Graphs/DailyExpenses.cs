@@ -10,10 +10,11 @@ namespace BudgetApp.Extensions.Graphs
 {
     public static class DailyExpenses
     {
-        public static Highchart CreateChart(List<Transaction> transactions)
+        public static Highchart CreateChart(List<Transaction> transactions, string currency)
         {
             return new Highchart
             {
+                Currency = currency,
                 Title = new Title
                 {
                     Text = "Daily expenses"

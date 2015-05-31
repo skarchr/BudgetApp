@@ -29,8 +29,6 @@
                     </div>
                 </div>                
 
-                <hr />
-
                 <div class="form-group">
                     <label for="Password" class="control-label col-sm-5">Password</label>
                     <div class="col-sm-7">
@@ -102,13 +100,6 @@
                     </div>
                 </div>
 
-                <div class="form-group">
-                    <label for="Mappings" class="control-label col-sm-5">Failed Access Attempts</label>
-                    <div class="col-sm-7">
-                        @Html.TextBoxFor(m => m.AccessFailedCount, new { @class = "form-control no-input", @readonly = "readonly" })
-                    </div>
-                </div>
-
             </div>
             <div class="col-md-6">
                 
@@ -154,24 +145,26 @@
                 
                 
                 
-                <h3>Goals</h3>
+                <h3>Monthly goals</h3>
                 <hr />
                 <div class="form-group">
                     <label for="Transactions" class="control-label col-sm-5">Saving</label>
                     <div class="col-sm-7">
-                        <input type="text" placeholder="How much do you want to save monthly" value="" class="form-control" />
+                        @Html.TextBoxFor(m => m.MonthlySavingGoal, new { @class = "form-control", @placeholder = "Monthly saving goal", @ng_model = "model.monthlySavingGoal", @ng_change = "dirty = true", @ng_pattern = "regexDouble" })
+                        <span class="currency-label">{{model.currency}}</span>
                     </div>
                 </div>
                 
                 <div class="form-group">
                     <label for="Transactions" class="control-label col-sm-5">Expenses</label>
                     <div class="col-sm-7">
-                        <input type="text" placeholder="Total" value="" class="form-control" />
-                        <input type="text" placeholder="CategoryItem" value="" class="form-control" />
-                        <input type="text" placeholder="CategoryItem" value="" class="form-control" />
+                        @Html.TextBoxFor(m => m.MonthlyExpensesGoal, new { @class = "form-control", @placeholder = "Monthly expenses goal", @ng_model = "model.monthlyExpensesGoal", @ng_change = "dirty = true", @ng_pattern="regexDouble" })
+                        <span class="currency-label">{{model.currency}}</span>
                     </div>
                 </div>
                 
+                <hr />
+
                 <div>
                     <div class="col-lg-offset-5 col-sm-7">
                         <button class="btn btn-primary" ng-disabled="!dirty" ng-click="saveProfile()">Save changes</button>

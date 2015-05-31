@@ -191,7 +191,7 @@
                         },
                         yAxis: {
                             title: {
-                                text: 'Amount'
+                                text: model.currency
                             }
                         },
                         series: model.series,

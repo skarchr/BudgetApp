@@ -15,6 +15,10 @@ namespace BudgetApp.Models
 
         public Range Range { get; set; }
 
+        public double? MonthlySavingGoal { get; set; }
+
+        public double? MonthlyExpensesGoal { get; set; }
+
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)
         {
             // Note the authenticationType must match the one defined in CookieAuthenticationOptions.AuthenticationType

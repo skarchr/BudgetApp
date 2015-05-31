@@ -436,3 +436,10 @@ input.transaction-filter {
     background-color: white;
     padding: 0 !important;
 }
+
+.currency-label {
+    position: absolute;
+    margin-top: -27px;
+    margin-left: 240px;
+    color: #c0c0c0;
+}

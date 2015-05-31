@@ -4,6 +4,8 @@
 
         $scope.dirty = false;
 
+        $scope.regexDouble = /^(\d+(?:[\.\,]\d{1,2})?)$/;
+
         $http.get('/js/resources/countries.json')
             .success(function (data) {
                 $scope.countries = data;
@@ -28,16 +30,23 @@
 
         $scope.$watchGroup(['currencies', 'countries'], function(newVal, oldVal) {
 
-            if (newVal[0] !== oldVal[0] && newVal[1] !== oldVal[1])
-                $scope.model = userModel.model;
-
+            if (newVal[0] !== oldVal[0] && newVal[1] !== oldVal[1]) {
+                $scope.model = userModel.model;                
+            }
+                               
         });
 
 
         $scope.saveProfile = function() {
             if ($scope.model.currency !== undefined && $scope.model.country !== undefined) {
 
-                $http.post('../Manage/SaveProfile', { currency: $scope.model.currency, country: $scope.model.country, range : $scope.model.range })
+                $http.post('../Manage/SaveProfile', {
+                        currency: $scope.model.currency,
+                        country: $scope.model.country,
+                        range: $scope.model.range,
+                        monthlyExpensesGoal: $scope.model.monthlyExpensesGoal,
+                        monthlySavingGoal: $scope.model.monthlySavingGoal
+                    })
                     .success(function(data, status, headers, config) {
                         toastr.success('Profile updated!');
                         $scope.dirty = false;

@@ -218,6 +218,14 @@
     <Compile Include="Migrations\201505301702385_Range.Designer.cs">
       <DependentUpon>201505301702385_Range.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201505311319016_Goals.cs" />
+    <Compile Include="Migrations\201505311319016_Goals.Designer.cs">
+      <DependentUpon>201505311319016_Goals.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201505311329556_NullableGoals.cs" />
+    <Compile Include="Migrations\201505311329556_NullableGoals.Designer.cs">
+      <DependentUpon>201505311329556_NullableGoals.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Category.cs" />
@@ -670,6 +678,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201505301702385_Range.resx">
       <DependentUpon>201505301702385_Range.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201505311319016_Goals.resx">
+      <DependentUpon>201505311319016_Goals.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201505311329556_NullableGoals.resx">
+      <DependentUpon>201505311329556_NullableGoals.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

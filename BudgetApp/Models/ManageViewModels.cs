@@ -12,7 +12,9 @@ namespace BudgetApp.Models
         public string Country { get; set; }
         public int TransactionCount { get; set; }
         public int MappingCount { get; set; }
-        public int AccessFailedCount { get; set; }
+
+        public double? MonthlySavingGoal { get; set; }
+        public double? MonthlyExpensesGoal { get; set; }
 
         public bool HasPassword { get; set; }
         public IList<UserLoginInfo> Logins { get; set; }
