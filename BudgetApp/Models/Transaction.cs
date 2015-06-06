@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using BudgetApp.Constants;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 
@@ -21,5 +22,13 @@ namespace BudgetApp.Models
         public DateTime Date { get; set; }
         public DateTime Created { get; set; }
         public bool Import { get; set; }
+
+        public string Color
+        {
+            get
+            {
+                return HighchartUtilities.Colors[Categories.GetCategoryColor(Category)];
+            }
+        }
     }
 }

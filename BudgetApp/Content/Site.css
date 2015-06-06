@@ -449,3 +449,22 @@ input.transaction-filter {
     margin-top: -5px;
     margin-left: -15px;
 }
+
+.chart-btn {
+    border: 1px solid #c0c0c0;
+    padding: 3px 8px;
+    font-size: 18px;
+    -ms-border-radius: 4px;
+    border-radius: 4px;
+}
+
+.chart-btn:hover {
+    border: 1px solid #313131;
+    color: #313131;
+    cursor: pointer;
+    background-color: #ececec;
+}
+
+span.active {
+    background-color: #b0e0e6;
+}

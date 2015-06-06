@@ -75,28 +75,27 @@
         {
 
             <div class="row">
+                
+                <div class="col-xs-12">
+                    
+                    <span style="height:350px;width:1123px !important;" class="visible-lg" data-overview-highchart="{{overviewGraph}}" data-range="@Model.Range"></span>
 
-                <div class="col-xs-12" style="margin-top:30px;" ng-repeat="range in model">
+                    <span style="height:350px;width:923px !important;" class="visible-md" data-overview-highchart="{{overviewGraph}}" data-range="@Model.Range"></span>
+
+                    <span style="height:350px;width:703px !important;" class="visible-sm" data-overview-highchart="{{overviewGraph}}" data-range="@Model.Range"></span>
+
+                </div>
+
+                <div class="col-xs-12" style="margin-top:30px;" ng-repeat="range in model" ng-show="rangeElem === $index">
 
 
                     <div class="panel panel-default">
 
-                        <div class="panel-body">
+                        <div class="panel-body" style="padding-bottom: 0;">
 
                             <div class="row">
-                                
-                                <div class="col-xs-4">
-                                    <span class="label label-big label-muted hide-xs" ng-show="range.year != range.title">
-                                        {{range.year }}
-                                    </span>
-                                    
-                                    <span class="label label-big label-muted" ng-show="filter === 2">
-                                        {{range.startDate | monthName2 }}
-                                    </span>
 
-                                    <span class="label label-primary label-big">
-                                        {{range.title @(Model.RangeViewers[0].Range == Range.Month ? "| monthName" : "") }}
-                                    </span>
+                                <div class="col-xs-4">
 
                                 </div>
 
@@ -104,29 +103,21 @@
                                     <span class="text-muted">
                                         {{range.startDate | date : 'dd.MM.yyyy'}} - {{range.endDate | date: 'dd.MM.yyyy'}}
                                     </span>
-                                                                        
+
                                 </div>
-                                
+
                                 <div class="col-xs-4 text-center visible-xs">
                                     <span class="label label-success" title="Income">{{range.totalIncome.toFixed(1)}}</span>
                                     <span class="label label-danger" title="Expenses">{{range.totalExpenses.toFixed(1)}}</span>
                                 </div>
 
-                                <div class="col-xs-4 text-right">                                                                       
-                                    
-                                    <span ng-model="showBalance.$index" ng-click="showBalance.$index = !showBalance.$index" style="min-height: 34px;" class="hide-xs toggle-transactions {{showBalance.$index ? 'active':''}}"> Balance</span>
-
-                                    <span class="toggle-transactions {{range.$index ? 'active':''}}" ng-click="range.$index = !range.$index">
-                                        <i class="glyphicon glyphicon-zoom-in" ng-hide="range.$index"></i>
-                                        <i class="glyphicon glyphicon-zoom-out" ng-show="range.$index"></i>
-                                        {{range.transactions.length}}
-                                    </span>
+                                <div class="col-xs-4 text-right">
                                 </div>
 
                             </div>
 
-                            <div class="row">
-                                <div class="col-xs-12 placeholder hidden-xs" ng-hide="showBalance.$index">
+                            <div class="row" style="margin-top: 13px;">
+                                <div class="col-xs-12 placeholder hidden-xs">
 
                                     <span style="height:350px;width:1123px !important;" class="visible-lg" data-highchart="{{range.graph}}"></span>
 
@@ -135,36 +126,17 @@
                                     <span style="height:350px;width:703px !important;" class="visible-sm" data-highchart="{{range.graph}}"></span>
 
                                 </div>
-                                
-                                <div class="col-xs-12 placeholder hidden-xs" ng-show="showBalance.$index">
 
-                                    <span style="height:350px;width:1123px !important;" class="visible-lg" data-gauge data-income="{{range.totalIncome}}" data-expense="{{range.totalExpenses}}"></span>
-
-                                    <span style="height:350px;width:923px !important;" class="visible-md" data-gauge data-income="{{range.totalIncome}}" data-expense="{{range.totalExpenses}}"></span>
-
-                                    <span style="height:350px;width:703px !important;" class="visible-sm" data-gauge data-income="{{range.totalIncome}}" data-expense="{{range.totalExpenses}}"></span>
-
-                                </div>
-                            </div>
-                            <div class="row hidden-xs" style="margin-bottom: -36px;">
-                                <div class="progress">
-                                    <div class="progress-bar progress-bar-success" style="{{calcPercentage(range.totalIncome, range.totalExpenses)}}">
-                                        <span>{{range.totalIncome.toFixed(1)}}</span>
-                                    </div>
-                                    <div class="progress-bar progress-bar-danger" style="{{calcPercentage(range.totalExpenses, range.totalIncome)}}">
-                                        <span>{{range.totalExpenses.toFixed(1)}}</span>
-                                    </div>
-                                </div>
-                                <div class="balance"></div>
                             </div>
                         </div>
-                        <table class="table table-condensed table-same-width table-hover" ng-show="range.$index" style="margin-top: 18px;">
+                        <table class="table table-condensed table-same-width table-hover" style="margin-top: 18px;">
                             <thead>
                                 <tr>
                                     <th class="hidden-xs">#</th>
                                     <th>Amount (@Model.Currency)</th>
                                     <th>Category</th>
-                                    <th>Date</th>
+                                    <th class="hidden-xs hidden-sm">Description</th>
+                                    <th class="hidden-xs hidden-md hidden-sm">Date</th>
                                     <th></th>
                                 </tr>
                             </thead>
@@ -174,7 +146,7 @@
 
                                         <span class="percentage-row" ng-show="row.category !== 'Salary' && row.category !== 'OtherIncome'">
                                             <svg set-width="{{calcRowPercentage(row.amount, findMax(range.transactions))}}" height="30">
-                                                <rect set-width="{{calcRowPercentage(row.amount, findMax(range.transactions))}}" height="30" style="stroke-width:0;fill:rgba(41,106,212, 0.2)" />
+                                                <rect set-width="{{calcRowPercentage(row.amount, findMax(range.transactions))}}" height="30" style="stroke-width:0;fill:{{row.color}};opacity:0.2" />
                                             </svg>
                                         </span>
 
@@ -182,7 +154,8 @@
                                     </td>
                                     <td>{{row.amount}}</td>
                                     <td>{{row.category | camelCaseToNormal}}</td>
-                                    <td>{{row.date | date}}</td>
+                                    <td class="hidden-xs hidden-sm" style="text-align: left">{{row.description | maxLength : 25}}</td>
+                                    <td class="hidden-md hidden-xs hidden-sm">{{row.date | date}}</td>
                                     <td class="text-right">
                                         <a class="link edit-link" href="{{urls.edit}}/{{row.transactionId}}" title="Edit"><i class="glyphicon glyphicon-pencil"></i></a>
                                         <a class="link delete-link" href="{{urls.del}}/{{row.transactionId}}" title="Delete">
@@ -218,6 +191,7 @@
             return {
                 filter : @Html.Raw(Model.Range.ToJson()),
                 model: @Html.Raw(Model.RangeViewers.ToJson()),
+                overview : @Html.Raw(Model.OverviewGraph),
                 urls: {
                     del: '@Url.Action("Delete")',
                     edit: '@Url.Action("Edit")',

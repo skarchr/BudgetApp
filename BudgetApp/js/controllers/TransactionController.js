@@ -5,9 +5,13 @@
 
         $scope.filter = transactionModel.filter;
 
+        $scope.rangeElem = '';
+
         $scope.model = transactionModel.model;
 
-        $scope.urls = transactionModel.urls;        
+        $scope.urls = transactionModel.urls;
+
+        $scope.overviewGraph = transactionModel.overview;
 
         $scope.showBalance = false;
 

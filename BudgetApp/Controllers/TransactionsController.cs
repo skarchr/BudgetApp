@@ -48,9 +48,10 @@ namespace BudgetApp.Controllers
             var model = new TransactionsViewModel 
             {
                 TransactionsDisplayed = allTransactions.Count,
-                RangeViewers = rangeViewers, 
+                RangeViewers = rangeViewers.OrderBy(s => s.StartDate).ToList(), 
                 Range = range,
-                Currency = user.Currency
+                Currency = user.Currency,
+                OverviewGraph = GraphBuilder.OverviewGraph(rangeViewers.OrderBy(s => s.StartDate).ToList(), user.Currency).ToJson()
             };
 
             ViewBag.Success = TempData["Success"];
@@ -81,9 +82,10 @@ namespace BudgetApp.Controllers
 
             }
 
-            model.RangeViewers = rangeViewers;
+            model.RangeViewers = rangeViewers.OrderBy(s => s.StartDate).ToList();
             model.Currency = currency;
             model.TransactionsDisplayed = allTransactions.Count;
+            model.OverviewGraph = GraphBuilder.OverviewGraph(rangeViewers.OrderBy(s => s.StartDate).ToList(), currency).ToJson();
 
             return View(model);
         }

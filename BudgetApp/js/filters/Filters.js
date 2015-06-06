@@ -32,6 +32,21 @@
 
         }
 
+    })
+    .filter('maxLength', function () {
+
+        return function (input, length) {
+
+            if(input.length > length){
+
+                var result = input.substring(0, length);
+
+                return result + '...';
+            }
+            return input;
+
+        }
+
     });
 
 })();

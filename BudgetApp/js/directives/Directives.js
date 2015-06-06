@@ -142,6 +142,93 @@
 
             }
         ])
+        .directive('overviewHighchart', [function () {
+
+            return {
+                restrict: 'A',
+                scope: {
+                    overviewHighchart: '@',
+                    range: '@'
+                },
+                link: function (scope, elem, attrs) {
+
+                    var model = JSON.parse(scope.overviewHighchart);
+
+                    Highcharts.setOptions({ lang: { drillUpText: 'Back' } });
+
+                    $(elem[0]).highcharts({
+                        chart: {
+                            plotBackgroundColor: null,
+                            plotBorderWidth: null,
+                            plotShadow: false,
+                        },
+                        title: {
+                            text: model.title.text,
+                            style: {
+                                fontSize: '18px',
+                                color: '#313131'
+                            }
+                        },
+                        tooltip: {
+                            enabled: false,
+                            pointFormat: '{series.name}: <b>{point.y:.1f} </b>'
+                        },
+                        legend: {
+                            enabled:true
+                        },                        
+                        credits: false,
+                        plotOptions: {
+                            column: {
+                                showInLegend: false,
+                                colorByPoint: true
+                            }
+                        },
+                        xAxis: {
+                            categories:model.categories,
+                            type: 'category',
+                            title: {
+                                text: scope.range !== undefined && scope.range !== 'Annual' ? scope.range : ''
+                            },
+                            labels: {
+                                useHTML: true,
+                                formatter: function () {
+                                    return '<div class="chart-btn">' + this.value + '</div>';
+                                }
+                            }
+                        },
+                        yAxis: {
+                            title: {
+                                text: model.currency
+                            }
+                        },                        
+                        series: model.series
+                    });
+
+                    $('.highcharts-axis-labels > span').each(function (e) {
+
+                        var that = this;
+
+                        $(this).on('click', function () {
+
+                            $('.highcharts-axis-labels > span').each(function () {
+                                console.log(this);
+                                $(this).removeClass('active');
+                            });
+
+                            $(this).addClass('active');
+
+                            scope.$apply(function () {
+                                scope.$parent.rangeElem = e;
+                            });
+
+                        });
+
+                    });
+
+                }
+            }
+        }])
+
         .directive('highchart', ['commonService', function (commonService) {
 
             return {
@@ -210,7 +297,7 @@
                         },
                         series: model.series,
                         drilldown : {
-                            series: model.drilldown.series,
+                            series: model.drilldown !== null ? model.drilldown.series : null,
                             drillUpButton: {
                                 position:{ y:-50 },
                                 theme: {

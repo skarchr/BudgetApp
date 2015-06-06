@@ -66,6 +66,66 @@ namespace BudgetApp.Tests.Graphs
 
         }
 
+        [Test]
+        public void TestOverviewGraph_Annual()
+        {
+
+            var model = new List<RangeViewer>
+            {
+                new RangeViewer
+                {
+                    Range = Range.Annual,
+                    Transactions = CreateTransactions(),
+                    StartDate = new DateTime(2014,1,1),
+                    EndDate = new DateTime(2014,12,31),
+                    Title = "2014",
+                    Year = 2014
+                }
+            };
+
+            var result = GraphBuilder.OverviewGraph(model, "NOK");
+
+            result.Categories[0].Should().Be("2014");
+
+            result.Series[0].Name.Should().Be("Expenses");
+            result.Series[0].Data[0].X.Should().Be(0);
+            result.Series[0].Data[0].Y.Should().Be(300);
+
+            result.Series[1].Name.Should().Be("Income");
+            result.Series[1].Data[0].X.Should().Be(0);
+            result.Series[1].Data[0].Y.Should().Be(600);
+        }
+
+        [Test]
+        public void TestOverviewGraph_Monthly()
+        {
+
+            var model = new List<RangeViewer>
+            {
+                new RangeViewer
+                {
+                    Range = Range.Month,
+                    Transactions = CreateTransactions(),
+                    StartDate = new DateTime(2014,1,1),
+                    EndDate = new DateTime(2014,1,31),
+                    Title = "1",
+                    Year = 2014
+                }
+            };
+
+            var result = GraphBuilder.OverviewGraph(model, "NOK");
+
+            result.Categories[0].Should().Be("Jan2014");
+
+            result.Series[0].Name.Should().Be("Expenses");
+            result.Series[0].Data[0].X.Should().Be(0);
+            result.Series[0].Data[0].Y.Should().Be(300);
+
+            result.Series[1].Name.Should().Be("Income");
+            result.Series[1].Data[0].X.Should().Be(0);
+            result.Series[1].Data[0].Y.Should().Be(600);
+        }
+
         private static List<Transaction> CreateTransactions()
         {
             return new List<Transaction>
@@ -88,6 +148,12 @@ namespace BudgetApp.Tests.Graphs
                     Amount = 60,
                     Category = Category.Car,
                     Date = new DateTime(2014,1,2)
+                },                
+                new Transaction
+                {
+                    Amount = 600.0,
+                    Category = Category.Salary,
+                    Date = new DateTime(2014,2,2)
                 }
             };
         } 

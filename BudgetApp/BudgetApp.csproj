@@ -191,6 +191,7 @@
     <Compile Include="Extensions\Dropdownlist.cs" />
     <Compile Include="Extensions\Graphs\DailyExpenses.cs" />
     <Compile Include="Extensions\Graphs\GraphBuilder.cs" />
+    <Compile Include="Extensions\Graphs\Overview.cs" />
     <Compile Include="Extensions\Graphs\TransactionDrilldown.cs" />
     <Compile Include="Extensions\Serialization.cs" />
     <Compile Include="Extensions\Validation.cs" />

@@ -13,6 +13,7 @@ namespace BudgetApp.Models
         public Range Range { get; set; }
         public List<RangeViewer> RangeViewers { get; set; }
         public string Currency { get; set; }
+        public string OverviewGraph { get; set; }
     }
 
 }
