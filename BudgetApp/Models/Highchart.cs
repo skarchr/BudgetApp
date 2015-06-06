@@ -9,6 +9,8 @@ namespace BudgetApp.Models
         public Drilldown Drilldown { get; set; }
         public Title Title { get; set; }
         public string Currency { get; set; }
+        public List<PlotLines> PlotLinesX { get; set; }
+        public List<PlotLines> PlotLinesY { get; set; } 
     }
 
     public class PlotLines

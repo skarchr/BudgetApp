@@ -25,9 +25,9 @@ namespace BudgetApp.Extensions.Graphs
             return (date.ToUniversalTime().Ticks - ((new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc)).Ticks)) / 10000;
         }
 
-        public static Highchart OverviewGraph(List<RangeViewer> rangeviewers, string currency)
+        public static Highchart OverviewGraph(List<RangeViewer> rangeviewers, ApplicationUser user)
         {
-            return Overview.CreateChart(rangeviewers, currency);
+            return Overview.CreateChart(rangeviewers, user);
         }
     }
 }

@@ -15,6 +15,9 @@
             
             <div class="col-md-6">
                 
+                <h3>Account settings</h3>
+                <hr />
+
                 <div class="form-group">
                     <label for="picture" class="control-label col-sm-5"></label>
                     <div class="col-sm-7">
@@ -84,20 +87,6 @@
                         @Html.ActionLink("Manage", "ManageLogins", null, new { @style = "margin-top:-3px;float:left;" })
                     </div>
                 </div>
-                
-                <div class="form-group">
-                    <label for="Transactions" class="control-label col-sm-5">Number of Transactions</label>
-                    <div class="col-sm-7">
-                        @Html.TextBoxFor(m => m.TransactionCount, new { @class = "form-control no-input", @readonly = "readonly" })
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label for="Mappings" class="control-label col-sm-5">Number of Mappings</label>
-                    <div class="col-sm-7">
-                        @Html.TextBoxFor(m => m.MappingCount, new { @class = "form-control no-input", @readonly = "readonly" })
-                    </div>
-                </div>
 
             </div>
             <div class="col-md-6">
@@ -108,7 +97,7 @@
                     <label for="Username" class="control-label col-sm-5">Default Range</label>
                     <div class="col-sm-7">
                         <div class="btn-group" role="group">
-                            <button type="button" class="btn btn-default {{model.range == '3' ? 'active':''}}" ng-click="model.range = '3'; dirty = true;">
+                            <button style="padding-left:24px;padding-right: 24px;" type="button" class="btn btn-default {{model.range == '3' ? 'active':''}}" ng-click="model.range = '3'; dirty = true;">
                                 All
                             </button>
                             <button type="button" class="btn btn-default {{model.range == '0' ? 'active':''}}" ng-click="model.range = '0'; dirty = true;">

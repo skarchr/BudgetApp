@@ -83,7 +83,7 @@ namespace BudgetApp.Tests.Graphs
                 }
             };
 
-            var result = GraphBuilder.OverviewGraph(model, "NOK");
+            var result = GraphBuilder.OverviewGraph(model, new ApplicationUser { Currency = "NOK" });
 
             result.Categories[0].Should().Be("2014");
 
@@ -113,7 +113,7 @@ namespace BudgetApp.Tests.Graphs
                 }
             };
 
-            var result = GraphBuilder.OverviewGraph(model, "NOK");
+            var result = GraphBuilder.OverviewGraph(model, new ApplicationUser { Currency = "NOK" });
 
             result.Categories[0].Should().Be("Jan");
 
@@ -124,6 +124,45 @@ namespace BudgetApp.Tests.Graphs
             result.Series[1].Name.Should().Be("Income");
             result.Series[1].Data[0].X.Should().Be(0);
             result.Series[1].Data[0].Y.Should().Be(600);
+        }
+
+        [Test]
+        public void TestOverviewGraph_Plotlines_Year()
+        {
+            var model = new List<RangeViewer>
+            {
+                new RangeViewer
+                {
+                    Range = Range.Month,
+                    Transactions = new List<Transaction>
+                    {
+                        new Transaction
+                        {
+                            Date = new DateTime(2013,12,30),
+                            Category = Category.Dental
+                        }
+                    },
+                    StartDate = new DateTime(2013,12,1),
+                    EndDate = new DateTime(2013,12,31),
+                    Title = "12",
+                    Year = 2013
+                },
+                new RangeViewer
+                {
+                    Range = Range.Month,
+                    Transactions = CreateTransactions(),
+                    StartDate = new DateTime(2014,1,1),
+                    EndDate = new DateTime(2014,1,31),
+                    Title = "1",
+                    Year = 2014
+                }    
+            };
+
+            var result = GraphBuilder.OverviewGraph(model, new ApplicationUser{Currency = "NOK"});
+
+            result.PlotLinesX[0].Value.Should().Be(0.5);
+            result.PlotLinesX[0].Label.Text.Should().Be("2014");
+
         }
 
         private static List<Transaction> CreateTransactions()

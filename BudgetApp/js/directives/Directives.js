@@ -186,7 +186,8 @@
                             }
                         },
                         xAxis: {
-                            categories:model.categories,
+                            categories: model.categories,
+                            plotLines: model.plotLinesX,
                             type: 'category',
                             title: {
                                 text: scope.range !== undefined && scope.range === 'Week' ? scope.range : ''
@@ -201,7 +202,8 @@
                         yAxis: {
                             title: {
                                 text: model.currency
-                            }
+                            },
+                            plotLines: scope.range === 'Month' ? model.plotLinesY : null
                         },                        
                         series: model.series
                     });

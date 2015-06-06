@@ -66,7 +66,7 @@ namespace BudgetApp.Controllers
                 RangeViewers = rangeViewers.OrderBy(s => s.StartDate).ToList(), 
                 Range = range,
                 Currency = user.Currency,
-                OverviewGraph = GraphBuilder.OverviewGraph(rangeViewers.OrderBy(s => s.StartDate).ToList(), user.Currency).ToJson()
+                OverviewGraph = GraphBuilder.OverviewGraph(rangeViewers.OrderBy(s => s.StartDate).ToList(), user).ToJson()
             };
 
             ViewBag.Success = TempData["Success"];
@@ -79,7 +79,7 @@ namespace BudgetApp.Controllers
         {
             var allTransactions = db.Transactions.Where(s => s.UserName == User.Identity.Name).ToList();
 
-            var currency = db.Users.First(u => u.UserName == User.Identity.Name).Currency;
+            var user = db.Users.First(u => u.UserName == User.Identity.Name);
 
             var rangeViewers = new List<RangeViewer>();
 
@@ -95,27 +95,27 @@ namespace BudgetApp.Controllers
                             Range = Range.All,
                             Title = "All",
                             Transactions = allTransactions,
-                            Graph = GraphBuilder.TransactionDrilldownGraph(allTransactions, currency).ToJson()
+                            Graph = GraphBuilder.TransactionDrilldownGraph(allTransactions, user.Currency).ToJson()
                             
                         }
                     };
                     break;
                 case Range.Annual:
-                    rangeViewers = GetAnnual(allTransactions, currency);
+                    rangeViewers = GetAnnual(allTransactions, user.Currency);
                     break;
                 case Range.Month:
-                    rangeViewers = GetMonth(allTransactions, currency);
+                    rangeViewers = GetMonth(allTransactions, user.Currency);
                     break;
                 case Range.Week:
-                    rangeViewers = GetWeek(allTransactions, currency);
+                    rangeViewers = GetWeek(allTransactions, user.Currency);
                     break;
 
             }
 
             model.RangeViewers = rangeViewers.OrderBy(s => s.StartDate).ToList();
-            model.Currency = currency;
+            model.Currency = user.Currency;
             model.TransactionsDisplayed = allTransactions.Count;
-            model.OverviewGraph = GraphBuilder.OverviewGraph(rangeViewers.OrderBy(s => s.StartDate).ToList(), currency).ToJson();
+            model.OverviewGraph = GraphBuilder.OverviewGraph(rangeViewers.OrderBy(s => s.StartDate).ToList(), user).ToJson();
 
             return View(model);
         }
