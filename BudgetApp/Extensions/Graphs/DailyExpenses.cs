@@ -40,7 +40,7 @@ namespace BudgetApp.Extensions.Graphs
 
             foreach (var date in listUniqueDates)
             {
-                var sum = transactions.Where(s => s.Date == date && Categories.GetMainCategory(s.Category.Value) != "Income").Sum(s => s.Amount);
+                var sum = transactions.Where(s => s.Date == date && CategoryExt.GetMainCategory(s.Category.Value) != "Income").Sum(s => s.Amount);
 
                 if (sum > 0.0)
                 {

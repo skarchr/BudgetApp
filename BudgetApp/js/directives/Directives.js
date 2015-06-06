@@ -158,6 +158,7 @@
 
                     $(elem[0]).highcharts({
                         chart: {
+                            type:'column',
                             plotBackgroundColor: null,
                             plotBorderWidth: null,
                             plotShadow: false,
@@ -170,8 +171,10 @@
                             }
                         },
                         tooltip: {
-                            enabled: false,
-                            pointFormat: '{series.name}: <b>{point.y:.1f} </b>'
+                            enabled: true,
+                            formatter: function () {
+                                return '<div><strong>'+ this.series.name+ '</strong><br>' + this.x + ': ' + this.y.toFixed(1) + ' ' + model.currency +'</div>';
+                            }
                         },
                         legend: {
                             enabled:true
@@ -179,8 +182,11 @@
                         credits: false,
                         plotOptions: {
                             column: {
-                                showInLegend: false,
-                                colorByPoint: true
+                                showInLegend: true,
+                                dataLabels: {
+                                    enabled: false,
+                                    format:'{y}'
+                                }
                             }
                         },
                         xAxis: {

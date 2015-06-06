@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using BudgetApp.Constants;
+using BudgetApp.Extensions;
 
 namespace BudgetApp.Models
 {
@@ -27,7 +28,7 @@ namespace BudgetApp.Models
         {
             get
             {
-                return Transactions.Where(s => Categories.GetMainCategory(s.Category.Value) != "Income").Sum(s => s.Amount);
+                return Transactions.Where(s => Extensions.CategoryExt.GetMainCategory(s.Category.Value) != "Income").Sum(s => s.Amount);
             }
         }
 
@@ -35,7 +36,7 @@ namespace BudgetApp.Models
         {
             get
             {
-                return Transactions.Where(s => Categories.GetMainCategory(s.Category.Value) == "Income").Sum(s => s.Amount);
+                return Transactions.Where(s => Extensions.CategoryExt.GetMainCategory(s.Category.Value) == "Income").Sum(s => s.Amount);
             }
         }
     }

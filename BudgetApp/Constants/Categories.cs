@@ -7,55 +7,20 @@ using BudgetApp.Models;
 namespace BudgetApp.Constants
 {
     public static class Categories
-    {        
+    {
 
-        public static string GetMainCategory(Category category)
-        {
-            return (from key in Grouped where key.Value.Any(val => val == category) select key.Key).FirstOrDefault();
-        }
-
-        public static int GetCategoryColor(Category? category)
-        {
-            if (category != null)
-            {
-                return GetCategoryColor(GetMainCategory(category.Value));
-            }
-            return 0;
-        }
-
-        public static int GetCategoryColor(string mainCategory)
-        {
-            return GetColorIndex(mainCategory);
-        }
-
-        private static int GetColorIndex(string mainCategory)
-        {
-
-            switch (mainCategory)
-            {
-                case "Fixed":
-                    return 0;
-                case "Food":
-                    return 1;
-                case "Income":
-                    return 2;
-                case "Personal":
-                    return 3;
-                case "Saving":
-                    return 4;
-                case "Shelter":
-                    return 5;
-                case "Transport":
-                    return 6;
-                default:
-                    return 0;
-            }
-        }
+        public const string Fixed = "Fixed";
+        public const string Food = "Food";
+        public const string Income = "Income";
+        public const string Personal = "Personal";
+        public const string Saving = "Saving";
+        public const string Shelter = "Shelter";
+        public const string Transport = "Transport";
 
         public static readonly Dictionary<string, List<Category>> Grouped = new Dictionary<string, List<Category>>
             {
                 {
-                    "Fixed", new List<Category>
+                    Fixed, new List<Category>
                     {
                         Category.DebtReduction,
                         Category.Dental,
@@ -65,7 +30,7 @@ namespace BudgetApp.Constants
                     }
                 },
                 {
-                    "Food", new List<Category>
+                    Food, new List<Category>
                     {
                         Category.Groceries,
                         Category.Restaurant,
@@ -74,14 +39,14 @@ namespace BudgetApp.Constants
                     }
                 },
                 {
-                    "Income", new List<Category>
+                    Income, new List<Category>
                     {
                         Category.Salary,
                         Category.OtherIncome
                     }
                 },
                 {
-                    "Personal", new List<Category>
+                    Personal, new List<Category>
                     {
                         Category.Appearance,
                         Category.Entertainment,
@@ -95,13 +60,13 @@ namespace BudgetApp.Constants
                     }
                 },
                 {
-                    "Saving", new List<Category>
+                    Saving, new List<Category>
                     {
                         Category.Saving
                     }
                 },
                 {
-                    "Shelter", new List<Category>
+                    Shelter, new List<Category>
                     {
                         Category.Furniture,
                         Category.Interior,
@@ -113,7 +78,7 @@ namespace BudgetApp.Constants
                     }
                 },
                 {
-                    "Transport", new List<Category>
+                    Transport, new List<Category>
                     {
                         Category.Car,
                         Category.CollectiveTransport,

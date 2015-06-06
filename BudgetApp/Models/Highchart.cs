@@ -11,6 +11,77 @@ namespace BudgetApp.Models
         public string Currency { get; set; }
     }
 
+    public class PlotLines
+    {
+        public PlotLines()
+        {
+            ZIndex = 5;
+            DashStyle = "Solid";
+        }
+
+        public string Id { get; set; }
+
+        public Label Label { get; set; }
+
+        public string Color { get; set; }
+
+        public string DashStyle { get; set; }
+
+        public double Value { get; set; }
+
+        public int Width { get; set; }
+
+        public int ZIndex { get; set; }
+    }
+
+    public class Style
+    {
+        public Style()
+        {
+            Color = "#333333";
+            FontSize = "12px";
+            FontWeight = "normal";
+        }
+
+        public Style(string size)
+        {
+            Color = "#333333";
+            FontSize = size;
+            FontWeight = "normal";
+        }
+
+        public string FontSize { get; set; }
+        public string FontWeight { get; set; }
+        public string Color { get; set; }
+        public string TextShadow { get; set; }
+    }
+
+    public class Label
+    {
+        public Label()
+        {
+            X = 2;
+            Y = 2;
+            Style = new Style("12px");
+        }
+
+        public string Text { get; set; }
+
+        public Style Style { get; set; }
+
+        public int Rotation { get; set; }
+
+        public string Align { get; set; }
+
+        public string VerticalAlign { get; set; }
+
+        public int? X { get; set; }
+
+        public int? Y { get; set; }
+    }
+
+
+
     public class Data
     {
         public Data()
@@ -44,13 +115,7 @@ namespace BudgetApp.Models
         public string Text { get; set; }
     }
 
-    public class Style
-    {
-        public string Color { get; set; }
-        public string FontSize { get; set; }
-        public string FontWeight { get; set; }
-        public string TextShadow { get; set; }
-    }
+
 
     public class DataLabels
     {

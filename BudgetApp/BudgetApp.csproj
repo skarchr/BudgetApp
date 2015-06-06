@@ -186,7 +186,7 @@
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\MappingsController.cs" />
     <Compile Include="Controllers\TransactionsController.cs" />
-    <Compile Include="Extensions\CategoryExtension.cs" />
+    <Compile Include="Extensions\CategoryExt.cs" />
     <Compile Include="Extensions\DateHelper.cs" />
     <Compile Include="Extensions\Dropdownlist.cs" />
     <Compile Include="Extensions\Graphs\DailyExpenses.cs" />

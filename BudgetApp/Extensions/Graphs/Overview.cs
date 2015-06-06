@@ -43,7 +43,7 @@ namespace BudgetApp.Extensions.Graphs
             {
                 data.Add(new Data
                 {
-                    Color = expense ? "red":"green",
+                    Color = expense ? "#FF0000" : "#48DDb8",
                     Name = rangeViewer.Title,
                     X = index,
                     Y = expense ? rangeViewer.TotalExpenses : rangeViewer.TotalIncome
@@ -67,7 +67,7 @@ namespace BudgetApp.Extensions.Graphs
 
             foreach (var rangeViewer in rangeViewers)
             {
-                var text = rangeViewer.Range == Range.Month ? DateHelper.GetMonthText(rangeViewer.StartDate, true, true) : rangeViewer.Title;
+                var text = rangeViewer.Range == Range.Month ? DateHelper.GetMonthText(rangeViewer.StartDate, true) : rangeViewer.Title;
 
                 result.Add(text);
             }

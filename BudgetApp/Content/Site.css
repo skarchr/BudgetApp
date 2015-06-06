@@ -451,20 +451,22 @@ input.transaction-filter {
 }
 
 .chart-btn {
-    border: 1px solid #c0c0c0;
-    padding: 3px 8px;
-    font-size: 18px;
-    -ms-border-radius: 4px;
-    border-radius: 4px;
+    font-size: 16px;
+    color: #0094ff;    
 }
 
 .chart-btn:hover {
-    border: 1px solid #313131;
     color: #313131;
     cursor: pointer;
-    background-color: #ececec;
+    text-decoration: underline;
 }
 
-span.active {
-    background-color: #b0e0e6;
+span.active {    
+    font-weight: bold;
+    font-size: 18px;     
+}
+
+span.active > .chart-btn {
+    color: #296ad4;
+    text-decoration: underline;
 }

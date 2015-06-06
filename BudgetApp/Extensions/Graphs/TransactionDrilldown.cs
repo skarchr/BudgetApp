@@ -41,7 +41,7 @@ namespace BudgetApp.Extensions.Graphs
                 {
                     data.Add(new Data
                     {
-                        Color = HighchartUtilities.Colors[Categories.GetCategoryColor(mainCategory)],
+                        Color = HighchartUtilities.Colors[CategoryExt.GetCategoryColor(mainCategory)],
                         Name = category.ToString(),
                         X = index,
                         Y = transactions.Where(s => s.Category == category).Sum(s => s.Amount)
@@ -63,11 +63,11 @@ namespace BudgetApp.Extensions.Graphs
 
                 data.Add(new Data
                 {
-                    Color = HighchartUtilities.Colors[Categories.GetCategoryColor(mainCategory)],
+                    Color = HighchartUtilities.Colors[CategoryExt.GetCategoryColor(mainCategory)],
                     Drilldown = mainCategory.ToLower(),
                     Name = mainCategory,
                     X = index,
-                    Y = transactions.Where(s => s.Category != null && Categories.GetMainCategory(s.Category.Value) == mainCategory).Sum(s => s.Amount)
+                    Y = transactions.Where(s => s.Category != null && CategoryExt.GetMainCategory(s.Category.Value) == mainCategory).Sum(s => s.Amount)
                 });
                 index++;
             }

@@ -1,4 +1,5 @@
 ﻿using BudgetApp.Constants;
+using BudgetApp.Extensions;
 using BudgetApp.Models;
 using FluentAssertions;
 using NUnit.Framework;
@@ -11,7 +12,7 @@ namespace BudgetApp.Tests
         [Test]
         public void TestMethod1()
         {
-            var result = Categories.GetMainCategory(Category.Car);
+            var result = CategoryExt.GetMainCategory(Models.Category.Car);
             result.Should().Be("Transport");
         }
     }

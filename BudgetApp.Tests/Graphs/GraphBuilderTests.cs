@@ -115,7 +115,7 @@ namespace BudgetApp.Tests.Graphs
 
             var result = GraphBuilder.OverviewGraph(model, "NOK");
 
-            result.Categories[0].Should().Be("Jan2014");
+            result.Categories[0].Should().Be("Jan");
 
             result.Series[0].Name.Should().Be("Expenses");
             result.Series[0].Data[0].X.Should().Be(0);

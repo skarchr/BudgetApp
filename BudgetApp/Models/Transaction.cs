@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using BudgetApp.Constants;
+using BudgetApp.Extensions;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 
@@ -27,7 +28,7 @@ namespace BudgetApp.Models
         {
             get
             {
-                return HighchartUtilities.Colors[Categories.GetCategoryColor(Category)];
+                return HighchartUtilities.Colors[Extensions.CategoryExt.GetCategoryColor(Category)];
             }
         }
     }
