@@ -33,6 +33,21 @@ namespace BudgetApp.Controllers
 
             switch (range)
             {
+                case Range.All:
+                    rangeViewers = new List<RangeViewer>
+                    {
+                        new RangeViewer
+                        {
+                            StartDate = allTransactions.OrderBy(s => s.Date).First().Date,
+                            EndDate = allTransactions.OrderByDescending(s => s.Date).First().Date,
+                            Range = Range.All,
+                            Title = "All",
+                            Transactions = allTransactions,
+                            Graph = GraphBuilder.TransactionDrilldownGraph(allTransactions, user.Currency).ToJson()
+                            
+                        }
+                    };
+                    break;
                 case Range.Annual:
                     rangeViewers = GetAnnual(allTransactions, user.Currency);
                     break;
@@ -70,6 +85,21 @@ namespace BudgetApp.Controllers
 
             switch (model.Range)
             {
+                case Range.All:
+                    rangeViewers = new List<RangeViewer>
+                    {
+                        new RangeViewer
+                        {
+                            StartDate = allTransactions.OrderBy(s => s.Date).First().Date,
+                            EndDate = allTransactions.OrderByDescending(s => s.Date).First().Date,
+                            Range = Range.All,
+                            Title = "All",
+                            Transactions = allTransactions,
+                            Graph = GraphBuilder.TransactionDrilldownGraph(allTransactions, currency).ToJson()
+                            
+                        }
+                    };
+                    break;
                 case Range.Annual:
                     rangeViewers = GetAnnual(allTransactions, currency);
                     break;

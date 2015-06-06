@@ -9,7 +9,7 @@ namespace BudgetApp.Models
 {
     public enum Range
     {
-        Annual, Month, Week
+        Annual, Month, Week, All
     }
 
     public class RangeViewer

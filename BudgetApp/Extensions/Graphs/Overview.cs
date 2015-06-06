@@ -46,7 +46,8 @@ namespace BudgetApp.Extensions.Graphs
                     Color = expense ? "#FF0000" : "#48DDb8",
                     Name = rangeViewer.Title,
                     X = index,
-                    Y = expense ? rangeViewer.TotalExpenses : rangeViewer.TotalIncome
+                    Y = expense ? rangeViewer.TotalExpenses : rangeViewer.TotalIncome,
+                    DataLabels = new DataLabels { Enabled = false }
                 });
                 index++;
             }
@@ -54,6 +55,7 @@ namespace BudgetApp.Extensions.Graphs
             return new Series
             {
                 Data = data,
+                Color = expense ? "#FF0000" : "#48DDb8",
                 Id = expense ? "expenses":"income",
                 Name = expense ? "Expenses" : "Income",
                 Type = "column"

@@ -33,7 +33,9 @@
 
                     <div class="btn-group" role="group">
                                                 
-
+                        <button type="button" set-range="@Range.All" class="btn btn-default @(Model.Range == Range.All ? "active":"")">
+                            All
+                        </button>
                         <button type="button" set-range="@Range.Annual" class="btn btn-default @(Model.Range == Range.Annual ? "active":"")">
                             Annual
                         </button>
@@ -152,9 +154,12 @@
 
                                         {{ $index + 1 }}
                                     </td>
-                                    <td>{{row.amount}}</td>
-                                    <td>{{row.category | camelCaseToNormal}}</td>
-                                    <td class="hidden-xs hidden-sm" style="text-align: left">{{row.description | maxLength : 25}}</td>
+                                    <td>{{row.amount.toFixed(2)}}</td>
+                                    <td style="text-align:left;padding-left: 20px;">
+                                        <img class="hidden-xs hidden-sm" style="position: absolute;" height="20" ng-src="{{getIcon(row.category)}}" alt="{{row.category}}" />
+                                        <span style="padding-left: 30px;">{{row.category | camelCaseToNormal}}</span>
+                                    </td>
+                                    <td class="hidden-xs hidden-sm" style="text-align: left" title="{{row.description}}">{{row.description | maxLength : 25}}</td>
                                     <td class="hidden-md hidden-xs hidden-sm">{{row.date | date}}</td>
                                     <td class="text-right">
                                         <a class="link edit-link" href="{{urls.edit}}/{{row.transactionId}}" title="Edit"><i class="glyphicon glyphicon-pencil"></i></a>

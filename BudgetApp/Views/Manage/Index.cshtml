@@ -108,6 +108,9 @@
                     <label for="Username" class="control-label col-sm-5">Default Range</label>
                     <div class="col-sm-7">
                         <div class="btn-group" role="group">
+                            <button type="button" class="btn btn-default {{model.range == '3' ? 'active':''}}" ng-click="model.range = '3'; dirty = true;">
+                                All
+                            </button>
                             <button type="button" class="btn btn-default {{model.range == '0' ? 'active':''}}" ng-click="model.range = '0'; dirty = true;">
                                 Annual
                             </button>

@@ -1,11 +1,17 @@
 ﻿(function() {
     'use strict';
 
-    angular.module('budgetApp').controller('transactionController', ['$scope', 'transactionModel', function ($scope, transactionModel) {
+    angular.module('budgetApp').controller('transactionController', ['$scope', 'transactionModel', 'commonService', function ($scope, transactionModel, commonService) {
 
         $scope.filter = transactionModel.filter;
 
         $scope.rangeElem = '';
+
+        $scope.getIcon = function (input) {
+
+            return commonService.getIconUrl(input);
+
+        };
 
         $scope.model = transactionModel.model;
 

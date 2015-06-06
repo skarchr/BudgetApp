@@ -182,18 +182,14 @@
                         credits: false,
                         plotOptions: {
                             column: {
-                                showInLegend: true,
-                                dataLabels: {
-                                    enabled: false,
-                                    format:'{y}'
-                                }
+                                showInLegend: true
                             }
                         },
                         xAxis: {
                             categories:model.categories,
                             type: 'category',
                             title: {
-                                text: scope.range !== undefined && scope.range !== 'Annual' ? scope.range : ''
+                                text: scope.range !== undefined && scope.range === 'Week' ? scope.range : ''
                             },
                             labels: {
                                 useHTML: true,
@@ -216,16 +212,28 @@
 
                         $(this).on('click', function () {
 
+                            var active = $(this).hasClass('active');
+
                             $('.highcharts-axis-labels > span').each(function () {
                                 console.log(this);
                                 $(this).removeClass('active');
                             });
 
-                            $(this).addClass('active');
+                            if (!active) {
+                                $(this).addClass('active');
 
-                            scope.$apply(function () {
-                                scope.$parent.rangeElem = e;
-                            });
+                                scope.$apply(function() {
+                                    scope.$parent.rangeElem = e;
+                                });
+
+                            } else {
+
+                                scope.$apply(function () {
+                                    scope.$parent.rangeElem = '';
+                                });
+                            }
+
+                            
 
                         });
 
