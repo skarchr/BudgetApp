@@ -199,7 +199,12 @@
                             }
                         },
                         legend: {
-                            enabled:true
+                            enabled: true,
+                            verticalAlign: 'top',
+                            align: 'right',
+                            layout:'vertical',
+                            floating: true,
+                            y:20
                         },                        
                         credits: false,
                         plotOptions: {
@@ -225,7 +230,7 @@
                             title: {
                                 text: model.currency
                             },
-                            plotLines: scope.range === 'Month' ? model.plotLinesY : null
+                            plotLines: scope.range === 'Month' || scope.range === 'Annual' ? model.plotLinesY : null
                         },                        
                         series: model.series
                     });

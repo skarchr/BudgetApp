@@ -17,7 +17,33 @@ namespace BudgetApp.Extensions.Graphs
         {
             var categories = CreateCategories(rangeViewers);
 
-            var plotlineX = CreatePlotLineX(rangeViewers);
+            var plotlinesX = CreatePlotLineX(rangeViewers);
+
+            var plotLinesY = new List<PlotLines>();
+
+            if (user.MonthlyExpensesGoal != null)
+            {
+                var goal = rangeViewers[0].Range == Range.Annual ? user.MonthlyExpensesGoal.Value * 12 : rangeViewers[0].Range == Range.Month ?  user.MonthlyExpensesGoal.Value : 0.0;
+
+                plotLinesY.Add(
+                    new PlotLines
+                    {
+                        Color = ColorExpense,
+                        DashStyle = "dash",
+                        Width = 1,
+                        Value = goal,
+                        Label = new Label
+                        {
+                            Align = "right",
+                            Text = "Goal",
+                            Y = -5,
+                            Style = new Style
+                            {
+                                Color = ColorExpense
+                            }
+                        }
+                    });
+            }
 
             return new Highchart
             {
@@ -31,17 +57,8 @@ namespace BudgetApp.Extensions.Graphs
                 {
                     CreateSeries(rangeViewers, true), CreateSeries(rangeViewers, false), CreateBalanceSeries(rangeViewers)
                 },
-                PlotLinesY = new List<PlotLines>
-                {
-                    new PlotLines
-                    {
-                        Color = ColorExpense,
-                        DashStyle = "dash",
-                        Width = 1,
-                        Value = user.MonthlyExpensesGoal != null ? user.MonthlyExpensesGoal.Value : 0.0
-                    }
-                },
-                PlotLinesX = plotlineX
+                PlotLinesY = plotLinesY,
+                PlotLinesX = plotlinesX
             };
         }
 

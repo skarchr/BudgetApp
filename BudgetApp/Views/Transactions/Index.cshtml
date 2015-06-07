@@ -96,8 +96,8 @@
 
                             @if (Model.CurrentPage != 1)
                             {
-                                <button type="button" set-page="@(Model.CurrentPage -1)" class="btn btn-default" style="margin-right:10px;padding: 6px 4px;">
-                                    <<
+                                <button type="button" set-page="@(Model.CurrentPage -1)" class="btn btn-default" style="margin-right:5px;padding: 6px 4px;">
+                                    <i class="glyphicon glyphicon-chevron-left"></i>
                                 </button>
                             }
                             @for (var i = 1; i <= Model.TotalPages; i++)
@@ -108,8 +108,8 @@
                             }
                             @if (Model.CurrentPage != Model.TotalPages)
                             {
-                                <button type="button" set-page="@(Model.CurrentPage + 1)" class="btn btn-default" style="margin-left:10px;padding: 6px 4px;">
-                                    >>
+                                <button type="button" set-page="@(Model.CurrentPage + 1)" class="btn btn-default" style="margin-left:5px;padding: 6px 4px;">
+                                    <i class="glyphicon glyphicon-chevron-right"></i>
                                 </button>
                             }
 
