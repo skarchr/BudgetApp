@@ -169,7 +169,8 @@
                 restrict: 'A',
                 scope: {
                     overviewHighchart: '@',
-                    range: '@'
+                    range: '@',
+                    id:'@'
                 },
                 link: function (scope, elem, attrs) {
 
@@ -228,8 +229,8 @@
                         },                        
                         series: model.series
                     });
-
-                    $('.highcharts-axis-labels > span').each(function (e) {
+                    console.log(scope.id);
+                    $('#' + scope.id + ' .highcharts-container > .highcharts-axis-labels > span').each(function (e) {
 
                         var that = this;
 
