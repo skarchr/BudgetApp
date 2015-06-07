@@ -27,12 +27,33 @@
 
                     $(elem[0]).on('click', function() {
                         
+                        $('#CurrentPage').val(0);
                         $('#Range').val(scope.setRange);
 
                         $('#submitBtn').trigger('click');
 
                     });
                     
+                }
+            };
+        }])
+
+        .directive('setPage', [function () {
+            return {
+                restrict: 'A',
+                scope: {
+                    setPage: '@'
+                },
+                link: function (scope, elem, attrs) {
+
+                    $(elem[0]).on('click', function () {
+
+                        $('#CurrentPage').val(scope.setPage);
+
+                        $('#submitBtn').trigger('click');
+
+                    });
+
                 }
             };
         }])
@@ -187,7 +208,7 @@
                         },
                         xAxis: {
                             categories: model.categories,
-                            plotLines: model.plotLinesX,
+                            plotLines: scope.range !== 'Annual' ? model.plotLinesX : null,
                             type: 'category',
                             title: {
                                 text: scope.range !== undefined && scope.range === 'Week' ? scope.range : ''
@@ -273,7 +294,7 @@
                             }
                         },
                         title: {
-                            text: model.title.text,
+                            text: ' ',
                             style: {
                                 fontSize: '18px',
                                 color:'#313131'
@@ -503,6 +524,33 @@
                     },
                     series: model.series
                 });
+            }
+        };
+    })
+
+    .directive('sortableTableHeader', function () {
+        return {
+            restrict: 'A',
+            transclude: true,
+            scope: {
+                sortableTableHeader: '@'
+            },
+            template: '<span style="cursor:pointer;" ng-transclude></span><i class="glyphicon glyphicon-sort-by-alphabet-alt" style="" ng-show="$parent.predicate == sortableTableHeader && $parent.reverse"></i><i class="glyphicon glyphicon-sort-by-alphabet" style="" ng-show="$parent.predicate == sortableTableHeader && !$parent.reverse"></i>',
+            link: function (scope, element, attrs, controller) {
+
+                $(element[0]).on('click', function () {
+
+                    scope.$apply(function () {
+                        if (scope.$parent.predicate != scope.sortableTableHeader) {
+                            scope.$parent.reverse = false;
+                        } else {
+                            scope.$parent.reverse = !scope.$parent.reverse;
+                        }
+                        scope.$parent.predicate = scope.sortableTableHeader;
+                    });
+
+                });
+
             }
         };
     });

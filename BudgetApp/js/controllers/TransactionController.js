@@ -13,6 +13,9 @@
 
         };
 
+        $scope.predicate = 'amount';
+        $scope.reverse = true;
+
         $scope.model = transactionModel.model;
 
         $scope.urls = transactionModel.urls;

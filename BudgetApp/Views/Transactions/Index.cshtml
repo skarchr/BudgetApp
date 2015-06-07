@@ -29,7 +29,8 @@
 
                 <div class="col-xs-12 col-md-9 text-right">
                                                                                 
-                    @Html.HiddenFor(s => s.Range, new { @class = "transaction-filter" })                    
+                    @Html.HiddenFor(s => s.Range)                    
+                    @Html.HiddenFor(s => s.CurrentPage)                    
 
                     <div class="btn-group" role="group">
                                                 
@@ -87,33 +88,50 @@
                     <span style="height:350px;width:703px !important;" class="visible-sm" data-overview-highchart="{{overviewGraph}}" data-range="@Model.Range"></span>
 
                 </div>
+                
+                @if (Model.TotalPages > 1)
+                {
+                    <div class="col-xs-12 text-center">
+                        <div class="btn-group" role="group">
+
+                            @if (Model.CurrentPage != 1)
+                            {
+                                <button type="button" set-page="@(Model.CurrentPage -1)" class="btn btn-default" style="margin-right:10px;padding: 6px 4px;">
+                                    <<
+                                </button>
+                            }
+                            @for (var i = 1; i <= Model.TotalPages; i++)
+                            {
+                                <button type="button" set-page="@i" class="btn btn-default @(i == Model.CurrentPage ? "active" : "")">
+                                    @i
+                                </button>
+                            }
+                            @if (Model.CurrentPage != Model.TotalPages)
+                            {
+                                <button type="button" set-page="@(Model.CurrentPage + 1)" class="btn btn-default" style="margin-left:10px;padding: 6px 4px;">
+                                    >>
+                                </button>
+                            }
+
+                        </div>
+                    </div>
+                }
 
                 <div class="col-xs-12" style="margin-top:30px;" ng-repeat="range in model" ng-show="rangeElem === $index">
 
 
                     <div class="panel panel-default">
+                        
 
                         <div class="panel-body" style="padding-bottom: 0;">
 
                             <div class="row">
 
-                                <div class="col-xs-4">
-
-                                </div>
-
-                                <div class="col-xs-4 text-center hidden-xs">
-                                    <span class="text-muted">
+                                <div class="col-xs-12 text-center">
+                                    <span>
                                         {{range.startDate | date : 'dd.MM.yyyy'}} - {{range.endDate | date: 'dd.MM.yyyy'}}
                                     </span>
 
-                                </div>
-
-                                <div class="col-xs-4 text-center visible-xs">
-                                    <span class="label label-success" title="Income">{{range.totalIncome.toFixed(1)}}</span>
-                                    <span class="label label-danger" title="Expenses">{{range.totalExpenses.toFixed(1)}}</span>
-                                </div>
-
-                                <div class="col-xs-4 text-right">
                                 </div>
 
                             </div>
@@ -135,15 +153,15 @@
                             <thead>
                                 <tr>
                                     <th class="hidden-xs">#</th>
-                                    <th>Amount (@Model.Currency)</th>
-                                    <th>Category</th>
-                                    <th class="hidden-xs hidden-sm">Description</th>
-                                    <th class="hidden-xs hidden-md hidden-sm">Date</th>
+                                    <th sortable-table-header="amount">Amount (@Model.Currency)</th>
+                                    <th sortable-table-header="category">Category</th>
+                                    <th sortable-table-header="description" class="hidden-xs hidden-sm">Description</th>
+                                    <th sortable-table-header="date" class="hidden-xs hidden-md hidden-sm">Date</th>
                                     <th></th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr ng-repeat="row in range.transactions | orderBy : 'amount' : true">
+                                <tr ng-repeat="row in range.transactions | orderBy:predicate:reverse">
                                     <td class="hidden-xs">
 
                                         <span class="percentage-row" ng-show="row.category !== 'Salary' && row.category !== 'OtherIncome'">
@@ -180,9 +198,9 @@
         }
     </div>
     
-    <div class="row">
+    @*<div class="row">
         <div class="col-xs-12">Icons made by <a href="http://www.flaticon.com/authors/freepik" title="Freepik">Freepik</a> from <a href="http://www.flaticon.com" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0">CC BY 3.0</a></div>
-    </div>
+    </div>*@
 
 </div>
 

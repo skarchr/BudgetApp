@@ -106,6 +106,12 @@ namespace BudgetApp.Models
 
     public class Series
     {
+        public Series()
+        {
+            Visible = true;
+        }
+
+        public bool Visible { get; set; }
         public string Type { get; set; }
         public string Id { get; set; }
         public string Color { get; set; }

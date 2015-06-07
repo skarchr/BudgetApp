@@ -60,13 +60,18 @@ namespace BudgetApp.Controllers
 
             }
 
+            var totalPages = (int)Math.Ceiling((double)rangeViewers.Count / 12);
+
+            var pageViewer = rangeViewers.OrderByDescending(s => s.StartDate).Take(12).ToList();
+
             var model = new TransactionsViewModel 
             {
-                TransactionsDisplayed = allTransactions.Count,
-                RangeViewers = rangeViewers.OrderBy(s => s.StartDate).ToList(), 
+                RangeViewers = pageViewer.OrderBy(s => s.StartDate).ToList(), 
                 Range = range,
                 Currency = user.Currency,
-                OverviewGraph = GraphBuilder.OverviewGraph(rangeViewers.OrderBy(s => s.StartDate).ToList(), user).ToJson()
+                OverviewGraph = GraphBuilder.OverviewGraph(pageViewer.OrderBy(s => s.StartDate).ToList(), user).ToJson(),
+                CurrentPage = totalPages,
+                TotalPages = totalPages
             };
 
             ViewBag.Success = TempData["Success"];
@@ -112,10 +117,18 @@ namespace BudgetApp.Controllers
 
             }
 
-            model.RangeViewers = rangeViewers.OrderBy(s => s.StartDate).ToList();
+            var totalPages = (int)Math.Ceiling((double)rangeViewers.Count / 12);
+
+            if (model.CurrentPage == 0)
+                model.CurrentPage = totalPages;
+
+            var pageViewer = rangeViewers.OrderByDescending(s => s.StartDate).Skip(12 * (totalPages - model.CurrentPage)).Take(12).ToList();
+
+            model.RangeViewers = pageViewer.OrderBy(s => s.StartDate).ToList();
             model.Currency = user.Currency;
-            model.TransactionsDisplayed = allTransactions.Count;
-            model.OverviewGraph = GraphBuilder.OverviewGraph(rangeViewers.OrderBy(s => s.StartDate).ToList(), user).ToJson();
+            model.OverviewGraph = GraphBuilder.OverviewGraph(pageViewer.OrderBy(s => s.StartDate).ToList(), user).ToJson();
+            model.CurrentPage = model.CurrentPage;
+            model.TotalPages = totalPages;
 
             return View(model);
         }

@@ -124,6 +124,10 @@ namespace BudgetApp.Tests.Graphs
             result.Series[1].Name.Should().Be("Income");
             result.Series[1].Data[0].X.Should().Be(0);
             result.Series[1].Data[0].Y.Should().Be(600);
+
+            result.Series[2].Name.Should().Be("Balance");
+            result.Series[2].Data[0].X.Should().Be(0);
+            result.Series[2].Data[0].Y.Should().Be(300);
         }
 
         [Test]

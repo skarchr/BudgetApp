@@ -9,13 +9,12 @@ namespace BudgetApp.Extensions.Graphs
 {
     public static class Overview
     {
+        private const string Type = "column";
+        private const string ColorExpense = "#FF0000";
+        private const string ColorIncome = "#48DDb8";
+
         public static Highchart CreateChart(List<RangeViewer> rangeViewers, ApplicationUser user)
         {
-
-            var expenseSeries = CreateSeries(rangeViewers, true);
-
-            var incomeSeries = CreateSeries(rangeViewers, false);
-
             var categories = CreateCategories(rangeViewers);
 
             var plotlineX = CreatePlotLineX(rangeViewers);
@@ -30,13 +29,13 @@ namespace BudgetApp.Extensions.Graphs
                 },
                 Series = new List<Series>
                 {
-                    expenseSeries, incomeSeries
+                    CreateSeries(rangeViewers, true), CreateSeries(rangeViewers, false), CreateBalanceSeries(rangeViewers)
                 },
                 PlotLinesY = new List<PlotLines>
                 {
                     new PlotLines
                     {
-                        Color = "#FF0000",
+                        Color = ColorExpense,
                         DashStyle = "dash",
                         Width = 1,
                         Value = user.MonthlyExpensesGoal != null ? user.MonthlyExpensesGoal.Value : 0.0
@@ -93,10 +92,10 @@ namespace BudgetApp.Extensions.Graphs
             {
                 data.Add(new Data
                 {
-                    Color = expense ? "#FF0000" : "#48DDb8",
+                    Color = expense ? ColorExpense : ColorIncome,
                     Name = rangeViewer.Title,
                     X = index,
-                    Y = expense ? rangeViewer.TotalExpenses : rangeViewer.TotalIncome,
+                    Y = expense ?  rangeViewer.TotalExpenses : rangeViewer.TotalIncome,
                     DataLabels = new DataLabels { Enabled = false }
                 });
                 index++;
@@ -105,12 +104,41 @@ namespace BudgetApp.Extensions.Graphs
             return new Series
             {
                 Data = data,
-                Color = expense ? "#FF0000" : "#48DDb8",
+                Color = expense ? ColorExpense : ColorIncome,
                 Id = expense ? "expenses":"income",
                 Name = expense ? "Expenses" : "Income",
-                Type = "column"
+                Type = Type
             };
 
+        }
+
+        private static Series CreateBalanceSeries(List<RangeViewer> rangeViewers)
+        {
+            var data = new List<Data>();
+
+            var index = 0;
+            foreach (var rangeViewer in rangeViewers)
+            {
+                data.Add(new Data
+                {
+                    Color = "#296ad4",
+                    Name = "Balance",
+                    X = index,
+                    Y = rangeViewer.TotalIncome - rangeViewer.TotalExpenses,
+                    DataLabels = new DataLabels { Enabled = false }
+                });
+                index++;
+            }
+
+            return new Series
+            {
+                Data = data,
+                Color = "#296ad4",
+                Id = "balance",
+                Name = "Balance",
+                Type = "line",
+                Visible = false
+            };
         }
 
         private static List<string> CreateCategories(List<RangeViewer> rangeViewers)
