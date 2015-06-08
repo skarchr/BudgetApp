@@ -16,7 +16,7 @@
 
     </div>
     <div class="row" style="margin-top: 40px;" ng-controller="editTransactionController">
-        @using (Html.BeginForm("Create", "Transactions", FormMethod.Post, new { name = "addForm" }))
+        @using (Html.BeginForm("Edit", "Transactions", FormMethod.Post, new { name = "addForm" }))
         {
             @Html.AntiForgeryToken()
             @Html.HiddenFor(model => model.TransactionId)

@@ -65,14 +65,17 @@ namespace BudgetApp.Extensions.Graphs
         private static List<PlotLines> CreatePlotLineX(List<RangeViewer> rangeViewers)
         {
             var result = new List<PlotLines>();
-            var list = new Dictionary<int,int>();
-            
+            var list = new Dictionary<int,int>();            
+
             for (var i = 0; i < rangeViewers.Count; i++)
             {
                 if (rangeViewers.Count != i +1)
                 {
-                    if(rangeViewers[i].Year != rangeViewers[i+1].Year)
-                        list.Add(rangeViewers[i+1].Year, i+1);
+                    if (rangeViewers[i].Year < rangeViewers[i + 1].Year)
+                    {
+                        if(!list.ContainsKey(rangeViewers[i + 1].Year))
+                            list.Add(rangeViewers[i + 1].Year, i + 1);
+                    }
                 }
             }
 

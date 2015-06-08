@@ -10,6 +10,7 @@ using System.Security;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.Owin.Security;
+using RestSharp.Extensions;
 
 namespace BudgetApp.Importer
 {
@@ -34,14 +35,18 @@ namespace BudgetApp.Importer
             excelReader.Read(); //skip first row
             while (excelReader.Read())
             {
-
+                //TODO: might take into account cultureinfo eventually
+                var date = Convert.ToDateTime(excelReader.GetString(0), new CultureInfo("nb-NO"));
+                var desc = excelReader.GetString(1);
+                var amount = FindAmount(excelReader);
+                var cat = FindCategory(excelReader.GetString(1), userName);
                 var newTransaction = new Transaction
                 {
                     Import = true,
-                    Date = Convert.ToDateTime(excelReader.GetString(0), new CultureInfo("nb-NO")),
-                    Description = excelReader.GetString(1),
-                    Amount = Convert.ToDouble(excelReader.GetString(2) ?? excelReader.GetString(3)),
-                    Category = FindCategory(excelReader.GetString(1), userName),
+                    Date = date,
+                    Description = desc,
+                    Amount = amount,
+                    Category = cat,
                     Created = DateTime.Now,
                     UserName = userName
                 };
@@ -58,6 +63,20 @@ namespace BudgetApp.Importer
             excelReader.Close();
 
             return transactions;
+        }
+
+        private static double FindAmount(IExcelDataReader excelReader)
+        {
+            for (var i = 2; i <= 10; i++)
+            {
+                var amount = excelReader.GetString(i);
+                if (amount.HasValue())
+                {
+                    amount = amount.Replace('.', ',');
+                    return Convert.ToDouble(amount);
+                }
+            }
+            return 0.0;
         }
 
         public static bool ExistsInDb(Transaction transaction, List<Transaction> database)

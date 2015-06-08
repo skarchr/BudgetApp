@@ -69,7 +69,7 @@ namespace BudgetApp.Controllers
                 RangeViewers = pageViewer.OrderBy(s => s.StartDate).ToList(), 
                 Range = range,
                 Currency = user.Currency,
-                OverviewGraph = GraphBuilder.OverviewGraph(pageViewer.OrderBy(s => s.StartDate).ToList(), user).ToJson(),
+                OverviewGraph = GraphBuilder.OverviewGraph(pageViewer.OrderBy(s => s.StartDate).ThenBy(f => f.Year).ToList(), user).ToJson(),
                 CurrentPage = totalPages,
                 TotalPages = totalPages
             };
@@ -126,7 +126,7 @@ namespace BudgetApp.Controllers
 
             model.RangeViewers = pageViewer.OrderBy(s => s.StartDate).ToList();
             model.Currency = user.Currency;
-            model.OverviewGraph = GraphBuilder.OverviewGraph(pageViewer.OrderBy(s => s.StartDate).ToList(), user).ToJson();
+            model.OverviewGraph = GraphBuilder.OverviewGraph(pageViewer.OrderBy(s => s.StartDate).ThenBy(f => f.Year).ToList(), user).ToJson();
             model.CurrentPage = model.CurrentPage;
             model.TotalPages = totalPages;
 
