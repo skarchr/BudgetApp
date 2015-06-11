@@ -291,10 +291,10 @@
                             plotBorderWidth: null,
                             plotShadow: false,
                             events: {
-                                drilldown: function (e) {
+                                drilldown: function(e) {
                                     this.setTitle({ text: e.point.name });
                                 },
-                                drillup: function (e) {
+                                drillup: function(e) {
                                     this.setTitle({ text: model.title.text });
                                 }
                             }
@@ -303,11 +303,11 @@
                             text: ' ',
                             style: {
                                 fontSize: '18px',
-                                color:'#313131'
+                                color: '#313131'
                             }
                         },
                         tooltip: {
-                            enabled:false,
+                            enabled: false,
                             pointFormat: '{series.name}: <b>{point.y:.1f} </b>'
                         },
                         legend: {
@@ -326,7 +326,7 @@
                             type: 'category',
                             labels: {
                                 useHTML: true,
-                                formatter: function () {
+                                formatter: function() {
 
                                     return '<div class="text-center" style="min-height:50px;"><img class="hs-image-label" title="' + this.value + '" src="' + commonService.getIconUrl(this.value) + '"/><br><span class="hidden-sm">' + this.value + '</span></div>';
                                 }
@@ -339,10 +339,10 @@
                             }
                         },
                         series: model.series,
-                        drilldown : {
+                        drilldown: {
                             series: model.drilldown !== null ? model.drilldown.series : null,
                             drillUpButton: {
-                                position:{ y:-50 },
+                                position: { y: -50 },
                                 theme: {
                                     fill: 'white',
                                     'stroke-width': 1,
@@ -359,6 +359,7 @@
                                     }
                                 }
                             }
+
                         }
                     });
 

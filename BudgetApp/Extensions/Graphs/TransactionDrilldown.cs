@@ -10,7 +10,7 @@ namespace BudgetApp.Extensions.Graphs
     public static class TransactionDrilldown
     {
 
-        public static Highchart CreateChart(List<Transaction> transactions, string currency)
+        public static Highchart CreateChart(List<Transaction> transactions, string currency, string graphType)
         {
 
             return new Highchart
@@ -22,13 +22,13 @@ namespace BudgetApp.Extensions.Graphs
                 },
                 Series = new List<Series>
                 {
-                    CreateMainCategorySeries(transactions)
+                    CreateMainCategorySeries(transactions, graphType)
                 },
-                Drilldown = new Drilldown { Series = CreateDrilldownSeries(transactions) }
+                Drilldown = new Drilldown { Series = CreateDrilldownSeries(transactions, graphType) }
             };
         }
 
-        private static List<Series> CreateDrilldownSeries(List<Transaction> transactions)
+        private static List<Series> CreateDrilldownSeries(List<Transaction> transactions, string graphType)
         {
             var series = new List<Series>();
 
@@ -48,13 +48,13 @@ namespace BudgetApp.Extensions.Graphs
                     });
                     index++;
                 }
-                series.Add(new Series { Id = mainCategory.ToLower(), Name = mainCategory, Type = "column", Data = data });
+                series.Add(new Series { Id = mainCategory.ToLower(), Name = mainCategory, Type = graphType, Data = data });
                 mainIndex++;
             }
             return series;
         }
 
-        private static Series CreateMainCategorySeries(List<Transaction> transactions)
+        private static Series CreateMainCategorySeries(List<Transaction> transactions, string graphType)
         {
             var data = new List<Data>();
             var index = 0;
@@ -75,7 +75,7 @@ namespace BudgetApp.Extensions.Graphs
             return new Series
             {
                 Name = "Expenses",
-                Type = "column",
+                Type = graphType,
                 Id = "mainCategories",
                 Data = data
             };

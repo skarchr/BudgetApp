@@ -7,6 +7,7 @@ using System.Web;
 using BudgetApp.Models;
 using Excel;
 using System.Security;
+using Microsoft.Ajax.Utilities;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.Owin.Security;
@@ -21,6 +22,7 @@ namespace BudgetApp.Importer
         public static List<Transaction> ReadFile(string filePath, string userName, out int found)
         {
             found = 0;
+
             var existingTransactions = Db.Transactions.ToList();
 
             var transactions = new List<Transaction>();
@@ -31,33 +33,40 @@ namespace BudgetApp.Importer
                                   : ExcelReaderFactory.CreateBinaryReader(stream);
 
             excelReader.IsFirstRowAsColumnNames = true;
-
+            var index = 1;
             excelReader.Read(); //skip first row
             while (excelReader.Read())
             {
                 //TODO: might take into account cultureinfo eventually
                 var date = Convert.ToDateTime(excelReader.GetString(0), new CultureInfo("nb-NO"));
                 var desc = excelReader.GetString(1);
-                var amount = FindAmount(excelReader);
+
+                
+
+                var amount = FindAmount(excelReader, index);
                 var cat = FindCategory(excelReader.GetString(1), userName);
-                var newTransaction = new Transaction
-                {
-                    Import = true,
-                    Date = date,
-                    Description = desc,
-                    Amount = amount,
-                    Category = cat,
-                    Created = DateTime.Now,
-                    UserName = userName
-                };
 
-
-                if (!ExistsInDb(newTransaction, existingTransactions))
+                if (amount != null)
                 {
-                    transactions.Add(newTransaction);
-                    found++;
+                    var newTransaction = new Transaction
+                    {
+                        Import = true,
+                        Date = date,
+                        Description = desc,
+                        Amount = amount.Value,
+                        Category = cat,
+                        Created = DateTime.Now,
+                        UserName = userName
+                    };
+
+                    if (!ExistsInDb(newTransaction, existingTransactions))
+                    {
+                        transactions.Add(newTransaction);
+                        found++;
+                    }
                 }
 
+                index++;
             }
 
             excelReader.Close();
@@ -65,18 +74,21 @@ namespace BudgetApp.Importer
             return transactions;
         }
 
-        private static double FindAmount(IExcelDataReader excelReader)
+        private static double? FindAmount(IExcelDataReader excelReader, int index)
         {
+
             for (var i = 2; i <= 10; i++)
             {
-                var amount = excelReader.GetString(i);
-                if (amount.HasValue())
+                try
                 {
-                    amount = amount.Replace('.', ',');
+                    var amount = excelReader.GetString(i).Replace('.', ',');
                     return Convert.ToDouble(amount);
                 }
+                catch
+                {                   
+                }
             }
-            return 0.0;
+            return null;
         }
 
         public static bool ExistsInDb(Transaction transaction, List<Transaction> database)

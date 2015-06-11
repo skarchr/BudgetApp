@@ -5,6 +5,60 @@
 }
 
 <div class="row" ng-controller="homeController" style="margin-top:30px;">
+   
+    @if (Model.Transactions.Count == 0)
+    {
+
+        <div class="jumbotron" fade-in="100">
+
+            <div id="icon" style="width: 30%;">
+                <object>
+                    <img src="~/Content/images/logo_pig.svg" id="svg" />
+                </object>
+            </div>
+
+            <h1 class="hidden-xs hidden-sm text-center" style="margin-top: -40px;">You have no transactions registered</h1>
+            <h2 class="visible-xs visible-sm text-center">You have no transactions registered</h2>
+
+            <div class="row">
+                <div class="col-xs-12 col-md-6 text-center">
+                    <button class="btn btn-primary btn-xlg" onclick=" location.href='@Url.Action("Create", "Transactions")' ">
+                        Add transaction
+                    </button>
+
+                </div>
+                <div class="col-xs-12 col-md-6 text-center">
+                    <button class="btn btn-primary btn-xlg" onclick=" location.href='@Url.Action("Upload", "Transactions")' ">
+                        Import transactions
+                    </button>
+                </div>
+            </div>
+
+        </div>
+
+    }
+    else
+    {
+
+        <div class="row">
+            <div class="col-xs-6">
+                
+                <span style="height:350px;width:1123px !important;" class="visible-lg" data-highchart="{{graphs.drilldownGraph}}"></span>
+
+                <span style="height:350px;width:923px !important;" class="visible-md" data-highchart="{{graphs.drilldownGraph}}"></span>
+
+                <span style="height:350px;width:703px !important;" class="visible-sm" data-highchart="{{graphs.drilldownGraph}}"></span>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12">
+                <div style="height: 300px;" data-highstock="{{graphs.dailyExpenses}}"></div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12">Icons made by <a href="http://www.flaticon.com/authors/freepik" title="Freepik">Freepik</a> from <a href="http://www.flaticon.com" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0">CC BY 3.0</a></div>
+        </div>
+    }
     
     <div class="alert alert-warning">
         <strong>TODO:</strong>
@@ -41,55 +95,7 @@
             </li>
         </ul>
     </div>
-    
 
-    @if (Model.Transactions.Count == 0)
-    {
-
-        <div class="jumbotron" fade-in="100">
-
-            <div id="icon" style="width: 30%;">
-                <object>
-                    <img src="~/Content/images/logo_pig.svg" id="svg" />
-                </object>
-            </div>
-
-            <h1 class="hidden-xs hidden-sm text-center" style="margin-top: -40px;">You have no transactions registered</h1>
-            <h2 class="visible-xs visible-sm text-center">You have no transactions registered</h2>
-
-            <div class="row">
-                <div class="col-xs-12 col-md-6 text-center">
-                    <button class="btn btn-primary btn-xlg" onclick=" location.href='@Url.Action("Create", "Transactions")' ">
-                        Add transaction
-                    </button>
-
-                </div>
-                <div class="col-xs-12 col-md-6 text-center">
-                    <button class="btn btn-primary btn-xlg" onclick=" location.href='@Url.Action("Upload", "Transactions")' ">
-                        Import transactions
-                    </button>
-                </div>
-            </div>
-
-        </div>
-
-    }
-    else
-    {
-        <div class="row">
-            <div class="col-xs-12">
-                <div style="height: 600px;" data-highstock="{{graphs.dailyExpenses}}"></div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-xs-12">
-                <div style="height: 600px;" data-highchart="{{graphs.drilldownGraph}}"></div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-xs-12">Icons made by <a href="http://www.flaticon.com/authors/freepik" title="Freepik">Freepik</a> from <a href="http://www.flaticon.com" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0">CC BY 3.0</a></div>
-        </div>
-    }
 </div>
 
 <script>

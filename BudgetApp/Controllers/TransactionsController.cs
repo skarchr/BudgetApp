@@ -389,6 +389,7 @@ namespace BudgetApp.Controllers
                 file.SaveAs(path);
 
                 int found;
+                string error;
 
                 var transactions = ExcelReader.ReadFile(path, User.Identity.Name, out found);
 
