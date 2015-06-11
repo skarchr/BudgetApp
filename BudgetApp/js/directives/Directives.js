@@ -2,62 +2,64 @@
     'use strict';
 
     angular.module('budgetApp')
+        .directive('setWidth', [
+            function() {
 
-        .directive('setWidth', [function() {
-            
-            return {
-                restrict: 'A',
-                scope: {
-                    setWidth:'@'
-                },
-                link: function(scope, elem) {
-                    $(elem[0]).attr('width', scope.setWidth);
+                return {
+                    restrict: 'A',
+                    scope: {
+                        setWidth: '@'
+                    },
+                    link: function(scope, elem) {
+                        $(elem[0]).attr('width', scope.setWidth);
+                    }
                 }
+
             }
+        ])
+        .directive('setRange', [
+            function() {
+                return {
+                    restrict: 'A',
+                    scope: {
+                        setRange: '@'
+                    },
+                    link: function(scope, elem, attrs) {
 
-        }])
+                        $(elem[0]).on('click', function() {
 
-        .directive('setRange', [function() {
-            return {
-                restrict: 'A',
-                scope: {
-                    setRange: '@'
-                },
-                link: function(scope, elem, attrs) {
+                            $('#CurrentPage').val(0);
+                            $('#Range').val(scope.setRange);
 
-                    $(elem[0]).on('click', function() {
-                        
-                        $('#CurrentPage').val(0);
-                        $('#Range').val(scope.setRange);
+                            $('#submitBtn').trigger('click');
 
-                        $('#submitBtn').trigger('click');
+                        });
 
-                    });
-                    
-                }
-            };
-        }])
+                    }
+                };
+            }
+        ])
+        .directive('setPage', [
+            function() {
+                return {
+                    restrict: 'A',
+                    scope: {
+                        setPage: '@'
+                    },
+                    link: function(scope, elem, attrs) {
 
-        .directive('setPage', [function () {
-            return {
-                restrict: 'A',
-                scope: {
-                    setPage: '@'
-                },
-                link: function (scope, elem, attrs) {
+                        $(elem[0]).on('click', function() {
 
-                    $(elem[0]).on('click', function () {
+                            $('#CurrentPage').val(scope.setPage);
 
-                        $('#CurrentPage').val(scope.setPage);
+                            $('#submitBtn').trigger('click');
 
-                        $('#submitBtn').trigger('click');
+                        });
 
-                    });
-
-                }
-            };
-        }])
-
+                    }
+                };
+            }
+        ])
         .directive('selectCategories', [
             function() {
 
@@ -66,7 +68,7 @@
                     scope: {
                         selectCategories: '@'
                     },
-                    require:'ngModel',
+                    require: 'ngModel',
                     template: '<select class="form-control" ng-model="selectCategories"><option value=""></option><optgroup label="Fixed" value="Fixed"><option value="DebtReduction">Debt reduction</option><option value="Dental">Dental</option><option value="Insurance">Insurance</option><option value="Medical">Medical</option><option value="OtherFixed">Other fixed</option></optgroup><optgroup label="Food" value="Food"><option value="Groceries">Groceries</option><option value="Restaurant">Restaurant</option><option value="Treats">Treats</option><option value="OtherFood">Other food</option></optgroup><optgroup label="Income" value="Income"><option value="Salary">Salary</option><option value="OtherIncome">Other income</option></optgroup><optgroup label="Personal" value="Personal"><option value="Appearance">Appearance</option><option value="Entertainment">Entertainment</option><option value="Gifts">Gifts</option><option value="Hobby">Hobby</option><option value="Phone">Phone</option><option value="Subscriptions">Subscriptions</option><option value="Travel">Travel</option><option value="OtherPersonal">Other personal</option></optgroup><optgroup label="Saving" value="Saving"><option value="Saving">Saving</option></optgroup><optgroup label="Shelter" value="Shelter"><option value="Furniture">Furniture</option><option value="Interior">Interior</option><option value="Mortgage">Mortgage</option><option value="Rent">Rent</option><option value="Utilities">Utilities</option><option value="OtherShelter">Other shelter</option></optgroup><optgroup label="Transport" value="Transport"><option value="Car">Car</option><option value="CollectiveTransport">Collective transport</option><option value="OtherTransportation">Other transport</option></optgroup></select>'
                 };
 
@@ -163,212 +165,214 @@
 
             }
         ])
-        .directive('overviewHighchart', [function () {
+        .directive('overviewHighchart', [
+            function() {
 
-            return {
-                restrict: 'A',
-                scope: {
-                    overviewHighchart: '@',
-                    range: '@',
-                    id:'@'
-                },
-                link: function (scope, elem, attrs) {
+                return {
+                    restrict: 'A',
+                    scope: {
+                        overviewHighchart: '@',
+                        range: '@',
+                        id: '@'
+                    },
+                    link: function(scope, elem, attrs) {
 
-                    var model = JSON.parse(scope.overviewHighchart);
+                        var model = JSON.parse(scope.overviewHighchart);
 
-                    Highcharts.setOptions({ lang: { drillUpText: 'Back' } });
+                        Highcharts.setOptions({ lang: { drillUpText: 'Back' } });
 
-                    $(elem[0]).highcharts({
-                        chart: {
-                            type:'column',
-                            plotBackgroundColor: null,
-                            plotBorderWidth: null,
-                            plotShadow: false,
-                        },
-                        title: {
-                            text: model.title.text,
-                            style: {
-                                fontSize: '18px',
-                                color: '#313131'
-                            }
-                        },
-                        tooltip: {
-                            enabled: true,
-                            formatter: function () {
-                                return '<div><strong>'+ this.series.name+ '</strong><br>' + this.x + ': ' + this.y.toFixed(1) + ' ' + model.currency +'</div>';
-                            }
-                        },
-                        legend: {
-                            enabled: true,
-                            verticalAlign: 'top',
-                            align: 'right',
-                            layout:'vertical',
-                            floating: true,
-                            y:20
-                        },                        
-                        credits: false,
-                        plotOptions: {
-                            column: {
-                                showInLegend: true
-                            }
-                        },
-                        xAxis: {
-                            categories: model.categories,
-                            plotLines: scope.range !== 'Annual' ? model.plotLinesX : null,
-                            type: 'category',
-                            title: {
-                                text: scope.range !== undefined && scope.range === 'Week' ? scope.range : ''
+                        $(elem[0]).highcharts({
+                            chart: {
+                                type: 'column',
+                                plotBackgroundColor: null,
+                                plotBorderWidth: null,
+                                plotShadow: false,
                             },
-                            labels: {
-                                useHTML: true,
-                                formatter: function () {
-                                    return '<div class="chart-btn">' + this.value + '</div>';
+                            title: {
+                                text: model.title.text,
+                                style: {
+                                    fontSize: '18px',
+                                    color: '#313131'
                                 }
-                            }
-                        },
-                        yAxis: {
-                            title: {
-                                text: model.currency
                             },
-                            plotLines: scope.range === 'Month' || scope.range === 'Annual' ? model.plotLinesY : null
-                        },                        
-                        series: model.series
-                    });
-                    console.log(scope.id);
-                    $('#' + scope.id + ' .highcharts-container > .highcharts-axis-labels > span').each(function (e) {
+                            tooltip: {
+                                enabled: true,
+                                formatter: function() {
+                                    return '<div><strong>' + this.series.name + '</strong><br>' + this.x + ': ' + this.y.toFixed(1) + ' ' + model.currency + '</div>';
+                                }
+                            },
+                            legend: {
+                                enabled: true,
+                                verticalAlign: 'top',
+                                align: 'right',
+                                layout: 'vertical',
+                                floating: true,
+                                y: 20
+                            },
+                            credits: false,
+                            plotOptions: {
+                                column: {
+                                    showInLegend: true
+                                }
+                            },
+                            xAxis: {
+                                categories: model.categories,
+                                plotLines: scope.range !== 'Annual' ? model.plotLinesX : null,
+                                type: 'category',
+                                title: {
+                                    text: scope.range !== undefined && scope.range === 'Week' ? scope.range : ''
+                                },
+                                labels: {
+                                    useHTML: true,
+                                    formatter: function() {
+                                        return '<div class="chart-btn">' + this.value + '</div>';
+                                    }
+                                }
+                            },
+                            yAxis: {
+                                title: {
+                                    text: model.currency
+                                },
+                                plotLines: scope.range === 'Month' || scope.range === 'Annual' ? model.plotLinesY : null
+                            },
+                            series: model.series
+                        });
+                        console.log(scope.id);
+                        $('#' + scope.id + ' .highcharts-container > .highcharts-axis-labels > span').each(function(e) {
 
-                        var that = this;
+                            var that = this;
 
-                        $(this).on('click', function () {
+                            $(this).on('click', function() {
 
-                            var active = $(this).hasClass('active');
+                                var active = $(this).hasClass('active');
 
-                            $('.highcharts-axis-labels > span').each(function () {
-                                console.log(this);
-                                $(this).removeClass('active');
+                                $('.highcharts-axis-labels > span').each(function() {
+                                    console.log(this);
+                                    $(this).removeClass('active');
+                                });
+
+                                if (!active) {
+                                    $(this).addClass('active');
+
+                                    scope.$apply(function() {
+                                        scope.$parent.rangeElem = e;
+                                    });
+
+                                } else {
+
+                                    scope.$apply(function() {
+                                        scope.$parent.rangeElem = '';
+                                    });
+                                }
+
+
                             });
-
-                            if (!active) {
-                                $(this).addClass('active');
-
-                                scope.$apply(function() {
-                                    scope.$parent.rangeElem = e;
-                                });
-
-                            } else {
-
-                                scope.$apply(function () {
-                                    scope.$parent.rangeElem = '';
-                                });
-                            }
-
-                            
 
                         });
 
-                    });
-
+                    }
                 }
             }
-        }])
+        ])
+        .directive('highchart', [
+            'commonService', function(commonService) {
 
-        .directive('highchart', ['commonService', function (commonService) {
+                return {
+                    restrict: 'A',
+                    scope: {
+                        highchart: '@'
+                    },
+                    link: function(scope, elem, attrs) {
 
-            return {
-                restrict: 'A',
-                scope: {
-                    highchart: '@'
-                },
-                link: function(scope, elem, attrs) {
+                        var model = JSON.parse(scope.highchart);
 
-                    var model = JSON.parse(scope.highchart);
+                        Highcharts.setOptions({ lang: { drillUpText: 'Back' } });
 
-                    Highcharts.setOptions({ lang: { drillUpText: 'Back' } });
-
-                    $(elem[0]).highcharts({
-                        chart: {
-                            plotBackgroundColor: null,
-                            plotBorderWidth: null,
-                            plotShadow: false,
-                            events: {
-                                drilldown: function(e) {
-                                    this.setTitle({ text: e.point.name });
-                                },
-                                drillup: function(e) {
-                                    this.setTitle({ text: model.title.text });
+                        $(elem[0]).highcharts({
+                            chart: {
+                                plotBackgroundColor: null,
+                                plotBorderWidth: null,
+                                plotShadow: false,
+                                events: {
+                                    drilldown: function(e) {
+                                        this.setTitle({ text: e.point.name });
+                                    },
+                                    drillup: function(e) {
+                                        this.setTitle({ text: model.title.text });
+                                    }
                                 }
-                            }
-                        },
-                        title: {
-                            text: ' ',
-                            style: {
-                                fontSize: '18px',
-                                color: '#313131'
-                            }
-                        },
-                        tooltip: {
-                            enabled: false,
-                            pointFormat: '{series.name}: <b>{point.y:.1f} </b>'
-                        },
-                        legend: {
-                            align: 'right',
-                            layout: 'vertical',
-                            y: -25
-                        },
-                        credits: false,
-                        plotOptions: {
-                            column: {
-                                showInLegend: false,
-                                colorByPoint: true
-                            }
-                        },
-                        xAxis: {
-                            type: 'category',
-                            labels: {
-                                useHTML: true,
-                                formatter: function() {
-
-                                    return '<div class="text-center" style="min-height:50px;"><img class="hs-image-label" title="' + this.value + '" src="' + commonService.getIconUrl(this.value) + '"/><br><span class="hidden-sm">' + this.value + '</span></div>';
-                                }
-                                //rotation: -45
-                            }
-                        },
-                        yAxis: {
+                            },
                             title: {
-                                text: model.currency
-                            }
-                        },
-                        series: model.series,
-                        drilldown: {
-                            series: model.drilldown !== null ? model.drilldown.series : null,
-                            drillUpButton: {
-                                position: { y: -50 },
-                                theme: {
-                                    fill: 'white',
-                                    'stroke-width': 1,
-                                    stroke: 'silver',
-                                    r: 0,
-                                    states: {
-                                        hover: {
-                                            fill: '#cccccc'
-                                        },
-                                        select: {
-                                            stroke: '#039',
-                                            fill: '#bada55'
+                                text: ' ',
+                                style: {
+                                    fontSize: '18px',
+                                    color: '#313131'
+                                }
+                            },
+                            tooltip: {
+                                enabled: false,
+                                pointFormat: '{series.name}: <b>{point.y:.1f} </b>'
+                            },
+                            legend: {
+                                align: 'right',
+                                layout: 'vertical',
+                                y: -25
+                            },
+                            credits: false,
+                            plotOptions: {
+                                column: {
+                                    showInLegend: false,
+                                    colorByPoint: true
+                                }
+                            },
+                            xAxis: {
+                                type: 'category',
+                                labels: {
+                                    useHTML: true,
+                                    formatter: function() {
+
+                                        return '<div class="text-center" style="min-height:50px;"><img class="hs-image-label" title="' + this.value + '" src="' + commonService.getIconUrl(this.value) + '"/><br><span class="hidden-sm">' + this.value + '</span></div>';
+                                    }
+                                    //rotation: -45
+                                }
+                            },
+                            yAxis: {
+                                title: {
+                                    text: model.currency
+                                }
+                            },
+                            series: model.series,
+                            drilldown: {
+                                series: model.drilldown !== null ? model.drilldown.series : null,
+                                drillUpButton: {
+                                    position: { y: -50 },
+                                    theme: {
+                                        fill: 'white',
+                                        'stroke-width': 1,
+                                        stroke: 'silver',
+                                        r: 0,
+                                        states: {
+                                            hover: {
+                                                fill: '#cccccc'
+                                            },
+                                            select: {
+                                                stroke: '#039',
+                                                fill: '#bada55'
+                                            }
                                         }
                                     }
                                 }
+
                             }
+                        });
 
-                        }
-                    });
-
-                    setTimeout(function () {
-                        $(elem[0]).highcharts().reflow();
-                    }, 350);
+                        setTimeout(function() {
+                            $(elem[0]).highcharts().reflow();
+                        }, 350);
+                    }
                 }
             }
-        }])
+        ])
         .directive('gauge', function() {
 
             return {
@@ -379,11 +383,10 @@
                 },
                 link: function(scope, elem) {
                     var gaugeOptions = {
-
                         chart: {
                             type: 'solidgauge'
                         },
-                        credits:false,
+                        credits: false,
                         title: null,
 
                         pane: {
@@ -416,16 +419,18 @@
                                 y: -70
                             },
                             labels: {
-                                enabled:false,
+                                enabled: false,
                                 y: 16
                             },
-                            plotLines: [{
-                                value: 50,
-                                width: 1,
-                                color: '#777',
-                                zIndex: 100,
-                                dashStyle:'dash'
-                            }]
+                            plotLines: [
+                                {
+                                    value: 50,
+                                    width: 1,
+                                    color: '#777',
+                                    zIndex: 100,
+                                    dashStyle: 'dash'
+                                }
+                            ]
                         },
 
                         plotOptions: {
@@ -451,7 +456,7 @@
                             max: 100,
                             title: {
                                 y: -181,
-                                x:0,
+                                x: 0,
                                 text: 'Balance',
                                 style: {
                                     fontSize: '18px',
@@ -460,21 +465,23 @@
                             }
                         },
 
-                        series: [{
-                            name: ' ',
-                            data: [exp],
-                            dataLabels: {
-                                y:-55,
-                                format: '<div style="text-align:center; background:white; z-index:110" >' +
-                                            '<span style="font-size:22px;color:black" title="Expenses:   ' + parseFloat(scope.expense).toFixed(1) + '\nIncome:   ' + parseFloat(scope.income).toFixed(1) + '"> ' +
-                                                + tot +
-                                            '</span><br/>' +
-                                            '<span style="font-size:14px;color:#777"> ' +
-                                                + exp.toFixed(1) +'%  / '+ inc.toFixed(1) +
-                                            '%</span><br/>' +
+                        series: [
+                            {
+                                name: ' ',
+                                data: [exp],
+                                dataLabels: {
+                                    y: -55,
+                                    format: '<div style="text-align:center; background:white; z-index:110" >' +
+                                        '<span style="font-size:22px;color:black" title="Expenses:   ' + parseFloat(scope.expense).toFixed(1) + '\nIncome:   ' + parseFloat(scope.income).toFixed(1) + '"> ' +
+                                        + tot +
+                                        '</span><br/>' +
+                                        '<span style="font-size:14px;color:#777"> ' +
+                                        + exp.toFixed(1) + '%  / ' + inc.toFixed(1) +
+                                        '%</span><br/>' +
                                         '</div>'
+                                }
                             }
-                        }]
+                        ]
 
                     }));
 
@@ -482,84 +489,195 @@
                         $(elem[0]).highcharts().reflow();
                     }, 500);
 
-                    
+
                 }
             }
 
         })
-    .directive('highstock', function () {
-        return {
-            restrict: 'A',
-            scope: {
-                highstock: '@'
-            },
-            link: function (scope, elem, attrs) {
+        .directive('highstock', function() {
+            return {
+                restrict: 'A',
+                scope: {
+                    highstock: '@'
+                },
+                link: function(scope, elem, attrs) {
 
-                var model = JSON.parse(scope.highstock);
+                    var model = JSON.parse(scope.highstock);
 
-                $(elem[0]).highcharts('StockChart', {
-                    chart: {
-                        type:'column'
-                    },
-                    title: {
-                        text: model.title.text
-                    },
-                    tooltip: {
-                        pointFormat: '{series.name}: <b>{point.y:.1f} </b>'
-                    },
-                    legend: {
-                        align: 'right',
-                        layout: 'vertical',
-                        y: -25
-                    },
-                    credits: false,
-                    plotOptions: {
-                        column: {
-                            showInLegend: false,
-                            colorByPoint: true
-                        }
-                    },
-                    xAxis: {
-                        ordinal:false,
-                        type: 'datetime'
-                    },
-                    yAxis: {
-                        opposite:false,
+                    $(elem[0]).highcharts('StockChart', {
+                        chart: {
+                            type: 'column'
+                        },
                         title: {
-                            text: model.currency
-                        }
-                    },
-                    series: model.series
-                });
-            }
-        };
-    })
+                            text: model.title.text
+                        },
+                        tooltip: {
+                            pointFormat: '{series.name}: <b>{point.y:.1f} </b>'
+                        },
+                        legend: {
+                            align: 'right',
+                            layout: 'vertical',
+                            y: -25
+                        },
+                        credits: false,
+                        plotOptions: {
+                            column: {
+                                showInLegend: false,
+                                colorByPoint: true
+                            }
+                        },
+                        xAxis: {
+                            ordinal: false,
+                            type: 'datetime'
+                        },
+                        yAxis: {
+                            opposite: false,
+                            title: {
+                                text: model.currency
+                            }
+                        },
+                        series: model.series
+                    });
+                }
+            };
+        })
+        .directive('sortableTableHeader', function() {
+            return {
+                restrict: 'A',
+                transclude: true,
+                scope: {
+                    sortableTableHeader: '@'
+                },
+                template: '<span style="cursor:pointer;" ng-transclude></span><i class="glyphicon glyphicon-sort-by-alphabet-alt" style="" ng-show="$parent.predicate == sortableTableHeader && $parent.reverse"></i><i class="glyphicon glyphicon-sort-by-alphabet" style="" ng-show="$parent.predicate == sortableTableHeader && !$parent.reverse"></i>',
+                link: function(scope, element, attrs, controller) {
 
-    .directive('sortableTableHeader', function () {
-        return {
-            restrict: 'A',
-            transclude: true,
-            scope: {
-                sortableTableHeader: '@'
-            },
-            template: '<span style="cursor:pointer;" ng-transclude></span><i class="glyphicon glyphicon-sort-by-alphabet-alt" style="" ng-show="$parent.predicate == sortableTableHeader && $parent.reverse"></i><i class="glyphicon glyphicon-sort-by-alphabet" style="" ng-show="$parent.predicate == sortableTableHeader && !$parent.reverse"></i>',
-            link: function (scope, element, attrs, controller) {
+                    $(element[0]).on('click', function() {
 
-                $(element[0]).on('click', function () {
+                        scope.$apply(function() {
+                            if (scope.$parent.predicate != scope.sortableTableHeader) {
+                                scope.$parent.reverse = false;
+                            } else {
+                                scope.$parent.reverse = !scope.$parent.reverse;
+                            }
+                            scope.$parent.predicate = scope.sortableTableHeader;
+                        });
 
-                    scope.$apply(function () {
-                        if (scope.$parent.predicate != scope.sortableTableHeader) {
-                            scope.$parent.reverse = false;
-                        } else {
-                            scope.$parent.reverse = !scope.$parent.reverse;
-                        }
-                        scope.$parent.predicate = scope.sortableTableHeader;
                     });
 
-                });
+                }
+            };
+        })
+        .directive('vuMeter', function() {
+            return {
+                restrict: 'A',
+                scope: {
+                    vuMeter: '@',
+                    goal: '@',
+                    currency:'@'
+                },
+                link : function(scope, elem) {
 
-            }
-        };
-    });
+                    var actual = parseFloat(scope.vuMeter);
+                    var goal = scope.goal !== undefined ? parseFloat(scope.goal.replace(',', '.')) : actual;
+                    var currency = scope.currency !== undefined ? scope.currency : '';
+                   
+                    console.log(goal);
+
+                    $(elem[0]).highcharts({
+                        chart: {
+                            type: 'gauge',
+                            height: 200
+                        },
+
+                        title: {
+                            text: 'Average daily expense'
+                        },
+
+                        tooltip: {
+                            enabled: false
+                        },
+
+                        pane: [
+                            {
+                                startAngle: -45,
+                                endAngle: 45,
+                                background: null,
+                                center: ['50%', '145%'],
+                                size: 300
+                            }
+                        ],
+                        credits: false,
+                        yAxis: [
+                            {
+                                title: {
+                                    align: 'high',
+                                    text: '<br/><span style="font-size:14px"> ' + actual.toFixed(1) + ' ' + currency + ' </span>',
+                                    y: -60,
+                                    x: 35
+                                },
+
+
+                                tickInterval: (goal / 4).toFixed(0),
+                                minorTickInterval: (goal * 0.1),
+                                minorTickWidth:1,
+                                minorTickLength:12,
+                                min: 0,
+                                max: (goal + (goal * 0.6)),
+                                minorTickPosition: 'outside',
+                                tickPosition: 'inside',
+                                tickColor:'rgb(0,0,0)',
+                                minorTickColor:'rgb(0,0,0)',
+                                lineColor:'rgb(0,0,0)',
+                                labels: {
+                                    rotation: 'auto',
+                                    distance: 20
+                                },
+
+                                plotBands: [
+                                    {
+                                        from: goal + 1,
+                                        to: (goal + (goal * 0.6)),
+                                        color: '#b94a48',
+                                        innerRadius: '100%',
+                                        outerRadius: '108%'
+                                    }
+                                ],
+                                pane: 0,
+
+                            }
+                        ],
+
+                        plotOptions: {
+                            gauge: {
+                                dataLabels: {
+                                    enabled: false
+                                },
+
+                                dial: {
+                                    radius: '100%',
+                                    backgroundColor: 'rgb(255, 255, 255)',
+                                    borderColor: 'rgb(0,0,0)',
+                                    borderWidth: 2,
+                                    baseWidth: 8,
+                                    topWidth: 1,
+                                }
+                            },
+
+                        },
+
+
+                        series: [
+                            {
+                                data: [actual],
+                                yAxis: 0,
+                                overshoot: 3
+                            }
+                        ]
+
+                    });
+
+                }
+            };
+        });
 
 })();

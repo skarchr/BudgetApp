@@ -51,8 +51,8 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-xs-12">
-                <div style="height: 300px;" data-highstock="{{graphs.dailyExpenses}}"></div>
+            <div class="col-xs-6">                                
+                <div style="height: 200px;" data-vu-meter="@Model.AverageDailyExpenses" data-goal="@((Model.ExpensesGoal * 12) / 365)" data-currency="@Model.Currency"></div>
             </div>
         </div>
         <div class="row">

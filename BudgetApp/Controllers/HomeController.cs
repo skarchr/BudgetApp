@@ -17,13 +17,15 @@ namespace BudgetApp.Controllers
             ViewBag.Link = TempData["ViewBagLink"];
 
             var transactions = db.Transactions.Where(s => s.UserName == User.Identity.Name).ToList();
-            var currency = db.Users.First(u => u.UserName == User.Identity.Name).Currency;
+            var user = db.Users.First(u => u.UserName == User.Identity.Name);
 
             var model = new HomeViewModel
             {
                 Transactions = transactions,
-                DailyExpensesGraph = GraphBuilder.DailyExpensesGraph(transactions, currency).ToJson(),
-                TransactionDrilldownGraph = GraphBuilder.TransactionDrilldownGraph(transactions, currency).ToJson()
+                DailyExpensesGraph = GraphBuilder.DailyExpensesGraph(transactions, user.Currency).ToJson(),
+                TransactionDrilldownGraph = GraphBuilder.TransactionDrilldownGraph(transactions, user.Currency).ToJson(),
+                ExpensesGoal = user.MonthlyExpensesGoal,
+                Currency = user.Currency
             };
 
             return View("Index", model);

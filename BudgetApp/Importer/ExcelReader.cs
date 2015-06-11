@@ -3,15 +3,8 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Linq;
-using System.Web;
 using BudgetApp.Models;
 using Excel;
-using System.Security;
-using Microsoft.Ajax.Utilities;
-using Microsoft.AspNet.Identity;
-using Microsoft.AspNet.Identity.EntityFramework;
-using Microsoft.Owin.Security;
-using RestSharp.Extensions;
 
 namespace BudgetApp.Importer
 {
@@ -33,7 +26,6 @@ namespace BudgetApp.Importer
                                   : ExcelReaderFactory.CreateBinaryReader(stream);
 
             excelReader.IsFirstRowAsColumnNames = true;
-            var index = 1;
             excelReader.Read(); //skip first row
             while (excelReader.Read())
             {
@@ -43,7 +35,7 @@ namespace BudgetApp.Importer
 
                 
 
-                var amount = FindAmount(excelReader, index);
+                var amount = FindAmount(excelReader);
                 var cat = FindCategory(excelReader.GetString(1), userName);
 
                 if (amount != null)
@@ -65,8 +57,6 @@ namespace BudgetApp.Importer
                         found++;
                     }
                 }
-
-                index++;
             }
 
             excelReader.Close();
@@ -74,7 +64,7 @@ namespace BudgetApp.Importer
             return transactions;
         }
 
-        private static double? FindAmount(IExcelDataReader excelReader, int index)
+        private static double? FindAmount(IExcelDataReader excelReader)
         {
 
             for (var i = 2; i <= 10; i++)
