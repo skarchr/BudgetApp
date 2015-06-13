@@ -8,6 +8,7 @@ using System.Net;
 using System.Reflection;
 using System.Web;
 using System.Web.Mvc;
+using BudgetApp.Constants;
 using BudgetApp.Extensions;
 using BudgetApp.Extensions.Graphs;
 using BudgetApp.Importer;
@@ -71,7 +72,9 @@ namespace BudgetApp.Controllers
                 Currency = user.Currency,
                 OverviewGraph = GraphBuilder.OverviewGraph(pageViewer.OrderBy(s => s.StartDate).ThenBy(f => f.Year).ToList(), user).ToJson(),
                 CurrentPage = totalPages,
-                TotalPages = totalPages
+                TotalPages = totalPages,
+                TotalExpenses = allTransactions.Where(s => CategoryExt.GetMainCategory(s.Category.Value) != Categories.Income).Sum(s => s.Amount),
+                TotalIncome = allTransactions.Where(s => CategoryExt.GetMainCategory(s.Category.Value) == Categories.Income).Sum(s => s.Amount)
             };
 
             ViewBag.Success = TempData["Success"];
@@ -129,6 +132,8 @@ namespace BudgetApp.Controllers
             model.OverviewGraph = GraphBuilder.OverviewGraph(pageViewer.OrderBy(s => s.StartDate).ThenBy(f => f.Year).ToList(), user).ToJson();
             model.CurrentPage = model.CurrentPage;
             model.TotalPages = totalPages;
+            model.TotalExpenses = allTransactions.Where(s => CategoryExt.GetMainCategory(s.Category.Value) != Categories.Income).Sum(s => s.Amount);
+            model.TotalIncome = allTransactions.Where(s => CategoryExt.GetMainCategory(s.Category.Value) == Categories.Income).Sum(s => s.Amount);
 
             return View(model);
         }

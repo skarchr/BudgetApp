@@ -1,12 +1,14 @@
 ﻿body {
     padding-top: 80px;
     padding-bottom: 20px;
+    font-family: 'Franklin Gothic Medium', 'Franklin Gothic', 'ITC Franklin Gothic', Arial, sans-serif !important;
 }
 
 /* Set padding to keep content from hitting the edges */
 .body-content {
     padding-left: 15px;
     padding-right: 15px;
+    padding-top: 40px;
 }
 
 /* Override the default bootstrap behavior where horizontal description lists 
@@ -140,13 +142,21 @@ input[type="checkbox"].input-validation-error {
 
 .navbar-brand {
     padding-top: 0;
-    padding-bottom: 0;    
+    padding-bottom: 0;
+    -webkit-transition: all 1.6s;
+    -moz-transition: all 1.6s;
+    -ms-transition: all 1.6s;
+    -o-transition: all 1.6s;
+    transition: all 1.6s;
+    
+    letter-spacing: 0.3px;
+    font-family: 'Franklin Gothic Medium', 'Franklin Gothic', 'ITC Franklin Gothic', Arial, sans-serif !important;
 }
 
 
-.navbar-brand.active, .navbar-brand.active:hover  {
+.navbar-brand.active:hover > a  {
     border-bottom: 0;
-    background-color: #296ad4;
+    color: #0094ff !important;
 }
 
 .navbar-brand > img {
@@ -154,27 +164,41 @@ input[type="checkbox"].input-validation-error {
     width: auto;     
 }
 
-.navbar-inverse .navbar-toggle:hover, .navbar-inverse .navbar-toggle:focus, .navbar-inverse .navbar-toggle{
+.navbar-inverse .navbar-toggle:hover, .navbar-inverse .navbar-toggle:focus, .navbar-inverse .navbar-toggle {
     background-color: #296ad4 !important;
-    border-color: white;
+    border-color: rgba(255,255,255,0.95);
     margin-top: 25px;
+    -webkit-transition: all 1.6s;
+    -moz-transition: all 1.6s;
+    -ms-transition: all 1.6s;
+    -o-transition: all 1.6s;
+    transition: all 1.6s;
 }
 
 .navbar-inverse {
-    background-color: white;
+    background-color: #ffffff;
+    background-color:rgba(255,255,255,0.95);
     border: 0;
-    border-bottom: 1px solid #ececec;
     -webkit-box-shadow: 1px 1px 6px #ececec;
     -ms-box-shadow: 1px 1px 6px #ececec;
     box-shadow: 1px 1px 6px #ececec;
 }
 
 .nav > li > a {
+    -webkit-transition: all 0.2s;
+    -moz-transition: all 0.2s;
+    -ms-transition: all 0.2s;
+    -o-transition: all 0.2s;
+    transition: all 0.2s;
     height: 80px;
-    padding-top: 55px;
-    font-size: 16px;
-    border-bottom: 4px solid white;
-    color: #296ad4 !important;
+    padding-top: 30px;
+    letter-spacing: 0.3px;
+    font-family: 'Franklin Gothic Medium', 'Franklin Gothic', 'ITC Franklin Gothic', Arial, sans-serif !important;
+    font-size: 18px;
+}
+
+.nav:hover > li > a {
+    color: red;
 }
 
 .navbar-inverse .navbar-nav > li > a {
@@ -186,13 +210,64 @@ input[type="checkbox"].input-validation-error {
 }
 
 .navbar-inverse .navbar-nav > .active > a, .navbar-inverse .navbar-nav > .active > a:hover, .navbar-inverse .navbar-nav > .active > a:focus {
-    color: #296ad4 !important;
-    background-color: white !important;
-    border-bottom: 4px solid #296ad4;    
+    color: #313131 !important;
+    background-color: rgba(255,255,255,0);
 }
 
-.navbar-inverse .navbar-nav > li > a:hover {
-    border-bottom: 4px solid #296ad4;
+.navbar-inverse .navbar-nav > li:hover > a {
+    color: #296ad4;    
+}
+
+.no-scroll-top > .container > .navbar-header > .navbar-brand > #svg1 {
+    display: none;
+}
+
+.no-scroll-top > .container > .navbar-header > .navbar-brand > #svg2 {
+    display: inline-block;
+}
+
+.scroll-top > .container > .navbar-header > .navbar-brand > #svg2 {
+    display: none;
+}
+
+.scroll-top > .container > .navbar-header > .navbar-brand > #svg1 {
+    display: inline-block;
+}
+
+.no-scroll-top > .container > .navbar-header > .navbar-brand, .no-scroll-top > .container > .navbar-right > .nav > li > a, .no-scroll-top > .container > .navbar-right > form > .nav > li > a {
+    color: white !important;    
+}
+
+.scroll-top > .container > .navbar-header > .navbar-brand, .scroll-top > .container > .navbar-right > .nav > li > a, .scroll-top > .container > .navbar-right > form > .nav > li > a {
+    color: #0094ff !important;    
+}
+
+.no-scroll-top > .container > .navbar-right > .nav > li.active > a, .no-scroll-top > .container > .navbar-right > form > .nav > li.active > a {
+    color: #313131 !important;    
+}
+
+.scroll-top {
+    -webkit-box-shadow: none;
+    -ms-box-shadow: none;
+    box-shadow: none;
+    border-bottom: none;
+    padding-top: 40px;
+    -webkit-transition: all 1.0s;
+    -moz-transition: all 1.0s;
+    -ms-transition: all 1.0s;
+    -o-transition: all 1.0s;
+    transition: all 1.0s;
+    background-color: white !important;
+    border-bottom: 0 !important;
+}
+.no-scroll-top {
+    -webkit-transition: all 1.0s;
+    -moz-transition: all 1.0s;
+    -ms-transition: all 1.0s;
+    -o-transition: all 1.0s;
+    transition: all 1.0s;
+    background-color: rgba(0, 148, 244, 0.95);
+    border-bottom: 1px solid rgb(0, 148, 255);
 }
 
 .btn-xlg {

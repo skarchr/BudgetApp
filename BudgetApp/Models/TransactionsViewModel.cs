@@ -16,6 +16,9 @@ namespace BudgetApp.Models
 
         public int TotalPages { get; set; }
         public int CurrentPage { get; set; }
+
+        public double TotalExpenses { get; set; }
+        public double TotalIncome { get; set; }
     }
 
 }

@@ -14,8 +14,8 @@
 </head>
     <body style="@(User.Identity.IsAuthenticated ? "" : "padding-top: 10px;")">
         @if (User.Identity.IsAuthenticated)
-        {           
-            <div class="navbar navbar-inverse navbar-fixed-top">
+        {
+            <div class="navbar navbar-inverse navbar-fixed-top scroll-top" top-nav>
                 <div class="container">
                     <div class="navbar-header">
                         <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -23,23 +23,25 @@
                             <span class="icon-bar"></span>
                             <span class="icon-bar"></span>
                         </button>
-                        
+
                         <a class="navbar-brand @(ViewBag.Title == "Home" ? "active":"")" href="@Url.Action("Index", "Home")" title="Dashboard">
-                            <img src="@Url.Content(ViewBag.Title == "Home" ? "~/Content/images/logo_inverted.svg" : "~/Content/images/logo.svg")" id="svg" />
+                            <img src="@Url.Content("~/Content/images/logo.svg")" id="svg1" />
+                            <img src="@Url.Content("~/Content/images/logo_inverted.svg")" id="svg2" />
+                            BudgetApp
                         </a>
-                        
+
                     </div>
-                    <div class="navbar-collapse collapse">
+                    <div class="navbar-collapse collapse navbar-right">
                         <ul class="nav navbar-nav">
                             <li class="@(ViewBag.Title == "Transactions" ? "active":"")">@Html.ActionLink("Transactions", "Index", "Transactions")</li>
-                            <li class="@(ViewBag.Title == "Mappings" ? "active":"")" >@Html.ActionLink("Mappings", "Index", "Mappings")</li>
+                            <li class="@(ViewBag.Title == "Mappings" ? "active":"")">@Html.ActionLink("Mappings", "Index", "Mappings")</li>
                         </ul>
                         @Html.Partial("_LoginPartial")
                     </div>
                 </div>
             </div>
         }
-        <div class="container body-content" ng-cloak ng-controller="toastrController">            
+        <div class="container body-content" ng-cloak ng-controller="toastrController" scroll-position>
 
             @RenderBody()
             <footer data-fade-in="600" class="text-center" style="margin-top:100px; ">
@@ -61,7 +63,6 @@
                 <a href="https://github.com/skarchr/BudgetApp" target="_blank">
                     <img src="~/Content/images/github.svg" height="32" />
                 </a>
-
             </footer>
 
         </div>

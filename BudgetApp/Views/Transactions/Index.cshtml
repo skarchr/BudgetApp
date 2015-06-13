@@ -10,14 +10,12 @@
 
 <div style="margin-top: 30px;" ng-controller="transactionController">
 
-    
-    {{window}}
 
     <div fade-in="200">
         @using (Html.BeginForm("Index", "Transactions", FormMethod.Post))
         {
             <div class="row">
-                <div class="col-xs-12 col-md-3">
+                <div class="col-xs-12 col-md-6">
                     <a href="@Url.Action("Create")" class="btn btn-default text-center" title="Add transaction" style="min-width: 67px;">
                         Add
                     </a>
@@ -26,8 +24,45 @@
                     </a>
 
                 </div>
+                <div class="col-xs-12 col-md-6 text-right" style="margin-top:5px;">
+                    <span class="label label-danger label-big">Out: @Model.TotalExpenses</span>
+                    
+                    <span class="label label-success label-big">In: @Model.TotalIncome</span>
+                </div>
+            </div>
 
-                <div class="col-xs-12 col-md-9 text-right">
+            <div class="row" style="margin-top: 40px;">
+                <div class="col-xs-12 col-md-6">
+                    @if (Model.TotalPages > 1)
+                    {
+
+                        <div class="btn-group" role="group">
+
+                            @if (Model.CurrentPage != 1)
+                            {
+                                <button type="button" set-page="@(Model.CurrentPage -1)" class="btn btn-default" style="margin-right:5px;padding: 6px 4px;">
+                                    <i class="glyphicon glyphicon-chevron-left"></i>
+                                </button>
+                            }
+                            @for (var i = 1; i <= Model.TotalPages; i++)
+                            {
+                                <button type="button" set-page="@i" class="btn btn-default @(i == Model.CurrentPage ? "active" : "")">
+                                    @i
+                                </button>
+                            }
+                            @if (Model.CurrentPage != Model.TotalPages)
+                            {
+                                <button type="button" set-page="@(Model.CurrentPage + 1)" class="btn btn-default" style="margin-left:5px;padding: 6px 4px;">
+                                    <i class="glyphicon glyphicon-chevron-right"></i>
+                                </button>
+                            }
+
+
+                        </div>
+                    }
+                </div>
+
+                <div class="col-xs-12 col-md-6 text-right">
                                                                                 
                     @Html.HiddenFor(s => s.Range)                    
                     @Html.HiddenFor(s => s.CurrentPage)                    
@@ -77,10 +112,10 @@
         else
         {
 
-            <div class="row">
-                
+            <div class="row" style="margin-top: 20px;">
+
                 <div class="col-xs-12">
-                    
+
                     <span id="big" style="height:350px;width:1123px !important;" class="visible-lg" data-overview-highchart="{{overviewGraph}}" data-range="@Model.Range"></span>
 
                     <span id="medium" style="height:350px;width:923px !important;" class="visible-md" data-overview-highchart="{{overviewGraph}}" data-range="@Model.Range"></span>
@@ -88,40 +123,14 @@
                     <span id="small" style="height:350px;width:703px !important;" class="visible-sm" data-overview-highchart="{{overviewGraph}}" data-range="@Model.Range"></span>
 
                 </div>
-                
-                @if (Model.TotalPages > 1)
-                {
-                    <div class="col-xs-12 text-center">
-                        <div class="btn-group" role="group">
 
-                            @if (Model.CurrentPage != 1)
-                            {
-                                <button type="button" set-page="@(Model.CurrentPage -1)" class="btn btn-default" style="margin-right:5px;padding: 6px 4px;">
-                                    <i class="glyphicon glyphicon-chevron-left"></i>
-                                </button>
-                            }
-                            @for (var i = 1; i <= Model.TotalPages; i++)
-                            {
-                                <button type="button" set-page="@i" class="btn btn-default @(i == Model.CurrentPage ? "active" : "")">
-                                    @i
-                                </button>
-                            }
-                            @if (Model.CurrentPage != Model.TotalPages)
-                            {
-                                <button type="button" set-page="@(Model.CurrentPage + 1)" class="btn btn-default" style="margin-left:5px;padding: 6px 4px;">
-                                    <i class="glyphicon glyphicon-chevron-right"></i>
-                                </button>
-                            }
 
-                        </div>
-                    </div>
-                }
 
                 <div class="col-xs-12" style="margin-top:30px;" ng-repeat="range in model" ng-show="rangeElem === $index">
 
 
                     <div class="panel panel-default">
-                        
+
 
                         <div class="panel-body" style="padding-bottom: 0;">
 

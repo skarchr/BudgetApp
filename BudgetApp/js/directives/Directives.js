@@ -2,6 +2,34 @@
     'use strict';
 
     angular.module('budgetApp')
+
+        .directive('topNav', ['$window', function($window) {
+            return {
+                restrict: 'A',
+                link : function(scope, elem) {
+
+                    if ($window.scrollY < 20) {
+                        $(elem[0]).addClass('no-scroll-top');
+                        $(elem[0]).addClass('scroll-top');
+                    }
+                        
+
+                    $($window).on('scroll', function () {
+
+                        if (this.scrollY < 20) {
+                            $(elem[0]).addClass('scroll-top');
+                        } else {
+                            $(elem[0]).removeClass('scroll-top');
+                            $(elem[0]).addClass('no-scroll-top');
+                        }
+
+                        console.log(this.scrollY);
+                    });
+
+                }
+            };
+        }])
+
         .directive('setWidth', [
             function() {
 
@@ -189,7 +217,7 @@
                                 plotShadow: false,
                             },
                             title: {
-                                text: model.title.text,
+                                text: ' ',
                                 style: {
                                     fontSize: '18px',
                                     color: '#313131'
@@ -573,14 +601,14 @@
                 scope: {
                     vuMeter: '@',
                     goal: '@',
-                    currency:'@'
+                    currency: '@'
                 },
-                link : function(scope, elem) {
+                link: function(scope, elem) {
 
                     var actual = parseFloat(scope.vuMeter);
                     var goal = scope.goal !== undefined ? parseFloat(scope.goal.replace(',', '.')) : actual;
                     var currency = scope.currency !== undefined ? scope.currency : '';
-                   
+
                     console.log(goal);
 
                     $(elem[0]).highcharts({
@@ -619,15 +647,15 @@
 
                                 tickInterval: (goal / 4).toFixed(0),
                                 minorTickInterval: (goal * 0.1),
-                                minorTickWidth:1,
-                                minorTickLength:12,
+                                minorTickWidth: 1,
+                                minorTickLength: 12,
                                 min: 0,
                                 max: (goal + (goal * 0.6)),
                                 minorTickPosition: 'outside',
                                 tickPosition: 'inside',
-                                tickColor:'rgb(0,0,0)',
-                                minorTickColor:'rgb(0,0,0)',
-                                lineColor:'rgb(0,0,0)',
+                                tickColor: 'rgb(0,0,0)',
+                                minorTickColor: 'rgb(0,0,0)',
+                                lineColor: 'rgb(0,0,0)',
                                 labels: {
                                     rotation: 'auto',
                                     distance: 20
