@@ -5,7 +5,8 @@
         <style type="text/css">
 
             #circle, #pig > path,ellipse, #pigDetails, #pigDetails > polyline,line,path,ellipse {
-                stroke:white;
+                stroke:#FFFFFF;
+                fill:#0094ff;
             }
 
             #pigDetails > path, polyline, line{                

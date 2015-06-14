@@ -8,26 +8,26 @@
 
 
 
-<div style="margin-top: 30px;" ng-controller="transactionController">
+<div class="row" style="margin-top: 30px;" ng-controller="transactionController">
 
 
-    <div fade-in="200">
+    <div class="col-xs-12" fade-in="200">
         @using (Html.BeginForm("Index", "Transactions", FormMethod.Post))
         {
             <div class="row">
                 <div class="col-xs-12 col-md-6">
-                    <a href="@Url.Action("Create")" class="btn btn-default text-center" title="Add transaction" style="min-width: 67px;">
+                    <a href="@Url.Action("Create")" class="btn btn-default text-center" title="Add transaction" style="min-width: 167px;">
                         Add
                     </a>
-                    <a href="@Url.Action("Upload")" class="btn btn-default text-center" title="Import transactions" style="min-width: 67px;">
+                    <a href="@Url.Action("Upload")" class="btn btn-default text-center" title="Import transactions" style="min-width: 167px;">
                         Import
                     </a>
 
                 </div>
                 <div class="col-xs-12 col-md-6 text-right" style="margin-top:5px;">
-                    <span class="label label-danger label-big">Out: @Model.TotalExpenses</span>
+                    <span class="label label-danger label-big" style="background-color: #FF0000;">Out: @Model.TotalExpenses</span>
                     
-                    <span class="label label-success label-big">In: @Model.TotalIncome</span>
+                    <span class="label label-success label-big" style="background-color:#48DDb8;">In: @Model.TotalIncome</span>
                 </div>
             </div>
 

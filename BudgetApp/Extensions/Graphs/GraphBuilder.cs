@@ -8,9 +8,9 @@ namespace BudgetApp.Extensions.Graphs
 {
     public static class GraphBuilder
     {
-        public static Highchart TransactionDrilldownGraph(List<Transaction> transactions, string currency = "Amount", string graphType = "column")
+        public static Highchart TransactionDrilldownGraph(List<Transaction> transactions, string currency = "Amount", string graphType = "column", bool sorted = false)
         {
-            return TransactionDrilldown.CreateChart(transactions, currency, graphType);
+            return TransactionDrilldown.CreateChart(transactions, currency, graphType, sorted);
         }
 
 

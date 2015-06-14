@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using BudgetApp.Extensions.Graphs;
 using BudgetApp.Models;
 using FluentAssertions;
@@ -40,7 +41,6 @@ namespace BudgetApp.Tests.Graphs
             result.Drilldown.Series[5].Data[1].Y.Should().Be(40);
 
         }
-
 
         [Test]
         public void TestExpensesGraph_No_Transactions()

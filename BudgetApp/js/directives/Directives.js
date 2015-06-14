@@ -23,7 +23,6 @@
                             $(elem[0]).addClass('no-scroll-top');
                         }
 
-                        console.log(this.scrollY);
                     });
 
                 }
@@ -211,6 +210,9 @@
 
                         $(elem[0]).highcharts({
                             chart: {
+                                style: {
+                                    fontFamily: "'Franklin Gothic Medium', 'Franklin Gothic', 'ITC Franklin Gothic', Arial, sans-serif !important"
+                                },
                                 type: 'column',
                                 plotBackgroundColor: null,
                                 plotBorderWidth: null,
@@ -265,7 +267,7 @@
                             },
                             series: model.series
                         });
-                        console.log(scope.id);
+
                         $('#' + scope.id + ' .highcharts-container > .highcharts-axis-labels > span').each(function(e) {
 
                             var that = this;
@@ -275,7 +277,7 @@
                                 var active = $(this).hasClass('active');
 
                                 $('.highcharts-axis-labels > span').each(function() {
-                                    console.log(this);
+                                    
                                     $(this).removeClass('active');
                                 });
 
@@ -318,6 +320,9 @@
 
                         $(elem[0]).highcharts({
                             chart: {
+                                style: {
+                                    fontFamily: "'Franklin Gothic Medium', 'Franklin Gothic', 'ITC Franklin Gothic', Arial, sans-serif !important"
+                                },
                                 plotBackgroundColor: null,
                                 plotBorderWidth: null,
                                 plotShadow: false,
@@ -342,6 +347,7 @@
                                 pointFormat: '{series.name}: <b>{point.y:.1f} </b>'
                             },
                             legend: {
+                                enabled:false,
                                 align: 'right',
                                 layout: 'vertical',
                                 y: -25
@@ -357,9 +363,16 @@
                                 type: 'category',
                                 labels: {
                                     useHTML: true,
-                                    formatter: function() {
+                                    formatter: function () {                                       
+                                        var input = this.value.replace(/([A-Z])/g, " $1");
 
-                                        return '<div class="text-center" style="min-height:50px;"><img class="hs-image-label" title="' + this.value + '" src="' + commonService.getIconUrl(this.value) + '"/><br><span class="hidden-sm">' + this.value + '</span></div>';
+                                        var textLabel = '<span class="hidden-sm">' + (input.charAt(0).toUpperCase() + input.slice(1)).trim() + '</span>';
+
+                                        var img = '<img class="hs-image-label" title="' + (input.charAt(0).toUpperCase() + input.slice(1)).trim() + '" src="' + commonService.getIconUrl(this.value) + '"/>';
+
+                                        var style = model.type === 'bar' ? 'min-height:50px;min-width:80px;' : 'min-height:50px;';
+
+                                        return '<div class="text-center" style = "' + style + '">' + img + '<br>' + textLabel + '</div>';
                                     }
                                     //rotation: -45
                                 }
@@ -601,7 +614,8 @@
                 scope: {
                     vuMeter: '@',
                     goal: '@',
-                    currency: '@'
+                    currency: '@',
+                    chartTitle:'@'
                 },
                 link: function(scope, elem) {
 
@@ -609,16 +623,20 @@
                     var goal = scope.goal !== undefined ? parseFloat(scope.goal.replace(',', '.')) : actual;
                     var currency = scope.currency !== undefined ? scope.currency : '';
 
-                    console.log(goal);
-
                     $(elem[0]).highcharts({
                         chart: {
                             type: 'gauge',
-                            height: 200
+                            height: 180,
+                            style: {
+                                fontFamily: "'Franklin Gothic Medium', 'Franklin Gothic', 'ITC Franklin Gothic', Arial, sans-serif !important"
+                            }
                         },
 
                         title: {
-                            text: 'Average daily expense'
+                            text: scope.chartTitle,
+                            style: {
+                                fontSize:'16px'
+                            }
                         },
 
                         tooltip: {
@@ -637,14 +655,6 @@
                         credits: false,
                         yAxis: [
                             {
-                                title: {
-                                    align: 'high',
-                                    text: '<br/><span style="font-size:14px"> ' + actual.toFixed(1) + ' ' + currency + ' </span>',
-                                    y: -60,
-                                    x: 35
-                                },
-
-
                                 tickInterval: (goal / 4).toFixed(0),
                                 minorTickInterval: (goal * 0.1),
                                 minorTickWidth: 1,
@@ -665,7 +675,7 @@
                                     {
                                         from: goal + 1,
                                         to: (goal + (goal * 0.6)),
-                                        color: '#b94a48',
+                                        color: '#FF0000',
                                         innerRadius: '100%',
                                         outerRadius: '108%'
                                     }
@@ -703,6 +713,24 @@
                         ]
 
                     });
+
+                    var chart = $(elem[0]).highcharts();
+
+                    var text = actual.toFixed(1) + ' ' + currency;
+
+                    
+
+                    chart.renderer.label(text, 100 - (text.length / 2), 140, 'callout', 1)
+                        .css({
+                            color: '#FFFFFF'
+                        })
+                        .attr({
+                            fill: actual >= goal ? 'rgba(255, 0, 0, 0.90)' : 'rgba(72, 221, 184,0.90)',
+                            padding: 10,
+                            r: 4,
+                            zIndex: 6
+                        })
+                        .add();
 
                 }
             };

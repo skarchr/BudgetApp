@@ -12,7 +12,7 @@ namespace BudgetApp.Tests
         [Test]
         public void TestMethod1()
         {
-            var result = CategoryExt.GetMainCategory(Models.Category.Car);
+            var result = CategoryExt.GetMainCategory(Category.Car);
             result.Should().Be("Transport");
         }
     }

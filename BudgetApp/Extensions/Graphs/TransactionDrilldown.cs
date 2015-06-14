@@ -10,25 +10,26 @@ namespace BudgetApp.Extensions.Graphs
     public static class TransactionDrilldown
     {
 
-        public static Highchart CreateChart(List<Transaction> transactions, string currency, string graphType)
+        public static Highchart CreateChart(List<Transaction> transactions, string currency, string graphType, bool sorted)
         {
 
             return new Highchart
             {
                 Currency = currency,
+                Type = graphType,
                 Title = new Title
                 {
                     Text = "Expenses"
                 },
                 Series = new List<Series>
                 {
-                    CreateMainCategorySeries(transactions, graphType)
+                    CreateMainCategorySeries(transactions, graphType, sorted)
                 },
-                Drilldown = new Drilldown { Series = CreateDrilldownSeries(transactions, graphType) }
+                Drilldown = new Drilldown { Series = CreateDrilldownSeries(transactions, graphType, sorted) }
             };
         }
 
-        private static List<Series> CreateDrilldownSeries(List<Transaction> transactions, string graphType)
+        private static List<Series> CreateDrilldownSeries(List<Transaction> transactions, string graphType, bool sorted)
         {
             var series = new List<Series>();
 
@@ -48,13 +49,14 @@ namespace BudgetApp.Extensions.Graphs
                     });
                     index++;
                 }
-                series.Add(new Series { Id = mainCategory.ToLower(), Name = mainCategory, Type = graphType, Data = data });
+
+                series.Add(new Series { Id = mainCategory.ToLower(), Name = mainCategory, Type = graphType, Data = sorted ? SortDataListByY(data) : data });
                 mainIndex++;
             }
             return series;
         }
 
-        private static Series CreateMainCategorySeries(List<Transaction> transactions, string graphType)
+        private static Series CreateMainCategorySeries(List<Transaction> transactions, string graphType, bool sorted)
         {
             var data = new List<Data>();
             var index = 0;
@@ -77,9 +79,29 @@ namespace BudgetApp.Extensions.Graphs
                 Name = "Expenses",
                 Type = graphType,
                 Id = "mainCategories",
-                Data = data
+                Data = sorted ? SortDataListByY(data) : data
             };
         }
 
+
+        private static List<Data> SortDataListByY(List<Data> data)
+        {
+            var sortedList = data.OrderByDescending(s => s.Y).Select(s => s.Name);
+
+            var result = new List<Data>();
+
+            var index = 0;
+            foreach (var item in sortedList)
+            {                
+                var temp = data.First(s => s.Name == item);
+
+                temp.X = index;
+
+                result.Add(temp);
+
+                index++;
+            }
+            return result;
+        }
     }
 }

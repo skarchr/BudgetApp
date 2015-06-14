@@ -10,7 +10,8 @@ namespace BudgetApp.Models
         public Title Title { get; set; }
         public string Currency { get; set; }
         public List<PlotLines> PlotLinesX { get; set; }
-        public List<PlotLines> PlotLinesY { get; set; } 
+        public List<PlotLines> PlotLinesY { get; set; }
+        public string Type { get; set; }
     }
 
     public class PlotLines

@@ -9,13 +9,13 @@ namespace BudgetApp.Constants
     {
         public static readonly List<string> Colors = new List<string>
         {
-            "#F1705C",
-            "#B39E7E",
+            "#D3F8E2",
+            "#E4C1F9",
             "#48DDb8",
-            "#2FB7E8",
+            "#F694C1",
             "#48DDb8",
-            "#4D86EB",
-            "#530006"
+            "#EDE7B1",
+            "#A9DEF9"
         }; 
 
     }
