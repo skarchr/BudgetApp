@@ -44,8 +44,8 @@
 
             <!-- Nav tabs -->
             <ul class="nav nav-tabs" role="tablist">
-                <li role="presentation" class="active"><a href="#expense" aria-controls="expense" role="tab" data-toggle="tab">Expenses <span class="label label-expense">  @Model.TotalExpenses</span></a></li>
-                <li role="presentation"><a href="#income" aria-controls="income" role="tab" data-toggle="tab">Income <span class="label label-income"> @Model.TotalIncome</span></a></li>
+                <li role="presentation" class="active"><a href="#expense" aria-controls="expense" role="tab" data-toggle="tab">Expenses</a></li>
+                <li role="presentation"><a href="#income" aria-controls="income" role="tab" data-toggle="tab">Income</a></li>
             </ul>
 
             <!-- Tab panes -->
@@ -54,9 +54,9 @@
                     
                     <div class="col-xs-12">
 
-                        <div class="row" style="margin-top: -1px;">
+                        <div class="row" style="margin-top: -1px;">                           
 
-                            <div class="col-xs-12 col-md-6" style="border:1px solid #ececec;border-top:0; padding: 0px;">
+                            <div class="col-xs-12 col-md-6" style="border:1px solid #ececec;border-top:0;border-left:0;padding: 0px;">
                                 <h3 class="text-center">Average</h3>
                                 <div class="col-xs-12 col-md-6" style="padding:0">
                                     <div style="height: 200px;" data-vu-meter="@Model.AverageDailyExpenses" data-goal="@((Model.ExpensesGoal * 12) / 365)" data-currency="@Model.Currency" data-chart-title="Daily expenses"></div>
@@ -69,7 +69,7 @@
 
 
 
-                            <div class="col-xs-12 col-md-6" style="border:1px solid #ececec;border-top:0;padding: 0px;">
+                            <div class="col-xs-12 col-md-6" style="border:1px solid #ececec;border-top:0;border-right:0;padding: 0px;">
                                 <h3 class="text-center">Current</h3>
                                 <div class="col-xs-12 col-md-6" style="padding:0">
                                     <div style="height: 200px;" data-vu-meter="@Model.CurrentMonthExpenses" data-goal="@((Model.ExpensesGoal))" data-currency="@Model.Currency" data-chart-title="Expenses for @(DateHelper.GetMonthText(DateTime.Now))"></div>
@@ -82,14 +82,14 @@
 
 
                         </div>
-                        <div class="row" style="border:1px solid #ececec;border-top:1px solid white;">
+                        <div class="row" style="margin-top: 40px;">
                             <div class="col-xs-12">
 
-                                <span style="height:500px;width:1123px !important;" class="visible-lg" data-highchart="{{model.transactionDrilldownGraph}}"></span>
+                                <span style="height:500px;width:1123px !important;" class="visible-lg" data-highchart="{{model.transactionDrilldownGraph}}" data-chart-label="{{model.totalExpenses}}"></span>
 
-                                <span style="height:500px;width:923px !important;" class="visible-md" data-highchart="{{model.transactionDrilldownGraph}}"></span>
+                                <span style="height:500px;width:923px !important;" class="visible-md" data-highchart="{{model.transactionDrilldownGraph}}" data-chart-label="{{model.totalExpenses}}"></span>
 
-                                <span style="height:500px;width:703px !important;" class="visible-sm" data-highchart="{{model.transactionDrilldownGraph}}"></span>
+                                <span style="height:500px;width:703px !important;" class="visible-sm" data-highchart="{{model.transactionDrilldownGraph}}" data-chart-label="{{model.totalExpenses}}"></span>
 
                             </div>
 

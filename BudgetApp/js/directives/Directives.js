@@ -200,7 +200,9 @@
                     scope: {
                         overviewHighchart: '@',
                         range: '@',
-                        id: '@'
+                        id: '@',
+                        totalIncome: '@',
+                        totalExpenses:'@'
                     },
                     link: function(scope, elem, attrs) {
 
@@ -300,6 +302,43 @@
 
                         });
 
+                        var chart = $(elem[0]).highcharts();
+
+                        if (scope.totalIncome !== undefined) {
+
+                            var text = scope.totalIncome.replace(',','.');
+
+                            chart.renderer.label('Total: ' + JSON.parse(text).toFixed(1), 70, 10, 'callout', 1)
+                                .css({
+                                    color: '#FFFFFF'
+                                })
+                                .attr({
+                                    fill: 'rgba(72, 221, 184,0.70)',//'rgba(255, 0, 0, 0.90)',
+                                    padding: 2,
+                                    r: 4,
+                                    zIndex: 6
+                                })
+                                .add();
+                        }
+
+                        if (scope.totalExpenses !== undefined) {
+
+                            var text1 = scope.totalExpenses.replace(',', '.');
+
+                            chart.renderer.label('Total: ' + JSON.parse(text1).toFixed(1), 70, 32, 'callout', 1)
+                                .css({
+                                    color: '#FFFFFF'
+                                })
+                                .attr({
+                                    fill: 'rgba(255, 0, 0, 0.70)',
+                                    stroke:'rgb(0,0,0)',
+                                    padding: 2,
+                                    r: 4,
+                                    zIndex: 6
+                                })
+                                .add();
+                        }
+
                     }
                 }
             }
@@ -310,7 +349,8 @@
                 return {
                     restrict: 'A',
                     scope: {
-                        highchart: '@'
+                        highchart: '@',
+                        chartLabel:'@'
                     },
                     link: function(scope, elem, attrs) {
 
@@ -407,9 +447,30 @@
                             }
                         });
 
+                        var chart = $(elem[0]).highcharts();
+
                         setTimeout(function() {
-                            $(elem[0]).highcharts().reflow();
+                            chart.reflow();
                         }, 350);
+
+                        if (scope.chartLabel !== undefined) {
+
+                            var text = scope.chartLabel;
+
+                            chart.renderer.label('Total: '+JSON.parse(scope.chartLabel).toFixed(1), chart.chartWidth - text.length * 8, chart.chartHeight - text.length * 6, 'callout', 1)
+                                .css({
+                                    color: '#FFFFFF'
+                                })
+                                .attr({
+                                    fill: 'rgba(255, 0, 0, 0.90)',
+                                    padding: 10,
+                                    r: 4,
+                                    zIndex: 6
+                                })
+                                .add();
+                        }
+
+                        
                     }
                 }
             }

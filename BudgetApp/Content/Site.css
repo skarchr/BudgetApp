@@ -557,10 +557,12 @@ th {
 
 .label-expense {
     background-color: #ff0000;
-    font-size: 12px;
+    font-size: 10px;
+    font-family: monospace;
 }
 
 .label-income {
     background-color: #48ddb8;
-    font-size: 12px;
+    font-size: 10px;
+    font-family: monospace;
 }
