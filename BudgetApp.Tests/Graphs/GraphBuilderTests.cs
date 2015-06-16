@@ -43,6 +43,38 @@ namespace BudgetApp.Tests.Graphs
         }
 
         [Test]
+        public void TestDrilldownIncomeGraph()
+        {
+
+            var trans = CreateTransactions();
+
+            trans.Add(new Transaction
+            {
+                Amount = 1000,
+                Category = Category.OtherIncome,
+                Date = new DateTime(2014,1,1)
+            });
+
+            var result = GraphBuilder.IncomeDrilldownGraph(trans, "NOK");
+
+            result.Currency.Should().Be("NOK");
+
+            result.Series[0].Data.Count.Should().Be(1);
+            result.Series[0].Data[0].X.Should().Be(0);
+            result.Series[0].Data[0].Y.Should().Be(1600);
+            result.Series[0].Data[0].Drilldown.Should().Be("income");
+            
+            result.Drilldown.Series[0].Data[0].Name.Should().Be("OtherIncome");
+            result.Drilldown.Series[0].Data[0].X.Should().Be(0);
+            result.Drilldown.Series[0].Data[0].Y.Should().Be(1000);
+
+            result.Drilldown.Series[0].Data[1].Name.Should().Be("Salary");
+            result.Drilldown.Series[0].Data[1].X.Should().Be(1);
+            result.Drilldown.Series[0].Data[1].Y.Should().Be(600);
+
+        }
+
+        [Test]
         public void TestExpensesGraph_No_Transactions()
         {
             var result = GraphBuilder.DailyExpensesGraph(new List<Transaction>(), "NOK");

@@ -13,6 +13,7 @@ namespace BudgetApp.Models
 
         public string DailyExpensesGraph { get; set; }
         public string TransactionDrilldownGraph { get; set; }
+        public string DrilldownIncomeGraph { get; set; }
         public double? ExpensesGoal { get; set; }
         public string Currency { get; set; }
 

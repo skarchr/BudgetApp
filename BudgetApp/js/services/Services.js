@@ -23,6 +23,9 @@
                 case "Salary":
                     imageName = "payment7.png";
                     break;
+                case "Income":
+                    imageName = "money132.png";
+                    break;
                 case "OtherIncome":
                     imageName = "money132.png";
                     break;

@@ -2,6 +2,10 @@
 <defs>
     <style type="text/css">
 
+        #pig > path,#circle{
+            fill:#FFFFFF;
+        }
+
          @media only screen and (max-width:220px) {
              #pigDetails {
                  display: none;

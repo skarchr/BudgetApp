@@ -24,6 +24,7 @@ namespace BudgetApp.Controllers
                 Transactions = transactions,
                 DailyExpensesGraph = GraphBuilder.DailyExpensesGraph(transactions, user.Currency).ToJson(),
                 TransactionDrilldownGraph = GraphBuilder.TransactionDrilldownGraph(transactions, user.Currency, "bar", true).ToJson(),
+                DrilldownIncomeGraph = GraphBuilder.IncomeDrilldownGraph(transactions, user.Currency, "bar", true).ToJson(),
                 ExpensesGoal = user.MonthlyExpensesGoal,
                 Currency = user.Currency
             };

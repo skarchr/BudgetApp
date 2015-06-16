@@ -29,5 +29,11 @@ namespace BudgetApp.Extensions.Graphs
         {
             return Overview.CreateChart(rangeviewers, user);
         }
+
+        //TODO: Merge with expenses and make alternativ to show all categories
+        public static Highchart IncomeDrilldownGraph(List<Transaction> transactions, string currency = "Amount", string graphType = "column", bool sorted = false)
+        {
+            return TransactionDrilldown.CreateIncomeChart(transactions, currency, graphType, sorted);
+        }
     }
 }

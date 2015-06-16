@@ -23,18 +23,21 @@ namespace BudgetApp.Extensions.Graphs
                 },
                 Series = new List<Series>
                 {
-                    CreateMainCategorySeries(transactions, graphType, sorted)
+                    CreateMainCategorySeries(transactions, graphType, sorted, false)
                 },
-                Drilldown = new Drilldown { Series = CreateDrilldownSeries(transactions, graphType, sorted) }
+                Drilldown = new Drilldown { Series = CreateDrilldownSeries(transactions, graphType, sorted, false) }
             };
         }
 
-        private static List<Series> CreateDrilldownSeries(List<Transaction> transactions, string graphType, bool sorted)
+        private static List<Series> CreateDrilldownSeries(List<Transaction> transactions, string graphType, bool sorted, bool income)
         {
             var series = new List<Series>();
 
-            var mainIndex = 0;
-            foreach (var mainCategory in Categories.Grouped.Keys.Where(s => s != "Income"))
+            var categories = income
+                ? Categories.Grouped.Keys.Where(s => s == "Income")
+                : Categories.Grouped.Keys.Where(s => s != "Income");
+
+            foreach (var mainCategory in categories)
             {
                 var data = new List<Data>();
                 var index = 0;
@@ -51,16 +54,19 @@ namespace BudgetApp.Extensions.Graphs
                 }
 
                 series.Add(new Series { Id = mainCategory.ToLower(), Name = mainCategory, Type = graphType, Data = sorted ? SortDataListByY(data) : data });
-                mainIndex++;
             }
             return series;
         }
 
-        private static Series CreateMainCategorySeries(List<Transaction> transactions, string graphType, bool sorted)
+        private static Series CreateMainCategorySeries(List<Transaction> transactions, string graphType, bool sorted, bool income)
         {
             var data = new List<Data>();
             var index = 0;
-            foreach (var mainCategory in Categories.Grouped.Keys.Where(s => s != "Income"))
+            var categories = income
+                ? Categories.Grouped.Keys.Where(s => s == "Income")
+                : Categories.Grouped.Keys.Where(s => s != "Income");
+
+            foreach (var mainCategory in categories)
             {
 
                 data.Add(new Data
@@ -76,7 +82,7 @@ namespace BudgetApp.Extensions.Graphs
 
             return new Series
             {
-                Name = "Expenses",
+                Name = income ? "Income":"Expenses",
                 Type = graphType,
                 Id = "mainCategories",
                 Data = sorted ? SortDataListByY(data) : data
@@ -102,6 +108,24 @@ namespace BudgetApp.Extensions.Graphs
                 index++;
             }
             return result;
+        }
+
+        public static Highchart CreateIncomeChart(List<Transaction> transactions, string currency, string graphType, bool sorted)
+        {
+            return new Highchart
+            {
+                Currency = currency,
+                Type = graphType,
+                Title = new Title
+                {
+                    Text = "Income"
+                },
+                Series = new List<Series>
+                {
+                    CreateMainCategorySeries(transactions, graphType, sorted, true)
+                },
+                Drilldown = new Drilldown { Series = CreateDrilldownSeries(transactions, graphType, sorted, true) }
+            };
         }
     }
 }

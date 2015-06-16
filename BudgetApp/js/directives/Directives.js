@@ -1,6 +1,19 @@
 ﻿(function() {
     'use strict';
 
+    var formatNumber = function (number) {
+        var numb = number.toFixed(2) + '';
+        var x = numb.split(' ');
+        var x1 = x[0];
+        var x2 = x.length > 1 ? '.' + x[1] : '';
+        var rgx = /(\d+)(\d{3})/;
+        while (rgx.test(x1)) {
+            x1 = x1.replace(rgx, '$1' + ' ' + '$2');
+        }
+        return x1 + x2;
+    };
+
+
     angular.module('budgetApp')
 
         .directive('topNav', ['$window', function($window) {
@@ -202,7 +215,8 @@
                         range: '@',
                         id: '@',
                         totalIncome: '@',
-                        totalExpenses:'@'
+                        totalExpenses: '@',
+                        currency:'@'
                     },
                     link: function(scope, elem, attrs) {
 
@@ -230,7 +244,7 @@
                             tooltip: {
                                 enabled: true,
                                 formatter: function() {
-                                    return '<div><strong>' + this.series.name + '</strong><br>' + this.x + ': ' + this.y.toFixed(1) + ' ' + model.currency + '</div>';
+                                    return '<div><strong>' + this.series.name + '</strong><br>' + this.x + ': ' + formatNumber(this.y) + ' ' + model.currency + '</div>';
                                 }
                             },
                             legend: {
@@ -303,12 +317,13 @@
                         });
 
                         var chart = $(elem[0]).highcharts();
+                        var currency = scope.currency !== undefined ? ' ' + scope.currency : '';
 
                         if (scope.totalIncome !== undefined) {
 
-                            var text = scope.totalIncome.replace(',','.');
+                            var text = formatNumber(JSON.parse(scope.totalIncome.replace(',','.')));
 
-                            chart.renderer.label('Total: ' + JSON.parse(text).toFixed(1), 70, 10, 'callout', 1)
+                            chart.renderer.label('Total: ' + text + currency, 70, 10, 'callout', 1)
                                 .css({
                                     color: '#FFFFFF'
                                 })
@@ -323,9 +338,9 @@
 
                         if (scope.totalExpenses !== undefined) {
 
-                            var text1 = scope.totalExpenses.replace(',', '.');
+                            var text1 = formatNumber(JSON.parse(scope.totalExpenses.replace(',', '.')));
 
-                            chart.renderer.label('Total: ' + JSON.parse(text1).toFixed(1), 70, 32, 'callout', 1)
+                            chart.renderer.label('Total: ' + text1 + currency, 70, 32, 'callout', 1)
                                 .css({
                                     color: '#FFFFFF'
                                 })
@@ -350,7 +365,8 @@
                     restrict: 'A',
                     scope: {
                         highchart: '@',
-                        chartLabel:'@'
+                        chartLabel: '@',
+                        currency: '@'
                     },
                     link: function(scope, elem, attrs) {
 
@@ -455,9 +471,11 @@
 
                         if (scope.chartLabel !== undefined) {
 
-                            var text = scope.chartLabel;
+                            var text = formatNumber(JSON.parse(scope.chartLabel));
 
-                            chart.renderer.label('Total: '+JSON.parse(scope.chartLabel).toFixed(1), chart.chartWidth - text.length * 8, chart.chartHeight - text.length * 6, 'callout', 1)
+                            var currency = scope.currency !== undefined ? ' ' + scope.currency : '';
+
+                            chart.renderer.label('Total: ' + text + currency, chart.chartWidth - text.length * 18, chart.chartHeight - text.length * 10, 'callout', 1)
                                 .css({
                                     color: '#FFFFFF'
                                 })
@@ -777,7 +795,7 @@
 
                     var chart = $(elem[0]).highcharts();
 
-                    var text = actual.toFixed(1) + ' ' + currency;
+                    var text = formatNumber(actual) + ' ' + currency;
 
                     
 

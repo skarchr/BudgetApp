@@ -3,7 +3,29 @@
 
     var shortMonthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
+
+    var formatNumber = function (number) {
+        var numb = number.toFixed(2) + '';
+        var x = numb.split(' ');
+        var x1 = x[0];
+        var x2 = x.length > 1 ? '.' + x[1] : '';
+        var rgx = /(\d+)(\d{3})/;
+        while (rgx.test(x1)) {
+            x1 = x1.replace(rgx, '$1' + ' ' + '$2');
+        }
+        return x1 + x2;
+    };
+
     angular.module('budgetApp')
+
+        .filter('currencyFormatter', function () {
+
+            return function (input) {
+                return formatNumber(input);
+            }
+
+        })
+
         .filter('monthName', function () {
 
             return function (input) {

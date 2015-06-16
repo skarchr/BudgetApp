@@ -111,11 +111,11 @@
 
                 <div class="col-xs-12">
 
-                    <span id="big" style="height:350px;width:1123px !important;" class="visible-lg" data-overview-highchart="{{overviewGraph}}" data-range="@Model.Range" total-income="@Model.TotalIncome" total-expenses="@Model.TotalExpenses"></span>
+                    <span id="big" style="height:350px;width:1123px !important;" class="visible-lg" data-overview-highchart="{{overviewGraph}}" data-range="@Model.Range" data-total-income="@Model.TotalIncome" data-total-expenses="@Model.TotalExpenses" data-currency="@Model.Currency"></span>
 
-                    <span id="medium" style="height:350px;width:923px !important;" class="visible-md" data-overview-highchart="{{overviewGraph}}" data-range="@Model.Range"></span>
+                    <span id="medium" style="height:350px;width:923px !important;" class="visible-md" data-overview-highchart="{{overviewGraph}}" data-range="@Model.Range" data-total-income="@Model.TotalIncome" data-total-expenses="@Model.TotalExpenses" data-currency="@Model.Currency"></span>
 
-                    <span id="small" style="height:350px;width:703px !important;" class="visible-sm" data-overview-highchart="{{overviewGraph}}" data-range="@Model.Range"></span>
+                    <span id="small" style="height:350px;width:703px !important;" class="visible-sm" data-overview-highchart="{{overviewGraph}}" data-range="@Model.Range" data-total-income="@Model.TotalIncome" data-total-expenses="@Model.TotalExpenses" data-currency="@Model.Currency"></span>
 
                 </div>
 
@@ -176,7 +176,7 @@
 
                                         {{ $index + 1 }}
                                     </td>
-                                    <td>{{row.amount.toFixed(2)}}</td>
+                                    <td>{{row.amount | currencyFormatter}}</td>
                                     <td style="text-align:left;padding-left: 20px;">
                                         <img class="hidden-xs hidden-sm" style="position: absolute;" height="20" ng-src="{{getIcon(row.category)}}" alt="{{row.category}}" />
                                         <span style="padding-left: 30px;">{{row.category | camelCaseToNormal}}</span>

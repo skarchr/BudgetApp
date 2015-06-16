@@ -45,7 +45,9 @@
             <!-- Nav tabs -->
             <ul class="nav nav-tabs" role="tablist">
                 <li role="presentation" class="active"><a href="#expense" aria-controls="expense" role="tab" data-toggle="tab">Expenses</a></li>
-                <li role="presentation"><a href="#income" aria-controls="income" role="tab" data-toggle="tab">Income</a></li>
+                <li role="presentation"><a href="#income" aria-controls="income" role="tab" data-toggle="tab">Income</a></li>                
+
+                <li class="pull-right" role="presentation"><a href="#prediction" aria-controls="prediction" role="tab" data-toggle="tab">Predictions</a></li>
             </ul>
 
             <!-- Tab panes -->
@@ -85,7 +87,7 @@
                         <div class="row" style="margin-top: 40px;">
                             <div class="col-xs-12">
 
-                                <span style="height:500px;width:1123px !important;" class="visible-lg" data-highchart="{{model.transactionDrilldownGraph}}" data-chart-label="{{model.totalExpenses}}"></span>
+                                <span style="height:500px;width:1123px !important;" class="visible-lg" data-highchart="{{model.transactionDrilldownGraph}}" data-chart-label="{{model.totalExpenses}}" data-currency="{{model.currency}}"></span>
 
                                 <span style="height:500px;width:923px !important;" class="visible-md" data-highchart="{{model.transactionDrilldownGraph}}" data-chart-label="{{model.totalExpenses}}"></span>
 
@@ -97,7 +99,25 @@
                     </div>
                 </div>
                 <div role="tabpanel" class="tab-pane" id="income">
-                    TODO
+                    <div class="col-xs-12">
+                        
+                        <div class="row" style="margin-top: 40px;">
+                            <div class="col-xs-12">
+
+                                <span style="height:500px;width:1123px !important;" class="visible-lg" data-highchart="{{model.drilldownIncomeGraph}}"></span>
+
+                                <span style="height:500px;width:923px !important;" class="visible-md" data-highchart="{{model.drilldownIncomeGraph}}"></span>
+
+                                <span style="height:500px;width:703px !important;" class="visible-sm" data-highchart="{{model.drilldownIncomeGraph}}"></span>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+                <div role="tabpanel" class="tab-pane" id="prediction">
+                    TODO - prediction
                 </div>
             </div>
 
