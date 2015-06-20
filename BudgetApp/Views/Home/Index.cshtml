@@ -44,8 +44,8 @@
 
             <!-- Nav tabs -->
             <ul class="nav nav-tabs" role="tablist">
-                <li role="presentation" class="active"><a href="#expense" aria-controls="expense" role="tab" data-toggle="tab">Expenses</a></li>
-                <li role="presentation"><a href="#income" aria-controls="income" role="tab" data-toggle="tab">Income</a></li>                
+                <li role="presentation" class="active"><a href="#expense" aria-controls="expense" role="tab" data-toggle="tab">Transactions</a></li>
+                <li role="presentation"><a href="#income" aria-controls="income" role="tab" data-toggle="tab">Savings</a></li>                
 
                 <li class="pull-right" role="presentation"><a href="#prediction" aria-controls="prediction" role="tab" data-toggle="tab">Predictions</a></li>
             </ul>
@@ -66,7 +66,12 @@
                                 <div class="col-xs-12 col-md-6" style="padding:0">
                                     <div style="height: 200px;" data-vu-meter="@Model.AverageMonthlyExpenses" data-goal="@((Model.ExpensesGoal))" data-currency="@Model.Currency" data-chart-title="Monthly expenses"></div>
                                 </div>
-
+                                <div class="col-xs-12 col-md-6" style="padding:0">
+                                    <div style="height: 200px;" data-vu-meter="@Model.AverageDailyIncome" data-goal="@(Model.AverageDailyExpenses) / 365)" data-currency="@Model.Currency" data-chart-title="Daily income" data-inverted="true"></div>
+                                </div>
+                                <div class="col-xs-12 col-md-6" style="padding:0">
+                                    <div style="height: 200px;" data-vu-meter="@Model.AverageMonthlyIncome" data-goal="@((Model.AverageMonthlyExpenses))" data-currency="@Model.Currency" data-chart-title="Monthly income" data-inverted="true"></div>
+                                </div>
                             </div>
 
 
@@ -101,6 +106,15 @@
                 <div role="tabpanel" class="tab-pane" id="income">
                     <div class="col-xs-12">
                         
+                        <div class="row">
+                            <div class="col-xs-6">
+                                
+                                <span>{{model.averageDailyIncome | currencyFormatter}}</span>
+                                <span>{{model.averageMonthlyIncome | currencyFormatter}}</span>
+
+                            </div>
+                        </div>
+
                         <div class="row" style="margin-top: 40px;">
                             <div class="col-xs-12">
 

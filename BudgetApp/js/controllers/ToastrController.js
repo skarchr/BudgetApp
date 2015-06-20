@@ -4,18 +4,9 @@
     angular.module('budgetApp').controller('toastrController', ['$scope', 'viewBags', 'toastr', function($scope, viewBags, toastr) {
 
         var viewbagList = viewBags.messages;
-
-        $scope.loading = true;
-
-        var init = function() {
-            angular.element(document).ready(function() {
-                $scope.loading = false;
-            });
-        }
-
-        init();
-
+        
         $.each(viewbagList, function(i, val) {
+            console.log(i);
 
             if(val !== ''){
                 switch (i) {
@@ -29,10 +20,10 @@
                     toastr.info(val);
                     break;
                 default:
-                    return false;
+                    break;
                 }
             }
-            return false;
+
         });
 
     }]);

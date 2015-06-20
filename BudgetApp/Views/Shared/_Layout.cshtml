@@ -13,23 +13,18 @@
    @RenderSection("scripts", required: false)
 </head>
     <body style="@(User.Identity.IsAuthenticated ? "" : "padding-top: 10px;")">
+        
+        <div class="row" ng-show="hideOnDomReady">
+
+            <div class="spinner">
+                <div class="ball"></div>
+                <p>LOADING</p>
+            </div>
+        </div>
+
         @if (User.Identity.IsAuthenticated)
         {
-            <div class="row" ng-show="loading">
-                <div class="col-xs-12 text-center" style="position: fixed; top:30%;">
-                    <div class="wrap">
-                        <div class="l">L</div>
-                        <div class="o">O</div>
-                        <div class="a">A</div>
-                        <div class="d">D</div>
-                        <div class="i">I</div>
-                        <div class="n">N</div>
-                        <div class="g">G</div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="navbar navbar-inverse navbar-fixed-top scroll-top" top-nav ng-controller="toastrController">
+            <div class="navbar navbar-inverse navbar-fixed-top scroll-top" ng-controller="toastrController" top-nav>
                 <div class="container">
                     <div class="navbar-header">
                         <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -56,9 +51,11 @@
             </div>
 
         }
-        <div class="container body-content" ng-cloak scroll-position>                        
+        <div class="container body-content" ng-cloak scroll-position>
 
             @RenderBody()
+
+
             <footer data-fade-in="600" class="text-center" style="margin-top:100px; ">
                 @{
                     if (!String.IsNullOrEmpty(ViewBag.Link))
@@ -82,10 +79,10 @@
 
         </div>
         <script>
-            (function() {
+            (function () {
                 'use strict';
 
-                angular.module('budgetApp').factory('viewBags', function() {
+                angular.module('budgetApp').factory('viewBags', function () {
 
                     return {
                         messages: {
@@ -100,4 +97,5 @@
         </script>
 
     </body>
+
 </html>

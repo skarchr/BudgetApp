@@ -694,13 +694,26 @@
                     vuMeter: '@',
                     goal: '@',
                     currency: '@',
-                    chartTitle:'@'
+                    chartTitle: '@',
+                    inverted : '@'
                 },
                 link: function(scope, elem) {
 
                     var actual = parseFloat(scope.vuMeter);
-                    var goal = scope.goal !== undefined ? parseFloat(scope.goal.replace(',', '.')) : actual;
+                    var goal = scope.goal !== undefined ? parseFloat(scope.goal.replace(',', '.')): actual;
                     var currency = scope.currency !== undefined ? scope.currency : '';
+
+                    var from;
+                    var to;
+
+                    if (scope.inverted) {
+                        from = 0;
+                        to = goal;
+                    } else {
+                        from = goal;
+                        to = (goal + (goal * 0.6));
+                    }
+
 
                     $(elem[0]).highcharts({
                         chart: {
@@ -734,7 +747,7 @@
                         credits: false,
                         yAxis: [
                             {
-                                tickInterval: (goal / 4).toFixed(0),
+                                tickInterval: (goal / (goal % 2 === 0 ? 4 : 3 ) ).toFixed(0),
                                 minorTickInterval: (goal * 0.1),
                                 minorTickWidth: 1,
                                 minorTickLength: 12,
@@ -752,9 +765,9 @@
 
                                 plotBands: [
                                     {
-                                        from: goal + 1,
-                                        to: (goal + (goal * 0.6)),
-                                        color: '#FF0000',
+                                        from: from,
+                                        to: to,
+                                        color: "#FF0000",
                                         innerRadius: '100%',
                                         outerRadius: '108%'
                                     }
@@ -797,14 +810,20 @@
 
                     var text = formatNumber(actual) + ' ' + currency;
 
-                    
+                    var fill;
+
+                    if (scope.inverted) {
+                        fill = actual >= goal ? 'rgba(72, 221, 184,0.90)' : 'rgba(255, 0, 0, 0.90)';
+                    } else {
+                        fill = actual >= goal ? 'rgba(255, 0, 0, 0.90)' : 'rgba(72, 221, 184,0.90)';
+                    }
 
                     chart.renderer.label(text, 100 - (text.length / 2), 140, 'callout', 1)
                         .css({
                             color: '#FFFFFF'
                         })
                         .attr({
-                            fill: actual >= goal ? 'rgba(255, 0, 0, 0.90)' : 'rgba(72, 221, 184,0.90)',
+                            fill: fill,
                             padding: 10,
                             r: 4,
                             zIndex: 6

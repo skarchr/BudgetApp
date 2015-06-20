@@ -91,5 +91,43 @@ namespace BudgetApp.Models
                             s.Date.Month == today.Month && s.Date.Year == today.Year).Sum(s => s.Amount);
             }
         }
+
+        public double AverageDailyIncome
+        {
+            get
+            {
+                if (Transactions.Count > 0)
+                {
+                    var startDate = Transactions.OrderBy(s => s.Date).First().Date;
+                    var endDate = Transactions.OrderBy(s => s.Date).Last().Date;
+
+                    if (startDate == endDate)
+                        return TotalIncome;
+
+                    return TotalIncome / (endDate - startDate).Days;
+                }
+
+                return 0.0;
+            }
+        }
+
+        public double AverageMonthlyIncome
+        {
+            get
+            {
+                if (Transactions.Count > 0)
+                {
+                    var startDate = Transactions.OrderBy(s => s.Date).First().Date;
+                    var endDate = Transactions.OrderBy(s => s.Date).Last().Date;
+
+                    if (startDate == endDate)
+                        return TotalIncome;
+
+                    return TotalIncome / ((endDate - startDate).Days / 30.0);
+                }
+
+                return 0.0;
+            }
+        }
     }
 }

@@ -3,5 +3,4 @@
 
     angular.module('budgetApp', ['ui.bootstrap', 'ngAnimate', 'ui.gravatar', 'toastr']);
 
-
 })();
