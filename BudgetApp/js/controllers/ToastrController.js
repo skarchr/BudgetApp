@@ -5,6 +5,16 @@
 
         var viewbagList = viewBags.messages;
 
+        $scope.loading = true;
+
+        var init = function() {
+            angular.element(document).ready(function() {
+                $scope.loading = false;
+            });
+        }
+
+        init();
+
         $.each(viewbagList, function(i, val) {
 
             if(val !== ''){

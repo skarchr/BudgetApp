@@ -1,15 +1,109 @@
-﻿/*.filter.ng-hide-remove {
-    -webkit-animation: zoomIn 0.3s;
-    -moz-animation: zoomIn 0.3s;
-    -ms-animation: zoomIn 0.3s;
-    -o-animation: zoomIn 0.3s;
-    animation: zoomIn 0.3s;
-}*/
+﻿.wrap {
+  width: 250px;
+  text-align: center;
+  position: absolute;
+  top: 40%;
+  left: 50%;
+    margin-left: -125px;
+    font-size: 34px;
+    color: #0094ff;
+}
+.wrap div {
+  display: inline;
+  margin: -2px;
+}
 
-/*.filter.ng-hide-add {
-    -webkit-animation: zoomOut 0.1s;
-    -moz-animation: zoomOut 0.1s;
-    -ms-animation: zoomOut 0.1s; 
-    -o-animation: zoomOut 0.1s;
-    animation: zoomOut 0.1s;
-}*/
+.l {
+  -webkit-animation: shrinkgrow 1.75s ease-in-out infinite;
+          animation: shrinkgrow 1.75s ease-in-out infinite;
+  -webkit-animation-delay: 0s;
+          animation-delay: 0s;
+}
+
+.o {
+  -webkit-animation: shrinkgrow 1.75s ease-in-out infinite;
+          animation: shrinkgrow 1.75s ease-in-out infinite;
+  -webkit-animation-delay: 0.21875s;
+          animation-delay: 0.21875s;
+}
+
+.a {
+  -webkit-animation: shrinkgrow 1.75s ease-in-out infinite;
+          animation: shrinkgrow 1.75s ease-in-out infinite;
+  -webkit-animation-delay: 0.4375s;
+          animation-delay: 0.4375s;
+}
+
+.d {
+  -webkit-animation: shrinkgrow 1.75s ease-in-out infinite;
+          animation: shrinkgrow 1.75s ease-in-out infinite;
+  -webkit-animation-delay: 0.65625s;
+          animation-delay: 0.65625s;
+}
+
+.i {
+  -webkit-animation: shrinkgrow 1.75s ease-in-out infinite;
+          animation: shrinkgrow 1.75s ease-in-out infinite;
+  -webkit-animation-delay: 0.875s;
+          animation-delay: 0.875s;
+}
+
+.n {
+  -webkit-animation: shrinkgrow 1.75s ease-in-out infinite;
+          animation: shrinkgrow 1.75s ease-in-out infinite;
+  -webkit-animation-delay: 1.09375s;
+          animation-delay: 1.09375s;
+}
+
+.g {
+  -webkit-animation: shrinkgrow 1.75s ease-in-out infinite;
+          animation: shrinkgrow 1.75s ease-in-out infinite;
+  -webkit-animation-delay: 1.3125s;
+          animation-delay: 1.3125s;
+}
+
+@-webkit-keyframes shrinkgrow {
+  0% {
+    -webkit-transform: scale(0);
+            transform: scale(0);
+  }
+  12.5% {
+    -webkit-transform: scale(1);
+            transform: scale(1);
+  }
+  25% {
+    -webkit-transform: scale(1);
+            transform: scale(1);
+  }
+  33% {
+    -webkit-transform: scale(0);
+            transform: scale(0);
+  }
+  100% {
+    -webkit-transform: scale(0);
+            transform: scale(0);
+  }
+}
+
+@keyframes shrinkgrow {
+  0% {
+    -webkit-transform: scale(0);
+            transform: scale(0);
+  }
+  12.5% {
+    -webkit-transform: scale(1);
+            transform: scale(1);
+  }
+  25% {
+    -webkit-transform: scale(1);
+            transform: scale(1);
+  }
+  33% {
+    -webkit-transform: scale(0);
+            transform: scale(0);
+  }
+  100% {
+    -webkit-transform: scale(0);
+            transform: scale(0);
+  }
+}
