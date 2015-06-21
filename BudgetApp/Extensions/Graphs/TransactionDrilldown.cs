@@ -13,6 +13,72 @@ namespace BudgetApp.Extensions.Graphs
         public static Highchart CreateChart(List<Transaction> transactions, string currency, string graphType, bool sorted)
         {
 
+            var drilldowns = new Drilldown
+            {
+                Series = CreateDrilldownSeries(transactions, graphType, sorted, false)
+            };
+
+            drilldowns.Series.Add(CreateSubMainCategorySeries(transactions, graphType, sorted, false));
+            drilldowns.Series.AddRange(CreateDrilldownSeries(transactions, graphType, sorted, true));
+
+            return new Highchart
+            {
+                Currency = currency,
+                Type = graphType,
+                Title = new Title
+                {
+                    Text = "Transactions"
+                },
+                Series = new List<Series>
+                {
+                    CreateTransactionCategorySeries(transactions, graphType, sorted, false)
+                },
+                Drilldown = drilldowns
+            };
+        }
+
+        private static Series CreateTransactionCategorySeries(List<Transaction> transactions, string graphType, bool sorted, bool income)
+        {
+            var data = new List<Data>
+            {
+                new Data
+                {
+                    Color = "#FF0000",
+                    Drilldown = "expenses",
+                    Name = "Expenses",
+                    X = 0,
+                    Y =
+                        transactions.Where(s => CategoryExt.GetMainCategory(s.Category.Value) != Categories.Income)
+                            .Sum(s => s.Amount)
+                },
+                new Data
+                {
+                    Color = "#48ddb8",
+                    Drilldown = "income",
+                    Name = "Income",
+                    X = 1,
+                    Y =
+                        transactions.Where(s => CategoryExt.GetMainCategory(s.Category.Value) == Categories.Income)
+                            .Sum(s => s.Amount)
+                }
+            };
+
+            if (sorted)
+                data = SortDataListByY(data);
+
+            return new Series
+            {
+                Id = "transactions",
+                Name = "Transactions",
+                Type = graphType,
+                Data = data
+            };
+        }
+
+
+        public static Highchart CreateExpensesChart(List<Transaction> transactions, string currency, string graphType, bool sorted)
+        {
+
             return new Highchart
             {
                 Currency = currency,
@@ -23,7 +89,7 @@ namespace BudgetApp.Extensions.Graphs
                 },
                 Series = new List<Series>
                 {
-                    CreateMainCategorySeries(transactions, graphType, sorted, false)
+                    CreateSubMainCategorySeries(transactions, graphType, sorted, false)
                 },
                 Drilldown = new Drilldown { Series = CreateDrilldownSeries(transactions, graphType, sorted, false) }
             };
@@ -58,7 +124,7 @@ namespace BudgetApp.Extensions.Graphs
             return series;
         }
 
-        private static Series CreateMainCategorySeries(List<Transaction> transactions, string graphType, bool sorted, bool income)
+        private static Series CreateSubMainCategorySeries(List<Transaction> transactions, string graphType, bool sorted, bool income)
         {
             var data = new List<Data>();
             var index = 0;
@@ -84,7 +150,7 @@ namespace BudgetApp.Extensions.Graphs
             {
                 Name = income ? "Income":"Expenses",
                 Type = graphType,
-                Id = "mainCategories",
+                Id = "expenses",
                 Data = sorted ? SortDataListByY(data) : data
             };
         }
@@ -122,7 +188,7 @@ namespace BudgetApp.Extensions.Graphs
                 },
                 Series = new List<Series>
                 {
-                    CreateMainCategorySeries(transactions, graphType, sorted, true)
+                    CreateSubMainCategorySeries(transactions, graphType, sorted, true)
                 },
                 Drilldown = new Drilldown { Series = CreateDrilldownSeries(transactions, graphType, sorted, true) }
             };

@@ -44,8 +44,8 @@
 
             <!-- Nav tabs -->
             <ul class="nav nav-tabs" role="tablist">
-                <li role="presentation" class="active"><a href="#expense" aria-controls="expense" role="tab" data-toggle="tab">All</a></li>
-                <li role="presentation"><a href="#income" aria-controls="income" role="tab" data-toggle="tab" reflow-charts>YTD</a></li>
+                <li role="presentation" class="active"><a href="#expense" aria-controls="expense" role="tab" data-toggle="tab">All transactions</a></li>
+                <li role="presentation"><a href="#income" aria-controls="income" role="tab" data-toggle="tab" reflow-charts>@DateTime.Now.Year</a></li>
 
                 <li class="pull-right" role="presentation"><a href="#prediction" aria-controls="prediction" role="tab" data-toggle="tab">Prognosis</a></li>
             </ul>
@@ -72,7 +72,22 @@
                                     <div style="height: 200px;" data-vu-meter="@Model.AverageMonthlyIncome" data-goal="@((Model.AverageMonthlyExpenses))" data-currency="@Model.Currency" data-chart-title="Monthly income" data-inverted="true"></div>
                                 </div>
                             </div>
+                            
+                        </div>
+                        
 
+                        <div class="row" style="margin-top: 20px;">
+
+
+                            <div class="col-xs-12">
+
+                                <span style="height:500px;width:1123px !important;" class="visible-lg" data-highchart="{{model.drilldownGraphTot}}"></span>
+
+                                <span style="height:500px;width:923px !important;" class="visible-md" data-highchart="{{model.drilldownGraphTot}}"></span>
+
+                                <span style="height:500px;width:703px !important;" class="visible-sm" data-highchart="{{model.drilldownGraphTot}}"></span>
+
+                            </div>
 
                         </div>
 
@@ -98,6 +113,21 @@
                             </div>
 
                         </div>
+                        
+                        <div class="row" style="margin-top: 20px;">
+
+
+                            <div class="col-xs-12">
+
+                                <span style="height:500px;width:1123px !important;" class="visible-lg" data-highchart="{{model.drilldownGraphYtd}}"></span>
+
+                                <span style="height:500px;width:923px !important;" class="visible-md" data-highchart="{{model.drilldownGraphYtd}}"></span>
+
+                                <span style="height:500px;width:703px !important;" class="visible-sm" data-highchart="{{model.drilldownGraphYtd}}"></span>
+
+                            </div>
+
+                        </div>
 
                     </div>
                 </div>
@@ -108,31 +138,6 @@
             <hr />
         </div>
 
-
-
-        <div class="row" style="margin-top: 40px;">
-            <div class="col-xs-12">
-
-                <span style="height:500px;width:1123px !important;" class="visible-lg" data-highchart="{{model.transactionDrilldownGraph}}" data-chart-label="{{model.totalExpenses}}" data-currency="{{model.currency}}"></span>
-
-                <span style="height:500px;width:923px !important;" class="visible-md" data-highchart="{{model.transactionDrilldownGraph}}" data-chart-label="{{model.totalExpenses}}"></span>
-
-                <span style="height:500px;width:703px !important;" class="visible-sm" data-highchart="{{model.transactionDrilldownGraph}}" data-chart-label="{{model.totalExpenses}}"></span>
-
-            </div>
-            
-
-            <div class="col-xs-12">
-
-                <span style="height:500px;width:1123px !important;" class="visible-lg" data-highchart="{{model.drilldownIncomeGraph}}"></span>
-
-                <span style="height:500px;width:923px !important;" class="visible-md" data-highchart="{{model.drilldownIncomeGraph}}"></span>
-
-                <span style="height:500px;width:703px !important;" class="visible-sm" data-highchart="{{model.drilldownIncomeGraph}}"></span>
-
-            </div>
-
-        </div>
 
 
         <div class="row">

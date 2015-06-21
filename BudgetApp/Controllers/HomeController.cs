@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Web.Helpers;
 using System.Web.Mvc;
 using BudgetApp.Extensions;
@@ -24,7 +25,8 @@ namespace BudgetApp.Controllers
                 Transactions = transactions,
                 DailyExpensesGraph = GraphBuilder.DailyExpensesGraph(transactions, user.Currency).ToJson(),
                 TransactionDrilldownGraph = GraphBuilder.TransactionDrilldownGraph(transactions, user.Currency, "bar", true).ToJson(),
-                DrilldownIncomeGraph = GraphBuilder.IncomeDrilldownGraph(transactions, user.Currency, "bar", true).ToJson(),
+                DrilldownGraphTot = GraphBuilder.DrilldownGraph(transactions, user.Currency, "column", true).ToJson(),
+                DrilldownGraphYtd = GraphBuilder.DrilldownGraph(transactions.Where(s => s.Date.Year == DateTime.Now.Year).ToList(), user.Currency, "column", true).ToJson(),
                 ExpensesGoal = user.MonthlyExpensesGoal,
                 Currency = user.Currency
             };

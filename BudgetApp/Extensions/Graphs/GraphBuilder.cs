@@ -10,15 +10,13 @@ namespace BudgetApp.Extensions.Graphs
     {
         public static Highchart TransactionDrilldownGraph(List<Transaction> transactions, string currency = "Amount", string graphType = "column", bool sorted = false)
         {
-            return TransactionDrilldown.CreateChart(transactions, currency, graphType, sorted);
+            return TransactionDrilldown.CreateExpensesChart(transactions, currency, graphType, sorted);
         }
-
 
         public static Highchart DailyExpensesGraph(List<Transaction> transactions, string currency = "Amount")
         {
             return DailyExpenses.CreateChart(transactions, currency);
         }
-
 
         public static long ConvertDateToMilliSeconds(DateTime date)
         {
@@ -30,10 +28,14 @@ namespace BudgetApp.Extensions.Graphs
             return Overview.CreateChart(rangeviewers, user);
         }
 
-        //TODO: Merge with expenses and make alternativ to show all categories
         public static Highchart IncomeDrilldownGraph(List<Transaction> transactions, string currency = "Amount", string graphType = "column", bool sorted = false)
         {
             return TransactionDrilldown.CreateIncomeChart(transactions, currency, graphType, sorted);
+        }
+
+        public static Highchart DrilldownGraph(List<Transaction> transactions, string currency, string graphType = "column", bool sorted = false)
+        {
+            return TransactionDrilldown.CreateChart(transactions, currency, graphType, sorted);
         }
     }
 }

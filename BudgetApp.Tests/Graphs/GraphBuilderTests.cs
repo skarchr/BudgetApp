@@ -75,6 +75,26 @@ namespace BudgetApp.Tests.Graphs
         }
 
         [Test]
+        public void TestDrilldownGraph_Merged()
+        {
+
+            var result = GraphBuilder.DrilldownGraph(CreateTransactions(), "NOK");
+
+            result.Currency.Should().Be("NOK");
+
+            result.Series[0].Data.Count.Should().Be(2);
+
+            result.Series[0].Data[0].X.Should().Be(0);
+            result.Series[0].Data[0].Y.Should().Be(300);
+            result.Series[0].Data[0].Drilldown.Should().Be("expenses");
+
+            result.Series[0].Data[1].X.Should().Be(1);
+            result.Series[0].Data[1].Y.Should().Be(600);
+            result.Series[0].Data[1].Drilldown.Should().Be("income");
+
+        }
+
+        [Test]
         public void TestExpensesGraph_No_Transactions()
         {
             var result = GraphBuilder.DailyExpensesGraph(new List<Transaction>(), "NOK");
