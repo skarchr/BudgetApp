@@ -15,33 +15,33 @@
 
 
     angular.module('budgetApp')
+        .directive('topNav', [
+            '$window', function($window) {
+                return {
+                    restrict: 'A',
+                    link: function(scope, elem) {
 
-        .directive('topNav', ['$window', function($window) {
-            return {
-                restrict: 'A',
-                link : function(scope, elem) {
-
-                    if ($window.scrollY < 20) {
-                        $(elem[0]).addClass('no-scroll-top');
-                        $(elem[0]).addClass('scroll-top');
-                    }
-                        
-
-                    $($window).on('scroll', function () {
-
-                        if (this.scrollY < 20) {
-                            $(elem[0]).addClass('scroll-top');
-                        } else {
-                            $(elem[0]).removeClass('scroll-top');
+                        if ($window.scrollY < 20) {
                             $(elem[0]).addClass('no-scroll-top');
+                            $(elem[0]).addClass('scroll-top');
                         }
 
-                    });
 
-                }
-            };
-        }])
+                        $($window).on('scroll', function() {
 
+                            if (this.scrollY < 20) {
+                                $(elem[0]).addClass('scroll-top');
+                            } else {
+                                $(elem[0]).removeClass('scroll-top');
+                                $(elem[0]).addClass('no-scroll-top');
+                            }
+
+                        });
+
+                    }
+                };
+            }
+        ])
         .directive('setWidth', [
             function() {
 
@@ -216,7 +216,7 @@
                         id: '@',
                         totalIncome: '@',
                         totalExpenses: '@',
-                        currency:'@'
+                        currency: '@'
                     },
                     link: function(scope, elem, attrs) {
 
@@ -293,7 +293,7 @@
                                 var active = $(this).hasClass('active');
 
                                 $('.highcharts-axis-labels > span').each(function() {
-                                    
+
                                     $(this).removeClass('active');
                                 });
 
@@ -321,14 +321,14 @@
 
                         if (scope.totalIncome !== undefined) {
 
-                            var text = formatNumber(JSON.parse(scope.totalIncome.replace(',','.')));
+                            var text = formatNumber(JSON.parse(scope.totalIncome.replace(',', '.')));
 
                             chart.renderer.label('Total: ' + text + currency, 70, 10, 'callout', 1)
                                 .css({
                                     color: '#FFFFFF'
                                 })
                                 .attr({
-                                    fill: 'rgba(72, 221, 184,0.70)',//'rgba(255, 0, 0, 0.90)',
+                                    fill: 'rgba(72, 221, 184,0.70)', //'rgba(255, 0, 0, 0.90)',
                                     padding: 2,
                                     r: 4,
                                     zIndex: 6
@@ -346,7 +346,7 @@
                                 })
                                 .attr({
                                     fill: 'rgba(255, 0, 0, 0.70)',
-                                    stroke:'rgb(0,0,0)',
+                                    stroke: 'rgb(0,0,0)',
                                     padding: 2,
                                     r: 4,
                                     zIndex: 6
@@ -403,7 +403,7 @@
                                 pointFormat: '{series.name}: <b>{point.y:.1f} </b>'
                             },
                             legend: {
-                                enabled:false,
+                                enabled: false,
                                 align: 'right',
                                 layout: 'vertical',
                                 y: -25
@@ -419,7 +419,7 @@
                                 type: 'category',
                                 labels: {
                                     useHTML: true,
-                                    formatter: function () {                                       
+                                    formatter: function() {
                                         var input = this.value.replace(/([A-Z])/g, " $1");
 
                                         var textLabel = '<span class="hidden-sm">' + (input.charAt(0).toUpperCase() + input.slice(1)).trim() + '</span>';
@@ -488,7 +488,7 @@
                                 .add();
                         }
 
-                        
+
                     }
                 }
             }
@@ -695,12 +695,12 @@
                     goal: '@',
                     currency: '@',
                     chartTitle: '@',
-                    inverted : '@'
+                    inverted: '@'
                 },
                 link: function(scope, elem) {
 
                     var actual = parseFloat(scope.vuMeter);
-                    var goal = scope.goal !== undefined ? parseFloat(scope.goal.replace(',', '.')): actual;
+                    var goal = scope.goal !== undefined ? parseFloat(scope.goal.replace(',', '.')) : actual;
                     var currency = scope.currency !== undefined ? scope.currency : '';
 
                     var from;
@@ -714,6 +714,7 @@
                         to = (goal + (goal * 0.6));
                     }
 
+                    $(elem[0]).addClass('reflow-chart');
 
                     $(elem[0]).highcharts({
                         chart: {
@@ -727,7 +728,7 @@
                         title: {
                             text: scope.chartTitle,
                             style: {
-                                fontSize:'16px'
+                                fontSize: '16px'
                             }
                         },
 
@@ -747,7 +748,7 @@
                         credits: false,
                         yAxis: [
                             {
-                                tickInterval: (goal / (goal % 2 === 0 ? 4 : 3 ) ).toFixed(0),
+                                tickInterval: (goal / (goal % 2 === 0 ? 4 : 3)).toFixed(0),
                                 minorTickInterval: (goal * 0.1),
                                 minorTickWidth: 1,
                                 minorTickLength: 12,
@@ -818,20 +819,42 @@
                         fill = actual >= goal ? 'rgba(255, 0, 0, 0.90)' : 'rgba(72, 221, 184,0.90)';
                     }
 
-                    chart.renderer.label(text, 100 - (text.length / 2), 140, 'callout', 1)
+                    chart.renderer.label(text, 90 - (text.length / 2), 160, 'callout', 1)
                         .css({
-                            color: '#FFFFFF'
+                            color: fill,
+                            fontSize:'16px'
                         })
                         .attr({
-                            fill: fill,
-                            padding: 10,
-                            r: 4,
                             zIndex: 6
                         })
                         .add();
 
                 }
             };
-        });
+        })
+        .directive('reflowCharts', [function() {
+        return {
+            restrict: 'A',
+            link : function(scope, elem, attrs) {
+
+                $(elem[0]).on('click', function() {
+
+                    setTimeout(function() {
+                        $('.reflow-chart').each(function () {
+
+                            var chart = $(this).highcharts();
+                            console.log(chart);
+                            chart.reflow();
+
+                            chart.redraw();
+
+                        });
+                    }, 75);                    
+
+                });
+
+            }
+        };
+    }]);
 
 })();

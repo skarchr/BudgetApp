@@ -129,5 +129,13 @@ namespace BudgetApp.Models
                 return 0.0;
             }
         }
+
+        public double YtdIncome
+        {
+            get
+            {
+               return Transactions.Where(s => s.Date.Year == DateTime.Now.Year && CategoryExt.GetMainCategory(s.Category.Value) == Categories.Income).Sum(s => s.Amount);
+            }
+        }
     }
 }

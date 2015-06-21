@@ -40,89 +40,60 @@
     else
     {
 
-        <div role="tabpanel" class="col-xs-12">
+        <div role="tabpanel" class="col-xs-12" ng-show="model.expensesGoal !== null">
 
             <!-- Nav tabs -->
             <ul class="nav nav-tabs" role="tablist">
-                <li role="presentation" class="active"><a href="#expense" aria-controls="expense" role="tab" data-toggle="tab">Transactions</a></li>
-                <li role="presentation"><a href="#income" aria-controls="income" role="tab" data-toggle="tab">Savings</a></li>                
+                <li role="presentation" class="active"><a href="#expense" aria-controls="expense" role="tab" data-toggle="tab">All</a></li>
+                <li role="presentation"><a href="#income" aria-controls="income" role="tab" data-toggle="tab" reflow-charts>YTD</a></li>
 
-                <li class="pull-right" role="presentation"><a href="#prediction" aria-controls="prediction" role="tab" data-toggle="tab">Predictions</a></li>
+                <li class="pull-right" role="presentation"><a href="#prediction" aria-controls="prediction" role="tab" data-toggle="tab">Prognosis</a></li>
             </ul>
 
             <!-- Tab panes -->
             <div class="tab-content">
                 <div role="tabpanel" class="tab-pane active" id="expense">
-                    
+
                     <div class="col-xs-12">
 
-                        <div class="row" style="margin-top: -1px;" ng-show="model.expensesGoal !== null">
+                        <div class="row" style="margin-top: 10px;">
 
-                            <div class="col-xs-12 col-md-6" style="border:1px solid #ececec;border-top:0;border-left:0;padding: 0px;">
-                                <h3 class="text-center">Average</h3>
-                                <div class="col-xs-12 col-md-6" style="padding:0">
+                            <div class="col-xs-12">                                
+                                <div class="col-xs-12 col-sm-6 col-md-3" style="padding:0">
                                     <div style="height: 200px;" data-vu-meter="@Model.AverageDailyExpenses" data-goal="@((Model.ExpensesGoal * 12) / 365)" data-currency="@Model.Currency" data-chart-title="Daily expenses"></div>
                                 </div>
-                                <div class="col-xs-12 col-md-6" style="padding:0">
+                                <div class="col-xs-12 col-sm-6 col-md-3" style="padding:0">
                                     <div style="height: 200px;" data-vu-meter="@Model.AverageMonthlyExpenses" data-goal="@((Model.ExpensesGoal))" data-currency="@Model.Currency" data-chart-title="Monthly expenses"></div>
                                 </div>
-                                <div class="col-xs-12 col-md-6" style="padding:0">
+                                <div class="col-xs-12 col-sm-6 col-md-3" style="padding:0">
                                     <div style="height: 200px;" data-vu-meter="@Model.AverageDailyIncome" data-goal="@(Model.AverageDailyExpenses) / 365)" data-currency="@Model.Currency" data-chart-title="Daily income" data-inverted="true"></div>
                                 </div>
-                                <div class="col-xs-12 col-md-6" style="padding:0">
+                                <div class="col-xs-12 col-sm-6 col-md-3" style="padding:0">
                                     <div style="height: 200px;" data-vu-meter="@Model.AverageMonthlyIncome" data-goal="@((Model.AverageMonthlyExpenses))" data-currency="@Model.Currency" data-chart-title="Monthly income" data-inverted="true"></div>
                                 </div>
                             </div>
 
 
-
-                            <div class="col-xs-12 col-md-6" style="border:1px solid #ececec;border-top:0;border-right:0;padding: 0px;">
-                                <h3 class="text-center">Current</h3>
-                                <div class="col-xs-12 col-md-6" style="padding:0">
-                                    <div style="height: 200px;" data-vu-meter="@Model.CurrentMonthExpenses" data-goal="@((Model.ExpensesGoal))" data-currency="@Model.Currency" data-chart-title="Expenses for @(DateHelper.GetMonthText(DateTime.Now))"></div>
-                                </div>
-                                <div class="col-xs-12 col-md-6" style="padding:0">
-                                    <div style="height: 200px;" data-vu-meter="@Model.YtdExpenses" data-goal="@(Model.ExpensesGoal *  DateTime.Now.Month)" data-currency="@Model.Currency" data-chart-title="Expenses for @(DateTime.Now.Year)"></div>
-                                </div>
-
-                            </div>
-
-
                         </div>
-                        <div class="row" style="margin-top: 40px;">
-                            <div class="col-xs-12">
 
-                                <span style="height:500px;width:1123px !important;" class="visible-lg" data-highchart="{{model.transactionDrilldownGraph}}" data-chart-label="{{model.totalExpenses}}" data-currency="{{model.currency}}"></span>
-
-                                <span style="height:500px;width:923px !important;" class="visible-md" data-highchart="{{model.transactionDrilldownGraph}}" data-chart-label="{{model.totalExpenses}}"></span>
-
-                                <span style="height:500px;width:703px !important;" class="visible-sm" data-highchart="{{model.transactionDrilldownGraph}}" data-chart-label="{{model.totalExpenses}}"></span>
-
-                            </div>
-
-                        </div>
                     </div>
                 </div>
                 <div role="tabpanel" class="tab-pane" id="income">
                     <div class="col-xs-12">
-                        
-                        <div class="row">
-                            <div class="col-xs-6">
-                                
-                                <span>{{model.averageDailyIncome | currencyFormatter}}</span>
-                                <span>{{model.averageMonthlyIncome | currencyFormatter}}</span>
 
-                            </div>
-                        </div>
+                        <div class="row" style="margin-top: 10px;">
 
-                        <div class="row" style="margin-top: 40px;">
                             <div class="col-xs-12">
-
-                                <span style="height:500px;width:1123px !important;" class="visible-lg" data-highchart="{{model.drilldownIncomeGraph}}"></span>
-
-                                <span style="height:500px;width:923px !important;" class="visible-md" data-highchart="{{model.drilldownIncomeGraph}}"></span>
-
-                                <span style="height:500px;width:703px !important;" class="visible-sm" data-highchart="{{model.drilldownIncomeGraph}}"></span>
+                                <div class="col-xs-12 col-sm-6 col-md-3" style="padding:0">
+                                    <div style="height: 200px;" data-vu-meter="@Model.CurrentMonthExpenses" data-goal="@((Model.ExpensesGoal))" data-currency="@Model.Currency" data-chart-title="Expenses for @(DateHelper.GetMonthText(DateTime.Now))"></div>
+                                </div>
+                                <div class="col-xs-12 col-sm-6 col-md-3" style="padding:0">
+                                    <div style="height: 200px;" data-vu-meter="@Model.YtdExpenses" data-goal="@(Model.ExpensesGoal *  DateTime.Now.Month)" data-currency="@Model.Currency" data-chart-title="Expenses for @(DateTime.Now.Year)"></div>
+                                </div>
+                                
+                                <div class="col-xs-12 col-sm-6 col-md-3" style="padding:0">
+                                    <div style="height: 200px;" data-vu-meter="@Model.YtdIncome" data-goal="@(Model.YtdExpenses)" data-currency="@Model.Currency" data-chart-title="Income for @(DateTime.Now.Year)" data-inverted="true"></div>
+                                </div>
 
                             </div>
 
@@ -134,12 +105,36 @@
                     TODO - prediction
                 </div>
             </div>
+            <hr />
+        </div>
+
+
+
+        <div class="row" style="margin-top: 40px;">
+            <div class="col-xs-12">
+
+                <span style="height:500px;width:1123px !important;" class="visible-lg" data-highchart="{{model.transactionDrilldownGraph}}" data-chart-label="{{model.totalExpenses}}" data-currency="{{model.currency}}"></span>
+
+                <span style="height:500px;width:923px !important;" class="visible-md" data-highchart="{{model.transactionDrilldownGraph}}" data-chart-label="{{model.totalExpenses}}"></span>
+
+                <span style="height:500px;width:703px !important;" class="visible-sm" data-highchart="{{model.transactionDrilldownGraph}}" data-chart-label="{{model.totalExpenses}}"></span>
+
+            </div>
+            
+
+            <div class="col-xs-12">
+
+                <span style="height:500px;width:1123px !important;" class="visible-lg" data-highchart="{{model.drilldownIncomeGraph}}"></span>
+
+                <span style="height:500px;width:923px !important;" class="visible-md" data-highchart="{{model.drilldownIncomeGraph}}"></span>
+
+                <span style="height:500px;width:703px !important;" class="visible-sm" data-highchart="{{model.drilldownIncomeGraph}}"></span>
+
+            </div>
 
         </div>
 
 
-               
-        
         <div class="row">
             <div class="col-xs-12">Icons made by <a href="http://www.flaticon.com/authors/freepik" title="Freepik">Freepik</a> from <a href="http://www.flaticon.com" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0">CC BY 3.0</a></div>
         </div>
