@@ -44,10 +44,11 @@
 
             <!-- Nav tabs -->
             <ul class="nav nav-tabs" role="tablist">
-                <li role="presentation" class="active"><a href="#expense" aria-controls="expense" role="tab" data-toggle="tab">All transactions</a></li>
-                <li role="presentation"><a href="#income" aria-controls="income" role="tab" data-toggle="tab" reflow-charts>@DateTime.Now.Year</a></li>
-
+                <li role="presentation" class="active"><a href="#expense" aria-controls="expense" role="tab" data-toggle="tab" title="Shows an overview for all your registered transactions">All transactions</a></li>
+                <li role="presentation"><a href="#income" aria-controls="income" role="tab" data-toggle="tab" reflow-charts title="Shows an overview for the transactions during the year @DateTime.Now.Year">Current year</a></li>
+                
                 <li class="pull-right" role="presentation"><a href="#prediction" aria-controls="prediction" role="tab" data-toggle="tab">Prognosis</a></li>
+                <li ng-show="model.savingsGoal" class="pull-right" role="presentation"><a href="#saving" aria-controls="saving" role="tab" data-toggle="tab">Savings</a></li>                                
             </ul>
 
             <!-- Tab panes -->
@@ -131,17 +132,20 @@
 
                     </div>
                 </div>
+                <div role="tabpanel" class="tab-pane" id="saving">
+                    
+                    <div class="col-xs-12">
+                        
+                        <h1>Monthly goal: {{model.savingsGoal | currencyFormatter}} {{model.currency}} </h1>
+
+                    </div>
+
+                </div>
                 <div role="tabpanel" class="tab-pane" id="prediction">
                     TODO - prediction
                 </div>
             </div>
             <hr />
-        </div>
-
-
-
-        <div class="row">
-            <div class="col-xs-12">Icons made by <a href="http://www.flaticon.com/authors/freepik" title="Freepik">Freepik</a> from <a href="http://www.flaticon.com" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0">CC BY 3.0</a></div>
         </div>
     }
     

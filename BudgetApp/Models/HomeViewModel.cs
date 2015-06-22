@@ -16,6 +16,7 @@ namespace BudgetApp.Models
         public string DrilldownGraphTot { get; set; }
         public string DrilldownGraphYtd { get; set; }
         public double? ExpensesGoal { get; set; }
+        public double? SavingsGoal { get; set; }
         public string Currency { get; set; }
 
         public double TotalExpenses

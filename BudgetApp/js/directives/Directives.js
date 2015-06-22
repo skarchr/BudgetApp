@@ -323,7 +323,7 @@
 
                             var text = formatNumber(JSON.parse(scope.totalIncome.replace(',', '.')));
 
-                            chart.renderer.label('Total: ' + text + currency, 70, 10, 'callout', 1)
+                            chart.renderer.label(text + currency, 70, 10, 'callout', 1)
                                 .css({
                                     color: '#FFFFFF'
                                 })
@@ -331,7 +331,8 @@
                                     fill: 'rgba(72, 221, 184,0.70)', //'rgba(255, 0, 0, 0.90)',
                                     padding: 2,
                                     r: 4,
-                                    zIndex: 6
+                                    zIndex: 6,
+                                    title:'Total income'
                                 })
                                 .add();
                         }
@@ -340,7 +341,7 @@
 
                             var text1 = formatNumber(JSON.parse(scope.totalExpenses.replace(',', '.')));
 
-                            chart.renderer.label('Total: ' + text1 + currency, 70, 32, 'callout', 1)
+                            chart.renderer.label( text1 + currency, 70, 32, 'callout', 1)
                                 .css({
                                     color: '#FFFFFF'
                                 })
@@ -349,7 +350,8 @@
                                     stroke: 'rgb(0,0,0)',
                                     padding: 2,
                                     r: 4,
-                                    zIndex: 6
+                                    zIndex: 6,
+                                    title: 'Total expenses'
                                 })
                                 .add();
                         }
