@@ -16,8 +16,13 @@ namespace BudgetApp.Models
         public string DrilldownGraphTot { get; set; }
         public string DrilldownGraphYtd { get; set; }
         public double? ExpensesGoal { get; set; }
-        public double? SavingsGoal { get; set; }
+        public double? SavingGoal { get; set; }
         public string Currency { get; set; }
+
+        public List<SavingModel> SavingGoals
+        {
+            get { return SavingHelper.CreateSavingsList(Transactions, SavingGoal); }
+        }
 
         public double TotalExpenses
         {
@@ -139,5 +144,12 @@ namespace BudgetApp.Models
                return Transactions.Where(s => s.Date.Year == DateTime.Now.Year && CategoryExt.GetMainCategory(s.Category.Value) == Categories.Income).Sum(s => s.Amount);
             }
         }
+    }
+
+    public class SavingModel
+    {
+        public DateTime Date { get; set; }
+        public double Saved { get; set; }
+        public double Percentage { get; set; }
     }
 }

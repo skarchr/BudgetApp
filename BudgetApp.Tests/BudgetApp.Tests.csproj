@@ -80,6 +80,7 @@
     <Compile Include="CategoryTests.cs" />
     <Compile Include="Graphs\GraphBuilderTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SavingHelperTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BudgetApp\BudgetApp.csproj">
