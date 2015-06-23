@@ -6,7 +6,6 @@
         var viewbagList = viewBags.messages;
         
         $.each(viewbagList, function(i, val) {
-            console.log(i);
 
             if(val !== ''){
                 switch (i) {

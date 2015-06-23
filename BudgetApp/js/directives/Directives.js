@@ -842,7 +842,6 @@
                                 $('.reflow-chart').each(function() {
 
                                     var chart = $(this).highcharts();
-                                    console.log(chart);
                                     chart.reflow();
 
                                     chart.redraw();

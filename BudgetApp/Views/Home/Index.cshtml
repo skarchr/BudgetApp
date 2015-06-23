@@ -46,9 +46,13 @@
             <ul class="nav nav-tabs" role="tablist">
                 <li role="presentation" class="active"><a href="#expense" aria-controls="expense" role="tab" data-toggle="tab" title="Shows an overview for all your registered transactions">All transactions</a></li>
                 <li role="presentation"><a href="#income" aria-controls="income" role="tab" data-toggle="tab" reflow-charts title="Shows an overview for the transactions during the year @DateTime.Now.Year">Current year</a></li>
-                
+
                 <li class="pull-right" role="presentation"><a href="#prediction" aria-controls="prediction" role="tab" data-toggle="tab">Prognosis</a></li>
-                <li ng-show="model.savingGoal" class="pull-right" role="presentation"><a href="#saving" aria-controls="saving" role="tab" data-toggle="tab">Savings</a></li>                                
+                <li ng-show="model.savingGoal" class="pull-right" role="presentation">
+                    <a href="#saving" aria-controls="saving" role="tab" data-toggle="tab">
+                        Savings
+                    </a>
+                </li>
             </ul>
 
             <!-- Tab panes -->
@@ -132,11 +136,23 @@
 
                     </div>
                 </div>
-                <div role="tabpanel" class="tab-pane" id="saving">
+                <div role="tabpanel" class="tab-pane" id="saving">                   
                     
+                    @*TODO:Fix*@
+                    <div class="col-xs-12 text-center">
+                        <span>
+                            <i class="glyphicon glyphicon-star" style="color:#F0F088;font-size:60px;"></i>
+                            <span style="position: absolute;margin-top: 24px;margin-left: {{ -(starCountNeg.toString().length + 39) + 'px' }};font-size:18px;">{{starCountPos}}</span>
+                        </span>
+                        <span>
+                            <i class="glyphicon glyphicon-star" style="color:#E87C7C;font-size:60px;"></i>
+                            <span style="position: absolute;margin-top: 24px;margin-left: {{ -(starCountNeg.toString().length + 36) + 'px' }};font-size:18px;">{{starCountNeg}}</span>
+                        </span>
+                    </div>
+
                     <div class="col-xs-12" ng-repeat="goal in model.savingGoals">
 
-                        <h3>{{goal.date | date : 'MMM, yyyy'}}</h3>
+                        <h3>{{goal.date | date : 'MMM, yyyy'}} <i ng-show="model.savingGoal <= goal.saved" style="color:#F0F088;" class="glyphicon glyphicon-star"></i> </h3>
 
                         <div class="progress">
                             <div class="progress-bar {{goal.saved >= model.savingGoal ? 'progress-bar-success':''}}" role="progressbar" aria-valuenow="goal.saved" aria-valuemin="0" aria-valuemax="100" style="width:{{ goal.percentage }}%">                               
@@ -162,6 +178,21 @@
                                 <span style="height:500px;width:923px !important;" class="visible-md" data-prog-highchart="{{model.prognosisChart}}"></span>
 
                                 <span style="height:500px;width:703px !important;" class="visible-sm" data-prog-highchart="{{model.prognosisChart}}"></span>
+
+                            </div>
+
+                        </div>
+                        
+                        <div class="row" style="margin-top: 20px;">
+
+
+                            <div class="col-xs-12">
+
+                                <span style="height:500px;width:1123px !important;" class="visible-lg" data-prog-highchart="{{model.prognosisIncomeChart}}"></span>
+
+                                <span style="height:500px;width:923px !important;" class="visible-md" data-prog-highchart="{{model.prognosisIncomeChart}}"></span>
+
+                                <span style="height:500px;width:703px !important;" class="visible-sm" data-prog-highchart="{{model.prognosisIncomeChart}}"></span>
 
                             </div>
 

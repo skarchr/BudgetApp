@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using BudgetApp.Constants;
 using BudgetApp.Models;
+using WebGrease.Css.Extensions;
 
 namespace BudgetApp.Extensions.Graphs
 {
@@ -11,32 +12,29 @@ namespace BudgetApp.Extensions.Graphs
     {
         public static Highchart CreateChart(List<Transaction> transactions, string currency, bool income = false)
         {
-            var categories = new List<string>
+            List<Transaction> filteredTransactions;
+
+            if (income)
             {
-                "Jan",
-                "Feb",
-                "Mar",
-                "Apr",
-                "May",
-                "Jun",
-                "Jul",
-                "Aug",
-                "Sep",
-                "Okt",
-                "Nov",
-                "Des"
-            };
+                filteredTransactions = transactions.Where(s => CategoryExt.GetMainCategory(s.Category.Value) == Categories.Income).ToList();
+            }
+            else
+            {
+                filteredTransactions = transactions.Where(s =>  CategoryExt.GetMainCategory(s.Category.Value) != Categories.Income).ToList();
+            }
 
-            var series = CreateSeries(transactions, categories);
+            
 
-            var predicted = CreatePredictedSeries(transactions);
+            var series = CreateSeries(filteredTransactions, DateHelper.ShortMonths);
+
+            var predicted = CreatePredictedSeries(filteredTransactions);
 
             if(predicted != null)
-                series.Add(predicted);
+                series.Insert(0, predicted);
 
             return new Highchart
             {
-                Categories = categories,
+                Categories = DateHelper.ShortMonths,
                 Currency = currency,
                 Series = series,
                 Title = new Title
@@ -45,24 +43,17 @@ namespace BudgetApp.Extensions.Graphs
                 }
             };
         }
-
+        //FIKS Predicted
         private static Series CreatePredictedSeries(List<Transaction> transactions)
         {
-            var trans = transactions.Where(s => s.Date.Year == DateTime.Now.Year && CategoryExt.GetMainCategory(s.Category.Value) != Categories.Income).ToList();
+            var trans = transactions.Where(s => s.Date.Year == DateTime.Now.Year).ToList();
 
             if(trans.Count == 0)
                 return null;
 
-            var startDate = trans.OrderBy(s => s.Date).First().Date;
-            var lastDate = trans.OrderBy(s => s.Date).Last().Date;
+            var lastMonth = trans.OrderBy(s => s.Date).Last().Date.Month;
 
-            var days = lastDate == startDate ? 1.0 : (lastDate - startDate).Days;
-
-            var daily = trans.Sum(s => s.Amount) / days;
-
-            var annual = daily*365;
-
-            var monthly = Math.Round(annual/12, 1);
+            var monthly = trans.Sum(s => s.Amount)/lastMonth;
 
             var totAmount = 0.0;
 
@@ -86,8 +77,13 @@ namespace BudgetApp.Extensions.Graphs
             {
                 Data = data,
                 Name = "Predicted (" + DateTime.Now.Year + ")",
-                Color = "#ECECEC",
-                Type = "line"
+                Color = "#C0C0C0",
+                Type = "line",
+                DashStyle = "Dot",
+                Marker = new Marker
+                {
+                    Radius = 0
+                }
             };
         }
  
@@ -98,7 +94,7 @@ namespace BudgetApp.Extensions.Graphs
             var series = new List<Series>();
             foreach (
                 var transaction in
-                    transactions.Where(s => CategoryExt.GetMainCategory(s.Category.Value) != Categories.Income))
+                    transactions)
             {
                 var year = transaction.Date.Year;
 

@@ -20,6 +20,7 @@ namespace BudgetApp.Models
         public double? SavingGoal { get; set; }
         public string Currency { get; set; }
         public string PrognosisChart { get { return GraphBuilder.PrognosisGraph(Transactions, Currency).ToJson(); } }
+        public string PrognosisIncomeChart { get { return GraphBuilder.PrognosisGraph(Transactions, Currency, true).ToJson(); } }
 
         public List<SavingModel> SavingGoals
         {
@@ -153,5 +154,10 @@ namespace BudgetApp.Models
         public DateTime Date { get; set; }
         public double Saved { get; set; }
         public double Percentage { get; set; }
+
+        public bool Achieved
+        {
+            get { return Percentage >= 100.0; }
+        }
     }
 }

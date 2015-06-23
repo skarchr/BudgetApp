@@ -110,6 +110,8 @@ namespace BudgetApp.Models
         public Series()
         {
             Visible = true;
+            DashStyle = "Solid";
+            Marker = new Marker();
         }
 
         public bool Visible { get; set; }
@@ -118,6 +120,22 @@ namespace BudgetApp.Models
         public string Color { get; set; }
         public string Name { get; set; }
         public List<Data> Data { get; set; }
+        public string DashStyle { get; set; }
+        public Marker Marker { get; set; }
+    }
+
+    public class Marker
+    {
+        public Marker()
+        {
+            Enabled = true;
+            Radius = 4;
+            Symbol = null;
+        }
+
+        public bool Enabled { get; set; }
+        public int Radius { get; set; }
+        public string Symbol { get; set; }
     }
 
     public class Title

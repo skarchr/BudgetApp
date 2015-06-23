@@ -86,16 +86,19 @@ namespace BudgetApp.Tests.Graphs
 
             result.Series.Count.Should().Be(2);            
 
-            result.Series[0].Name.Should().Be(DateTime.Now.Year.ToString());
+            result.Series[1].Name.Should().Be(DateTime.Now.Year.ToString());
+            result.Series[1].Data[0].X.Should().Be(0);
+            result.Series[1].Data[0].Y.Should().Be(1);
+
+            result.Series[0].Name.Should().Be("Predicted (" + DateTime.Now.Year + ")");
             result.Series[0].Data[0].X.Should().Be(0);
             result.Series[0].Data[0].Y.Should().Be(1);
 
-            result.Series[1].Name.Should().Be("Predicted (" + DateTime.Now.Year + ")");
-            result.Series[1].Data[0].X.Should().Be(0);
-            result.Series[1].Data[0].Y.Should().Be(30.4);
+            result.Series[0].Data[1].X.Should().Be(1);
+            result.Series[0].Data[1].Y.Should().Be(2);
 
-            result.Series[1].Data[1].X.Should().Be(1);
-            result.Series[1].Data[1].Y.Should().Be(60.8);
+            result.Series[0].Data[11].X.Should().Be(11);
+            result.Series[0].Data[11].Y.Should().Be(12);
 
         }
 

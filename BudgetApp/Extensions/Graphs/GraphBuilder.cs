@@ -38,9 +38,9 @@ namespace BudgetApp.Extensions.Graphs
             return TransactionDrilldown.CreateChart(transactions, currency, graphType, sorted);
         }
 
-        public static Highchart PrognosisGraph(List<Transaction> transactions, string currency)
+        public static Highchart PrognosisGraph(List<Transaction> transactions, string currency, bool income = false)
         {
-            return Prognosis.CreateChart(transactions, currency);
+            return Prognosis.CreateChart(transactions, currency, income);
         }
     }
 }

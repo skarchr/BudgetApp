@@ -8,11 +8,13 @@ namespace BudgetApp.Extensions
 {
     public class DateHelper
     {
+        public static readonly List<string> ShortMonths = new List<string> { "Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Okt","Nov","Des" };
+
+        public static readonly List<string> FullMonths = new List<string> { "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" };
+
         public static string GetMonthText(DateTime date, bool shortMonths = false)
         {
-            string[] months = { "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" };
-
-            return string.Format("{0}", (shortMonths ? months[date.Month - 1].Substring(0, 3) : months[date.Month - 1]));
+            return string.Format("{0}", (shortMonths ? ShortMonths[date.Month - 1] : FullMonths[date.Month - 1]));
         }
 
         public static bool IsCurrentMonth(DateTime date)
