@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using BudgetApp.Constants;
 using BudgetApp.Extensions;
+using BudgetApp.Extensions.Graphs;
 
 namespace BudgetApp.Models
 {
@@ -18,6 +19,7 @@ namespace BudgetApp.Models
         public double? ExpensesGoal { get; set; }
         public double? SavingGoal { get; set; }
         public string Currency { get; set; }
+        public string PrognosisChart { get { return GraphBuilder.PrognosisGraph(Transactions, Currency).ToJson(); } }
 
         public List<SavingModel> SavingGoals
         {

@@ -92,7 +92,7 @@ namespace BudgetApp.Models
             DataLabels = new DataLabels();
         }
 
-        public double Y { get; set; }
+        public double? Y { get; set; }
         public double X { get; set; }
         public string Color { get; set; }
         public string Drilldown { get; set; }

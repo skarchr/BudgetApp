@@ -192,6 +192,7 @@
     <Compile Include="Extensions\Graphs\DailyExpenses.cs" />
     <Compile Include="Extensions\Graphs\GraphBuilder.cs" />
     <Compile Include="Extensions\Graphs\Overview.cs" />
+    <Compile Include="Extensions\Graphs\Prognosis.cs" />
     <Compile Include="Extensions\Graphs\TransactionDrilldown.cs" />
     <Compile Include="Extensions\SavingHelper.cs" />
     <Compile Include="Extensions\Serialization.cs" />

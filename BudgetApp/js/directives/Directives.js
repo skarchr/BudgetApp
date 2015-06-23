@@ -332,7 +332,7 @@
                                     padding: 2,
                                     r: 4,
                                     zIndex: 6,
-                                    title:'Total income'
+                                    title: 'Total income'
                                 })
                                 .add();
                         }
@@ -341,7 +341,7 @@
 
                             var text1 = formatNumber(JSON.parse(scope.totalExpenses.replace(',', '.')));
 
-                            chart.renderer.label( text1 + currency, 70, 32, 'callout', 1)
+                            chart.renderer.label(text1 + currency, 70, 32, 'callout', 1)
                                 .css({
                                     color: '#FFFFFF'
                                 })
@@ -466,10 +466,6 @@
                         });
 
                         var chart = $(elem[0]).highcharts();
-
-                        setTimeout(function() {
-                            chart.reflow();
-                        }, 350);
 
                         if (scope.chartLabel !== undefined) {
 
@@ -824,7 +820,7 @@
                     chart.renderer.label(text, 90 - (text.length / 2), 160, 'callout', 1)
                         .css({
                             color: fill,
-                            fontSize:'16px'
+                            fontSize: '16px'
                         })
                         .attr({
                             zIndex: 6
@@ -834,29 +830,101 @@
                 }
             };
         })
-        .directive('reflowCharts', [function() {
-        return {
-            restrict: 'A',
-            link : function(scope, elem, attrs) {
+        .directive('reflowCharts', [
+            function() {
+                return {
+                    restrict: 'A',
+                    link: function(scope, elem, attrs) {
 
-                $(elem[0]).on('click', function() {
+                        $(elem[0]).on('click', function() {
 
-                    setTimeout(function() {
-                        $('.reflow-chart').each(function () {
+                            setTimeout(function() {
+                                $('.reflow-chart').each(function() {
 
-                            var chart = $(this).highcharts();
-                            console.log(chart);
-                            chart.reflow();
+                                    var chart = $(this).highcharts();
+                                    console.log(chart);
+                                    chart.reflow();
 
-                            chart.redraw();
+                                    chart.redraw();
+
+                                });
+                            }, 15);
 
                         });
-                    }, 75);                    
 
-                });
-
+                    }
+                };
             }
-        };
-    }]);
+        ])
+        .directive('progHighchart', [
+            function() {
+
+                return {
+                    restrict: 'A',
+                    scope: {
+                        progHighchart: '@',
+                        chartLabel: '@',
+                        currency: '@'
+                    },
+                    link: function(scope, elem, attrs) {
+
+                        var model = JSON.parse(scope.progHighchart);
+
+                        Highcharts.setOptions({ lang: { drillUpText: 'Back' } });
+
+                        $(elem[0]).highcharts({
+                            chart: {
+                                type:'line',
+                                style: {
+                                    fontFamily: "'Franklin Gothic Medium', 'Franklin Gothic', 'ITC Franklin Gothic', Arial, sans-serif !important"
+                                },
+                                plotBackgroundColor: null,
+                                plotBorderWidth: null,
+                                plotShadow: false
+                            },
+                            title: {
+                                text: model.title.text,
+                                style: {
+                                    fontSize: '18px',
+                                    color: '#313131'
+                                }
+                            },
+                            tooltip: {
+                                enabled: true,
+                                pointFormat: '{series.name}: <b>{point.y:.1f} </b>'
+                            },
+                            legend: {
+                                enabled: true,
+                                align: 'right',
+                                verticalAlign: 'middle',
+                                layout: 'vertical',
+                                y: -25
+                            },
+                            credits: false,
+                            plotOptions: {
+                                series: {
+                                    dataLabels: {
+                                        enabled: false
+                                    }
+                                }
+
+                            },
+                            xAxis: {
+                                type: 'category',
+                                categories: model.categories,
+                            },
+                            yAxis: {
+                                title: {
+                                    text: model.currency
+                                }
+                            },
+                            series: model.series
+                        });
+
+
+                    }
+                }
+            }
+        ]);
 
 })();

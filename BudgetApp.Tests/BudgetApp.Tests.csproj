@@ -79,6 +79,7 @@
   <ItemGroup>
     <Compile Include="CategoryTests.cs" />
     <Compile Include="Graphs\GraphBuilderTests.cs" />
+    <Compile Include="Graphs\PrognosisGraphTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SavingHelperTests.cs" />
   </ItemGroup>
