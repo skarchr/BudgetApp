@@ -140,63 +140,6 @@ input[type="checkbox"].input-validation-error {
     display: block;
 }
 
-.navbar-brand {
-    padding-top: 0;
-    padding-bottom: 0;
-    -webkit-transition: all 1.6s;
-    -moz-transition: all 1.6s;
-    -ms-transition: all 1.6s;
-    -o-transition: all 1.6s;
-    transition: all 1.6s;
-    
-    letter-spacing: 0.3px;
-    font-family: 'Franklin Gothic Medium', 'Franklin Gothic', 'ITC Franklin Gothic', Arial, sans-serif !important;
-}
-
-
-.navbar-brand.active:hover > a  {
-    border-bottom: 0;
-    color: #0094ff !important;
-}
-
-.navbar-brand > img {
-    height: 80px;
-    width: auto;     
-}
-
-.navbar-inverse .navbar-toggle:hover, .navbar-inverse .navbar-toggle:focus, .navbar-inverse .navbar-toggle {
-    background-color: #0094ff !important;
-    border-color: rgba(255,255,255,0.95);
-    margin-top: 25px;
-    -webkit-transition: all 1.6s;
-    -moz-transition: all 1.6s;
-    -ms-transition: all 1.6s;
-    -o-transition: all 1.6s;
-    transition: all 1.6s;
-}
-
-.navbar-inverse {
-    background-color: #ffffff;
-    background-color:rgba(255,255,255,0.95);
-    border: 0;
-    -webkit-box-shadow: 1px 1px 6px #ececec;
-    -ms-box-shadow: 1px 1px 6px #ececec;
-    box-shadow: 1px 1px 6px #ececec;
-}
-
-.navbar-right > .nav > li > a {
-    -webkit-transition: all 0.2s;
-    -moz-transition: all 0.2s;
-    -ms-transition: all 0.2s;
-    -o-transition: all 0.2s;
-    transition: all 0.2s;
-    height: 80px;
-    padding-top: 30px;
-    letter-spacing: 0.3px;
-    font-family: 'Franklin Gothic Medium', 'Franklin Gothic', 'ITC Franklin Gothic', Arial, sans-serif !important;
-    font-size: 18px;
-}
-
 .tabpanel > .nav:hover > li > a {
     color: #4169e1;
 }
@@ -229,7 +172,7 @@ input[type="checkbox"].input-validation-error {
     -o-transition: all 1.0s;
     transition: all 1.0s;
     background-color: rgba(255,255,255,0.0) !important;
-    border-bottom: 0 !important;
+    border-bottom: 1px solid #ececec !important;
 }
 .no-scroll-top {
     -webkit-transition: all 1.0s;
@@ -238,7 +181,7 @@ input[type="checkbox"].input-validation-error {
     -o-transition: all 1.0s;
     transition: all 1.0s;
     background-color: rgba(0, 148, 244, 0.95);
-    border-bottom: 1px solid rgb(0, 148, 255);
+    border-bottom: 1px solid #0094ff;
 }
 
 .btn-xlg {
@@ -565,6 +508,6 @@ th {
 
 .navbar-right .dropdown-menu {
   right: 10px;
-  top: 54px;
+  top: 40px;
   left: auto;
 }
