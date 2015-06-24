@@ -458,12 +458,12 @@ namespace BudgetApp.Controllers
             for (int i = 0; i < transactions.Count(); i++)
             {
                 if (!transactions[i].Import)
-                {
-                    ModelState["[" + i + "].Category"].Errors.Clear();
+                {                    
                     try
-                    {
-                        ModelState["[" + i + "].Description"].Errors.Clear();
-                        ModelState["[" + i + "].Amount"].Errors.Clear();
+                    {                        
+                        ModelState["transactions[" + i + "].Description"].Errors.Clear();
+                        ModelState["transactions[" + i + "].Amount"].Errors.Clear();
+                        ModelState["transactions[" + i + "].Category"].Errors.Clear();
                     }
                     catch (Exception)
                     {
@@ -488,7 +488,7 @@ namespace BudgetApp.Controllers
 
             ViewBag.Error = "Please fill in all mandatory fields";
 
-            return View("Import", transactions);
+            return View("Import", new ImportViewModel { Transactions = transactions, Mapping = new Mapping() });
         }
 
 

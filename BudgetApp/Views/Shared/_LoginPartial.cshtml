@@ -5,24 +5,42 @@
     {
     @Html.AntiForgeryToken()
 
-    <ul class="nav navbar-nav navbar-right">
-        <li class="@(ViewBag.Title == "Manage" ? "active":"")">
-            <a href="@Url.Action("Index", "Manage", null)" title="Profile">
-                Profile
+
+    <ul class="list-unstyled">
+        <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" title="Menu">
+                <svg style="width: 42px; height: 42px;float:right;margin-top: 5px;">
+                    <rect stroke="#FFFFFF" stroke-width="1" fill="#FFFFFF" x="0" y="0" width="36" height="36"></rect>
+                    <g>
+                        <rect fill="#0094ff" x="5" y="6" width="25.5" height="5"></rect>
+                        
+                        <rect fill="#0094ff" x="5" y="16" width="25.5" height="5"></rect>
+
+                        <rect fill="#0094ff" x="5" y="26" width="25.5" height="5"></rect>
+                    </g>
+                </svg>
             </a>
-        </li>
-        <li style="padding-left: 30px;">
-            <a href="javascript:document.getElementById('logoutForm').submit()" title="Log off">
-                Log off
-            </a>
+            <ul class="dropdown-menu text-left">
+                
+                <li class="visible-xs visible-sm"><a href="@Url.Action("Create", "Transactions")" title="Add transaction">Add</a></li>
+                <li class="visible-xs visible-sm"><a href="@Url.Action("Upload", "Transactions")" title="Import transactions">Import</a></li>
+                <li role="separator" class="divider visible-xs visible-sm"></li>
+                <li class="@(ViewBag.Title == "Transactions" ? "active":"")">@Html.ActionLink("Transactions", "Index", "Transactions")</li>
+                <li class="@(ViewBag.Title == "Mappings" ? "active":"")">@Html.ActionLink("Mappings", "Index", "Mappings")</li>
+                <li class="@(ViewBag.Title == "Manage" ? "active":"")">
+                    <a href="@Url.Action("Index", "Manage", null)" title="Profile">
+                        Profile
+                    </a>
+                </li>
+                <li role="separator" class="divider"></li>
+                <li>
+                    <a href="javascript:document.getElementById('logoutForm').submit()" title="Log off">
+                        Log off
+                    </a>
+                </li>
+            </ul>
         </li>
     </ul>
+
     }
-}
-else
-{
-    <ul class="nav navbar-nav navbar-right">
-        <li>@Html.ActionLink("Register", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>
-        <li>@Html.ActionLink("Log in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>
-    </ul>
 }

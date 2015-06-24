@@ -1,23 +1,12 @@
 ﻿@{
-    ViewBag.Title = "Transactions";
+    ViewBag.Title = "Import Transactions";
 }
 
 <div style="margin-top: 60px;">
-    <div class="row">
-        <div class="col-md-12 text-center">
 
-            <div id="icon" data-logo="18" style="width:18%; min-width: 220px;">
-                <object>
-                    <img src="~/Content/images/logo.svg" id="svg" />
-                </object>
-            </div>
-
-        </div>
-    </div>
     <div class="row" style="margin-top: 30px;">
         <div class="col-xs-12">
             
-            <h2 class="text-center" style="margin-top: -50px;">Import transactions</h2>
 
             @using (Html.BeginForm("Upload", "Transactions", FormMethod.Post, new { enctype = "multipart/form-data" }))
             {

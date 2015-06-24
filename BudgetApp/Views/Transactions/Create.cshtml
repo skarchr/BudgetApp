@@ -2,26 +2,17 @@
 @model BudgetApp.Models.Transaction
 
 @{
-    ViewBag.Title = "Transactions";
+    ViewBag.Title = "Add Transaction";
 }
 
 <div style="margin-top:30px;">
-    <div class="col-md-12 text-center">
 
-        <div id="icon" data-logo="18" style="width:18%; min-width: 220px;">
-            <object>
-                <img src="~/Content/images/logo.svg" id="svg" />
-            </object>
-        </div>
-
-    </div>
     <div class="row" style="margin-top: 40px;" ng-controller="addTransactionController">
         @using (Html.BeginForm("Create", "Transactions", FormMethod.Post, new { name="addForm" }))
         {
             @Html.AntiForgeryToken()
             <div class="col-xs-12">
                 
-                <h2 class="text-center" style="margin-top: -50px;">Add transaction</h2>
 
                 <div class="row form-member">
                     <div class="member-label col-xs-12">
