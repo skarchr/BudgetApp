@@ -24,6 +24,11 @@ namespace BudgetApp.Models
         public DateTime Created { get; set; }
         public bool Import { get; set; }
 
+        public string MainCategory
+        {
+            get { return CategoryExt.GetMainCategory(Category.Value); }
+        }
+
         public string Color
         {
             get

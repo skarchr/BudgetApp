@@ -346,7 +346,7 @@
                                     color: '#FFFFFF'
                                 })
                                 .attr({
-                                    fill: 'rgba(255, 0, 0, 0.70)',
+                                    fill: '#E87C7C',
                                     stroke: 'rgb(0,0,0)',
                                     padding: 2,
                                     r: 4,
@@ -414,7 +414,20 @@
                             plotOptions: {
                                 column: {
                                     showInLegend: false,
-                                    colorByPoint: true
+                                    colorByPoint: true,
+                                    events: {
+                                        click: function (e) {
+
+                                            var _scope = angular.element('[ng-controller=transactionController]').scope();
+
+
+                                            _scope.querystring = e.point.name;
+
+                                            _scope.$apply();
+                                            //console.log(_scope);
+                                            //console.log(e.point.name);
+                                        }
+                                    }
                                 }
                             },
                             xAxis: {
@@ -478,7 +491,7 @@
                                     color: '#FFFFFF'
                                 })
                                 .attr({
-                                    fill: 'rgba(255, 0, 0, 0.90)',
+                                    fill: '#E87C7C',
                                     padding: 10,
                                     r: 4,
                                     zIndex: 6
@@ -766,7 +779,7 @@
                                     {
                                         from: from,
                                         to: to,
-                                        color: "#FF0000",
+                                        color: "#E87C7C",
                                         innerRadius: '100%',
                                         outerRadius: '108%'
                                     }
@@ -812,9 +825,9 @@
                     var fill;
 
                     if (scope.inverted) {
-                        fill = actual >= goal ? 'rgba(72, 221, 184,0.90)' : 'rgba(255, 0, 0, 0.90)';
+                        fill = actual >= goal ? 'rgba(72, 221, 184,0.90)' : '#E87C7C';
                     } else {
-                        fill = actual >= goal ? 'rgba(255, 0, 0, 0.90)' : 'rgba(72, 221, 184,0.90)';
+                        fill = actual >= goal ? '#E87C7C' : 'rgba(72, 221, 184,0.90)';
                     }
 
                     chart.renderer.label(text, 90 - (text.length / 2), 160, 'callout', 1)

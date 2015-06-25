@@ -43,7 +43,7 @@ namespace BudgetApp.Extensions.Graphs
             {
                 new Data
                 {
-                    Color = "#FF0000",
+                    Color = "#E87C7C",
                     Drilldown = "expenses",
                     Name = "Expenses",
                     X = 0,

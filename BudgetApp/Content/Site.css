@@ -4,6 +4,10 @@
     font-family: 'Franklin Gothic Medium', 'Franklin Gothic', 'ITC Franklin Gothic', Arial, sans-serif !important;
 }
 
+.highcharts-background {
+    fill: none !important;
+}
+
 /* Set padding to keep content from hitting the edges */
 .body-content {
     padding-left: 15px;
@@ -153,11 +157,11 @@ input[type="checkbox"].input-validation-error {
     border-bottom: none;
     padding-top: 10px;
     background-color: rgba(255,255,255,0.0) !important;
-    border-bottom: 1px solid #ececec !important;
+    border-bottom: 2px solid #0094ff !important;
 }
 .no-scroll-top {
     background-color: rgba(0, 148, 244, 0.90);
-    border-bottom: 1px solid #0094ff;
+    border-bottom: 2px solid #0094ff;
 }
 
 .btn-xlg {
@@ -196,10 +200,6 @@ input[type="checkbox"].input-validation-error {
 
 .delete-link:hover {
     color: red;
-}
-
-.highcharts-background {
-    fill: none !important;
 }
 
 .label-muted {
@@ -294,9 +294,9 @@ input[type="checkbox"].input-validation-error {
 .badge-mapping {
     position: absolute;
     margin-left: 8px;
-    background-color: #cc7b19;
+    background-color: #0094ff;
     color: white;
-    border: 1px solid #cc7b19;;
+    border: 1px solid #0094ff;
 }
 
 .mapping-image {
@@ -390,19 +390,64 @@ th {
 }
 
 .dropdown-menu {
-    top: 38px;
-    margin-right: 10px;
+    top: 55px;
+    margin-right: 6px;
+    border-radius: 0;
+    box-shadow: none;
+    border-right: 2px solid #0094ff;
+    border-bottom: 2px solid #0094ff;
+    border-left: 2px solid #0094ff;
+    border-top: 2px solid white;
 }
 
-.dropdown-menu > .active > a, .dropdown-menu > .active > a:focus {
+.dropdown-menu > li > a {
+    min-width: 250px;
+    font-size: 20px;
+}
+
+.dropdown-menu > li.divider {
+    background-color: #0094ff;
+    height: 2px;
+}
+
+.dropdown-menu > li > a:hover {
+    background-color: white;
+    color: #0094ff;
+}
+
+.dropdown-menu > .active > a {
   background-color: #0094ff;
 }
 
 .btn-nav {
-    border: 1px solid #0094ff;
+    border: 2px solid #0094ff;
     color: #0094ff;
     font-size: 20px !important;
     padding: 2px;
     -ms-border-radius: 0;
     border-radius: 0;
+}
+
+.btn-nav:hover {
+    color: white;
+    background-color: #0094ff;
+    border: 2px solid white;
+}
+
+
+.nav-tabs {
+  border-bottom: 1px solid #0094ff;
+}
+
+.nav-tabs > li.active > a, .nav-tabs > li.active > a:hover, .nav-tabs > li.active > a:focus {
+    border: 1px solid #0094ff;
+    border-bottom: 2px solid white;
+}
+
+.nav-tabs > li > a {
+    color: #0094ff;
+}
+
+.panel {
+    border: 0;
 }

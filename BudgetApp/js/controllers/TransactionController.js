@@ -12,7 +12,7 @@
             return commonService.getIconUrl(input);
 
         };
-
+        $scope.querystring = '';
         $scope.predicate = 'amount';
         $scope.reverse = true;
 

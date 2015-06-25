@@ -9,15 +9,56 @@
     <ul class="list-unstyled">
         <li class="dropdown">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" title="Menu">
-                <svg style="width: 42px; height: 42px;float:right;margin-top: 5px;">
-                    <rect stroke="#FFFFFF" stroke-width="1" fill="#FFFFFF" x="0" y="0" width="36" height="36"></rect>
-                    <g>
-                        <rect fill="#0094ff" x="5" y="6" width="25.5" height="5"></rect>
-                        
-                        <rect fill="#0094ff" x="5" y="16" width="25.5" height="5"></rect>
+                <svg id="menu" style="width: 42px; height: 42px;float:right;margin-top: 5px;">
+                    
+                    <defs>
+                        <style>                           
 
-                        <rect fill="#0094ff" x="5" y="26" width="25.5" height="5"></rect>
+                            #menu > g > .upper, #menu > g > .lower {
+                                -webkit-transition: all 0.6s;
+                                -moz-transition: all 0.6s;
+                                -ms-transition: all 0.6s;
+                                -o-transition: all 0.6s;
+                                transition: all 0.6s;
+                            }
+
+                            .dropdown.open >a > svg > g.stripes {
+                                display: none;
+                            }
+
+                            .dropdown.open >a > svg > g.cross {
+                                display: inline-block;
+                            }
+
+                            .dropdown >a > svg > g.cross {
+                                display: none;
+                            }
+
+                            #menu:hover > g > .upper {
+                                y: 4;
+                            }
+
+                            #menu:hover > g > .lower {
+                                y: 28;
+                            }
+
+                        </style>
+                    </defs>
+
+                    <rect stroke="#FFFFFF" stroke-width="1" fill="#FFFFFF" x="0" y="0" width="36" height="36"/>
+                    <g class="stripes">
+                        <rect class="upper" fill="#0094ff" x="5" y="6" width="25.5" height="5" />
+
+                        <rect fill="#0094ff" x="5" y="16" width="25.5" height="5"/>
+
+                        <rect class="lower" fill="#0094ff" x="5" y="26" width="25.5" height="5"/>
                     </g>
+                    
+                    <g class="cross">
+                        <line x1="6" y1="6" x2="30" y2="30" style="stroke:#0094ff;stroke-width:5" />
+                        <line x1="6" y1="30" x2="30" y2="6" style="stroke:#0094ff;stroke-width:5" />
+                    </g>
+
                 </svg>
             </a>
             <ul class="dropdown-menu text-left">

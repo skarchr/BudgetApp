@@ -110,27 +110,31 @@
 
 
 
-                <div class="col-xs-12" style="margin-top:30px;" ng-repeat="range in model" ng-show="rangeElem === $index">
+                <div class="col-xs-12" style="margin-top:10px;" ng-repeat="range in model" ng-show="rangeElem === $index">
 
 
                     <div class="panel panel-default">
+                        
+                        <hr />
 
-
-                        <div class="panel-body" style="padding-bottom: 0;">
+                        <div class="panel-body">
 
                             <div class="row">
 
                                 <div class="col-xs-12 text-center">
-                                    <span>
+                                    <h2 style="margin-top: -7px;">
                                         {{range.startDate | date : 'dd.MM.yyyy'}} - {{range.endDate | date: 'dd.MM.yyyy'}}
-                                    </span>
+                                    </h2>
 
                                 </div>
 
                             </div>
 
                             <div class="row" style="margin-top: 13px;">
-                                <div class="col-xs-12 placeholder hidden-xs">
+                                <div class="col-xs-12 text-center">
+                                    <input type="text" value="" class="form-control" placeholder="Search transactions" ng-model="querystring" />
+                                </div>
+                                <div class="col-xs-12 hidden-xs">
 
                                     <span style="height:350px;width:1123px !important;" class="visible-lg" data-highchart="{{range.graph}}"></span>
 
@@ -139,13 +143,14 @@
                                     <span style="height:350px;width:703px !important;" class="visible-sm" data-highchart="{{range.graph}}"></span>
 
                                 </div>
-
+                                
                             </div>
                         </div>
                         <table class="table table-condensed table-same-width table-hover" style="margin-top: 18px;">
                             <thead>
                                 <tr>
                                     <th class="hidden-xs">#</th>
+                                    <th class="hidden"></th>
                                     <th sortable-table-header="amount">Amount (@Model.Currency)</th>
                                     <th sortable-table-header="category">Category</th>
                                     <th sortable-table-header="description" class="hidden-xs hidden-sm">Description</th>
@@ -154,7 +159,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr ng-repeat="row in range.transactions | orderBy:predicate:reverse">
+                                <tr ng-repeat="row in range.transactions | orderBy:predicate:reverse | filter: querystring">
                                     <td class="hidden-xs">
 
                                         <span class="percentage-row" ng-show="row.category !== 'Salary' && row.category !== 'OtherIncome'">
@@ -165,6 +170,7 @@
 
                                         {{ $index + 1 }}
                                     </td>
+                                    <td class="hidden">{{row.mainCategory}}</td>
                                     <td>{{row.amount | currencyFormatter}}</td>
                                     <td style="text-align:left;padding-left: 20px;">
                                         <img class="hidden-xs hidden-sm" style="position: absolute;" height="20" ng-src="{{getIcon(row.category)}}" alt="{{row.category}}" />

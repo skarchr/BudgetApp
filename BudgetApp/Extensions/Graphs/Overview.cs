@@ -10,7 +10,7 @@ namespace BudgetApp.Extensions.Graphs
     public static class Overview
     {
         private const string Type = "column";
-        private const string ColorExpense = "#FF0000";
+        private const string ColorExpense = "#E87C7C";
         private const string ColorIncome = "#48DDb8";
 
         public static Highchart CreateChart(List<RangeViewer> rangeViewers, ApplicationUser user)
