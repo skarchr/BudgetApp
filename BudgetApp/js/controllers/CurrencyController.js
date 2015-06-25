@@ -4,6 +4,8 @@
 
         $scope.dirty = false;
 
+        $scope.confirmDelete = '';
+
         $scope.regexDouble = /^(\d+(?:[\.\,]\d{1,2})?)$/;
 
         $http.get('/js/resources/countries.json')
