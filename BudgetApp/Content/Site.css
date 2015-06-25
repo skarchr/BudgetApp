@@ -11,13 +11,6 @@
     padding-top: 40px;
 }
 
-/* Override the default bootstrap behavior where horizontal description lists 
-   will truncate terms that are too long to fit in the left column 
-*/
-.dl-horizontal dt {
-    white-space: normal;
-}
-
 /* Set width on the form input elements since they're 100% wide by default */
 input,
 select,
@@ -117,14 +110,6 @@ input[type="checkbox"].input-validation-error {
     -webkit-animation: zoomIn 0.5s;
 }
 
-
-.checkmark {
-  stroke: green;
-  stroke-dashoffset: 745.74853515625;
-  stroke-dasharray: 745.74853515625;
-  animation: dash 2s ease-out forwards infinite;
-}
-
 @keyframes dash {
   0% {
     stroke-dashoffset: 745.74853515625;
@@ -138,10 +123,6 @@ input[type="checkbox"].input-validation-error {
     width: 30%;
     margin: auto;
     display: block;
-}
-
-.tabpanel > .nav:hover > li > a {
-    color: #4169e1;
 }
 
 .no-scroll-top > .container > .row > .col-xs-4 > a > #svg1 {
@@ -160,27 +141,22 @@ input[type="checkbox"].input-validation-error {
     display: inline-block;
 }
 
-.scroll-top {
-    -webkit-box-shadow: none;
-    -ms-box-shadow: none;
-    box-shadow: none;
-    border-bottom: none;
-    padding-top: 40px;
+.no-scroll-top, .scroll-top {
     -webkit-transition: all 1.0s;
     -moz-transition: all 1.0s;
     -ms-transition: all 1.0s;
     -o-transition: all 1.0s;
     transition: all 1.0s;
+}
+
+.scroll-top {
+    border-bottom: none;
+    padding-top: 10px;
     background-color: rgba(255,255,255,0.0) !important;
     border-bottom: 1px solid #ececec !important;
 }
 .no-scroll-top {
-    -webkit-transition: all 1.0s;
-    -moz-transition: all 1.0s;
-    -ms-transition: all 1.0s;
-    -o-transition: all 1.0s;
-    transition: all 1.0s;
-    background-color: rgba(0, 148, 244, 0.95);
+    background-color: rgba(0, 148, 244, 0.90);
     border-bottom: 1px solid #0094ff;
 }
 
@@ -192,45 +168,12 @@ input[type="checkbox"].input-validation-error {
     padding-top: 2%;
 }
 
-.square {
-    color: #777;
-    min-height: 260px;
-    border: 1px solid #ececec;
-}
-
-.label-big {
-    font-size: 20px;
-}
-
 .placeholder {
     min-width: 100%;
     border-top: 1px solid #ececec;
     background: white;
     padding: 8px;
     height: 350px;
-}
-
-.toggle-transactions {
-    border: 1px solid #ececec;
-    padding: 10px;
-    color: #777;
-    border-radius: 4px;
-    -webkit-touch-callout: none;
-    -webkit-user-select: none;
-    -khtml-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-}
-
-.toggle-transactions:hover {
-    cursor: pointer;
-    color: #313131;
-    border-color: #313131;
-}
-
-.toggle-transactions.active {
-    background: #ececec;
 }
 
 .link {
@@ -259,49 +202,10 @@ input[type="checkbox"].input-validation-error {
     fill: none !important;
 }
 
-select.transaction-filter {
-    padding: 6px 6px 8px;
-    border-radius: 4px;
-    -webkit-border-radius: 4px;
-    -moz-border-radius: 4px;
-}
-
-input.transaction-filter {
-    padding: 3px 6px 6px;
-    border-radius: 4px;
-    -webkit-border-radius: 4px;
-    -moz-border-radius: 4px;
-}
-
 .label-muted {
     color: #777;
     border: 1px solid #ececec;
     margin-right: 5px;
-}
-
-@media(max-width:703px) {
-    
-    .hide-xs {
-        display: none;
-    }
-
-    .navbar-inverse .navbar-collapse, .navbar-inverse .navbar-form {
-        border-width: 0;
-    }
-
-    .navbar-inverse .navbar-nav > .active > a, .navbar-inverse .navbar-nav > li > a {
-        height: 60px;
-        padding-top: 20px;
-    }
-
-    .navbar-inverse .navbar-nav > .active > a, .navbar-inverse .navbar-nav > .active > a:hover, .navbar-inverse .navbar-nav > .active > a:focus {
-        color: white !important;
-        background-color: #0094ff !important;
-    }
-
-        .navbar-inverse .navbar-nav > li > a:hover {
-            border-bottom: 4px solid white;
-        }
 }
 
 .panel-success  {
@@ -414,11 +318,6 @@ input.transaction-filter {
     font-weight: normal;
 }
 
-.clingy {
-    position: absolute;
-    margin-top: 6px;
-}
-
 .btn-empty {
     border: 0;
     background-color: rgba(0,0,0,0.0);
@@ -444,13 +343,18 @@ input.transaction-filter {
 
 .chart-btn {
     font-size: 16px;
-    color: #0094ff;    
+    color: #333333;
+    background-color: #ffffff;
+    border: 1px solid #cccccc;
+    -ms-border-radius: 4px;
+    border-radius: 4px;
+    padding: 3px 6px;
+    margin-left: -5px;
 }
 
 .chart-btn:hover {
-    color: #313131;
+    background: #ececec;
     cursor: pointer;
-    text-decoration: underline;
 }
 
 span.active {    
@@ -459,8 +363,13 @@ span.active {
 }
 
 span.active > .chart-btn {
-    color: #313131;
-    text-decoration: underline;
+    color: #333333;
+    background-color: #ebebeb;
+    border-color: #adadad;
+    background-image: none;
+    outline: 0;
+    -webkit-box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+    box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
 }
 
 th {
@@ -472,25 +381,17 @@ th {
     user-select: none;
 }
 
-.label-expense {
-    background-color: #ff0000;
-    font-size: 10px;
-    font-family: monospace;
-}
-
-.label-income {
-    background-color: #48ddb8;
-    font-size: 10px;
-    font-family: monospace;
-}
-
-
 .nav.nav-tabs > li > a {
       font-size: 16px;
 }
 
 .reflow-chart {
     max-width: 280px;
+}
+
+.dropdown-menu {
+    top: 38px;
+    margin-right: 10px;
 }
 
 .dropdown-menu > .active > a, .dropdown-menu > .active > a:focus {
@@ -504,10 +405,4 @@ th {
     padding: 2px;
     -ms-border-radius: 0;
     border-radius: 0;
-}
-
-.navbar-right .dropdown-menu {
-  right: 10px;
-  top: 40px;
-  left: auto;
 }

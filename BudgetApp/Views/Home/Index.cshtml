@@ -138,16 +138,27 @@
                 </div>
                 <div role="tabpanel" class="tab-pane" id="saving">                   
                     
-                    @*TODO:Fix*@
                     <div class="col-xs-12 text-center">
-                        <span>
-                            <i class="glyphicon glyphicon-star" style="color:#F0F088;font-size:60px;"></i>
-                            <span style="position: absolute;margin-top: 24px;margin-left: {{ -(starCountNeg.toString().length + 39) + 'px' }};font-size:18px;">{{starCountPos}}</span>
-                        </span>
-                        <span>
-                            <i class="glyphicon glyphicon-star" style="color:#E87C7C;font-size:60px;"></i>
-                            <span style="position: absolute;margin-top: 24px;margin-left: {{ -(starCountNeg.toString().length + 40) + 'px' }};font-size:18px;">{{starCountNeg}}</span>
-                        </span>
+                        
+                        <svg xmlns="http://www.w3.org/2000/svg" width="80px" height="70px" viewBox="0 0 300 275" version="1.1">
+
+                            <g>
+                                <polygon fill="#F0F088" stroke="#000000" stroke-width="2" points="150,25  179,111 269,111 197,165 223,251 150,200 77,251  103,165 31,111 121,111" />
+
+                                <text x="150" y="168" text-anchor="middle" font-size="55px">{{starCountPos}}</text>
+                            </g>
+                        </svg>
+                        
+                        
+                        <svg xmlns="http://www.w3.org/2000/svg" width="80px" height="70px" viewBox="0 0 300 275" version="1.1">
+
+                            <g>
+                                <polygon fill="#E87C7C" stroke="#000000" stroke-width="2" points="150,25  179,111 269,111 197,165 223,251 150,200 77,251  103,165 31,111 121,111" />
+
+                                <text x="150" y="168" text-anchor="middle" font-size="55px">{{starCountNeg}}</text>
+                            </g>
+                        </svg>
+
                     </div>
 
                     <div class="col-xs-12" ng-repeat="goal in model.savingGoals">
