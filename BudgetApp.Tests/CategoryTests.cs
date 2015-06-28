@@ -15,5 +15,13 @@ namespace BudgetApp.Tests
             var result = CategoryExt.GetMainCategory(Category.Car);
             result.Should().Be("Transport");
         }
+
+        [Test]
+        public void TestCamelCaseToNormal()
+        {
+            var result = CategoryExt.CamelCaseToNormal(Category.OtherShelter.ToString());
+
+            result.Should().Be("Other Shelter");
+        }
     }
 }

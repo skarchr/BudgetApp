@@ -14,6 +14,14 @@
     };
 
 
+    var formatCamelText = function(input) {
+        
+        var source = input.replace(/([A-Z])/g, " $1");
+
+
+        return (source.charAt(0).toUpperCase() + source.slice(1)).trim();
+    }
+
     angular.module('budgetApp')
         .directive('topNav', [
             '$window', function($window) {
@@ -258,8 +266,14 @@
                             credits: false,
                             plotOptions: {
                                 column: {
-                                    showInLegend: true
-                                }
+                                    showInLegend: true,
+                                    states: {
+                                        hover: {
+                                            enabled: false
+                                        }
+                                    }
+                                },
+                                
                             },
                             xAxis: {
                                 categories: model.categories,
@@ -368,7 +382,8 @@
                     scope: {
                         highchart: '@',
                         chartLabel: '@',
-                        currency: '@'
+                        currency: '@',
+                        index : '@'
                     },
                     link: function(scope, elem, attrs) {
 
@@ -420,12 +435,17 @@
 
                                             var _scope = angular.element('[ng-controller=transactionController]').scope();
 
+                                            if (_scope !== undefined) {
 
-                                            _scope.querystring = e.point.name;
+                                                if (scope.index !== undefined) {
 
-                                            _scope.$apply();
-                                            //console.log(_scope);
-                                            //console.log(e.point.name);
+                                                    _scope.querystring[scope.index] = e.point.name !== undefined ? formatCamelText(e.point.name) : '';
+                                                
+                                                }
+                                                _scope.$apply();
+                                            }
+
+                                            
                                         }
                                     }
                                 }
@@ -434,12 +454,12 @@
                                 type: 'category',
                                 labels: {
                                     useHTML: true,
-                                    formatter: function() {
-                                        var input = this.value.replace(/([A-Z])/g, " $1");
+                                    formatter: function () {
 
-                                        var textLabel = '<span class="hidden-sm">' + (input.charAt(0).toUpperCase() + input.slice(1)).trim() + '</span>';
 
-                                        var img = '<img class="hs-image-label" title="' + (input.charAt(0).toUpperCase() + input.slice(1)).trim() + '" src="' + commonService.getIconUrl(this.value) + '"/>';
+                                        var textLabel = '<span class="hidden-sm">' + formatCamelText(this.value) + '</span>';
+
+                                        var img = '<img class="hs-image-label" title="' + formatCamelText(this.value) + '" src="' + commonService.getIconUrl(this.value) + '"/>';
 
                                         var style = model.type === 'bar' ? 'min-height:50px;min-width:80px;' : 'min-height:50px;';
 

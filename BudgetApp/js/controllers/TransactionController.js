@@ -6,13 +6,14 @@
         $scope.filter = transactionModel.filter;
 
         $scope.rangeElem = '';
+        
+        $scope.querystring = {};
 
         $scope.getIcon = function (input) {
 
             return commonService.getIconUrl(input);
 
         };
-        $scope.querystring = '';
         $scope.predicate = 'amount';
         $scope.reverse = true;
 

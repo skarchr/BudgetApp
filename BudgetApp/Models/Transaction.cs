@@ -24,9 +24,11 @@ namespace BudgetApp.Models
         public DateTime Created { get; set; }
         public bool Import { get; set; }
 
+        public string CategoryText { get { return CategoryExt.CamelCaseToNormal(Category.Value.ToString()); } }
+
         public string MainCategory
         {
-            get { return CategoryExt.GetMainCategory(Category.Value); }
+            get { return  CategoryExt.GetMainCategory(Category.Value); }
         }
 
         public string Color

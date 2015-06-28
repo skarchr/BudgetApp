@@ -131,25 +131,31 @@
                             </div>
 
                             <div class="row" style="margin-top: 13px;">
-                                <div class="col-xs-12 text-center">
-                                    <input type="text" value="" class="form-control" placeholder="Search transactions" ng-model="querystring" />
-                                </div>
+
                                 <div class="col-xs-12 hidden-xs">
 
-                                    <span style="height:350px;width:1123px !important;" class="visible-lg" data-highchart="{{range.graph}}"></span>
+                                    <span style="height:350px;width:1123px !important;" class="visible-lg" data-highchart="{{range.graph}}" data-index="{{$index}}"></span>
 
-                                    <span style="height:350px;width:923px !important;" class="visible-md" data-highchart="{{range.graph}}"></span>
+                                    <span style="height:350px;width:923px !important;" class="visible-md" data-highchart="{{range.graph}}" data-index="{{$index}}"></span>
 
-                                    <span style="height:350px;width:703px !important;" class="visible-sm" data-highchart="{{range.graph}}"></span>
+                                    <span style="height:350px;width:703px !important;" class="visible-sm" data-highchart="{{range.graph}}" data-index="{{$index}}"></span>
 
                                 </div>
+                                
                                 
                             </div>
                         </div>
                         <table class="table table-condensed table-same-width table-hover" style="margin-top: 18px;">
                             <thead>
                                 <tr>
+                                    <th colspan="7">
+                                        <input type="text" value="" class="form-control" placeholder="Search" ng-model="querystring[$index]" />
+                                        <span class="btn-remove" ng-show="querystring[$index] !== undefined" ng-click="querystring[$index] = undefined"><i class="glyphicon glyphicon-remove"></i></span>
+                                    </th>
+                                </tr>
+                                <tr>
                                     <th class="hidden-xs">#</th>
+                                    <th class="hidden"></th>
                                     <th class="hidden"></th>
                                     <th sortable-table-header="amount">Amount (@Model.Currency)</th>
                                     <th sortable-table-header="category">Category</th>
@@ -159,7 +165,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr ng-repeat="row in range.transactions | orderBy:predicate:reverse | filter: querystring">
+                                <tr ng-repeat="row in range.transactions | orderBy:predicate:reverse | filter: querystring[$index]">
                                     <td class="hidden-xs">
 
                                         <span class="percentage-row" ng-show="row.category !== 'Salary' && row.category !== 'OtherIncome'">
@@ -171,6 +177,7 @@
                                         {{ $index + 1 }}
                                     </td>
                                     <td class="hidden">{{row.mainCategory}}</td>
+                                    <td class="hidden">{{row.categoryText}}</td>
                                     <td>{{row.amount | currencyFormatter}}</td>
                                     <td style="text-align:left;padding-left: 20px;">
                                         <img class="hidden-xs hidden-sm" style="position: absolute;" height="20" ng-src="{{getIcon(row.category)}}" alt="{{row.category}}" />

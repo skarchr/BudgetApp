@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Web;
 using BudgetApp.Constants;
 using BudgetApp.Models;
@@ -14,8 +15,19 @@ namespace BudgetApp.Extensions
             return Enum.GetNames(typeof(Category)).ToList();
         }
 
-        public static string GetMainCategory(Category category)
+        public static string CamelCaseToNormal(string input)
         {
+            return Regex.Replace(input, "(\\B[A-Z])", " $1");
+        }
+
+        public static string GetMainCategory(Category category, bool normal = false)
+        {
+            if (normal)
+                return
+                    CamelCaseToNormal(
+                        (from key in Categories.Grouped where key.Value.Any(val => val == category) select key.Key)
+                            .FirstOrDefault());
+
             return (from key in Categories.Grouped where key.Value.Any(val => val == category) select key.Key).FirstOrDefault();
         }
 

@@ -242,7 +242,7 @@ input[type="checkbox"].input-validation-error {
     margin-top: -50px;
     transition: all 0.2s;
     font-size: 25px;
-    color: rgb(233, 249, 233);    
+    color: #b1defe;    
 }
 
 .panel-mapping > .panel-body:hover {
@@ -251,11 +251,11 @@ input[type="checkbox"].input-validation-error {
 }
 
 .panel-default > .panel-body:hover > .add {
-    color: #3c763d;
+    color: #b1defe;
 }
 
 .panel-default > .panel-body:hover > .add:hover {
-    color: white;
+    color: #0094ff;
     cursor: pointer;
 }
 
@@ -450,4 +450,20 @@ th {
 
 .panel {
     border: 0;
+}
+
+.btn-remove {
+    float: left;
+    margin-top: -30px;
+    margin-left: 255px;
+    font-size: 20px;
+    color: #c0c0c0;
+    cursor: pointer;
+}
+
+.btn-remove:hover {
+    color: #929292;
+}
+.panel-mapping {
+    border: 1px solid #0094ff;
 }
