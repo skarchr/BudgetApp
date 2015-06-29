@@ -36,6 +36,9 @@ namespace BudgetApp.Controllers
         [AllowAnonymous]
         public ActionResult Login(string returnUrl)
         {
+
+            ViewBag.Success = TempData["Success"];
+
             ViewBag.ReturnUrl = returnUrl;
             return View();
         }

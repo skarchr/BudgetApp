@@ -467,3 +467,11 @@ th {
 .panel-mapping {
     border: 1px solid #0094ff;
 }
+
+optgroup {
+    background-color: #ececec;
+}
+
+optgroup > option {
+    background-color: white;
+}

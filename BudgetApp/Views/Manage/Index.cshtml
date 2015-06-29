@@ -197,7 +197,9 @@
 
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-danger col-xs-12" ng-disabled="confirmDelete !== '@User.Identity.Name'">I understand the consequences, delete this account</button>
+                        
+                        @Html.ActionLink("I understand the consequences, delete this account", "DeleteProfile", "Manage", null, new { @class = "btn btn-danger col-xs-12", @ng_disabled = "confirmDelete !=='" + User.Identity.Name + "'" })
+
                     </div>
                 </div>
             </div>

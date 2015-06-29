@@ -1,7 +1,9 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Security;
 using Antlr.Runtime.Misc;
 using BudgetApp.Models;
 using Microsoft.AspNet.Identity;
@@ -56,6 +58,42 @@ namespace BudgetApp.Controllers
             return Json("{ saved: false }");
 
         }
+
+        public ActionResult DeleteProfile()
+        {
+            var user = db.Users.FirstOrDefault(s => s.UserName == User.Identity.Name);
+
+            if (user != null && user.UserName == User.Identity.Name)
+            {
+
+                foreach (var transaction in db.Transactions.Where(s => s.UserName == User.Identity.Name).ToList())
+                {
+                    db.Transactions.Remove(transaction);
+                }
+
+                foreach (var mapping in db.Mappings.Where(s => s.UserName == User.Identity.Name).ToList())
+                {
+                    db.Mappings.Remove(mapping);
+                }
+
+
+                foreach (var userLoginInfo in UserManager.GetLogins(User.Identity.GetUserId()))
+                {
+                    UserManager.RemoveLogin(User.Identity.GetUserId(), new UserLoginInfo(userLoginInfo.LoginProvider, userLoginInfo.ProviderKey));
+                }
+
+                db.Users.Remove(user);
+                db.SaveChanges();
+
+                AuthenticationManager.SignOut();
+
+                TempData["Success"] = "Your account was deleted";
+            }
+
+            return RedirectToAction("Login", "Account");
+
+        }
+
 
         //
         // GET: /Manage/Index

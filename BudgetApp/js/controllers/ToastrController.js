@@ -4,7 +4,7 @@
     angular.module('budgetApp').controller('toastrController', ['$scope', 'viewBags', 'toastr', function($scope, viewBags, toastr) {
 
         var viewbagList = viewBags.messages;
-        
+
         $.each(viewbagList, function(i, val) {
 
             if(val !== ''){

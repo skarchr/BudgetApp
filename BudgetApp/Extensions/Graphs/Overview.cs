@@ -23,7 +23,10 @@ namespace BudgetApp.Extensions.Graphs
 
             if (user.MonthlyExpensesGoal != null)
             {
-                var goal = rangeViewers[0].Range == Range.Annual ? user.MonthlyExpensesGoal.Value * 12 : rangeViewers[0].Range == Range.Month ?  user.MonthlyExpensesGoal.Value : 0.0;
+                var goal = 0.0;
+
+                if(rangeViewers.Count > 0)
+                    goal = rangeViewers[0].Range == Range.Annual ? user.MonthlyExpensesGoal.Value * 12 : rangeViewers[0].Range == Range.Month ?  user.MonthlyExpensesGoal.Value : 0.0;
 
                 plotLinesY.Add(
                     new PlotLines

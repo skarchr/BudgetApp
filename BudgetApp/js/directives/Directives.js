@@ -23,6 +23,24 @@
     }
 
     angular.module('budgetApp')
+
+        .directive('dropdown', function() {
+            return {
+                restrict : 'C',
+                link : function(scope, elem) {
+                    
+                    $(elem[0]).on('show.bs.dropdown', function(e){
+                        $(this).find('.dropdown-menu').first().stop(true, true).slideDown();
+                    });
+
+                    $(elem[0]).on('hide.bs.dropdown', function (e) {
+                        $(this).find('.dropdown-menu').first().stop(true, true).slideUp();
+                    });
+
+                }
+            };
+        })
+
         .directive('topNav', [
             '$window', function($window) {
                 return {

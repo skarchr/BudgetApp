@@ -1,4 +1,5 @@
-﻿@using BudgetApp.Extensions
+﻿@using System.Activities.Statements
+@using BudgetApp.Extensions
 @using BudgetApp.Models
 @model TransactionsViewModel
 
@@ -47,12 +48,14 @@
                 </div>
 
                 <div class="col-xs-12 col-md-6 text-right">
-                                                                                
-                    @Html.HiddenFor(s => s.Range)                    
-                    @Html.HiddenFor(s => s.CurrentPage)                    
+
+                    @if (Model.RangeViewers.Any()) { 
+
+                    @Html.HiddenFor(s => s.Range)
+                    @Html.HiddenFor(s => s.CurrentPage)
 
                     <div class="btn-group" role="group">
-                                                
+
                         <button style="padding-left:24px;padding-right: 24px;" type="button" set-range="@Range.All" class="btn btn-default @(Model.Range == Range.All ? "active":"")">
                             All
                         </button>
@@ -66,9 +69,9 @@
                             Weekly
                         </button>
                     </div>
-                    
-                    <input type="submit" id="submitBtn" class="hidden" />
 
+                    <input type="submit" id="submitBtn" class="hidden" />
+                    }
                 </div>
 
 
@@ -114,7 +117,7 @@
 
 
                     <div class="panel panel-default">
-                        
+
                         <hr />
 
                         <div class="panel-body">
@@ -141,8 +144,8 @@
                                     <span style="height:350px;width:703px !important;" class="visible-sm" data-highchart="{{range.graph}}" data-index="{{$index}}"></span>
 
                                 </div>
-                                
-                                
+
+
                             </div>
                         </div>
                         <table class="table table-condensed table-same-width table-hover" style="margin-top: 18px;">
@@ -203,10 +206,10 @@
 
         }
     </div>
-    
+
     @*<div class="row">
-        <div class="col-xs-12">Icons made by <a href="http://www.flaticon.com/authors/freepik" title="Freepik">Freepik</a> from <a href="http://www.flaticon.com" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0">CC BY 3.0</a></div>
-    </div>*@
+            <div class="col-xs-12">Icons made by <a href="http://www.flaticon.com/authors/freepik" title="Freepik">Freepik</a> from <a href="http://www.flaticon.com" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0">CC BY 3.0</a></div>
+        </div>*@
 
 </div>
 
