@@ -475,3 +475,17 @@ optgroup {
 optgroup > option {
     background-color: white;
 }
+
+.blue {
+    color: #0094ff;
+}
+
+hr.blue {
+    border-top: 1px solid #0094ff;
+    margin-top: -8px;
+}
+
+hr.red {
+    border-top: 1px solid #b94a48;
+    margin-top: -8px;
+}
