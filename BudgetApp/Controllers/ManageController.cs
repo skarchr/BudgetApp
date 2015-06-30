@@ -3,6 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Routing;
 using System.Web.Security;
 using Antlr.Runtime.Misc;
 using BudgetApp.Models;
@@ -103,10 +104,11 @@ namespace BudgetApp.Controllers
             ViewBag.StatusMessage =
                 message == ManageMessageId.ChangePasswordSuccess ? "Your password has been changed."
                 : message == ManageMessageId.SetPasswordSuccess ? "Your password has been set."
-                : message == ManageMessageId.SetTwoFactorSuccess ? "Your two-factor authentication provider has been set."
+                : message == ManageMessageId.SetTwoFactorSuccess ? "Two-factor authentication has been enabled."
                 : message == ManageMessageId.Error ? "An error has occurred."
                 : message == ManageMessageId.AddPhoneSuccess ? "Your phone number was added."
                 : message == ManageMessageId.RemovePhoneSuccess ? "Your phone number was removed."
+                : message == ManageMessageId.RemoveTwoFactorSuccess ? "Two-factor authentication has been disabled."
                 : "";
 
             var model = new IndexViewModel
@@ -178,7 +180,7 @@ namespace BudgetApp.Controllers
             {
                 await SignInAsync(user, isPersistent: false);
             }
-            return RedirectToAction("Index", "Manage");
+            return RedirectToAction("Index", "Manage", new { Message = ManageMessageId.SetTwoFactorSuccess });
         }
 
         //
@@ -192,7 +194,7 @@ namespace BudgetApp.Controllers
             {
                 await SignInAsync(user, isPersistent: false);
             }
-            return RedirectToAction("Index", "Manage");
+            return RedirectToAction("Index", "Manage", new { Message = ManageMessageId.RemoveTwoFactorSuccess });
         }
 
 
@@ -376,7 +378,8 @@ namespace BudgetApp.Controllers
             SetPasswordSuccess,
             RemoveLoginSuccess,
             RemovePhoneSuccess,
-            Error
+            Error,
+            RemoveTwoFactorSuccess,
         }
 
 #endregion

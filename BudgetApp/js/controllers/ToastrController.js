@@ -18,6 +18,14 @@
                 case 'info':
                     toastr.info(val);
                     break;
+                case 'statusMessage':
+
+                    if ('An error has occurred.' === val) {
+                        toastr.error(val);
+                    } else {
+                        toastr.success(val);
+                    }
+                    break;
                 default:
                     break;
                 }

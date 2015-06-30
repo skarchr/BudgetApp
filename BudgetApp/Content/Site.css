@@ -485,7 +485,6 @@ hr.blue {
     margin-top: -8px;
 }
 
-hr.red {
-    border-top: 1px solid #b94a48;
-    margin-top: -8px;
+.red {
+    color: #b94a48;
 }

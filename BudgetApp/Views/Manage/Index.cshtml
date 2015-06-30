@@ -5,7 +5,6 @@
     ViewBag.Title = "Manage";
 }
 
-<p class="text-success">@ViewBag.StatusMessage</p>
 
 <div class="row" fade-in="500" style="margin-top:30px;">
 
@@ -13,29 +12,37 @@
 
         <div class="form-horizontal">
             
-            <div class="col-md-12">
-                
-                <h3 class="blue">Account settings <button class="btn btn-xs btn-danger pull-right" data-toggle="modal" data-target="#deleteModal">Delete</button></h3>
-                <hr class="blue" />
+            <div class="col-md-12">               
 
                 <div class="form-group">
                     <label for="picture" class="control-label col-sm-5"></label>
                     <div class="col-sm-7">
-                        <img gravatar-src="'@User.Identity.Name'" gravatar-size="200">
+                        <img gravatar-src="'@User.Identity.Name'" gravatar-size="200" style="border:2px solid #0094ff;padding:2px; -ms-border-radius: 4px; border-radius: 4px;">
+                    </div>
+                </div>               
+                
+                <div class="form-group" style="margin-bottom: 40px;">
+                    <label for="delete" class="control-label col-sm-5">Delete account</label>
+                    <div class="col-sm-7" style="padding-top:7px;">
+                        <a href="#" class="red" data-toggle="modal" data-target="#deleteModal">Delete</a>
                     </div>
                 </div>
-
+                <hr />
                 <div class="form-group">
-                    <label for="Username" class="control-label col-sm-5">Username</label>
+                    <label for="Username" class="control-label col-sm-5">Email</label>
                     <div class="col-sm-7" style="padding-top:4px;">
                         <strong style="font-size:18px;"> @User.Identity.Name</strong>
                         @if (Model.EmailConfirmed)
                         {
-                            <span style="font-size:10px;margin-left: 20px;" class="label label-success">Confirmed</span>
+                            <span style="font-size: 10px; margin-left: 20px;" class="label label-success">Confirmed</span>
+                        }
+                        else
+                        {
+                            <span title="Confirm your email by logging in with ur email and password" style="font-size: 10px; margin-left: 20px;" class="label label-danger">Unconfirmed</span>
                         }
                     </div>
                 </div>                
-
+                                
                 <div class="form-group">
                     <label for="Password" class="control-label col-sm-5">Password</label>
                     <div class="col-sm-7" style="padding-top:7px;">
@@ -69,9 +76,9 @@
                             using (Html.BeginForm("EnableTwoFactorAuthentication", "Manage", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
                             {
                                 @Html.AntiForgeryToken()
-                                <text>
+                                <text>                                    
+                                    <input type="submit" value="Enable" class="btn btn-link" style="margin-top: -3px;padding-left:0;" />
                                     Disabled
-                                    <input type="submit" value="Enable" class="btn btn-link" style="margin-top: -3px;" />
                                 </text>
                             }
                         }
@@ -93,12 +100,7 @@
                         @Html.ActionLink("Manage", "ManageLogins", null, new { @style = "margin-top:-3px;float:left;" })
                     </div>
                 </div>               
-
-            </div>
-            <div class="col-md-12">
-                
-                <h3 class="blue">View settings</h3>
-                <hr class="blue" />
+                <hr />
                 <div class="form-group">
                     <label for="Username" class="control-label col-sm-5">Default Range</label>
                     <div class="col-sm-7">
@@ -119,7 +121,6 @@
                     </div>
                 </div>
 
-
                 <div class="form-group">
                     <label for="Currency" class="control-label col-sm-5">Currency</label>
                     <div class="col-sm-7">
@@ -139,11 +140,7 @@
                         </select>
                     </div>
                 </div>
-                
-                
-                
-                <h3 class="blue">Monthly goals</h3>
-                <hr class="blue" />
+                                               
                 <div class="form-group">
                     <label for="Transactions" class="control-label col-sm-5">Saving</label>
                     <div class="col-sm-7">
@@ -152,15 +149,13 @@
                     </div>
                 </div>
                 
-                <div class="form-group">
+                <div class="form-group" style="margin-bottom: 35px;">
                     <label for="Transactions" class="control-label col-sm-5">Expenses</label>
                     <div class="col-sm-7">
                         @Html.TextBoxFor(m => m.MonthlyExpensesGoal, new { @class = "form-control", @placeholder = "Monthly expenses goal", @ng_model = "model.monthlyExpensesGoal", @ng_change = "dirty = true", @ng_pattern="regexDouble" })
                         <span class="currency-label">{{model.currency}}</span>
                     </div>
-                </div>
-                
-                <hr />
+                </div>                
 
                 <div>
                     <div class="col-lg-offset-5 col-sm-7">
@@ -187,7 +182,7 @@
                         <span>This action CANNOT be undone. This will permanently delete your account, transactions and mappings.</span>
                         <br />
                         <br />
-                        <span>Please type in your username to confirm. </span>
+                        <span>Please type in your email to confirm. </span>
                         
                         <input type="text" class="form-control" ng-model="confirmDelete" />
                         

@@ -74,7 +74,7 @@ namespace BudgetApp.Controllers
 
                     // Uncomment to debug locally  
                     ViewBag.Link = callbackUrl;
-                    ViewBag.errorMessage = "You must have a confirmed email to log on. "
+                    ViewBag.errorMessage = "You must have a confirmed email to log in. "
                                            + "The confirmation token has been resent to your email account.";
                     return View("Error");
                 }

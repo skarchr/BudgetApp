@@ -4,16 +4,34 @@
     ViewBag.Title = "Error";
 }
 
-<h1 class="text-danger">Error.</h1>
-@{
-   if (String.IsNullOrEmpty(ViewBag.errorMessage))
-   {
-      <h2 class="text-danger">An error occurred while processing your request.</h2>
-   }
-   else
-   {
-      <h2 class="text-danger">@ViewBag.errorMessage</h2>
-   }
-}
 
+<div class="row" ng-controller="loginController" style="margin-top: -70px;">
 
+    <div class="col-md-12 text-center">
+
+        <div id="icon" data-logo="40" style="width:40%;min-width: 200px;">
+            <object>
+                <img src="~/Content/images/logo.svg" id="svg" />
+            </object>
+        </div>
+
+    </div>
+</div>
+
+<div class="row">
+
+    @{
+        if (String.IsNullOrEmpty(ViewBag.errorMessage))
+        {
+            <div class="alert alert-danger">An error occurred while processing your request.</div>
+        }
+        else
+        {
+            <div class="alert alert-info text-center">@ViewBag.errorMessage</div>
+        }
+    }
+    <div class="col-xs-12 text-center">
+        @Html.ActionLink("Click here to Log in", "Login", "Account", new { @class = "text-center" })
+    </div>
+    
+</div>
