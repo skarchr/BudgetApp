@@ -13,9 +13,9 @@
 
         <div class="form-horizontal">
             
-            <div class="col-md-6">
+            <div class="col-md-12">
                 
-                <h3 class="blue">Account settings</h3>
+                <h3 class="blue">Account settings <button class="btn btn-xs btn-danger pull-right" data-toggle="modal" data-target="#deleteModal">Delete</button></h3>
                 <hr class="blue" />
 
                 <div class="form-group">
@@ -27,8 +27,12 @@
 
                 <div class="form-group">
                     <label for="Username" class="control-label col-sm-5">Username</label>
-                    <div class="col-sm-7">
-                        <input type="text" class="form-control no-input" value="@User.Identity.Name" readonly="readonly" />
+                    <div class="col-sm-7" style="padding-top:4px;">
+                        <strong style="font-size:18px;"> @User.Identity.Name</strong>
+                        @if (Model.EmailConfirmed)
+                        {
+                            <span style="font-size:10px;margin-left: 20px;" class="label label-success">Confirmed</span>
+                        }
                     </div>
                 </div>                
 
@@ -88,19 +92,10 @@
 
                         @Html.ActionLink("Manage", "ManageLogins", null, new { @style = "margin-top:-3px;float:left;" })
                     </div>
-                </div>
-                
-                <h3 class="text-danger">Danger zone</h3>
-                <hr class="red" />
-                <div class="form-group">
-                    <label for="Transactions" class="control-label col-sm-5">Delete account</label>
-                    <div class="col-sm-7">
-                        <button class="btn btn-danger" data-toggle="modal" data-target="#deleteModal">Delete</button>
-                    </div>
-                </div>
+                </div>               
 
             </div>
-            <div class="col-md-6">
+            <div class="col-md-12">
                 
                 <h3 class="blue">View settings</h3>
                 <hr class="blue" />

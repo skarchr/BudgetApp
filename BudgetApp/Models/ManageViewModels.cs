@@ -16,6 +16,8 @@ namespace BudgetApp.Models
         public double? MonthlySavingGoal { get; set; }
         public double? MonthlyExpensesGoal { get; set; }
 
+        public bool EmailConfirmed { get; set; }
+
         public bool HasPassword { get; set; }
         public IList<UserLoginInfo> Logins { get; set; }
         public bool TwoFactor { get; set; }
