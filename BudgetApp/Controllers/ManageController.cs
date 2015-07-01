@@ -109,6 +109,7 @@ namespace BudgetApp.Controllers
                 : message == ManageMessageId.AddPhoneSuccess ? "Your phone number was added."
                 : message == ManageMessageId.RemovePhoneSuccess ? "Your phone number was removed."
                 : message == ManageMessageId.RemoveTwoFactorSuccess ? "Two-factor authentication has been disabled."
+                : message == ManageMessageId.EmailConfirmationTokenSent ? "Check your email and confirm your account."
                 : "";
 
             var model = new IndexViewModel
@@ -380,6 +381,7 @@ namespace BudgetApp.Controllers
             RemovePhoneSuccess,
             Error,
             RemoveTwoFactorSuccess,
+            EmailConfirmationTokenSent
         }
 
 #endregion

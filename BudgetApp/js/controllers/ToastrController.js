@@ -10,7 +10,7 @@
             if(val !== ''){
                 switch (i) {
                 case 'success':
-                    toastr.success(val);
+                    toastr.success(val,{ timeOut: 7000 });
                     break;
                 case 'error':
                     toastr.error(val, { timeOut: 30000, closeButton: true });
@@ -22,8 +22,10 @@
 
                     if ('An error has occurred.' === val) {
                         toastr.error(val, { timeOut: 30000, closeButton: true });
+                    } else if ('Check your email and confirm your account.' === val) {
+                        toastr.info(val);
                     } else {
-                        toastr.success(val);
+                        toastr.success(val, { timeOut: 7000 });
                     }
                     break;
                 default:

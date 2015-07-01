@@ -16,6 +16,7 @@ namespace BudgetApp.Controllers
         public ActionResult Index()
         {
             ViewBag.Link = TempData["ViewBagLink"];
+            ViewBag.Success = TempData["Success"];
 
             var transactions = db.Transactions.Where(s => s.UserName == User.Identity.Name).ToList();
             var user = db.Users.First(u => u.UserName == User.Identity.Name);

@@ -60,6 +60,18 @@ namespace BudgetApp.Controllers
         {
             if (!ModelState.IsValid)
             {
+                string errorString = "";
+
+                foreach (var state in ModelState)
+                {
+                    foreach (var error in state.Value.Errors)
+                    {
+                        errorString += string.Format("{0} ", error.ErrorMessage ?? "");
+                    }                    
+                }
+
+                ViewBag.Error = errorString;
+
                 return View(model);
             }
 
@@ -91,12 +103,15 @@ namespace BudgetApp.Controllers
                 case SignInStatus.Success:
                     return RedirectToLocal(returnUrl);
                 case SignInStatus.LockedOut:
-                    return View("Lockout");
+                    ViewBag.Error = "This account has been locked out, please try again later.";
+                    return View("Login");
                 case SignInStatus.RequiresVerification:
                     return RedirectToAction("SendCode", new {ReturnUrl = returnUrl, RememberMe = model.RememberMe});
                 case SignInStatus.Failure:
                 default:
-                    ModelState.AddModelError("", "Wrong email and/or password");
+                    //ModelState.AddModelError("", "Wrong email and/or password");
+
+                    ViewBag.Error = "Wrong email and/or password";
                     return View(model);
             }
         }
@@ -146,7 +161,8 @@ namespace BudgetApp.Controllers
                 case SignInStatus.Success:
                     return RedirectToLocal(model.ReturnUrl);
                 case SignInStatus.LockedOut:
-                    return View("Lockout");
+                    ViewBag.Error = "This account has been locked out, please try again later.";
+                    return View("Login");
                 case SignInStatus.Failure:
                 default:
                     ModelState.AddModelError("", "Invalid code.");
@@ -222,7 +238,12 @@ namespace BudgetApp.Controllers
             {
                 ViewBag.Error = "Something went wrong. Try again!";
             }
-                
+
+            if (User.Identity.IsAuthenticated)
+            {
+                TempData["Success"] = ViewBag.Success;
+                return RedirectToAction("Index", "Home");
+            }
 
             return View("Login");
         }
@@ -248,7 +269,8 @@ namespace BudgetApp.Controllers
                 if (user == null || !(await UserManager.IsEmailConfirmedAsync(user.Id)))
                 {
                     // Don't reveal that the user does not exist or is not confirmed
-                    return View("ForgotPasswordConfirmation");
+                    ViewBag.Info = "Please check your email to reset your password.";
+                    return View("Login");
                 }
 
                 string code = await UserManager.GeneratePasswordResetTokenAsync(user.Id);
@@ -256,8 +278,9 @@ namespace BudgetApp.Controllers
                     protocol: Request.Url.Scheme);
                 await UserManager.SendEmailAsync(user.Id, "Reset Password",
                     "Please reset your password by clicking <a href=\"" + callbackUrl + "\">here</a>");
-                TempData["ViewBagLink"] = callbackUrl;
-                return RedirectToAction("ForgotPasswordConfirmation", "Account");
+                ViewBag.ViewBagLink = callbackUrl;
+                ViewBag.Info = "Please check your email to reset your password.";
+                return View("Login");
             }
 
             // If we got this far, something failed, redisplay form
@@ -297,12 +320,14 @@ namespace BudgetApp.Controllers
             if (user == null)
             {
                 // Don't reveal that the user does not exist
-                return RedirectToAction("ResetPasswordConfirmation", "Account");
+                ViewBag.Success = "Your password has been reset.";
+                return View("Login");
             }
             var result = await UserManager.ResetPasswordAsync(user.Id, model.Code, model.Password);
             if (result.Succeeded)
             {
-                return RedirectToAction("ResetPasswordConfirmation", "Account");
+                ViewBag.Success = "Your password has been reset.";
+                return View("Login");
             }
             AddErrors(result);
             return View();
@@ -388,7 +413,8 @@ namespace BudgetApp.Controllers
                 case SignInStatus.Success:
                     return RedirectToLocal(returnUrl);
                 case SignInStatus.LockedOut:
-                    return View("Lockout");
+                    ViewBag.Error = "This account has been locked out, please try again later.";
+                    return View("Login");
                 case SignInStatus.RequiresVerification:
                     return RedirectToAction("SendCode", new {ReturnUrl = returnUrl, RememberMe = false});
                 case SignInStatus.Failure:
@@ -420,7 +446,9 @@ namespace BudgetApp.Controllers
                 var info = await AuthenticationManager.GetExternalLoginInfoAsync();
                 if (info == null)
                 {
-                    return View("ExternalLoginFailure");
+                    ViewBag.Error = "Unsuccessful login with service.";
+
+                    return View("Index");
                 }
                 var user = new ApplicationUser
                 {
@@ -528,6 +556,15 @@ namespace BudgetApp.Controllers
                 }
                 context.HttpContext.GetOwinContext().Authentication.Challenge(properties, LoginProvider);
             }
+        }
+
+        [HttpGet]
+        [Authorize]
+        public async Task<ActionResult> SendEmailConfirmationToken()
+        {
+            var callBack = await SendEmailConfirmationTokenAsync(UserManager.FindByName(User.Identity.Name).Id, "Confirm email");
+
+            return RedirectToAction("Index", "Manage", new { Message = ManageController.ManageMessageId.EmailConfirmationTokenSent });
         }
 
         private async Task<string> SendEmailConfirmationTokenAsync(string userID, string subject)
