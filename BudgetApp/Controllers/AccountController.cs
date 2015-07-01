@@ -74,9 +74,9 @@ namespace BudgetApp.Controllers
 
                     // Uncomment to debug locally  
                     ViewBag.Link = callbackUrl;
-                    ViewBag.errorMessage = "You must have a confirmed email to log in. "
+                    ViewBag.Error = "You must have a confirmed email to log in. "
                                            + "The confirmation token has been resent to your email account.";
-                    return View("Error");
+                    return View("Login");
                 }
             }
 
@@ -210,10 +210,21 @@ namespace BudgetApp.Controllers
         {
             if (userId == null || code == null)
             {
-                return View("Error");
+                return View("Login");
             }
             var result = await UserManager.ConfirmEmailAsync(userId, code);
-            return View(result.Succeeded ? "ConfirmEmail" : "Error");
+
+            if (result.Succeeded)
+            {
+                ViewBag.Success = "Thank you for confirming your email.";
+            }
+            else
+            {
+                ViewBag.Error = "Something went wrong. Try again!";
+            }
+                
+
+            return View("Login");
         }
 
         //

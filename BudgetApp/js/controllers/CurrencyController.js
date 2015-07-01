@@ -62,4 +62,15 @@
 
     }]);
 
+
+    angular.module('budgetApp').controller('externalLoginsController', ['$scope', 'commonService', function($scope, commonService) {
+        
+        $scope.getIcon = function (input) {
+
+            return commonService.getIconUrl(input);
+
+        };
+
+    }]);
+
 })();

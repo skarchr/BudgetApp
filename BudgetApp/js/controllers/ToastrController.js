@@ -13,7 +13,7 @@
                     toastr.success(val);
                     break;
                 case 'error':
-                    toastr.error(val);
+                    toastr.error(val, { timeOut: 30000, closeButton: true });
                     break;
                 case 'info':
                     toastr.info(val);
@@ -21,7 +21,7 @@
                 case 'statusMessage':
 
                     if ('An error has occurred.' === val) {
-                        toastr.error(val);
+                        toastr.error(val, { timeOut: 30000, closeButton: true });
                     } else {
                         toastr.success(val);
                     }
