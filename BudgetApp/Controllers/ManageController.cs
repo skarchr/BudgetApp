@@ -88,7 +88,7 @@ namespace BudgetApp.Controllers
 
                 AuthenticationManager.SignOut();
 
-                TempData["Success"] = "Your account was deleted";
+                TempData["Info"] = "Your account was deleted";
             }
 
             return RedirectToAction("Login", "Account");

@@ -36,7 +36,7 @@ namespace BudgetApp.Controllers
         [AllowAnonymous]
         public ActionResult Login(string returnUrl)
         {
-
+            ViewBag.Info = TempData["Info"];
             ViewBag.Success = TempData["Success"];
 
             ViewBag.ReturnUrl = returnUrl;
@@ -230,22 +230,13 @@ namespace BudgetApp.Controllers
             }
             var result = await UserManager.ConfirmEmailAsync(userId, code);
 
-            if (result.Succeeded)
-            {
-                ViewBag.Success = "Thank you for confirming your email.";
-            }
-            else
+            if (!result.Succeeded)
             {
                 ViewBag.Error = "Something went wrong. Try again!";
+                return View("Login");
             }
 
-            if (User.Identity.IsAuthenticated)
-            {
-                TempData["Success"] = ViewBag.Success;
-                return RedirectToAction("Index", "Home");
-            }
-
-            return View("Login");
+            return View();
         }
 
         //

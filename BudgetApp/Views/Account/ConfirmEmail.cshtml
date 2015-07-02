@@ -1,27 +1,36 @@
 ﻿@{
     ViewBag.Title = "Confirm Email";
+    Layout = "";
 }
 
-<div class="row" ng-controller="loginController" style="margin-top: -70px;">
+<html>
+    <head>
+        <title>BudgetApp</title>
+        <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+    </head>
 
-    <div class="col-md-12 text-center">
+    <body>
+        <div class="container">
+            <div class="row" style="margin-top: 30px;">
 
-        <div id="icon" data-logo="40" style="width:40%;min-width: 200px;">
-            <object>
-                <img src="~/Content/images/logo.svg" id="svg" />
-            </object>
+                <div class="col-md-12 text-center">
+
+                    <div id="icon" style="width:40%;min-width: 150px;margin-left:auto;margin-right:auto;">
+                        <object>
+                            <img src="~/Content/images/logo.svg" id="svg" />
+                        </object>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="row">
+
+
+                <h3 class="text-center" style="font-weight: bold;" >Thank you for confirming your email.</h3>
+
+
+            </div>
         </div>
-
-    </div>
-</div>
-
-<div class="row">
-
-
-    <div class="alert alert-success text-center">Thank you for confirming your email.</div>
-
-    <div class="col-xs-12 text-center">
-        @Html.ActionLink("Click here to Log in", "Login", "Account", new { @class = "text-center" })
-    </div>
-
-</div>
+    </body>
+</html>

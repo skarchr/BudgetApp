@@ -89,6 +89,12 @@ namespace BudgetApp.Controllers
 
             var user = db.Users.First(u => u.UserName == User.Identity.Name);
 
+            if (model.Range != user.Range)
+            {
+                user.Range = model.Range;
+                db.SaveChanges();
+            }
+
             var rangeViewers = new List<RangeViewer>();
 
             switch (model.Range)

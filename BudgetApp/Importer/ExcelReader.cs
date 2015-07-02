@@ -45,7 +45,7 @@ namespace BudgetApp.Importer
                         Import = true,
                         Date = date,
                         Description = desc,
-                        Amount = amount.Value,
+                        Amount = amount.Value > 0 ? amount.Value : amount.Value * -1,
                         Category = cat,
                         Created = DateTime.Now,
                         UserName = userName
