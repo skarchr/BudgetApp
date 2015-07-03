@@ -145,6 +145,7 @@ namespace BudgetApp.Controllers
         {
             if (!ModelState.IsValid)
             {
+                ViewBag.Error = "Invalid code";
                 return View(model);
             }
 
@@ -165,7 +166,7 @@ namespace BudgetApp.Controllers
                     return View("Login");
                 case SignInStatus.Failure:
                 default:
-                    ModelState.AddModelError("", "Invalid code.");
+                    ViewBag.Error = "Invalid code";
                     return View(model);
             }
         }

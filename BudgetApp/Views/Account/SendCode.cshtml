@@ -3,22 +3,39 @@
     ViewBag.Title = "Send";
 }
 
-<h2>@ViewBag.Title.</h2>
 
-@using (Html.BeginForm("SendCode", "Account", new { ReturnUrl = Model.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" })) {
-    @Html.AntiForgeryToken()
-    @Html.Hidden("rememberMe", @Model.RememberMe)
-    <h4>Send verification code</h4>
-    <hr />
-    <div class="row">
-        <div class="col-md-8">
-            Select Two-Factor Authentication Provider:
-            @Html.DropDownListFor(model => model.SelectedProvider, Model.Providers)
-            <input type="submit" value="Submit" class="btn btn-default" />
+<div class="container">
+    <div class="row" style="margin-top: -70px;">
+
+        <div class="col-md-12 text-center">
+
+            <div id="icon" style="width:40%;min-width: 150px;margin-left:auto;margin-right:auto;">
+                <object>
+                    <img src="~/Content/images/logo.svg" id="svg" />
+                </object>
+            </div>
+
         </div>
     </div>
-}
 
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
-}
+    <div class="row text-center">
+
+
+        @using (Html.BeginForm("SendCode", "Account", new { ReturnUrl = Model.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+        {
+            @Html.AntiForgeryToken()
+            @Html.Hidden("rememberMe", @Model.RememberMe)
+            <h3>Two-Factor verification enabled</h3>
+
+
+                <div class="col-xs-12">
+                    @Html.DropDownListFor(model => model.SelectedProvider, Model.Providers, new { @class="hidden" })
+                    <br />
+                    <input type="submit" value="Send verification code" class="btn btn-primary" />
+                </div>
+
+        }
+
+
+    </div>
+</div>

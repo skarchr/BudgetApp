@@ -21,11 +21,9 @@
                 case 'statusMessage':
 
                     if ('An error has occurred.' === val) {
-                        toastr.error(val, { timeOut: 30000, closeButton: true });
-                    } else if ('Check your email and confirm your account.' === val) {
-                        toastr.info(val);
+                        toastr.error(val, { timeOut: 30000, closeButton: true });                    
                     } else {
-                        toastr.success(val, { timeOut: 7000 });
+                        toastr.info(val, { timeOut: 10000 });
                     }
                     break;
                 default:
