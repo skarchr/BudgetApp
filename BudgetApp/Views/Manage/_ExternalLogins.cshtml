@@ -1,0 +1,56 @@
+﻿@using Microsoft.Owin.Security
+@model BudgetApp.Models.ManageLoginsViewModel
+    
+
+<div class="col-xs-12" style="padding:0;">
+    
+    <div class="col-xs-5 col-md-@(Model.CurrentLogins.Count > 0 ? Model.CurrentLogins.Count:2)" style="padding:0;">
+        
+        @if (Model.CurrentLogins.Count > 0)
+        {
+
+            foreach (var account in Model.CurrentLogins)
+            {
+
+                using (Html.BeginForm("RemoveLogin", "Manage"))
+                {
+                    @Html.AntiForgeryToken()
+                    <div class="col-xs-4" style="padding: 0; min-width: 48px;">
+                        @Html.Hidden("loginProvider", account.LoginProvider)
+                        @Html.Hidden("providerKey", account.ProviderKey)
+                        <button type="submit" class="btn btn-empty" title="Remove this @account.LoginProvider login from your account">
+                            <img height="48" ng-src="{{getIcon('@account.LoginProvider')}}">
+                        </button>
+                    </div>
+                }
+            }
+
+        }
+        else
+        {
+            <div style="padding-top: 7px;" class="text-muted">Select logins &#8594; </div>
+        }
+    </div>  
+    <div class="col-xs-1" style="max-width: 37px;">
+        <span style="padding-top:9px;color:#ececec;padding-bottom: 32px;background:#ececec;min-height: 48px;font-size: 7px;@(Model.OtherLogins.Count > 0 && Model.OtherLogins.Count != 3  ? "":"display:none;")">|</span>
+    </div>
+    <div class="col-xs-5 col-md-3" style="padding:0;">
+        @if (Model.OtherLogins.Count > 0)
+        {
+
+            using (Html.BeginForm("LinkLogin", "Manage"))
+            {
+                @Html.AntiForgeryToken()
+                foreach (AuthenticationDescription p in Model.OtherLogins)
+                {
+                    <div class="col-xs-4" style="padding: 0;">
+
+                        <button type="submit" class="btn btn-empty" id="@p.AuthenticationType" name="provider" value="@p.AuthenticationType" title="Log in using your @p.Caption account"><img style="-ms-opacity: 0.3; opacity: 0.3" height="48" ng-src="{{getIcon('@p.AuthenticationType')}}" /></button>
+
+                    </div>
+                }
+            }
+        }
+    </div>
+</div>
+

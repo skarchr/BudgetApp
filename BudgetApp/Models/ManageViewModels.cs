@@ -21,6 +21,9 @@ namespace BudgetApp.Models
         public IList<UserLoginInfo> Logins { get; set; }
         public bool TwoFactor { get; set; }
         public bool BrowserRemembered { get; set; }
+
+        public ManageLoginsViewModel ManageLogins { get; set; }
+
     }
 
     public class ManageLoginsViewModel

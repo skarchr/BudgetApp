@@ -109,6 +109,8 @@ namespace BudgetApp.Controllers
                 : message == ManageMessageId.RemovePhoneSuccess ? "Your phone number was removed."
                 : message == ManageMessageId.RemoveTwoFactorSuccess ? "Two-factor authentication has been disabled."
                 : message == ManageMessageId.EmailConfirmationTokenSent ? "Check your email and confirm your account."
+                : message == ManageMessageId.RemoveLoginSuccess ? "The external login was removed."
+                : message == ManageMessageId.AddLoginSuccess ? "The external login was added."
                 : "";
 
             var model = new IndexViewModel
@@ -122,6 +124,15 @@ namespace BudgetApp.Controllers
 
             var user = db.Users.FirstOrDefault(s => s.UserName == User.Identity.Name);
 
+            var userLogins = await UserManager.GetLoginsAsync(User.Identity.GetUserId());
+            var otherLogins = AuthenticationManager.GetExternalAuthenticationTypes().Where(auth => userLogins.All(ul => auth.AuthenticationType != ul.LoginProvider)).ToList();
+                        
+            var loginModel = new ManageLoginsViewModel
+            {
+                CurrentLogins = userLogins,
+                OtherLogins = otherLogins
+            };
+
             if (user != null)
             {
                 model.Country = user.Country;
@@ -130,6 +141,7 @@ namespace BudgetApp.Controllers
                 model.MonthlySavingGoal = user.MonthlySavingGoal;
                 model.TransactionCount = db.Transactions.Count(s => s.UserName == User.Identity.Name);
                 model.MappingCount = db.Mappings.Count(s => s.UserName == User.Identity.Name);
+                model.ManageLogins = loginModel;
             }
 
             return View(model);
@@ -165,7 +177,7 @@ namespace BudgetApp.Controllers
             {
                 message = ManageMessageId.Error;
             }
-            return RedirectToAction("ManageLogins", new { Message = message });
+            return RedirectToAction("Index", new { Message = message });
         }
 
         //
@@ -317,10 +329,10 @@ namespace BudgetApp.Controllers
             var loginInfo = await AuthenticationManager.GetExternalLoginInfoAsync(XsrfKey, User.Identity.GetUserId());
             if (loginInfo == null)
             {
-                return RedirectToAction("ManageLogins", new { Message = ManageMessageId.Error });
+                return RedirectToAction("Index", new { Message = ManageMessageId.Error });
             }
             var result = await UserManager.AddLoginAsync(User.Identity.GetUserId(), loginInfo.Login);
-            return result.Succeeded ? RedirectToAction("ManageLogins") : RedirectToAction("ManageLogins", new { Message = ManageMessageId.Error });
+            return result.Succeeded ? RedirectToAction("Index", new { Message = ManageMessageId.AddLoginSuccess }) : RedirectToAction("Index", new { Message = ManageMessageId.Error });
         }
 
 #region Helpers
@@ -379,7 +391,8 @@ namespace BudgetApp.Controllers
             RemovePhoneSuccess,
             Error,
             RemoveTwoFactorSuccess,
-            EmailConfirmationTokenSent
+            EmailConfirmationTokenSent,
+            AddLoginSuccess,
         }
 
 #endregion

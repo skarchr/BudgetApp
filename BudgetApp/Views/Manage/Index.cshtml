@@ -21,7 +21,7 @@
                     </div>
                 </div>
 
-                <div class="form-group" style="margin-bottom: 40px;">
+                <div class="form-group" style="margin-bottom: 20px;">
                     <label for="delete" class="control-label col-sm-5"></label>
                     <div class="col-sm-7" style="padding-top:7px;">
                         <a href="#" class="red" data-toggle="modal" data-target="#deleteModal">Delete account</a>
@@ -96,17 +96,10 @@
                 
                 <div class="form-group">
                     <label for="External" class="control-label col-sm-5">External logins</label>
-                    <div class="col-sm-7">
-                        @{
-                            <ul class="list-unstyled list-inline" style="margin-left: -5px;">
-                                @foreach (var userLoginInfo in Model.Logins)
-                                {
-                                    <li><img ng-src="{{getIcon('@userLoginInfo.LoginProvider')}}" height="48" alt="social media" /></li>
-                                }
-                            </ul>
-                        }
+                    <div class="col-sm-7">                        
+                        
+                        @Html.Partial("_ExternalLogins", Model.ManageLogins)
 
-                        @Html.ActionLink("Manage", "ManageLogins", null, new { @style = "margin-top:-3px;float:left;" })
                     </div>
                 </div>
                 <hr />

@@ -16,7 +16,7 @@
                     toastr.error(val, { timeOut: 30000, closeButton: true });
                     break;
                 case 'info':
-                    toastr.info(val);
+                    toastr.info(val, { timeOut: 10000 });
                     break;
                 case 'statusMessage':
 

@@ -39,7 +39,6 @@ namespace BudgetApp.Controllers
             ViewBag.Info = TempData["Info"];
             ViewBag.Success = TempData["Success"];
 
-            ViewBag.ReturnUrl = returnUrl;
             return View();
         }
 
@@ -198,19 +197,12 @@ namespace BudgetApp.Controllers
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
-                    //  Comment the following line to prevent log in until the user is confirmed.
-                    //  await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
 
                     string callbackUrl = await SendEmailConfirmationTokenAsync(user.Id, "Confirm your account");
 
+                    ViewBag.Info = "Check your email and confirm your account, it must be confirmed before you can log in.";
 
-                    ViewBag.Message = "Check your email and confirm your account, you must be confirmed "
-                                      + "before you can log in.";
-
-                    // For local debug only
-                    ViewBag.Link = callbackUrl;
-
-                    return View("Info");
+                    return View("Login"); ;
                     //return RedirectToAction("Index", "Home");
                 }
                 AddErrors(result);
