@@ -51,7 +51,6 @@ namespace BudgetApp.Controllers
                 user.Country = model.Country;
                 user.MonthlyExpensesGoal = model.MonthlyExpensesGoal;
                 user.MonthlySavingGoal = model.MonthlySavingGoal;
-                user.Range = model.Range;
                 db.SaveChanges();
                 return Json("{ saved: true }");
             }
@@ -129,7 +128,6 @@ namespace BudgetApp.Controllers
                 model.Currency = user.Currency;
                 model.MonthlyExpensesGoal = user.MonthlyExpensesGoal;
                 model.MonthlySavingGoal = user.MonthlySavingGoal;
-                model.Range = user.Range;
                 model.TransactionCount = db.Transactions.Count(s => s.UserName == User.Identity.Name);
                 model.MappingCount = db.Mappings.Count(s => s.UserName == User.Identity.Name);
             }

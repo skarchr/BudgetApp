@@ -1,6 +1,7 @@
 ﻿@using System.Activities.Statements
 @using BudgetApp.Extensions
 @using BudgetApp.Models
+@using Microsoft.Ajax.Utilities
 @model TransactionsViewModel
 
 @{
@@ -22,26 +23,66 @@
                     {
 
                         <div class="btn-group" role="group">
-
+                            
                             @if (Model.CurrentPage != 1)
                             {
                                 <button type="button" set-page="@(Model.CurrentPage -1)" class="btn btn-default" style="margin-right:5px;padding: 6px 4px;">
                                     <i class="glyphicon glyphicon-chevron-left"></i>
                                 </button>
                             }
-                            @for (var i = 1; i <= Model.TotalPages; i++)
-                            {
-                                <button type="button" set-page="@i" class="btn btn-default @(i == Model.CurrentPage ? "active" : "")">
-                                    @i
-                                </button>
-                            }
+
+                            @{
+                                var startPage = (Model.CurrentPage < 5) ? 1 : Model.CurrentPage - 2;
+                                var endPage = 4 + startPage;
+                                endPage = (Model.TotalPages < endPage) ? Model.TotalPages : endPage;
+
+                                var diff = startPage - endPage + 4;
+
+                                startPage -= (startPage - diff > 0) ? diff : 0;
+
+                                if (startPage > 1)
+                                {
+                                    <button type="button" set-page="1" class="btn btn-default @(1 == Model.CurrentPage ? "active" : "")">
+                                        1
+                                    </button>
+                                }
+
+                                if (Model.CurrentPage > 4 && Model.TotalPages > 5)
+                                {
+                                    <button type="button"class="btn btn-default">
+                                        ...
+                                    </button>
+                                }
+
+                                for (var i = startPage; i <= endPage; i++)
+                                {
+                                    <button type="button" set-page="@i" class="btn btn-default @(i == Model.CurrentPage ? "active" : "")">
+                                        @i
+                                    </button>
+                                }
+
+                                if (Model.CurrentPage <= (Model.TotalPages - 4) && Model.TotalPages > 5)
+                                {
+                                    <button type="button" class="btn btn-default">
+                                        ...
+                                    </button>
+                                }
+
+                                if (endPage < Model.TotalPages)
+                                {
+                                    <button type="button" set-page="@Model.TotalPages" class="btn btn-default @(Model.TotalPages == Model.CurrentPage ? "active" : "")">
+                                        @Model.TotalPages
+                                    </button>
+                                }
+
+                            }                            
+
                             @if (Model.CurrentPage != Model.TotalPages)
                             {
                                 <button type="button" set-page="@(Model.CurrentPage + 1)" class="btn btn-default" style="margin-left:5px;padding: 6px 4px;">
                                     <i class="glyphicon glyphicon-chevron-right"></i>
                                 </button>
                             }
-
 
                         </div>
                     }
@@ -56,9 +97,6 @@
 
                     <div class="btn-group" role="group">
 
-                        <button style="padding-left:24px;padding-right: 24px;" type="button" set-range="@Range.All" class="btn btn-default @(Model.Range == Range.All ? "active":"")">
-                            All
-                        </button>
                         <button type="button" set-range="@Range.Annual" class="btn btn-default @(Model.Range == Range.Annual ? "active":"")">
                             Annual
                         </button>
