@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
@@ -297,6 +298,8 @@ namespace BudgetApp.Controllers
         {
             if (!ModelState.IsValid)
             {
+                ViewBag.Error = CreateErrorMessages(ModelState);
+
                 return View(model);
             }
 
@@ -314,7 +317,24 @@ namespace BudgetApp.Controllers
                 return View("Login");
             }
             AddErrors(result);
+            ViewBag.Error = CreateErrorMessages(ModelState);
             return View();
+        }
+
+        private string CreateErrorMessages(ModelStateDictionary state)
+        {
+            var messages = new List<string>();
+
+            foreach (var item in state.Values)
+            {
+                foreach (var error in item.Errors)
+                {
+                    if (error.ErrorMessage != null)
+                        messages.Add(error.ErrorMessage);
+                }
+            }
+
+            return string.Join("\n", messages);
         }
 
         //

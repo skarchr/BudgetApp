@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
@@ -241,6 +242,7 @@ namespace BudgetApp.Controllers
         {
             if (!ModelState.IsValid)
             {
+                ViewBag.Error = CreateErrorMessages(ModelState);
                 return View(model);
             }
             var result = await UserManager.ChangePasswordAsync(User.Identity.GetUserId(), model.OldPassword, model.NewPassword);
@@ -254,7 +256,24 @@ namespace BudgetApp.Controllers
                 return RedirectToAction("Index", new { Message = ManageMessageId.ChangePasswordSuccess });
             }
             AddErrors(result);
+            ViewBag.Error = CreateErrorMessages(ModelState);
             return View(model);
+        }
+
+        private string CreateErrorMessages(ModelStateDictionary state)
+        {
+            var messages = new List<string>();
+
+            foreach (var item in state.Values)
+            {
+                foreach (var error in item.Errors)
+                {
+                    if (error.ErrorMessage != null)
+                        messages.Add(error.ErrorMessage);
+                }
+            }
+
+            return string.Join(Environment.NewLine, messages);
         }
 
         //
@@ -284,6 +303,8 @@ namespace BudgetApp.Controllers
                 }
                 AddErrors(result);
             }
+
+            ViewBag.Error = CreateErrorMessages(ModelState);
 
             // If we got this far, something failed, redisplay form
             return View(model);
