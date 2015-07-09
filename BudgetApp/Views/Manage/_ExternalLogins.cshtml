@@ -2,9 +2,8 @@
 @model BudgetApp.Models.ManageLoginsViewModel
     
 
-<div class="col-xs-12" style="padding:0;">
-    
-    <div class="col-xs-5 col-md-@(Model.CurrentLogins.Count > 0 ? Model.CurrentLogins.Count:2)" style="padding:0;">
+<div class="col-xs-12" style="padding:0;display: inline-block;max-width:156px;">
+
         
         @if (Model.CurrentLogins.Count > 0)
         {
@@ -26,15 +25,7 @@
             }
 
         }
-        else
-        {
-            <div style="padding-top: 7px;" class="text-muted">Select logins &#8594; </div>
-        }
-    </div>  
-    <div class="col-xs-1" style="max-width: 37px;">
-        <span style="padding-top:13px;color:#eeeeee;padding-bottom: 34px;background:#ececec;min-height: 48px;font-size: 2px;@(Model.OtherLogins.Count > 0 && Model.OtherLogins.Count != 3  ? "":"display:none;")">|</span>
-    </div>
-    <div class="col-xs-5 col-md-3" style="padding:0;">
+        
         @if (Model.OtherLogins.Count > 0)
         {
 
@@ -43,14 +34,13 @@
                 @Html.AntiForgeryToken()
                 foreach (AuthenticationDescription p in Model.OtherLogins)
                 {
-                    <div class="col-xs-4" style="padding: 0;">
+                    <div class="col-xs-4" style="padding: 0; min-width: 48px;">
 
-                        <button type="submit" class="btn btn-empty" id="@p.AuthenticationType" name="provider" value="@p.AuthenticationType" title="Log in using your @p.Caption account"><img style="-ms-opacity: 0.3; opacity: 0.3" height="48" ng-src="{{getIcon('@p.AuthenticationType')}}" /></button>
+                        <button type="submit" class="btn btn-empty" id="@p.AuthenticationType" name="provider" value="@p.AuthenticationType" title="Log in using your @p.Caption account"><img style="-ms-opacity: 0.1; opacity: 0.1" height="48" ng-src="{{getIcon('@p.AuthenticationType')}}" /></button>
 
                     </div>
                 }
             }
         }
-    </div>
 </div>
 
