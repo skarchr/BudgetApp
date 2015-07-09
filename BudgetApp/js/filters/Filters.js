@@ -5,6 +5,10 @@
 
 
     var formatNumber = function (number) {
+
+        if (number === null)
+            return number;
+
         var numb = number.toFixed(2) + '';
         var x = numb.split(' ');
         var x1 = x[0];

@@ -62,7 +62,7 @@
                 </a>
                 <ul class="dropdown-menu text-left">
                     <li class="visible-xs visible-sm"><a href="@Url.Action("Create", "Transactions")" title="Add transaction">Add</a></li>
-                    <li class="visible-xs visible-sm"><a href="@Url.Action("Upload", "Transactions")" title="Import transactions">Import</a></li>
+                    <li class="visible-sm"><a href="@Url.Action("Upload", "Transactions")" title="Import transactions">Import</a></li>
                     <li role="separator" class="divider visible-xs visible-sm"></li>
                     <li class="@(ViewBag.Title == "Transactions" ? "active" : "")">@Html.ActionLink("Transactions", "Index", "Transactions")</li>
                     <li class="@(ViewBag.Title == "Mappings" ? "active" : "")">@Html.ActionLink("Mappings", "Index", "Mappings")</li>

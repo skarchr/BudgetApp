@@ -43,11 +43,21 @@
         <div role="tabpanel" class="col-xs-12">
 
             <!-- Nav tabs -->
-            <ul class="nav nav-tabs" role="tablist" style="margin-bottom: 40px;">
+            <ul class="nav nav-tabs hidden-xs" role="tablist" style="margin-bottom: 40px;">
                 <li role="presentation" class="active"><a href="#expense" aria-controls="expense" role="tab" data-toggle="tab" title="Shows an overview for all your registered transactions">All transactions</a></li>
                 <li role="presentation"><a href="#income" aria-controls="income" role="tab" data-toggle="tab" reflow-charts title="Shows an overview for the transactions during the year @DateTime.Now.Year">Current year</a></li>
 
                 <li class="pull-right" role="presentation"><a href="#prediction" aria-controls="prediction" role="tab" data-toggle="tab">Prognosis</a></li>
+                <li ng-show="model.savingGoal" class="pull-right" role="presentation">
+                    <a href="#saving" aria-controls="saving" role="tab" data-toggle="tab">
+                        Savings
+                    </a>
+                </li>
+            </ul>
+            
+            <ul class="nav nav-pills visible-xs" role="tablist" style="margin-bottom: 40px;">
+                <li role="presentation" class="active"><a href="#expense" aria-controls="expense" role="tab" data-toggle="tab" title="Shows an overview for all your registered transactions">All transactions</a></li>
+                <li role="presentation"><a href="#income" aria-controls="income" role="tab" data-toggle="tab" reflow-charts title="Shows an overview for the transactions during the year @DateTime.Now.Year">Current year</a></li>                
                 <li ng-show="model.savingGoal" class="pull-right" role="presentation">
                     <a href="#saving" aria-controls="saving" role="tab" data-toggle="tab">
                         Savings
@@ -60,6 +70,22 @@
                 <div role="tabpanel" class="tab-pane active" id="expense">
 
                     <div class="col-xs-12">
+                        
+                        <div class="row visible-xs">
+                            <div class="col-xs-12">
+                                
+                                <div class="col-xs-5 text-right text-muted" style="font-size:18px;">Income</div>
+                                <div class="col-xs-7" style="font-size:18px;">{{ model.totalIncome | currencyFormatter}} {{model.currency}}</div>
+                            </div>
+                        </div>
+                        
+                        <div class="row visible-xs" style="margin-bottom: 40px;">
+                            <div class="col-xs-12">
+
+                                <div class="col-xs-5 text-right text-muted" style="font-size:18px;">Expenses</div>
+                                <div class="col-xs-7" style="font-size:18px;">{{ model.totalExpenses | currencyFormatter}} {{model.currency}}</div>
+                            </div>
+                        </div>
 
                         <div class="row" style="margin-top: 10px;">
 
@@ -100,6 +126,22 @@
                 </div>
                 <div role="tabpanel" class="tab-pane" id="income">
                     <div class="col-xs-12">
+                        
+                        <div class="row visible-xs">
+                            <div class="col-xs-12">
+
+                                <div class="col-xs-5 text-right text-muted" style="font-size:18px;">Income</div>
+                                <div class="col-xs-7" style="font-size:18px;">{{ model.ytdIncome | currencyFormatter}} {{model.currency}}</div>
+                            </div>
+                        </div>
+
+                        <div class="row visible-xs" style="margin-bottom: 40px;">
+                            <div class="col-xs-12">
+
+                                <div class="col-xs-5 text-right text-muted" style="font-size:18px;">Expenses</div>
+                                <div class="col-xs-7" style="font-size:18px;">{{ model.ytdExpenses | currencyFormatter}} {{model.currency}}</div>
+                            </div>
+                        </div>
 
                         <div class="row" style="margin-top: 10px;">
 

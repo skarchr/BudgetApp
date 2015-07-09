@@ -18,12 +18,12 @@
         {
 
             <div class="row" style="margin-top: 30px;">
-                <div class="col-xs-12 col-md-6">
+                <div class="col-xs-12 col-md-6 btn-paging">
                     @if (Model.TotalPages > 1)
                     {
 
                         <div class="btn-group" role="group">
-                            
+
                             @if (Model.CurrentPage != 1)
                             {
                                 <button type="button" set-page="@(Model.CurrentPage -1)" class="btn btn-default" style="margin-right:5px;padding: 6px 4px;">
@@ -32,50 +32,50 @@
                             }
 
                             @{
-                                var startPage = (Model.CurrentPage < 5) ? 1 : Model.CurrentPage - 2;
-                                var endPage = 4 + startPage;
-                                endPage = (Model.TotalPages < endPage) ? Model.TotalPages : endPage;
+                            var startPage = (Model.CurrentPage < 5) ? 1 : Model.CurrentPage - 2;
+                            var endPage = 4 + startPage;
+                            endPage = (Model.TotalPages < endPage) ? Model.TotalPages : endPage;
 
-                                var diff = startPage - endPage + 4;
+                            var diff = startPage - endPage + 4;
 
-                                startPage -= (startPage - diff > 0) ? diff : 0;
+                            startPage -= (startPage - diff > 0) ? diff : 0;
 
-                                if (startPage > 1)
-                                {
-                                    <button type="button" set-page="1" class="btn btn-default @(1 == Model.CurrentPage ? "active" : "")">
-                                        1
-                                    </button>
-                                }
+                            if (startPage > 1)
+                            {
+                                <button type="button" set-page="1" class="btn btn-default @(1 == Model.CurrentPage ? "active" : "")">
+                                    1
+                                </button>
+                            }
 
-                                if (Model.CurrentPage > 4 && Model.TotalPages > 6)
-                                {
-                                    <button type="button"class="btn btn-default">
-                                        ...
-                                    </button>
-                                }
+                            if (Model.CurrentPage > 4 && Model.TotalPages > 6)
+                            {
+                                <button type="button" class="btn btn-default">
+                                    ...
+                                </button>
+                            }
 
-                                for (var i = startPage; i <= endPage; i++)
-                                {
-                                    <button type="button" set-page="@i" class="btn btn-default @(i == Model.CurrentPage ? "active" : "")">
-                                        @i
-                                    </button>
-                                }
+                            for (var i = startPage; i <= endPage; i++)
+                            {
+                                <button type="button" set-page="@i" class="btn btn-default @(i == Model.CurrentPage ? "active" : "")">
+                                    @i
+                                </button>
+                            }
 
-                                if (Model.CurrentPage <= (Model.TotalPages - 4) && Model.TotalPages > 6)
-                                {
-                                    <button type="button" class="btn btn-default">
-                                        ...
-                                    </button>
-                                }
+                            if (Model.CurrentPage <= (Model.TotalPages - 4) && Model.TotalPages > 6)
+                            {
+                                <button type="button" class="btn btn-default">
+                                    ...
+                                </button>
+                            }
 
-                                if (endPage < Model.TotalPages)
-                                {
-                                    <button type="button" set-page="@Model.TotalPages" class="btn btn-default @(Model.TotalPages == Model.CurrentPage ? "active" : "")">
-                                        @Model.TotalPages
-                                    </button>
-                                }
+                            if (endPage < Model.TotalPages)
+                            {
+                                <button type="button" set-page="@Model.TotalPages" class="btn btn-default @(Model.TotalPages == Model.CurrentPage ? "active" : "")">
+                                    @Model.TotalPages
+                                </button>
+                            }
 
-                            }                            
+                            }
 
                             @if (Model.CurrentPage != Model.TotalPages)
                             {
@@ -88,7 +88,9 @@
                     }
                 </div>
 
-                <div class="col-xs-12 col-md-6 text-right">
+
+
+                <div class="col-xs-12 col-md-6 text-right btn-range">
 
                     @if (Model.RangeViewers.Any()) { 
 
@@ -149,6 +151,28 @@
 
                 </div>
 
+                <div class="col-xs-12 visible-xs" style="padding:2px;">
+                    
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th ng-hide="filter === 0">{{filter === 1 ? 'Month': 'Week'}}</th>
+                                <th>Year</th>
+                                <th class="text-right">Income</th>
+                                <th class="text-right">Expenses</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="range in model">
+                                <td ng-hide="filter === 0">{{filter === 1 ? (range.title | monthName) : range.title }}</td>
+                                <td>{{range.year}}</td>
+                                <td class="text-right green">{{range.totalIncome | currencyFormatter}}</td>
+                                <td class="text-right red">{{range.totalExpenses | currencyFormatter}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                </div>
 
 
                 <div class="col-xs-12" style="margin-top:10px;" ng-repeat="range in model" ng-show="rangeElem === $index">
@@ -244,10 +268,6 @@
 
         }
     </div>
-
-    @*<div class="row">
-            <div class="col-xs-12">Icons made by <a href="http://www.flaticon.com/authors/freepik" title="Freepik">Freepik</a> from <a href="http://www.flaticon.com" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0">CC BY 3.0</a></div>
-        </div>*@
 
 </div>
 

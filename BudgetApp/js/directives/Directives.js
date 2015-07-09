@@ -495,18 +495,20 @@
                             drilldown: {
                                 series: model.drilldown !== null ? model.drilldown.series : null,
                                 drillUpButton: {
-                                    position: { y: -50 },
+                                    position: { y: -20 },
                                     theme: {
                                         fill: 'white',
                                         'stroke-width': 1,
                                         stroke: 'silver',
-                                        r: 0,
+                                        heigth:50,
+                                        r: 4,
                                         states: {
                                             hover: {
-                                                fill: '#cccccc'
+                                                fill: '#cccccc',
+                                                stroke: '#adadad !important',
                                             },
                                             select: {
-                                                stroke: '#039',
+                                                stroke: '#adadad',
                                                 fill: '#bada55'
                                             }
                                         }

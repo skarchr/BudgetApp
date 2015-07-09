@@ -146,11 +146,11 @@ input[type="checkbox"].input-validation-error {
 }
 
 .no-scroll-top, .scroll-top {
-    -webkit-transition: all 1.0s;
-    -moz-transition: all 1.0s;
-    -ms-transition: all 1.0s;
-    -o-transition: all 1.0s;
-    transition: all 1.0s;
+    -webkit-transition: background-color 1.0s, padding-top 1.0s ;
+    -moz-transition: background-color 1.0s, padding-top 1.0s ;
+    -ms-transition: background-color 1.0s, padding-top 1.0s ;
+    -o-transition: background-color 1.0s, padding-top 1.0s ;
+    transition: background-color 1.0s, padding-top 1.0s ;
 }
 
 .scroll-top {
@@ -259,9 +259,61 @@ input[type="checkbox"].input-validation-error {
     cursor: pointer;
 }
 
+@media (max-width: 470px) {
+    #menu {
+        margin-top: -6px !important;
+    }
+
+    #icon {
+        min-width: 288px !important;
+    }
+
+    .dropdown-menu.text-left {
+        top: 45px !important;
+        margin: 2px -267px 0 !important;
+        width: 379px;
+    }
+
+    .dropdown-menu.text-left > li > a {
+        padding-left: 30px;
+        font-size: 30px;
+    }
+
+    .btn-range {
+        text-align: center;
+        margin-top: -75px;
+    }
+
+    .btn-paging {
+        text-align: center;
+        margin-top: -20px;
+    }
+
+    .btn-paging > .btn-group > .btn {
+        padding: 6px 7px;
+    }
+
+    footer {
+        font-size: 10px;
+    }
+}
+
+@media (max-width: 320px) {
+
+    .dropdown-menu.text-left > li > a {
+        padding-left: 60px;
+    }
+
+    .btn-paging > .btn-group > .btn {
+        padding: 6px 4px;
+    }
+}
+
+
 @media (min-width: 992px) {
     .modal-lg {
         width: 900px;
+        margin-left: -50px;
     }
 }
 
@@ -485,6 +537,14 @@ hr.blue {
     margin-top: -8px;
 }
 
+.green {
+    color: #48DDb8;
+}
+
 .red {
     color: #b94a48;
+}
+
+.highcharts-button > rect, .highcharts-button > text {
+    cursor: pointer;
 }
