@@ -55,10 +55,10 @@
                 </li>
             </ul>
             
-            <ul class="nav nav-pills visible-xs" role="tablist" style="margin-bottom: 40px;">
+            <ul class="nav nav-stacked nav-pills visible-xs" role="tablist" style="margin-bottom: 40px;margin-top: -40px;">
                 <li role="presentation" class="active"><a href="#expense" aria-controls="expense" role="tab" data-toggle="tab" title="Shows an overview for all your registered transactions">All transactions</a></li>
                 <li role="presentation"><a href="#income" aria-controls="income" role="tab" data-toggle="tab" reflow-charts title="Shows an overview for the transactions during the year @DateTime.Now.Year">Current year</a></li>                
-                <li ng-show="model.savingGoal" class="pull-right" role="presentation">
+                <li ng-show="model.savingGoal" role="presentation">
                     <a href="#saving" aria-controls="saving" role="tab" data-toggle="tab">
                         Savings
                     </a>
