@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Web;
+using BudgetApp.Extensions.Graphs;
+using BudgetApp.Models;
 
 namespace BudgetApp.Extensions
 {
-    public class DateHelper
+    public static class DateHelper
     {
         public static readonly List<string> ShortMonths = new List<string> { "Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Okt","Nov","Des" };
 
@@ -60,5 +62,6 @@ namespace BudgetApp.Extensions
         {
             return GetWeekStartDate(year, weekOfyear).AddDays(6);
         }
+        
     }
 }

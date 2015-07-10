@@ -194,6 +194,7 @@
     <Compile Include="Extensions\Graphs\Overview.cs" />
     <Compile Include="Extensions\Graphs\Prognosis.cs" />
     <Compile Include="Extensions\Graphs\TransactionDrilldown.cs" />
+    <Compile Include="Extensions\Ranger\RangeHelper.cs" />
     <Compile Include="Extensions\SavingHelper.cs" />
     <Compile Include="Extensions\Serialization.cs" />
     <Compile Include="Extensions\Validation.cs" />
