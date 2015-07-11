@@ -10,7 +10,7 @@ namespace BudgetApp.Extensions
 {
     public static class DateHelper
     {
-        public static readonly List<string> ShortMonths = new List<string> { "Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Okt","Nov","Des" };
+        public static readonly List<string> ShortMonths = new List<string> { "Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Des" };
 
         public static readonly List<string> FullMonths = new List<string> { "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" };
 

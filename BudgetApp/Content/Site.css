@@ -312,8 +312,13 @@ input[type="checkbox"].input-validation-error {
 
 @media (min-width: 992px) {
     .modal-lg {
-        width: 900px;
-        margin-left: -50px;
+        width: 1000px;        
+    }
+}
+
+@media (max-width: 992px) {
+    .modal-lg {
+        width: 100%;        
     }
 }
 
