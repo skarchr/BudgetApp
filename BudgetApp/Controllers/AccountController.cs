@@ -85,7 +85,7 @@ namespace BudgetApp.Controllers
                     string callbackUrl = await SendEmailConfirmationTokenAsync(user.Id, "Confirm your account-Resend");
 
                     // Uncomment to debug locally  
-                    ViewBag.Link = callbackUrl;
+                    //ViewBag.Link = callbackUrl;
                     ViewBag.Error = "You must have a confirmed email to log in. "
                                            + "The confirmation token has been resent to your email account.";
                     return View("Login");
@@ -131,7 +131,7 @@ namespace BudgetApp.Controllers
             {
                 var code = await UserManager.GenerateTwoFactorTokenAsync(user.Id, provider);
                 // Remove for Debug
-                ViewBag.Code = code;
+                //ViewBag.Code = code;
             }
             return View(new VerifyCodeViewModel {Provider = provider, ReturnUrl = returnUrl, RememberMe = rememberMe});
         }
