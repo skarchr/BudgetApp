@@ -916,9 +916,12 @@
                     scope: {
                         progHighchart: '@',
                         chartLabel: '@',
-                        currency: '@'
+                        currency: '@',
+                        legend:'@'
                     },
                     link: function(scope, elem, attrs) {
+
+                        console.log(scope.legend);
 
                         var model = JSON.parse(scope.progHighchart);
 
@@ -946,7 +949,7 @@
                                 pointFormat: '{series.name}: <b>{point.y:.1f} </b>'
                             },
                             legend: {
-                                enabled: true,
+                                enabled: scope.legend === undefined,
                                 align: 'right',
                                 verticalAlign: 'middle',
                                 layout: 'vertical',
@@ -965,10 +968,12 @@
                                 type: 'category',
                                 categories: model.categories,
                             },
+
                             yAxis: {
                                 title: {
                                     text: model.currency
-                                }
+                                },
+                                plotLines: model.plotLinesY
                             },
                             series: model.series
                         });

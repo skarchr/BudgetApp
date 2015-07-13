@@ -28,7 +28,7 @@ namespace BudgetApp.Models
         {
             get
             {
-                return Transactions.Where(s => Extensions.CategoryExt.GetMainCategory(s.Category.Value) != "Income").Sum(s => s.Amount);
+                return Transactions.Where(s => CategoryExt.GetMainCategory(s.Category.Value) != "Income").Sum(s => s.Amount);
             }
         }
 
@@ -36,7 +36,7 @@ namespace BudgetApp.Models
         {
             get
             {
-                return Transactions.Where(s => Extensions.CategoryExt.GetMainCategory(s.Category.Value) == "Income").Sum(s => s.Amount);
+                return Transactions.Where(s => CategoryExt.GetMainCategory(s.Category.Value) == "Income").Sum(s => s.Amount);
             }
         }
     }
