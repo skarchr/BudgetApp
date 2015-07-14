@@ -21,7 +21,7 @@ namespace BudgetApp.Models
         public string Currency { get; set; }
         public string PrognosisChart { get { return GraphBuilder.PrognosisGraph(Transactions, Currency).ToJson(); } }
         public string PrognosisIncomeChart { get { return GraphBuilder.PrognosisGraph(Transactions, Currency, true).ToJson(); } }
-        public string ScpExpensesChart { get { return GraphBuilder.SpcGraph(Transactions, Currency, Range.Week).ToJson(); } }
+        public string ScpExpensesChart { get { return GraphBuilder.SpcGraph(Transactions, Currency, Range.Month).ToJson(); } }
 
         public List<SavingModel> SavingGoals
         {

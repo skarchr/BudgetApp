@@ -921,8 +921,6 @@
                     },
                     link: function(scope, elem, attrs) {
 
-                        console.log(scope.legend);
-
                         var model = JSON.parse(scope.progHighchart);
 
                         Highcharts.setOptions({ lang: { drillUpText: 'Back' } });
@@ -967,13 +965,17 @@
                             xAxis: {
                                 type: 'category',
                                 categories: model.categories,
+                                plotLines: model.plotLinesX
                             },
 
                             yAxis: {
                                 title: {
                                     text: model.currency
                                 },
-                                plotLines: model.plotLinesY
+                                plotLines: model.plotLinesY,
+                                max: model.max,
+                                min : model.min
+
                             },
                             series: model.series
                         });

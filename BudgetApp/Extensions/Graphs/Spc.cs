@@ -17,6 +17,8 @@ namespace BudgetApp.Extensions.Graphs
 
             var serie = new List<Series>();
             var plotlinesY = new List<PlotLines>();
+            var plotlinesX = new List<PlotLines>();
+            int? max = null;
 
             if (transactions.Count > 0)
             {
@@ -24,8 +26,12 @@ namespace BudgetApp.Extensions.Graphs
 
                 if (serie.First().Data.Count > 0)
                 {
-                    var median = Statistics.Statistics.Median(serie[0].Data.Select(s => s.Y.Value).ToList());
-                    var stdDev = Statistics.Statistics.StandardDeviation(serie[0].Data.Select(s => s.Y.Value).ToList());
+                    var median = serie[0].Data.Select(s => s.Y.Value).ToList().Median();
+                    var stdDev = serie[0].Data.Select(s => s.Y.Value).ToList().StandardDeviation();
+
+                    max = (int?) Math.Ceiling(median + (4*stdDev));
+
+                    plotlinesX = CreatePlotLineX(serie[0].Data);
 
                     plotlinesY.Add(
 
@@ -41,8 +47,9 @@ namespace BudgetApp.Extensions.Graphs
                                 {                                    
                                     Color = "green"
                                 },
-                                Y = 4,
-                                X = -46
+                                Y = 14,
+                                X = -5,
+                                Align = "right"
                             },
                             Value = median
                         });
@@ -61,8 +68,9 @@ namespace BudgetApp.Extensions.Graphs
                                 {
                                     Color = "blue"
                                 },
-                                Y = 4,
-                                X = -28
+                                Y = 14,
+                                X = -5,
+                                Align = "right"
                             },
                             Value = median + (3 * stdDev)
                         });
@@ -81,7 +89,9 @@ namespace BudgetApp.Extensions.Graphs
                                 {
                                     Color = "blue"
                                 },
-                                Y = 15
+                                Y = 14,
+                                X = -5,
+                                Align = "right"
                             },
                             Value = median - (3 * stdDev)
                         });
@@ -90,7 +100,9 @@ namespace BudgetApp.Extensions.Graphs
 
             return new Highchart
             {
+                Max = max,
                 PlotLinesY = plotlinesY,
+                PlotLinesX = plotlinesX,
                 Categories = categories,
                 Currency = currency,
                 Series = serie,
@@ -103,8 +115,6 @@ namespace BudgetApp.Extensions.Graphs
 
         private static Series CreateSeries(List<Transaction> transactions, Range? range, out List<string> categories)
         {
-            categories = new List<string>();
-
             transactions = transactions.Where(s => (CategoryExt.GetMainCategory(s.Category.Value) != Categories.Income)).ToList();
 
             var endDate = transactions.OrderByDescending(s => s.Date).First().Date;
@@ -117,10 +127,8 @@ namespace BudgetApp.Extensions.Graphs
             {
                 Color = "#b94a48",
                 Type = "line",
-                Data = range == Range.Month ? 
-                    new List<Data>() : 
-                    range == Range.Week ? 
-                        CreateWeekData(transactions, transactions.First().Date, endDate, out categories) : 
+                Data = range != null ?
+                        range.Value == Range.Week ? CreateWeekData(transactions, range.Value, out categories) : CreateMonthData(transactions, out categories) :
                         CreateDayData(transactions, transactions.First().Date, endDate, out categories),
                 Name = "SPC",
                 Id = "spc_expenses"
@@ -151,7 +159,7 @@ namespace BudgetApp.Extensions.Graphs
             return data;
         }
 
-        private static List<Data> CreateWeekData(List<Transaction> transactions, DateTime startDate, DateTime endDate, out List<string> categories)
+        private static List<Data> CreateWeekData(List<Transaction> transactions, Range range, out List<string> categories)
         {
             categories = new List<string>();
             var data = new List<Data>();
@@ -160,31 +168,118 @@ namespace BudgetApp.Extensions.Graphs
 
             foreach (var expense in transactions)
             {
-                var week = DateHelper.GetWeekNumber(expense.Date);
+                var ran = range == Range.Week ? DateHelper.GetWeekNumber(expense.Date) : expense.Date.Month;
 
-                if (!dict.ContainsKey(week))
+                if (!dict.ContainsKey(ran))
                 {
-                    dict.Add(week, new List<Transaction>());
+                    dict.Add(ran, new List<Transaction>());
                 }
 
-                dict[week].Add(expense);
+                dict[ran].Add(expense);
             }
 
             var index = 0;
-            foreach (var week in dict)
+            foreach (var ran in dict)
             {
-                categories.Add(week.Key.ToString());
+                categories.Add(range == Range.Week ? ran.Key.ToString() : DateHelper.GetMonthText(ran.Key, true));
 
                 data.Add(new Data
                 {
                     X = index,
-                    Y = week.Value.Sum(s => s.Amount),
-                    DataLabels = new DataLabels{Enabled = false}
+                    Y = ran.Value.Sum(s => s.Amount),
+                    DataLabels = new DataLabels{Enabled = false},
+                    Year = ran.Value.First().Date.Year
                 });
                 index++;
             }
 
             return data;
+        }
+
+        private static List<Data> CreateMonthData(List<Transaction> transactions, out List<string> categories)
+        {
+            categories = new List<string>();
+            var data = new List<Data>();
+            var dict = new Dictionary<int, Dictionary<int, List<Transaction>>>();
+
+            foreach (var transaction in transactions)
+            {
+                var year = transaction.Date.Year;
+
+                if (!dict.ContainsKey(year))
+                {
+                    dict.Add(year, new Dictionary<int, List<Transaction>>());
+                }
+
+                var month = transaction.Date.Month;
+
+                if (!dict[year].ContainsKey(month))
+                {
+                    dict[year].Add(month, new List<Transaction>());
+                }
+
+                dict[year][month].Add(transaction);
+            }
+
+            var index = 0;
+            foreach (var year in dict)
+            {
+                foreach (var month in year.Value)
+                {
+                    categories.Add(DateHelper.GetMonthText(month.Key, true));
+
+                    data.Add(new Data
+                    {
+                        X = index,
+                        Y = month.Value.Sum(s => s.Amount),
+                        DataLabels = new DataLabels { Enabled = false },
+                        Year = month.Value.First().Date.Year
+                    });
+                    index++;
+                }
+            }
+
+            return data;
+        }
+
+        private static List<PlotLines> CreatePlotLineX(List<Data> data)
+        {
+            var result = new List<PlotLines>();
+            var list = new Dictionary<int, int>();
+
+            for (var i = 0; i < data.Count; i++)
+            {
+                if (data.Count != i + 1)
+                {
+                    if (data[i].Year < data[i + 1].Year)
+                    {
+                        if (!list.ContainsKey(data[i + 1].Year))
+                            list.Add(data[i + 1].Year, i + 1);
+                    }
+                }
+            }
+
+            foreach (var i in list)
+            {
+                result.Add(new PlotLines
+                {
+                    Color = "#c0c0c0",
+                    DashStyle = "",
+                    Width = 1,
+                    Id = i.Key.ToString(),
+                    Label = new Label
+                    {
+                        Text = i.Key.ToString(),
+                        Style = new Style
+                        {
+                            Color = "#c0c0c0"
+                        },
+                        Y = 15
+                    },
+                    Value = (i.Value - 0.5)
+                });
+            }
+            return result;
         }
     }
 }

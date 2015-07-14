@@ -1,10 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using BudgetApp.Extensions.Graphs;
-using BudgetApp.Extensions.Statistics;
 using BudgetApp.Models;
 using FluentAssertions;
 using NUnit.Framework;
@@ -61,9 +57,36 @@ namespace BudgetApp.Tests.Graphs
 
             result.Series[0].Data[0].Y.Should().Be(950);
             result.Series[0].Data[0].X.Should().Be(0);
+            result.Series[0].Data[0].Year.Should().Be(2014);
+            result.Categories[0].Should().Be("1");
 
             result.Series[0].Data[1].Y.Should().Be(200);
             result.Series[0].Data[1].X.Should().Be(1);
+            result.Categories[1].Should().Be("2");
+        }
+
+        [Test]
+        public void Last_Months()
+        {
+            var trans = createTransactions();
+
+            trans.Add(new Transaction { Amount = 200, Date = new DateTime(2013, 12, 31), Category = Category.Restaurant });
+
+            var result = Spc.CreateChart(trans, "NOK", Range.Month);
+
+            result.Series[0].Data.Count.Should().Be(2);
+
+            result.Series[0].Data[0].Y.Should().Be(200);
+            result.Series[0].Data[0].X.Should().Be(0);
+            result.Series[0].Data[0].Year.Should().Be(2013);
+            result.Categories[0].Should().Be("Dec");
+
+            result.Series[0].Data[1].Y.Should().Be(950);
+            result.Series[0].Data[1].X.Should().Be(1);
+            result.Categories[1].Should().Be("Jan");
+            result.Series[0].Data[1].Year.Should().Be(2014);
+
+            result.PlotLinesX[0].Value.Should().Be(0.5);
         }
 
 

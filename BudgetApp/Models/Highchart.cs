@@ -12,6 +12,9 @@ namespace BudgetApp.Models
         public List<PlotLines> PlotLinesX { get; set; }
         public List<PlotLines> PlotLinesY { get; set; }
         public string Type { get; set; }
+
+        public int? Max { get; set; }
+        public int? Min { get; set; }
     }
 
     public class PlotLines
@@ -91,7 +94,7 @@ namespace BudgetApp.Models
         {
             DataLabels = new DataLabels();
         }
-
+        public int Year { get; set; }
         public double? Y { get; set; }
         public double X { get; set; }
         public string Color { get; set; }
