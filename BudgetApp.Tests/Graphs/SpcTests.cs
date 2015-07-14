@@ -14,7 +14,7 @@ namespace BudgetApp.Tests.Graphs
         [Test]
         public void Last_Weeks_No_Transactions()
         {
-            var result = Spc.CreateChart(new List<Transaction>(), "NOK", null);
+            var result = Spc.CreateChart(new List<Transaction>(), "NOK");
 
             result.Series.Count.Should().Be(0);
         }
@@ -24,7 +24,7 @@ namespace BudgetApp.Tests.Graphs
         {
             var trans = createTransactions();
 
-            var result = Spc.CreateChart(trans, "NOK", null);
+            var result = Spc.CreateChart(trans, "NOK");
 
             result.Series[0].Data.Count.Should().Be(4);
 

@@ -10,7 +10,16 @@ namespace BudgetApp.Extensions.Graphs
 {
     public class Spc
     {
-        public static Highchart CreateChart(List<Transaction> transactions, string currency, Range? range)
+        private static int? FindMaxValue(List<Data> data, double median, double stdDev)
+        {
+            var fourStdDev = (int?) Math.Ceiling(median + (4*stdDev));
+            var tranMax = (int?)Math.Ceiling(data.Max(s => s.Y.Value));
+
+            return fourStdDev > tranMax ? fourStdDev : tranMax;
+
+        }
+
+        public static Highchart CreateChart(List<Transaction> transactions, string currency, Range range = Range.Annual)
         {
 
             var categories = new List<string>();
@@ -29,7 +38,7 @@ namespace BudgetApp.Extensions.Graphs
                     var median = serie[0].Data.Select(s => s.Y.Value).ToList().Median();
                     var stdDev = serie[0].Data.Select(s => s.Y.Value).ToList().StandardDeviation();
 
-                    max = (int?) Math.Ceiling(median + (4*stdDev));
+                    max = FindMaxValue(serie.First().Data, median, stdDev);
 
                     plotlinesX = CreatePlotLineX(serie[0].Data);
 
@@ -37,15 +46,15 @@ namespace BudgetApp.Extensions.Graphs
 
                         new PlotLines
                         {
-                            Color = "green",
+                            Color = "rgb(72, 221, 184)",
                             DashStyle = "dash",
-                            Width = 1,
+                            Width = 2,
                             Label = new Label
                             {
                                 Text = "Median",
                                 Style = new Style
-                                {                                    
-                                    Color = "green"
+                                {
+                                    Color = "rgb(72, 221, 184)"
                                 },
                                 Y = 14,
                                 X = -5,
@@ -58,7 +67,7 @@ namespace BudgetApp.Extensions.Graphs
 
                         new PlotLines
                         {
-                            Color = "blue",
+                            Color = "#b94a48",
                             DashStyle = "dash",
                             Width = 1,
                             Label = new Label
@@ -66,7 +75,7 @@ namespace BudgetApp.Extensions.Graphs
                                 Text = "UCL",
                                 Style = new Style
                                 {
-                                    Color = "blue"
+                                    Color = "#b94a48"
                                 },
                                 Y = 14,
                                 X = -5,
@@ -79,7 +88,7 @@ namespace BudgetApp.Extensions.Graphs
 
                         new PlotLines
                         {
-                            Color = "blue",
+                            Color = "#b94a48",
                             DashStyle = "dash",
                             Width = 1,
                             Label = new Label
@@ -87,9 +96,9 @@ namespace BudgetApp.Extensions.Graphs
                                 Text = "LCL",
                                 Style = new Style
                                 {
-                                    Color = "blue"
+                                    Color = "#b94a48"
                                 },
-                                Y = 14,
+                                Y = -6,
                                 X = -5,
                                 Align = "right"
                             },
@@ -108,12 +117,12 @@ namespace BudgetApp.Extensions.Graphs
                 Series = serie,
                 Title = new Title
                 {
-                    Text = "SPC"
+                    Text = "SPC (expenses)"
                 }
             };
         }
 
-        private static Series CreateSeries(List<Transaction> transactions, Range? range, out List<string> categories)
+        private static Series CreateSeries(List<Transaction> transactions, Range range, out List<string> categories)
         {
             transactions = transactions.Where(s => (CategoryExt.GetMainCategory(s.Category.Value) != Categories.Income)).ToList();
 
@@ -125,10 +134,10 @@ namespace BudgetApp.Extensions.Graphs
 
             return new Series
             {
-                Color = "#b94a48",
+                Color = "rgb(0, 148, 244)",
                 Type = "line",
-                Data = range != null ?
-                        range.Value == Range.Week ? CreateWeekData(transactions, range.Value, out categories) : CreateMonthData(transactions, out categories) :
+                Data = range != Range.Annual ?
+                        range == Range.Week ? CreateWeekData(transactions, range, out categories) : CreateMonthData(transactions, out categories) :
                         CreateDayData(transactions, transactions.First().Date, endDate, out categories),
                 Name = "SPC",
                 Id = "spc_expenses"
