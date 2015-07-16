@@ -949,9 +949,9 @@
                             legend: {
                                 enabled: scope.legend === undefined,
                                 align: 'right',
-                                verticalAlign: 'middle',
-                                layout: 'vertical',
-                                y: -25
+                                verticalAlign: 'bottom',
+                                layout: 'horizontal',
+                                y: 20
                             },
                             credits: false,
                             plotOptions: {

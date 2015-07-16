@@ -6,6 +6,88 @@
 
 <div class="row" ng-controller="homeController" style="margin-top:30px;">
    
+    <div class="col-xs-12">
+        <h3>SVG test</h3>
+        
+        <svg height="80" width="280">
+            
+            <defs>
+                <style>
+                    
+                    .gauge-whole-numb > g > text {
+                        fill: #313131;
+                        font-size: 13px;
+                    }
+
+                    .gauge-whole-numb > g > line, .gauge-half-numb > line {
+                        stroke-width: 1;
+                        stroke:#000;
+                    }
+
+                    rect.gauge-goal:hover {
+                        fill: #e73131 !important;
+                    }
+
+                </style>
+            </defs>
+
+            <g class="gauge-container">                
+                <rect class="gauge-goal" x="247" height="50" width="280" style="fill:#e87c7c;stroke:#e73131;" />                            <!-- Must figure out 247 out from value 715  -->
+                <rect height="50" width="280" style="stroke-width: 1px;stroke:#000;fill:none;" />
+                <polygon points="130,50 150,50 140,30" style="stroke-width:1px;stroke:#000;fill:#fff" />
+                <text text-anchor="middle" x="140" y="70">715</text>
+            </g>
+
+            <g class="gauge-numb">
+
+                <g class="gauge-whole-numb">
+                    
+                    <g>
+                        <line x1="-75" y1="0" x2="-75" y2="17" />
+                        <text text-anchor="middle" x="-75" y="28">500</text>
+                    </g>
+
+                    <g>
+                        <line x1="25" y1="0" x2="25" y2="17" />
+                        <text text-anchor="middle" x="25" y="28">600</text>
+                    </g>
+
+                    <g>
+                        <line x1="125" y1="0" x2="125" y2="17" />                                           <!-- Must figure out 125 out from value 715 -->
+                        <text text-anchor="middle" x="125" y="28">700</text>
+                    </g>
+
+                    <g>
+                        <line x1="225" y1="0" x2="225" y2="17" />
+                        <text text-anchor="middle" x="225" y="28">800</text>
+                    </g>
+                    
+                    <g>
+                        <line x1="325" y1="0" x2="325" y2="17" />
+                        <text text-anchor="middle" x="325" y="28">900</text>
+                    </g>
+
+                </g>
+                <g class="gauge-half-numb">                  
+                    
+                    <line x1="-25" y1="0" x2="-25" y2="8.5" />                                                  <!-- (n - 200) -->
+
+                    <line x1="75" y1="0" x2="75" y2="8.5" />                                                    <!-- (n - 100) -->
+
+                    <line x1="175" y1="0" x2="175" y2="8.5" />                                                  <!-- Must figure out 175 from value 715 -->
+
+                    <line x1="275" y1="0" x2="275" y2="8.5" />                                                  <!-- (n + 100) -->
+                    
+                    <line x1="375" y1="0" x2="375" y2="8.5" />                                                  <!-- (n + 200) -->
+
+                </g>
+            </g>
+
+        </svg>
+
+    </div>
+    
+
     @if (Model.Transactions.Count == 0)
     {
 
