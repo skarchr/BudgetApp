@@ -23,6 +23,41 @@
     }
 
     angular.module('budgetApp')
+        .directive('budgetGauge', function() {
+
+
+            return {
+                restrict: 'A',
+                transclude: true,
+                scope: {
+                    budgetGauge: '@',
+                    goal: '@',
+                    titleText: '@',
+                    type:'@'
+                },
+                link: function(scope, elem) {
+
+                    var gaugeVal = JSON.parse(scope.budgetGauge);
+
+                    scope.gaugeVal = gaugeVal;
+
+                    scope.zeroText = Math.floor(gaugeVal / 100) * 100;
+
+                    if(scope.goal > 0.0)
+                        scope.goalText = JSON.parse(scope.goal).toFixed(2);
+
+                    scope.zeroValue = 140 - (gaugeVal - scope.zeroText);
+
+                    if(scope.goal > 0.0)
+                        scope.goalVal = 140 - (gaugeVal - JSON.parse(scope.goal));
+
+                    if (scope.goalVal < 0)
+                        scope.goalVal = 0;
+
+                },
+                templateUrl: '../views/shared/_Gauge.html',
+            };
+        })
 
         .directive('dropdown', function() {
             return {

@@ -20,11 +20,31 @@
         return x1 + x2;
     };
 
+    var formatNumber2 = function (number) {
+
+        if (number === null)
+            return number;
+
+        var numb = number.toFixed(0) + '';
+        var x = numb.split(' ');
+        var x1 = x[0];
+        var x2 = x.length > 1 ? '.' + x[1] : '';
+        var rgx = /(\d+)(\d{3})/;
+        while (rgx.test(x1)) {
+            x1 = x1.replace(rgx, '$1' + ' ' + '$2');
+        }
+        return x1 + x2;
+    };
+
     angular.module('budgetApp')
 
         .filter('currencyFormatter', function () {
 
-            return function (input) {
+            return function (input, input2) {
+
+                if (input2)
+                    return formatNumber2(input);
+
                 return formatNumber(input);
             }
 

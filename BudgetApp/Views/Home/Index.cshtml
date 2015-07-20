@@ -5,88 +5,26 @@
 }
 
 <div class="row" ng-controller="homeController" style="margin-top:30px;">
-   
-    <div class="col-xs-12">
-        <h3>SVG test</h3>
+
+    <div class="row">
+
+        <div class="col-xs-3" budget-gauge="{{model.averageDailyExpenses}}" data-goal="{{model.expensesGoal * 12.0 / 365.0}}" data-title-text="Daily" data-type="expenses"></div>
+
+        <div class="col-xs-3" budget-gauge="{{model.averageMonthlyExpenses}}" data-goal="{{model.expensesGoal}}" data-title-text="Monthly" data-type="expenses"></div>
+
+        <div class="col-xs-3" budget-gauge="{{model.averageDailyIncome}}" data-goal="{{model.averageDailyExpenses}}" data-t data-title-text="Daily" data-type="income"></div>
+
+        <div class="col-xs-3" budget-gauge="{{model.averageMonthlyIncome}}" data-goal="{{model.averageMonthlyExpenses}}" data-title-text="Monthly" data-type="income"></div>
+
+
+        <div class="col-xs-3" budget-gauge="{{model.currentMonthExpenses}}" data-goal="{{model.expensesGoal}}" data-title-text="@(DateHelper.GetMonthText(DateTime.Now))" data-type="expenses"></div>
+
+        <div class="col-xs-3" budget-gauge="{{model.ytdExpenses}}" data-goal="{{model.expensesGoal * @DateTime.Now.Month}}" data-title-text="@DateTime.Now.Year" data-type="expenses"></div>
         
-        <svg height="80" width="280">
-            
-            <defs>
-                <style>
-                    
-                    .gauge-whole-numb > g > text {
-                        fill: #313131;
-                        font-size: 13px;
-                    }
-
-                    .gauge-whole-numb > g > line, .gauge-half-numb > line {
-                        stroke-width: 1;
-                        stroke:#000;
-                    }
-
-                    rect.gauge-goal:hover {
-                        fill: #e73131 !important;
-                    }
-
-                </style>
-            </defs>
-
-            <g class="gauge-container">                
-                <rect class="gauge-goal" x="247" height="50" width="280" style="fill:#e87c7c;stroke:#e73131;" />                            <!-- Must figure out 247 out from value 715  -->
-                <rect height="50" width="280" style="stroke-width: 1px;stroke:#000;fill:none;" />
-                <polygon points="130,50 150,50 140,30" style="stroke-width:1px;stroke:#000;fill:#fff" />
-                <text text-anchor="middle" x="140" y="70">715</text>
-            </g>
-
-            <g class="gauge-numb">
-
-                <g class="gauge-whole-numb">
-                    
-                    <g>
-                        <line x1="-75" y1="0" x2="-75" y2="17" />
-                        <text text-anchor="middle" x="-75" y="28">500</text>
-                    </g>
-
-                    <g>
-                        <line x1="25" y1="0" x2="25" y2="17" />
-                        <text text-anchor="middle" x="25" y="28">600</text>
-                    </g>
-
-                    <g>
-                        <line x1="125" y1="0" x2="125" y2="17" />                                           <!-- Must figure out 125 out from value 715 -->
-                        <text text-anchor="middle" x="125" y="28">700</text>
-                    </g>
-
-                    <g>
-                        <line x1="225" y1="0" x2="225" y2="17" />
-                        <text text-anchor="middle" x="225" y="28">800</text>
-                    </g>
-                    
-                    <g>
-                        <line x1="325" y1="0" x2="325" y2="17" />
-                        <text text-anchor="middle" x="325" y="28">900</text>
-                    </g>
-
-                </g>
-                <g class="gauge-half-numb">                  
-                    
-                    <line x1="-25" y1="0" x2="-25" y2="8.5" />                                                  <!-- (n - 200) -->
-
-                    <line x1="75" y1="0" x2="75" y2="8.5" />                                                    <!-- (n - 100) -->
-
-                    <line x1="175" y1="0" x2="175" y2="8.5" />                                                  <!-- Must figure out 175 from value 715 -->
-
-                    <line x1="275" y1="0" x2="275" y2="8.5" />                                                  <!-- (n + 100) -->
-                    
-                    <line x1="375" y1="0" x2="375" y2="8.5" />                                                  <!-- (n + 200) -->
-
-                </g>
-            </g>
-
-        </svg>
+        <div class="col-xs-3" budget-gauge="{{model.ytdIncome}}" data-goal="{{model.ytdExpenses}}" data-title-text="@DateTime.Now.Year" data-type="income"></div>
 
     </div>
-    
+
 
     @if (Model.Transactions.Count == 0)
     {
@@ -136,10 +74,10 @@
                     </a>
                 </li>
             </ul>
-            
+
             <ul class="nav nav-stacked nav-pills visible-xs" role="tablist" style="margin-bottom: 40px;margin-top: -40px;">
                 <li role="presentation" class="active"><a href="#expense" aria-controls="expense" role="tab" data-toggle="tab" title="Shows an overview for all your registered transactions">All transactions</a></li>
-                <li role="presentation"><a href="#income" aria-controls="income" role="tab" data-toggle="tab" reflow-charts title="Shows an overview for the transactions during the year @DateTime.Now.Year">Current year</a></li>                
+                <li role="presentation"><a href="#income" aria-controls="income" role="tab" data-toggle="tab" reflow-charts title="Shows an overview for the transactions during the year @DateTime.Now.Year">Current year</a></li>
                 <li ng-show="model.savingGoal" role="presentation">
                     <a href="#saving" aria-controls="saving" role="tab" data-toggle="tab">
                         Savings
@@ -152,15 +90,15 @@
                 <div role="tabpanel" class="tab-pane active" id="expense">
 
                     <div class="col-xs-12">
-                        
+
                         <div class="row visible-xs">
                             <div class="col-xs-12">
-                                
+
                                 <div class="col-xs-5 text-right text-muted" style="font-size:18px;">Income</div>
                                 <div class="col-xs-7" style="font-size:18px;">{{ model.totalIncome | currencyFormatter}} {{model.currency}}</div>
                             </div>
                         </div>
-                        
+
                         <div class="row visible-xs" style="margin-bottom: 40px;">
                             <div class="col-xs-12">
 
@@ -171,7 +109,7 @@
 
                         <div class="row" style="margin-top: 10px;">
 
-                            <div class="col-xs-12">                                
+                            <div class="col-xs-12">
                                 <div class="col-xs-12 col-sm-6 col-md-3" style="padding:0">
                                     <div style="height: 200px;" data-vu-meter="@Model.AverageDailyExpenses" data-goal="@((Model.ExpensesGoal * 12) / 365)" data-currency="@Model.Currency" data-chart-title="Daily expenses"></div>
                                 </div>
@@ -185,9 +123,9 @@
                                     <div style="height: 200px;" data-vu-meter="@Model.AverageMonthlyIncome" data-goal="@((Model.AverageMonthlyExpenses))" data-currency="@Model.Currency" data-chart-title="Monthly income" data-inverted="true"></div>
                                 </div>
                             </div>
-                            
+
                         </div>
-                        
+
 
                         <div class="row" style="margin-top: 20px;">
 
@@ -208,7 +146,7 @@
                 </div>
                 <div role="tabpanel" class="tab-pane" id="income">
                     <div class="col-xs-12">
-                        
+
                         <div class="row visible-xs">
                             <div class="col-xs-12">
 
@@ -234,7 +172,7 @@
                                 <div class="col-xs-12 col-sm-6 col-md-3" style="padding:0">
                                     <div style="height: 200px;" data-vu-meter="@Model.YtdExpenses" data-goal="@(Model.ExpensesGoal *  DateTime.Now.Month)" data-currency="@Model.Currency" data-chart-title="Expenses for @(DateTime.Now.Year)"></div>
                                 </div>
-                                
+
                                 <div class="col-xs-12 col-sm-6 col-md-3" style="padding:0">
                                     <div style="height: 200px;" data-vu-meter="@Model.YtdIncome" data-goal="@(Model.YtdExpenses)" data-currency="@Model.Currency" data-chart-title="Income for @(DateTime.Now.Year)" data-inverted="true"></div>
                                 </div>
@@ -242,7 +180,7 @@
                             </div>
 
                         </div>
-                        
+
                         <div class="row" style="margin-top: 20px;">
 
 
@@ -260,10 +198,10 @@
 
                     </div>
                 </div>
-                <div role="tabpanel" class="tab-pane" id="saving">                   
-                    
+                <div role="tabpanel" class="tab-pane" id="saving">
+
                     <div class="col-xs-12 text-center">
-                        
+
                         <svg xmlns="http://www.w3.org/2000/svg" width="80px" height="70px" viewBox="0 0 300 275" version="1.1">
 
                             <g>
@@ -272,8 +210,8 @@
                                 <text x="150" y="168" text-anchor="middle" font-size="55px">{{starCountPos}}</text>
                             </g>
                         </svg>
-                        
-                        
+
+
                         <svg xmlns="http://www.w3.org/2000/svg" width="80px" height="70px" viewBox="0 0 300 275" version="1.1">
 
                             <g>
@@ -290,7 +228,7 @@
                         <h3>{{goal.date | date : 'MMM, yyyy'}} <i ng-show="model.savingGoal <= goal.saved" style="color:#F0F088;" class="glyphicon glyphicon-star"></i> </h3>
 
                         <div class="progress">
-                            <div class="progress-bar {{goal.saved >= model.savingGoal ? 'progress-bar-success':''}}" role="progressbar" aria-valuenow="goal.saved" aria-valuemin="0" aria-valuemax="100" style="width:{{ goal.percentage }}%">                               
+                            <div class="progress-bar {{goal.saved >= model.savingGoal ? 'progress-bar-success':''}}" role="progressbar" aria-valuenow="goal.saved" aria-valuemin="0" aria-valuemax="100" style="width:{{ goal.percentage }}%">
                             </div>
                         </div>
                         <div class="text-center">
@@ -302,7 +240,7 @@
                 </div>
                 <div role="tabpanel" class="tab-pane" id="prediction">
                     <div class="col-xs-12">
-                        
+
                         <div class="row" style="margin-top: 20px;">
 
 
@@ -315,7 +253,7 @@
                                 <span style="height:400px;width:703px !important;" class="visible-sm" data-prog-highchart="{{model.prognosisChart}}"></span>
 
                             </div>
-                            
+
                             <div class="col-xs-12">
 
                                 <span style="height:400px;width:1123px !important;" class="visible-lg" data-legend="false" data-prog-highchart="{{model.scpExpensesChart}}"></span>
@@ -327,7 +265,7 @@
                             </div>
 
                         </div>
-                        
+
                         <div class="row" style="margin-top: 20px;">
 
 
@@ -349,7 +287,7 @@
             <hr />
         </div>
     }
-    
+
 
 </div>
 
@@ -361,7 +299,7 @@
 
             return {
                 model:@Html.Raw(Model.ToJson())
-            };
+                };
 
         });
 
