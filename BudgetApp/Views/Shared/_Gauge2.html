@@ -71,17 +71,18 @@
             <rect style="fill:#9cf5df;" ng-attr-x="{{xOffset + expenses}}" ng-attr-y="{{yOffset}}" height="60" ng-attr-width="{{income - expenses}}" />
 
         </g>
+        
 
         <g class="gauge-income" ng-show="gaugeIn !== undefined">
             <polygon ng-attr-points="{{income - arrowWidth}},{{yOffset}} {{income + arrowWidth}},{{yOffset}} {{income}},{{yOffset + 20}}" />
             <text ng-attr-x="{{xOffset + income}}" ng-attr-y="{{yOffset - 5}}" text-anchor="middle"> {{displayIn | currencyFormatter}} </text>
-            <line ng-attr-x1="{{xOffset}}" ng-attr-y1="{{yOffset + 1}}" ng-attr-x2="{{xOffset + income - arrowWidth}}" ng-attr-y2="{{yOffset + 1}}" />
+            <line ng-attr-x1="{{xOffset}}" ng-attr-y1="{{yOffset + 1}}" ng-attr-x2="{{xOffset + income}}" ng-attr-y2="{{yOffset + 1}}" />
         </g>
 
         <g class="gauge-expenses" ng-show="gaugeOut !== undefined">
             <polygon ng-attr-points="{{expenses - arrowWidth}},{{yOffset + 60}} {{expenses + arrowWidth}},{{yOffset + 60}} {{expenses}},{{yOffset + 40}}" />
             <text ng-attr-x="{{xOffset + expenses}}" ng-attr-y="{{yOffset + 78}}" text-anchor="middle"> {{displayOut | currencyFormatter}} </text>
-            <line ng-attr-x1="{{xOffset}}" ng-attr-y1="{{yOffset + 59}}" ng-attr-x2="{{xOffset + expenses - arrowWidth}}" ng-attr-y2="{{yOffset + 59}}" />
+            <line ng-attr-x1="{{xOffset}}" ng-attr-y1="{{yOffset + 59}}" ng-attr-x2="{{xOffset + expenses}}" ng-attr-y2="{{yOffset + 59}}" />
         </g>
 
 
@@ -94,12 +95,13 @@
             <line ng-attr-x1="{{xOffset + xvalue}}" ng-attr-y1="{{yOffset + 60}}" ng-attr-x2="{{xOffset + xvalue}}" ng-attr-y2="{{yOffset + 40}}" ng-repeat="xvalue in xLines" />
                                              
         </g>
+
         <g class="gauge-goal" ng-show="gaugeGoal !== '' && gaugeGoal !== undefined && gaugeGoal !== '0'">
-            <line stroke-dasharray="5,5" class="goal-line" ng-attr-x1="{{xOffset + goal}}" ng-attr-y1="{{yOffset}}" ng-attr-x2="{{xOffset + goal}}" ng-attr-y2="{{yOffset + 61}}" />
+            <line stroke-dasharray="4,4" class="goal-line" ng-attr-x1="{{xOffset + goal}}" ng-attr-y1="{{yOffset}}" ng-attr-x2="{{xOffset + goal}}" ng-attr-y2="{{yOffset + 61}}" />
         </g>
-        
+
         <g class="gauge-goal" ng-hide="gaugeGoal !== '' && gaugeGoal !== undefined && gaugeGoal !== '0'">
-            <text onclick="location.href = '/Manage'" ng-attr-x="{{xOffset}}" ng-attr-y="{{yOffset+ 75}}">No goal set</text>
+            <text style="cursor: pointer;" onclick="location.href = '/Manage'" ng-attr-x="{{xOffset}}" ng-attr-y="{{yOffset+ 75}}">No goal set</text>
         </g>
 
 

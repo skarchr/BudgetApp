@@ -90,8 +90,8 @@
 
                         <div class="row" style="margin-top: 10px;">
 
-                            <div class="col-xs-12 col-sm-6 no-padding" budget-gauge2="Avgerage daily" gauge-in="{{model.averageDailyIncome}}" gauge-out="{{model.averageDailyExpenses}}" gauge-goal="{{model.expensesGoal * 12.0 / 365.0}}"></div>
-                            <div class="col-xs-12 col-sm-6" budget-gauge2="Average monthly" gauge-in="{{model.averageMonthlyIncome}}" gauge-out="{{model.averageMonthlyExpenses}}" gauge-goal="{{model.expensesGoal}}"></div>
+                            <div class="col-xs-12 col-lg-6 no-padding" budget-gauge2="Avgerage daily" gauge-in="{{model.averageDailyIncome}}" gauge-out="{{model.averageDailyExpenses}}" gauge-goal="{{model.expensesGoal * 12.0 / 365.0}}"></div>
+                            <div class="col-xs-12 col-lg-6" budget-gauge2="Average monthly" gauge-in="{{model.averageMonthlyIncome}}" gauge-out="{{model.averageMonthlyExpenses}}" gauge-goal="{{model.expensesGoal}}"></div>
 
                         </div>
 
@@ -134,8 +134,8 @@
 
                         <div class="row" style="margin-top: 10px;">
 
-                            <div class="col-xs-12 col-sm-6 no-padding" budget-gauge2="@(DateHelper.GetMonthText(DateTime.Now))" gauge-in="{{model.currentMonthIncome}}" gauge-out="{{model.currentMonthExpenses}}" gauge-goal="{{model.expensesGoal}}"></div>
-                            <div class="col-xs-12 col-sm-6" budget-gauge2="@DateTime.Now.Year" gauge-in="{{model.ytdIncome}}" gauge-out="{{model.ytdExpenses}}" gauge-goal="{{model.expensesGoal * @DateTime.Now.Month}}"></div>
+                            <div class="col-xs-12 col-lg-6 no-padding" budget-gauge2="This month (@(DateHelper.GetMonthText(DateTime.Now)))" gauge-in="{{model.currentMonthIncome}}" gauge-out="{{model.currentMonthExpenses}}" gauge-goal="{{model.expensesGoal}}"></div>
+                            <div class="col-xs-12 col-lg-6" budget-gauge2="Year-to-date (@DateTime.Now.Year)" gauge-in="{{model.ytdIncome}}" gauge-out="{{model.ytdExpenses}}" gauge-goal="{{model.expensesGoal * @DateTime.Now.Month}}"></div>
 
 
                         </div>
