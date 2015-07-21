@@ -526,3 +526,6 @@ hr.blue {
 .highcharts-button > rect, .highcharts-button > text {
     cursor: pointer;
 }
+.no-padding {
+    padding: 0;
+}

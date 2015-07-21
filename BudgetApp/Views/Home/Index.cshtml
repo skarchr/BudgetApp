@@ -5,26 +5,8 @@
 }
 
 <div class="row" ng-controller="homeController" style="margin-top:30px;">
-
-    <div class="row">
-
-        <div class="col-xs-3" budget-gauge="{{model.averageDailyExpenses}}" data-goal="{{model.expensesGoal * 12.0 / 365.0}}" data-title-text="Daily" data-type="expenses"></div>
-
-        <div class="col-xs-3" budget-gauge="{{model.averageMonthlyExpenses}}" data-goal="{{model.expensesGoal}}" data-title-text="Monthly" data-type="expenses"></div>
-
-        <div class="col-xs-3" budget-gauge="{{model.averageDailyIncome}}" data-goal="{{model.averageDailyExpenses}}" data-t data-title-text="Daily" data-type="income"></div>
-
-        <div class="col-xs-3" budget-gauge="{{model.averageMonthlyIncome}}" data-goal="{{model.averageMonthlyExpenses}}" data-title-text="Monthly" data-type="income"></div>
-
-
-        <div class="col-xs-3" budget-gauge="{{model.currentMonthExpenses}}" data-goal="{{model.expensesGoal}}" data-title-text="@(DateHelper.GetMonthText(DateTime.Now))" data-type="expenses"></div>
-
-        <div class="col-xs-3" budget-gauge="{{model.ytdExpenses}}" data-goal="{{model.expensesGoal * @DateTime.Now.Month}}" data-title-text="@DateTime.Now.Year" data-type="expenses"></div>
-        
-        <div class="col-xs-3" budget-gauge="{{model.ytdIncome}}" data-goal="{{model.ytdExpenses}}" data-title-text="@DateTime.Now.Year" data-type="income"></div>
-
-    </div>
-
+    
+    
 
     @if (Model.Transactions.Count == 0)
     {
@@ -58,8 +40,7 @@
 
     }
     else
-    {
-
+    {                
         <div role="tabpanel" class="col-xs-12">
 
             <!-- Nav tabs -->
@@ -109,20 +90,8 @@
 
                         <div class="row" style="margin-top: 10px;">
 
-                            <div class="col-xs-12">
-                                <div class="col-xs-12 col-sm-6 col-md-3" style="padding:0">
-                                    <div style="height: 200px;" data-vu-meter="@Model.AverageDailyExpenses" data-goal="@((Model.ExpensesGoal * 12) / 365)" data-currency="@Model.Currency" data-chart-title="Daily expenses"></div>
-                                </div>
-                                <div class="col-xs-12 col-sm-6 col-md-3" style="padding:0">
-                                    <div style="height: 200px;" data-vu-meter="@Model.AverageMonthlyExpenses" data-goal="@((Model.ExpensesGoal))" data-currency="@Model.Currency" data-chart-title="Monthly expenses"></div>
-                                </div>
-                                <div class="col-xs-12 col-sm-6 col-md-3" style="padding:0">
-                                    <div style="height: 200px;" data-vu-meter="@Model.AverageDailyIncome" data-goal="@(Model.AverageDailyExpenses) / 365)" data-currency="@Model.Currency" data-chart-title="Daily income" data-inverted="true"></div>
-                                </div>
-                                <div class="col-xs-12 col-sm-6 col-md-3" style="padding:0">
-                                    <div style="height: 200px;" data-vu-meter="@Model.AverageMonthlyIncome" data-goal="@((Model.AverageMonthlyExpenses))" data-currency="@Model.Currency" data-chart-title="Monthly income" data-inverted="true"></div>
-                                </div>
-                            </div>
+                            <div class="col-xs-12 col-sm-6 no-padding" budget-gauge2="Avgerage daily" gauge-in="{{model.averageDailyIncome}}" gauge-out="{{model.averageDailyExpenses}}" gauge-goal="{{model.expensesGoal * 12.0 / 365.0}}"></div>
+                            <div class="col-xs-12 col-sm-6" budget-gauge2="Average monthly" gauge-in="{{model.averageMonthlyIncome}}" gauge-out="{{model.averageMonthlyExpenses}}" gauge-goal="{{model.expensesGoal}}"></div>
 
                         </div>
 
@@ -165,19 +134,9 @@
 
                         <div class="row" style="margin-top: 10px;">
 
-                            <div class="col-xs-12">
-                                <div class="col-xs-12 col-sm-6 col-md-3" style="padding:0">
-                                    <div style="height: 200px;" data-vu-meter="@Model.CurrentMonthExpenses" data-goal="@((Model.ExpensesGoal))" data-currency="@Model.Currency" data-chart-title="Expenses for @(DateHelper.GetMonthText(DateTime.Now))"></div>
-                                </div>
-                                <div class="col-xs-12 col-sm-6 col-md-3" style="padding:0">
-                                    <div style="height: 200px;" data-vu-meter="@Model.YtdExpenses" data-goal="@(Model.ExpensesGoal *  DateTime.Now.Month)" data-currency="@Model.Currency" data-chart-title="Expenses for @(DateTime.Now.Year)"></div>
-                                </div>
+                            <div class="col-xs-12 col-sm-6 no-padding" budget-gauge2="@(DateHelper.GetMonthText(DateTime.Now))" gauge-in="{{model.currentMonthIncome}}" gauge-out="{{model.currentMonthExpenses}}" gauge-goal="{{model.expensesGoal}}"></div>
+                            <div class="col-xs-12 col-sm-6" budget-gauge2="@DateTime.Now.Year" gauge-in="{{model.ytdIncome}}" gauge-out="{{model.ytdExpenses}}" gauge-goal="{{model.expensesGoal * @DateTime.Now.Month}}"></div>
 
-                                <div class="col-xs-12 col-sm-6 col-md-3" style="padding:0">
-                                    <div style="height: 200px;" data-vu-meter="@Model.YtdIncome" data-goal="@(Model.YtdExpenses)" data-currency="@Model.Currency" data-chart-title="Income for @(DateTime.Now.Year)" data-inverted="true"></div>
-                                </div>
-
-                            </div>
 
                         </div>
 

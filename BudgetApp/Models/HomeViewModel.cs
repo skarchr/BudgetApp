@@ -103,6 +103,19 @@ namespace BudgetApp.Models
             }
         }
 
+        public double CurrentMonthIncome
+        {
+            get
+            {
+                var today = DateTime.Now;
+
+                return Transactions.Where(
+                        s =>
+                            CategoryExt.GetMainCategory(s.Category.Value) == Categories.Income &&
+                            s.Date.Month == today.Month && s.Date.Year == today.Year).Sum(s => s.Amount);
+            }
+        }
+
         public double AverageDailyIncome
         {
             get

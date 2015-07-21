@@ -546,6 +546,7 @@
     <Content Include="Content\Site.css" />
     <Content Include="js\app\BudgetApp.js" />
     <Content Include="js\controllers\CurrencyController.js" />
+    <Content Include="js\controllers\GaugeController.js" />
     <Content Include="js\controllers\HomeController.js" />
     <Content Include="js\controllers\ImportController.js" />
     <Content Include="js\controllers\LoginController.js" />
@@ -614,6 +615,7 @@
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\_references.js" />
     <Content Include="Views\Shared\_Gauge.html" />
+    <Content Include="Views\Shared\_Gauge2.html" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>

@@ -23,6 +23,75 @@
     }
 
     angular.module('budgetApp')
+        .directive('budgetGauge2', function () {
+
+            var arrayGenerator = function (interval, amount, input) {
+
+                var arr = [];
+
+                for (var i = 0; i <= amount; i++) {
+
+                    arr.push({ x : 25 + (interval*i), text: input*i });
+
+                }
+
+                return arr;
+
+            };
+
+            return {
+                restrict: 'A',
+                transclude: true,
+                scope: {
+                    budgetGauge2:'@',
+                    gaugeIn: '@',
+                    gaugeOut: '@',
+                    gaugeGoal:'@'
+                },
+
+                link:function(scope, elem, attrs) {
+
+                    var income = 0,
+                        goal = 0,
+                        expenses = 0;
+
+                    if(scope.gaugeIn !== undefined)
+                        income = JSON.parse(scope.gaugeIn);
+
+                    if (scope.gaugeOut !== undefined)
+                        expenses = JSON.parse(scope.gaugeOut);                    
+
+                    if (scope.gaugeGoal !== '' && scope.gaugeGoal !== undefined && scope.gaugeGoal !== '0')
+                        goal = JSON.parse(scope.gaugeGoal);
+
+
+                    scope.displayIn = income;
+                    scope.displayOut = expenses;
+                    scope.displayGoal = goal;
+
+                   
+                    var max = Math.max(income, expenses, goal);
+
+                    var roundedMax = Math.ceil(max / 100) * 100;
+
+                    scope.intervals = arrayGenerator(100, 5, roundedMax / 5);
+
+                    var pxLength = roundedMax / 50;
+
+
+                    scope.income = 25 + (scope.gaugeIn * 10 / pxLength);
+
+                    scope.expenses = 25 + (scope.gaugeOut * 10 / pxLength);
+
+
+                    if (scope.gaugeGoal !== undefined)
+                        scope.goal = (25 + (scope.gaugeGoal * 10 / pxLength)).toFixed(2);
+
+                },
+                templateUrl: '../views/shared/_Gauge2.html',
+            };
+        })
+
         .directive('budgetGauge', function() {
 
 
