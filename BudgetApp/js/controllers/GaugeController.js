@@ -7,25 +7,17 @@
 
         $scope.yOffset = 40;
 
-        $scope.arrowWidth = 10;
+        $scope.arrowWidth = 3;
 
-        var arrayGenerator = function(interval, amount) {
+        $scope.findXPos = function(income, expenses) {
 
-            var arr = new Array();
+            var x1 = income > expenses ? expenses : income;
+            var x2 = income > expenses ? income : expenses;
 
-            var temp = 25;
+            var midPoint = x1 + ((x2 - x1) / 2);
 
-            for (var i = 0; i <= amount; i++) {
-                arr.push(temp);
-
-                temp += interval;
-            }
-
-            return arr;
-
+            return $scope.xOffset + midPoint;
         };
-
-        $scope.xLines = arrayGenerator(50, 10);
 
     }]);
 

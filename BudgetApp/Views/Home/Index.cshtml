@@ -135,7 +135,7 @@
                         <div class="row" style="margin-top: 10px;">
 
                             <div class="col-xs-12 col-lg-6 no-padding" budget-gauge2="This month (@(DateHelper.GetMonthText(DateTime.Now)))" gauge-in="{{model.currentMonthIncome}}" gauge-out="{{model.currentMonthExpenses}}" gauge-goal="{{model.expensesGoal}}"></div>
-                            <div class="col-xs-12 col-lg-6" budget-gauge2="Year-to-date (@DateTime.Now.Year)" gauge-in="{{model.ytdIncome}}" gauge-out="{{model.ytdExpenses}}" gauge-goal="{{model.expensesGoal * @DateTime.Now.Month}}"></div>
+                            <div class="col-xs-12 col-lg-6" budget-gauge2="Year-to-date (@DateTime.Now.Year)" gauge-in="{{model.ytdIncome}}" gauge-out="{{model.ytdExpenses+ 20000}}" gauge-goal="{{model.expensesGoal * @DateTime.Now.Month}}"></div>
 
 
                         </div>
