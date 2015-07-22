@@ -1,7 +1,7 @@
 ﻿
 <div ng-controller="gaugeController">   
 
-    <svg width="580" heigth="100">
+    <svg width="580" height="100">
 
         <defs>
             <style type="text/css">
@@ -32,13 +32,13 @@
                  }
 
                  .gauge-income > line {
-                     stroke-width: 3px;
+                     stroke-width: 10px;
                      stroke:#4bcdad;
                  }
 
                  .gauge-income > text {
                      fill:#4bcdad;
-                     font-size: 18px;
+                     font-size: 14px;
                  }
 
                  .gauge-expenses > polygon {
@@ -48,13 +48,13 @@
                  }
 
                  .gauge-expenses > line {
-                     stroke-width: 3px;
+                     stroke-width: 10px;
                      stroke:#e73131;
                  }
 
                  .gauge-expenses > text {
                      fill:#e73131;
-                     font-size: 18px;
+                     font-size: 14px;
                  }
 
             </style>
@@ -62,46 +62,46 @@
 
         <g class="gauge-container-2">            
             <text style="font-size:20px;" x="0" y="20" >{{budgetGauge2}}</text>
-            <rect ng-attr-x="{{xOffset}}" ng-attr-y="{{yOffset}}" width="552" height="61" style="stroke:#000;stroke-width: 1px; fill:#fff" />
+            <rect ng-attr-x="{{xOffset}}" ng-attr-y="{{yOffset}}" width="552" height="30" style="stroke:#000;stroke-width: 1px; fill:#fff" />
         </g>
         
         <g class="gauge-balance">
-            <rect style="fill:#f2aeae;" ng-attr-x="{{xOffset + income}}" ng-attr-y="{{yOffset}}" height="60" ng-attr-width="{{expenses - income}}" />
+            <rect style="fill:#f2aeae;" ng-attr-x="{{xOffset + income}}" ng-attr-y="{{yOffset}}" height="29" ng-attr-width="{{expenses - income}}" />
 
-            <rect style="fill:#9cf5df;" ng-attr-x="{{xOffset + expenses}}" ng-attr-y="{{yOffset}}" height="60" ng-attr-width="{{income - expenses}}" />
+            <rect style="fill:#9cf5df;" ng-attr-x="{{xOffset + expenses}}" ng-attr-y="{{yOffset}}" height="29" ng-attr-width="{{income - expenses}}" />
 
         </g>
         
 
         <g class="gauge-income" ng-show="gaugeIn !== undefined">
-            <polygon ng-attr-points="{{income - arrowWidth}},{{yOffset}} {{income + arrowWidth}},{{yOffset}} {{income}},{{yOffset + 20}}" />
+            <polygon ng-attr-points="{{income - arrowWidth}},{{yOffset}} {{income}},{{yOffset}} {{income}},{{yOffset + 20}}" />
             <text ng-attr-x="{{xOffset + income}}" ng-attr-y="{{yOffset - 5}}" text-anchor="middle"> {{displayIn | currencyFormatter}} </text>
-            <line ng-attr-x1="{{xOffset}}" ng-attr-y1="{{yOffset + 1}}" ng-attr-x2="{{xOffset + income}}" ng-attr-y2="{{yOffset + 1}}" />
+            <line ng-attr-x1="{{xOffset}}" ng-attr-y1="{{yOffset + 4}}" ng-attr-x2="{{xOffset + income}}" ng-attr-y2="{{yOffset + 4}}" />
         </g>
 
         <g class="gauge-expenses" ng-show="gaugeOut !== undefined">
-            <polygon ng-attr-points="{{expenses - arrowWidth}},{{yOffset + 60}} {{expenses + arrowWidth}},{{yOffset + 60}} {{expenses}},{{yOffset + 40}}" />
-            <text ng-attr-x="{{xOffset + expenses}}" ng-attr-y="{{yOffset + 78}}" text-anchor="middle"> {{displayOut | currencyFormatter}} </text>
-            <line ng-attr-x1="{{xOffset}}" ng-attr-y1="{{yOffset + 59}}" ng-attr-x2="{{xOffset + expenses}}" ng-attr-y2="{{yOffset + 59}}" />
+            <polygon ng-attr-points="{{expenses - arrowWidth}},{{yOffset + 30}} {{expenses}},{{yOffset + 30}} {{expenses}},{{yOffset + 10}}" />
+            <text ng-attr-x="{{xOffset + expenses}}" ng-attr-y="{{yOffset + 48}}" text-anchor="middle"> {{displayOut | currencyFormatter}} </text>
+            <line ng-attr-x1="{{xOffset}}" ng-attr-y1="{{yOffset + 26}}" ng-attr-x2="{{xOffset + expenses}}" ng-attr-y2="{{yOffset + 26}}" />
         </g>
 
 
         <g class="gauge-lines">
 
-            <line ng-attr-x1="{{xOffset + xvalue}}" ng-attr-y1="{{yOffset}}" ng-attr-x2="{{xOffset + xvalue}}" ng-attr-y2="{{yOffset + 20}}" ng-repeat="xvalue in xLines" />
+            <line ng-attr-x1="{{xOffset + xvalue}}" ng-attr-y1="{{yOffset}}" ng-attr-x2="{{xOffset + xvalue}}" ng-attr-y2="{{yOffset + 8}}" ng-repeat="xvalue in xLines" />
 
-            <text text-anchor="middle" baseline-alignment="middle" ng-attr-x="{{xOffset + interval.x}}" ng-attr-y="{{yOffset + 35}}" ng-repeat="interval in intervals"> {{interval.text | currencyFormatter : true}} </text>    
+            <text text-anchor="middle" baseline-alignment="middle" ng-attr-x="{{xOffset + interval.x}}" ng-attr-y="{{yOffset + 20}}" ng-repeat="interval in intervals"> {{interval.text | currencyFormatter : true}} </text>    
 
-            <line ng-attr-x1="{{xOffset + xvalue}}" ng-attr-y1="{{yOffset + 60}}" ng-attr-x2="{{xOffset + xvalue}}" ng-attr-y2="{{yOffset + 40}}" ng-repeat="xvalue in xLines" />
+            <line ng-attr-x1="{{xOffset + xvalue}}" ng-attr-y1="{{yOffset + 22}}" ng-attr-x2="{{xOffset + xvalue}}" ng-attr-y2="{{yOffset + 30}}" ng-repeat="xvalue in xLines" />
                                              
         </g>
 
         <g class="gauge-goal" ng-show="gaugeGoal !== '' && gaugeGoal !== undefined && gaugeGoal !== '0'">
-            <line stroke-dasharray="4,4" class="goal-line" ng-attr-x1="{{xOffset + goal}}" ng-attr-y1="{{yOffset}}" ng-attr-x2="{{xOffset + goal}}" ng-attr-y2="{{yOffset + 61}}" />
+            <line stroke-dasharray="2,2" class="goal-line" ng-attr-x1="{{xOffset + goal}}" ng-attr-y1="{{yOffset}}" ng-attr-x2="{{xOffset + goal}}" ng-attr-y2="{{yOffset + 32}}" />
         </g>
 
         <g class="gauge-goal" ng-hide="gaugeGoal !== '' && gaugeGoal !== undefined && gaugeGoal !== '0'">
-            <text style="cursor: pointer;" onclick="location.href = '/Manage'" ng-attr-x="{{xOffset}}" ng-attr-y="{{yOffset+ 75}}">No goal set</text>
+            <text style="cursor: pointer;" onclick="location.href = '/Manage'" ng-attr-x="{{xOffset}}" ng-attr-y="{{yOffset+ 45}}">No goal set</text>
         </g>
 
 

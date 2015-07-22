@@ -7,7 +7,7 @@
 
         $scope.yOffset = 40;
 
-        $scope.arrowWidth = 4;
+        $scope.arrowWidth = 10;
 
         var arrayGenerator = function(interval, amount) {
 
