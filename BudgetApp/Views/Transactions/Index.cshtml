@@ -260,7 +260,7 @@
                             </tbody>
                         </table>
                         
-                        <div pagination data-items-per-page="numPerPage" total-items="range.transactions.length" ng-model="currentPage" max-size="maxSize" boundary-links="true" rotate="false"></div>
+                        <div ng-show="(range.transactions | filter: querystring[$index]).length > numPerPage" pagination data-items-per-page="numPerPage" total-items="(range.transactions | filter: querystring[$index] ).length" ng-model="currentPage" max-size="maxSize" boundary-links="true" rotate="false"></div>
                     </div>
 
 

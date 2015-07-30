@@ -1,7 +1,7 @@
 ﻿
 <div ng-controller="gaugeController">   
 
-    <svg width="580" height="100">
+    <svg width="580" height="110">
 
         <defs>
             <style type="text/css">
@@ -57,7 +57,7 @@
                      font-size: 14px;
                  }
 
-                 .gauge-balance > rect {
+                 .gauge-balance > rect,.gauge-balance > text {
                      -webkit-transition: all 1s;
                      -moz-transition: all 1s;
                      -ms-transition: all 1s;
@@ -66,7 +66,7 @@
                  }
 
                  .gauge-balance:hover > text {
-                     display: block !important;
+                     fill: #428bca !important;
                  }
 
                  .gauge-balance:hover > rect {
@@ -92,11 +92,9 @@
             <line ng-attr-x1="{{xOffset + 1}}" ng-attr-y1="{{yOffset + 22}}" ng-attr-x2="{{xOffset + expenses}}" ng-attr-y2="{{yOffset + 22}}" />
         </g>
 
-        <g class="gauge-balance">
-            
-
+        <g class="gauge-balance">            
             <rect style="fill:{{findColor(income, expenses)}};stroke:0;" ng-attr-x="{{findBalance(income, expenses)}}" ng-attr-y="{{yOffset + 1}}" height="28" ng-attr-width="{{findWidth(income, expenses)}}" />            
-            <text alignment-baseline="middle" text-anchor="{{ findPlacement(income, expenses) }}" style="display:none;fill:white;font-size:14px;z-index: 1000;" ng-attr-x="{{ findXPos(income, expenses) }}" ng-attr-y="{{yOffset + 16}}">{{(displayIn - displayOut) | currencyFormatter}}</text>
+            <text alignment-baseline="middle" text-anchor="{{ findPlacement(income, expenses) }}" style="fill:white;font-size:14px;z-index: 1000;" ng-attr-x="{{ findXPos(income, expenses) }}" ng-attr-y="{{yOffset + 60}}">{{(displayIn - displayOut) | currencyFormatter}}</text>
         </g>
 
         <g class="gauge-goal" ng-show="gaugeGoal !== '' && gaugeGoal !== undefined && gaugeGoal !== '0'">
