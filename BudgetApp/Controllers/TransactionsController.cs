@@ -237,7 +237,7 @@ namespace BudgetApp.Controllers
                     return View("Upload");
                 }
 
-                var path = Path.Combine(Server.MapPath("~/App_Data/uploads"), fileName);
+                var path = Path.Combine(Server.MapPath("~/App_Data/uploads"), string.Format("{0}_{1}", Guid.NewGuid(),fileName));
 
                 file.SaveAs(path);
 
@@ -252,6 +252,10 @@ namespace BudgetApp.Controllers
                     TempData["Error"] = "No transactions found";
                     return RedirectToAction("Upload");
                 }
+
+                //Delete file
+
+                new FileInfo(path).Delete();
 
                 return View("Import", new ImportViewModel{Transactions = transactions, Mapping = new Mapping()});
             }
