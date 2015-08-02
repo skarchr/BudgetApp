@@ -1,6 +1,6 @@
 ﻿(function() {
     'use strict';
 
-    angular.module('budgetApp', ['ui.bootstrap', 'ui.gravatar', 'toastr']);
+    angular.module('budgetApp', ['ui.bootstrap', 'ngAnimate', 'ui.gravatar', 'toastr']);
 
 })();
