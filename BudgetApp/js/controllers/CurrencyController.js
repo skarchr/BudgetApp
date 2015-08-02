@@ -16,7 +16,7 @@
 
         };
 
-        $http.get('../../js/resources/currencies.json')
+        $http.get('/js/resources/currencies.json')
             .success(function (data) {
                 $scope.currencies = data;                
             })
