@@ -108,7 +108,8 @@
             }
         });
 
-        $http.get('../../js/resources/countries.json')
+        $timeout(function() {
+            $http.get('../../js/resources/countries.json')
             .success(function (data) {
                 $scope.countries = data;
             })
@@ -116,13 +117,16 @@
                 $scope.countries = [];
             });
 
-        $http.get('/js/resources/currencies.json')
-            .success(function (data) {
-                $scope.currencies = data;
-            })
-            .error(function (data) {
-                $scope.currencies = [];
-            });
+            $http.get('/js/resources/currencies.json')
+                .success(function (data) {
+                    $scope.currencies = data;
+                })
+                .error(function (data) {
+                    $scope.currencies = [];
+                });
+        }, 1000);
+
+        
 
       
 
