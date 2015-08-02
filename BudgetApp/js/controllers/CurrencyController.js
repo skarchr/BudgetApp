@@ -8,13 +8,7 @@
 
         $scope.regexDouble = /^(\d+(?:[\.\,]\d{1,2})?)$/;
 
-        $http.get('/js/resources/countries.json')
-            .success(function (data) {
-                $scope.countries = data;
-            })
-            .error(function (data) {
-                $scope.countries = [];
-            });
+        
 
         $scope.getIcon = function (input) {
 
@@ -22,12 +16,20 @@
 
         };
 
-        $http.get('/js/resources/currencies.json')
+        $http.get('../../js/resources/currencies.json')
             .success(function (data) {
                 $scope.currencies = data;                
             })
             .error(function (data) {
                 $scope.currencies = [];
+            });
+
+        $http.get('/js/resources/countries.json')
+            .success(function (data) {
+                $scope.countries = data;
+            })
+            .error(function (data) {
+                $scope.countries = [];
             });
 
         $scope.$watchGroup(['currencies', 'countries'], function(newVal, oldVal) {

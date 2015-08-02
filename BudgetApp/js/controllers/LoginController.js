@@ -108,7 +108,7 @@
             }
         });
 
-        $http.get('/js/resources/countries.json')
+        $http.get('../../js/resources/countries.json')
             .success(function (data) {
                 $scope.countries = data;
             })
