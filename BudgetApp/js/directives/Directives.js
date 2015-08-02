@@ -23,6 +23,110 @@
     }
 
     angular.module('budgetApp')
+        .directive('budgetGauge2', function () {
+
+            var arrayGenerator = function (interval, amount, input) {
+
+                var arr = [];
+
+                for (var i = 0; i <= amount; i++) {
+
+                    arr.push({ x : 25 + (interval*i), text: input*i });
+
+                }
+
+                return arr;
+
+            };
+
+            return {
+                restrict: 'A',
+                transclude: true,
+                scope: {
+                    budgetGauge2:'@',
+                    gaugeIn: '@',
+                    gaugeOut: '@',
+                    gaugeGoal:'@'
+                },
+
+                link:function(scope, elem, attrs) {
+
+                    var income = 0,
+                        goal = 0,
+                        expenses = 0;
+
+                    if(scope.gaugeIn !== undefined)
+                        income = JSON.parse(scope.gaugeIn);
+
+                    if (scope.gaugeOut !== undefined)
+                        expenses = JSON.parse(scope.gaugeOut);                    
+
+                    if (scope.gaugeGoal !== '' && scope.gaugeGoal !== undefined && scope.gaugeGoal !== '0')
+                        goal = JSON.parse(scope.gaugeGoal);
+
+
+                    scope.displayIn = income;
+                    scope.displayOut = expenses;
+                    scope.displayGoal = goal;
+
+                   
+                    var max = Math.max(income, expenses, goal);
+
+                    var roundedMax = Math.ceil(max / 100) * 100;
+
+                    scope.intervals = arrayGenerator(100, 5, roundedMax / 5);
+
+                    var pxLength = roundedMax / 50;
+
+
+                    scope.income = 25 + (scope.gaugeIn * 10 / pxLength);
+
+                    scope.expenses = 25 + (scope.gaugeOut * 10 / pxLength);
+
+
+                    if (scope.gaugeGoal !== undefined)
+                        scope.goal = (25 + (scope.gaugeGoal * 10 / pxLength)).toFixed(2);
+
+                },
+                templateUrl: '../views/shared/_Gauge2.html',
+            };
+        })
+
+        .directive('budgetGauge', function() {
+
+
+            return {
+                restrict: 'A',
+                transclude: true,
+                scope: {
+                    budgetGauge: '@',
+                    goal: '@',
+                    titleText: '@',
+                    type:'@'
+                },
+                link: function(scope, elem) {
+
+                    var gaugeVal = JSON.parse(scope.budgetGauge);
+
+                    scope.gaugeVal = gaugeVal;
+
+                    scope.zeroText = Math.floor(gaugeVal / 100) * 100;
+
+                    if(scope.goal > 0.0)
+                        scope.goalText = JSON.parse(scope.goal).toFixed(2);
+
+                    scope.zeroValue = 140 - (gaugeVal - scope.zeroText);
+
+                    if(scope.goal > 0.0)
+                        scope.goalVal = 140 - (gaugeVal - JSON.parse(scope.goal));
+
+                    if (scope.goalVal < 0)
+                        scope.goalVal = 0;
+
+                },
+                templateUrl: '../views/shared/_Gauge.html',
+            };
+        })
 
         .directive('dropdown', function() {
             return {
@@ -916,7 +1020,8 @@
                     scope: {
                         progHighchart: '@',
                         chartLabel: '@',
-                        currency: '@'
+                        currency: '@',
+                        legend:'@'
                     },
                     link: function(scope, elem, attrs) {
 
@@ -946,11 +1051,11 @@
                                 pointFormat: '{series.name}: <b>{point.y:.1f} </b>'
                             },
                             legend: {
-                                enabled: true,
+                                enabled: scope.legend === undefined,
                                 align: 'right',
-                                verticalAlign: 'middle',
-                                layout: 'vertical',
-                                y: -25
+                                verticalAlign: 'bottom',
+                                layout: 'horizontal',
+                                y: 20
                             },
                             credits: false,
                             plotOptions: {
@@ -964,11 +1069,17 @@
                             xAxis: {
                                 type: 'category',
                                 categories: model.categories,
+                                plotLines: model.plotLinesX
                             },
+
                             yAxis: {
                                 title: {
                                     text: model.currency
-                                }
+                                },
+                                plotLines: model.plotLinesY,
+                                max: model.max,
+                                min : model.min
+
                             },
                             series: model.series
                         });

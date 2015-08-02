@@ -139,7 +139,8 @@ namespace BudgetApp.Extensions.Graphs
                     Id = year.Key.ToString().ToLower(),
                     Name = year.Key.ToString(),
                     Data = data,
-                    Type = "line"
+                    Type = "line",
+                    Visible = year.Key == DateTime.Now.Year
                 });
                 mainIndex++;
             }

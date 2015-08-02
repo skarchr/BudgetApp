@@ -21,8 +21,27 @@ namespace BudgetApp.Tests.Graphs
         [Test]
         public void One_Year()
         {
+            var result = Prognosis.CreateChart(CreateTransactions(), "NOK");
 
-            var trans = new List<Transaction>
+            result.Series.Count.Should().Be(1);
+
+            result.Series[0].Name.Should().Be("2014");
+            result.Series[0].Data[0].X.Should().Be(0);
+            result.Series[0].Data[0].Y.Should().Be(300);
+
+            result.Series[0].Data[1].X.Should().Be(1);
+            result.Series[0].Data[1].Y.Should().Be(800);
+
+            result.Series[0].Data[2].X.Should().Be(2);
+            result.Series[0].Data[2].Y.Should().Be(800);
+
+            result.Series[0].Data[3].X.Should().Be(3);
+            result.Series[0].Data[3].Y.Should().Be(1000);
+        }
+
+        private List<Transaction> CreateTransactions()
+        {
+            return new List<Transaction>
             {
                 new Transaction
                 {
@@ -49,27 +68,10 @@ namespace BudgetApp.Tests.Graphs
                     Category = Category.Travel
                 }
             };
-
-            var result = Prognosis.CreateChart(trans, "NOK");
-
-            result.Series.Count.Should().Be(1);
-
-            result.Series[0].Name.Should().Be("2014");
-            result.Series[0].Data[0].X.Should().Be(0);
-            result.Series[0].Data[0].Y.Should().Be(300);
-
-            result.Series[0].Data[1].X.Should().Be(1);
-            result.Series[0].Data[1].Y.Should().Be(800);
-
-            result.Series[0].Data[2].X.Should().Be(2);
-            result.Series[0].Data[2].Y.Should().Be(800);
-
-            result.Series[0].Data[3].X.Should().Be(3);
-            result.Series[0].Data[3].Y.Should().Be(1000);
         }
 
         [Test]
-        public void Two_Year()
+        public void This_Year_Predicted()
         {
 
             var trans = new List<Transaction>
@@ -99,6 +101,29 @@ namespace BudgetApp.Tests.Graphs
 
             result.Series[0].Data[11].X.Should().Be(11);
             result.Series[0].Data[11].Y.Should().Be(12);
+
+        }
+
+        [Test]
+        public void Two_Years_Oldest_Disabled()
+        {
+
+            var trans = CreateTransactions();
+
+            trans.Add(new Transaction
+            {
+                Amount = 200,
+                Category = Category.Travel,
+                Date = new DateTime(DateTime.Now.Year,1,1)
+            });
+
+            var result = Prognosis.CreateChart(trans, "NOK");
+
+            result.Series.Count.Should().Be(3);
+
+            result.Series[0].Visible.Should().Be(true);
+            result.Series[1].Visible.Should().Be(false);
+            result.Series[2].Visible.Should().Be(true);
 
         }
 

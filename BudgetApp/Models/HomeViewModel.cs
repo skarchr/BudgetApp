@@ -21,6 +21,7 @@ namespace BudgetApp.Models
         public string Currency { get; set; }
         public string PrognosisChart { get { return GraphBuilder.PrognosisGraph(Transactions, Currency).ToJson(); } }
         public string PrognosisIncomeChart { get { return GraphBuilder.PrognosisGraph(Transactions, Currency, true).ToJson(); } }
+        public string ScpExpensesChart { get; set; }
 
         public List<SavingModel> SavingGoals
         {
@@ -98,6 +99,19 @@ namespace BudgetApp.Models
                 return Transactions.Where(
                         s =>
                             CategoryExt.GetMainCategory(s.Category.Value) != Categories.Income &&
+                            s.Date.Month == today.Month && s.Date.Year == today.Year).Sum(s => s.Amount);
+            }
+        }
+
+        public double CurrentMonthIncome
+        {
+            get
+            {
+                var today = DateTime.Now;
+
+                return Transactions.Where(
+                        s =>
+                            CategoryExt.GetMainCategory(s.Category.Value) == Categories.Income &&
                             s.Date.Month == today.Month && s.Date.Year == today.Year).Sum(s => s.Amount);
             }
         }

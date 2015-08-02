@@ -22,33 +22,6 @@ textarea {
     max-width: 280px;
 }
 
-
-/* styles for validation helpers */
-.field-validation-error {
-    color: #b94a48;
-}
-
-.field-validation-valid {
-    display: none;
-}
-
-input.input-validation-error {
-    border: 1px solid #b94a48;
-}
-
-input[type="checkbox"].input-validation-error {
-    border: 0 none;
-}
-
-.validation-summary-errors {
-    color: #b94a48;
-}
-
-.validation-summary-valid {
-    display: none;
-}
-
-
 .placeholder-text{
     color: white;
 }
@@ -552,4 +525,7 @@ hr.blue {
 
 .highcharts-button > rect, .highcharts-button > text {
     cursor: pointer;
+}
+.no-padding {
+    padding: 0;
 }

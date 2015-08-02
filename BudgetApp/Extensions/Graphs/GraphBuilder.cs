@@ -42,5 +42,10 @@ namespace BudgetApp.Extensions.Graphs
         {
             return Prognosis.CreateChart(transactions, currency, income);
         }
+
+        public static Highchart SpcGraph(List<Transaction> transactions, string currency, Range range)
+        {
+            return Spc.CreateChart(transactions, currency, range);
+        }
     }
 }

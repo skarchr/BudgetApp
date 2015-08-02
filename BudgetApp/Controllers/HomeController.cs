@@ -28,6 +28,7 @@ namespace BudgetApp.Controllers
                 TransactionDrilldownGraph = GraphBuilder.TransactionDrilldownGraph(transactions, user.Currency, "bar", true).ToJson(),
                 DrilldownGraphTot = GraphBuilder.DrilldownGraph(transactions, user.Currency, "column", true).ToJson(),
                 DrilldownGraphYtd = GraphBuilder.DrilldownGraph(transactions.Where(s => s.Date.Year == DateTime.Now.Year).ToList(), user.Currency, "column", true).ToJson(),
+                ScpExpensesChart = GraphBuilder.SpcGraph(transactions, user.Currency, user.Range).ToJson(),
                 ExpensesGoal = user.MonthlyExpensesGoal,
                 SavingGoal = user.MonthlySavingGoal,
                 Currency = user.Currency

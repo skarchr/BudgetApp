@@ -64,6 +64,11 @@
 
         };
 
+        $scope.currentPage = 1;
+
+        $scope.numPerPage = 25;
+
+        $scope.maxSize = 8;
     }]);
 
     angular.module('budgetApp').controller('addTransactionController', ['$scope', 'addTransactionModel', function ($scope, addTransactionModel) {

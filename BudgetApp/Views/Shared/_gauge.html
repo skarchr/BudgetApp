@@ -1,0 +1,113 @@
+﻿<svg class="gauge" height="100" width="280">
+
+    <defs>
+        <style>
+            .gauge-whole-numb > g > text {
+                fill: #313131;
+                font-size: 13px;
+            }
+
+            .gauge-whole-numb > g > line, .gauge-half-numb > line {
+                stroke-width: 1px;
+                stroke: #000;
+            }
+
+            .gauge-no-goal:hover {
+                cursor: pointer;
+                text-decoration: underline;
+            }
+
+            .gauge-goal, .gauge-no-goal {
+                font-size: 11px;
+                fill: #e87c7c;
+            }
+
+            .gauge-arrow-expenses {
+                stroke-width:1px;
+                stroke:#e73131;
+            }
+
+            .gauge-arrow-expenses, .type-expenses {                
+                fill: #e87c7c;
+            }
+
+            .gauge-arrow-income {
+                stroke-width:1px;
+                stroke:#4bcdad;
+            }
+
+            .gauge-arrow-income, .type-income {                
+                fill: #61f6d1;
+            }
+
+        </style>
+    </defs>
+
+    <g class="gauge-container">
+        <rect ng-show="goal !== '0' && goal !== '' && type !== 'income'" y="20" ng-attr-x="{{goalVal}}" height="50" width="280" style="fill:#fbe6e6;stroke:#e73131;" />
+        <rect ng-show="type === 'income'" y="20" ng-attr-x="0" height="50" ng-attr-width="{{goalVal}}" style="fill:#fbe6e6;stroke:#e73131;" />
+        <rect y="20" height="50" width="280" style="stroke-width: 1px;stroke:#0094ff;fill:none;" />
+        <polygon class="gauge-arrow-{{type}}" points="130,20 150,20 140,40" />
+    </g>
+
+    <g class="gauge-numb">
+
+        <g class="gauge-whole-numb">
+
+            <g>
+                <line ng-attr-x1="{{zeroValue - 200}}" y1="70" ng-attr-x2="{{zeroValue - 200}}" y2="50" />
+                <text text-anchor="middle" ng-attr-x="{{zeroValue - 200}}" y="48">{{zeroText - 200 | currencyFormatter : true}}</text>
+            </g>
+
+            <g>
+                <line ng-attr-x1="{{zeroValue - 100}}" y1="70" ng-attr-x2="{{zeroValue - 100}}" y2="50" />
+                <text text-anchor="middle" ng-attr-x="{{zeroValue - 100}}" y="48">{{zeroText - 100 | currencyFormatter : true}}</text>
+            </g>
+
+            <g>
+                <line ng-attr-x1="{{zeroValue}}" y1="70" ng-attr-x2="{{zeroValue}}" y2="50" />
+                <text text-anchor="middle" ng-attr-x="{{zeroValue}}" y="48">{{zeroText | currencyFormatter : true}}</text>
+            </g>
+
+            <g>
+                <line ng-attr-x1="{{zeroValue + 100}}" y1="70" ng-attr-x2="{{zeroValue + 100}}" y2="50" />
+                <text text-anchor="middle" ng-attr-x="{{zeroValue + 100}}" y="48">{{zeroText + 100 | currencyFormatter : true}}</text>
+            </g>
+
+            <g>
+                <line ng-attr-x1="{{zeroValue + 200}}" y1="70" ng-attr-x2="{{zeroValue + 200}}" y2="50" />
+                <text text-anchor="middle" ng-attr-x="{{zeroValue + 200}}" y="48">{{zeroText + 200 | currencyFormatter : true}}</text>
+            </g>
+
+        </g>
+        <g class="gauge-half-numb">
+
+            <line ng-attr-x1="{{zeroValue - 150}}" y1="70" ng-attr-x2="{{zeroValue - 150}}" y2="55" />
+
+            <line ng-attr-x1="{{zeroValue - 50}}" y1="70" ng-attr-x2="{{zeroValue - 50}}" y2="55" />
+
+            <line ng-attr-x1="{{zeroValue + 50}}" y1="70" ng-attr-x2="{{zeroValue + 50}}" y2="55" />
+
+            <line ng-attr-x1="{{zeroValue + 150}}" y1="70" ng-attr-x2="{{zeroValue + 150}}" y2="55" />
+
+            <line ng-attr-x1="{{zeroValue + 250}}" y1="70" ng-attr-x2="{{zeroValue + 250}}" y2="55" />
+
+        </g>
+    </g>
+
+    <g class="gauge-text">
+        <text x="0" y="15" text-anchor="start">{{titleText}}</text>
+        <text class="gauge-value type-{{type}}" style="font-size:20px;" x="140" y="14" text-anchor="middle">{{gaugeVal | currencyFormatter}}</text>
+
+        <text ng-show="(goalVal <= 280 && goalVal > 0)" class="gauge-goal" text-anchor="start" ng-attr-x="{{goalVal}}" y="80">{{goalText}}</text>
+
+        <polygon ng-show="goalVal <= 0.0" points="2,77 8,81 8,73" style="fill:#e73131" />
+        <text ng-show="goalVal <= 0.0" class="gauge-goal" x="10" y="81">{{goalText}}</text>
+        
+        <polygon ng-show="goalVal > 280.0" points="278,77 272,81 272,73" style="fill:#e73131" />
+        <text ng-show="goalVal >= 280.0" class="gauge-goal" text-anchor="end" x="268" y="81">{{goalText}}</text>
+
+        <text onclick="location.href = '/Manage'" ng-hide="goalText > 0.0 || type === 'income'" class="gauge-no-goal" text-anchor="end" x="276" y="80">No goal set</text>
+    </g>
+
+</svg>

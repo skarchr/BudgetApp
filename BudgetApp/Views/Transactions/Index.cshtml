@@ -230,7 +230,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr ng-repeat="row in range.transactions | orderBy:predicate:reverse | filter: querystring[$index]">
+                                <tr ng-repeat="row in range.transactions | orderBy:predicate:reverse | filter: querystring[$index] | startFrom:(currentPage - 1)*numPerPage | limitTo:numPerPage">
                                     <td class="hidden-xs">
 
                                         <span class="percentage-row" ng-show="row.category !== 'Salary' && row.category !== 'OtherIncome'">
@@ -239,7 +239,7 @@
                                             </svg>
                                         </span>
 
-                                        {{ $index + 1 }}
+                                        {{(currentPage-1)*numPerPage + ($index+1)}}
                                     </td>
                                     <td class="hidden">{{row.mainCategory}}</td>
                                     <td class="hidden">{{row.categoryText}}</td>
@@ -259,6 +259,8 @@
                                 </tr>
                             </tbody>
                         </table>
+                        
+                        <div ng-show="(range.transactions | filter: querystring[$index]).length > numPerPage" pagination data-items-per-page="numPerPage" total-items="(range.transactions | filter: querystring[$index] ).length" ng-model="currentPage" max-size="maxSize" boundary-links="true" rotate="false"></div>
                     </div>
 
 
