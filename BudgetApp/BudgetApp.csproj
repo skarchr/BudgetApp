@@ -559,7 +559,6 @@
     <Content Include="js\templates\SelectCategory.html" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
-    <Content Include="PrivateSettings.config" />
     <Content Include="bower.json" />
     <Content Include="bower_components\jquery\.bower.json" />
     <Content Include="bower_components\jquery\bower.json" />
