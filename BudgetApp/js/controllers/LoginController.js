@@ -108,13 +108,6 @@
             }
         });
 
-        $http.get('/js/resources/countries.json')
-            .success(function (data) {
-                $scope.countries = data;
-            })
-            .error(function (data) {
-                $scope.countries = [];
-            });
 
         $http.get('/js/resources/currencies.json')
             .success(function (data) {
@@ -123,6 +116,15 @@
             .error(function (data) {
                 $scope.currencies = [];
             });
+
+        $http.get('/js/resources/countries.json')
+            .success(function (data) {
+                $scope.countries = data;
+            })
+            .error(function (data) {
+                $scope.countries = [];
+            });
+
 
       
 
