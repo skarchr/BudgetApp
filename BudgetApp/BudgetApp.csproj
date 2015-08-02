@@ -595,7 +595,7 @@
     <Content Include="bower_components\angular-animate\bower.json" />
     <Content Include="bower_components\angular-animate\package.json" />
     <Content Include="bower_components\angular-animate\README.md" />
-    <None Include="js\resources\countries.json" />
+    <Content Include="js\resources\countries.json" />
     <Content Include="bower_components\angular-bootstrap\.bower.json" />
     <Content Include="bower_components\angular-bootstrap\bower.json" />
     <Content Include="js\resources\currencies.json" />
