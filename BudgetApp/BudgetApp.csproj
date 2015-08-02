@@ -248,9 +248,6 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="bower_components\angular-animate\angular-animate.js" />
-    <Content Include="bower_components\angular-animate\angular-animate.min.js" />
-    <Content Include="bower_components\angular-animate\index.js" />
     <Content Include="bower_components\angular-bootstrap\ui-bootstrap-tpls.js" />
     <Content Include="bower_components\angular-bootstrap\ui-bootstrap-tpls.min.js" />
     <Content Include="bower_components\angular-bootstrap\ui-bootstrap.js" />
@@ -577,11 +574,6 @@
     <Content Include="bower_components\animate.css\animate-config.json" />
     <Content Include="bower_components\animate.css\bower.json" />
     <Content Include="bower_components\animate.css\package.json" />
-    <Content Include="bower_components\angular-animate\.bower.json" />
-    <Content Include="bower_components\angular-animate\angular-animate.min.js.map" />
-    <Content Include="bower_components\angular-animate\bower.json" />
-    <Content Include="bower_components\angular-animate\package.json" />
-    <Content Include="bower_components\angular-animate\README.md" />
     <Content Include="bower_components\angular-gravatar\.bower.json" />
     <Content Include="bower_components\angular-gravatar\.bowerrc" />
     <Content Include="bower_components\angular-gravatar\.jshintrc" />
