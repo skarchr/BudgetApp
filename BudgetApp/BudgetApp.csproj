@@ -468,6 +468,10 @@
     <Content Include="bower_components\jquery\src\var\support.js" />
     <Content Include="bower_components\jquery\src\var\toString.js" />
     <Content Include="bower_components\jquery\src\wrap.js" />
+    <Content Include="bower_components\toastr\toastr.css" />
+    <Content Include="bower_components\toastr\toastr.js" />
+    <Content Include="bower_components\toastr\toastr.min.css" />
+    <Content Include="bower_components\toastr\toastr.min.js" />
     <Content Include="bower_components\velocity\test\bluebird.js" />
     <Content Include="bower_components\velocity\test\index.html" />
     <Content Include="bower_components\velocity\test\jquery-1.11.1.js" />
@@ -600,6 +604,11 @@
     <Content Include="bower_components\angular-bootstrap\bower.json" />
     <Content Include="js\resources\currencies.json" />
     <Content Include="PrivateSettings.config" />
+    <Content Include="bower_components\toastr\.bower.json" />
+    <Content Include="bower_components\toastr\bower.json" />
+    <Content Include="bower_components\toastr\README.md" />
+    <Content Include="bower_components\toastr\toastr.less" />
+    <Content Include="bower_components\toastr\toastr.scss" />
     <None Include="Properties\PublishProfiles\MvcP.pubxml" />
     <None Include="Properties\PublishProfiles\MvcPWy.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
