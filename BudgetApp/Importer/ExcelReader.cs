@@ -71,8 +71,12 @@ namespace BudgetApp.Importer
             {
                 try
                 {
-                    var amount = excelReader.GetString(i).Replace('.', ',');
-                    return Convert.ToDouble(amount);
+                    var result = excelReader.GetDouble(i);
+
+                    if (excelReader[i].GetType().Name == "Double")
+                    {
+                        return result;
+                    }                    
                 }
                 catch
                 {                   

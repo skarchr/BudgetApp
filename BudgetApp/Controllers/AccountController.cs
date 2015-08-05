@@ -131,7 +131,7 @@ namespace BudgetApp.Controllers
             {
                 var code = await UserManager.GenerateTwoFactorTokenAsync(user.Id, provider);
                 // Remove for Debug
-                //ViewBag.Code = code;
+                ViewBag.Code = code;
             }
             return View(new VerifyCodeViewModel {Provider = provider, ReturnUrl = returnUrl, RememberMe = rememberMe});
         }
