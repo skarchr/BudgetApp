@@ -5,7 +5,7 @@ A webpage for storing and displaying transaction data.
 
 Warning! This is the non-technical part. You can skip this and go straight to the Configuration part unless you want to know why I made this application...
 
-There are three mayor reasons behind the ignition of this project.
+There are three major reasons behind the ignition of this project.
 
 Necessity. As a student, trying to make ends meet, I needed to get control of my income and expenses. My solution back then was to add transaction data from my internet bank into google docs. This was an ok solution for a while, but the process of organizing transactions into categories on a monthly basis became too cumbersome in the long run. As a consequence, I promised myself that i would create a webpage to make my life alittle easier.
 
@@ -15,7 +15,7 @@ Challenge. Working mostly as a front-end developer at my daily job, I now would 
 
 ## Configuration
 
-This project is built ontop of the following tutorial: https://code.msdn.microsoft.com/MVC-5-with-2FA-email-8f26d952 which takes care of user accounts. It also uses a service to send emails (for verifying the user email and resetting passwords). To fully understand how this works i highly recommend looking further into the tutorial.
+This project is built ontop of the following tutorial: https://code.msdn.microsoft.com/MVC-5-with-2FA-email-8f26d952 which takes care of user accounts. It also uses a service to send emails (for verifying the user email and resetting passwords). To fully understand how this works i recommend to check out the tutorial.
 
 In the Web.Config file you need to fill in values for these keys:
 
