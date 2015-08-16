@@ -60,6 +60,8 @@
 
 
             <footer data-fade-in="600" class="text-center" style="margin-top:100px; ">
+<<<<<<< HEAD
+=======
                 
                 @{
                     if (ConfigurationManager.AppSettings["debugmode"] == "true")
@@ -82,6 +84,7 @@
 }
                 <br />
                 <br />
+>>>>>>> master
                 <div class="row text-center">
                     <div class="col-xs-12 text-muted">Icons made by <a href="http://www.flaticon.com/authors/freepik" title="Freepik">Freepik</a> from <a href="http://www.flaticon.com" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0">CC BY 3.0</a></div>
                 </div>

@@ -85,11 +85,16 @@ namespace BudgetApp.Controllers
                 {
                     string callbackUrl = await SendEmailConfirmationTokenAsync(user.Id, "Confirm your account-Resend");
 
+<<<<<<< HEAD
+                    // Uncomment to debug locally  
+                    //ViewBag.Link = callbackUrl;
+=======
                     // Uncomment to debug locally
 
                     if (ConfigurationManager.AppSettings["debugmode"] == "true")
                         ViewBag.Link = callbackUrl;                        
                     
+>>>>>>> master
                     ViewBag.Error = "You must have a confirmed email to log in. "
                                                + "The confirmation token has been resent to your email account.";
                     
