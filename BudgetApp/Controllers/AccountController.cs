@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
@@ -84,10 +85,14 @@ namespace BudgetApp.Controllers
                 {
                     string callbackUrl = await SendEmailConfirmationTokenAsync(user.Id, "Confirm your account-Resend");
 
-                    // Uncomment to debug locally  
-                    ViewBag.Link = callbackUrl;
+                    // Uncomment to debug locally
+
+                    if (ConfigurationManager.AppSettings["debugmode"] == "true")
+                        ViewBag.Link = callbackUrl;                        
+                    
                     ViewBag.Error = "You must have a confirmed email to log in. "
-                                           + "The confirmation token has been resent to your email account.";
+                                               + "The confirmation token has been resent to your email account.";
+                    
                     return View("Login");
                 }
             }
@@ -130,8 +135,9 @@ namespace BudgetApp.Controllers
             if (user != null)
             {
                 var code = await UserManager.GenerateTwoFactorTokenAsync(user.Id, provider);
-                // Remove for Debug
-                ViewBag.Code = code;
+
+                if (ConfigurationManager.AppSettings["debugmode"] == "true")
+                    ViewBag.Code = code;
             }
             return View(new VerifyCodeViewModel {Provider = provider, ReturnUrl = returnUrl, RememberMe = rememberMe});
         }
@@ -202,6 +208,9 @@ namespace BudgetApp.Controllers
                     string callbackUrl = await SendEmailConfirmationTokenAsync(user.Id, "Confirm your account");
 
                     ViewBag.Info = "Check your email and confirm your account, it must be confirmed before you can log in.";
+
+                    if (ConfigurationManager.AppSettings["debugmode"] == "true")
+                        ViewBag.Link = callbackUrl;
 
                     return View("Login"); ;
                     //return RedirectToAction("Index", "Home");
@@ -277,7 +286,8 @@ namespace BudgetApp.Controllers
         [AllowAnonymous]
         public ActionResult ForgotPasswordConfirmation()
         {
-            ViewBag.Link = TempData["ViewBagLink"];
+            if (ConfigurationManager.AppSettings["debugmode"] == "true")
+                ViewBag.Link = TempData["ViewBagLink"];
             return View();
         }
 

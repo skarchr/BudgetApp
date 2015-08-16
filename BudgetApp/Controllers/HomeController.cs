@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Configuration;
 using System.Linq;
 using System.Web.Helpers;
 using System.Web.Mvc;
@@ -15,7 +16,9 @@ namespace BudgetApp.Controllers
 
         public ActionResult Index()
         {
-            ViewBag.Link = TempData["ViewBagLink"];
+            if (ConfigurationManager.AppSettings["debugmode"] == "true")
+                ViewBag.Link = TempData["ViewBagLink"];
+
             ViewBag.Success = TempData["Success"];
 
             var transactions = db.Transactions.Where(s => s.UserName == User.Identity.Name).ToList();
