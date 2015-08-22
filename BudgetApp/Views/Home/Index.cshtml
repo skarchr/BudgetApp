@@ -5,8 +5,8 @@
 }
 
 <div class="row" ng-controller="homeController" style="margin-top:30px;">
-    
-    
+
+
 
     @if (Model.Transactions.Count == 0)
     {
@@ -40,210 +40,72 @@
 
     }
     else
-    {                
-        <div role="tabpanel" class="col-xs-12">
+    {
+        <div class="row">
+            <div class="col-xs-12 col-lg-6 text-center">
+                <h3>All transactions</h3>
 
-            <!-- Nav tabs -->
-            <ul class="nav nav-tabs hidden-xs" role="tablist" style="margin-bottom: 40px;">
-                <li role="presentation" class="active"><a href="#expense" aria-controls="expense" role="tab" data-toggle="tab" title="Shows an overview for all your registered transactions">All transactions</a></li>
-                <li role="presentation"><a href="#income" aria-controls="income" role="tab" data-toggle="tab" reflow-charts title="Shows an overview for the transactions during the year @DateTime.Now.Year">Current year</a></li>
+                <span style="height:300px;width:565px !important;" class="visible-lg visible-sm" data-highchart="{{model.drilldownGraphTot}}"></span>
+                
+                <span style="height:300px;width:923px !important;" class="visible-md" data-highchart="{{model.drilldownGraphTot}}"></span>
 
-                <li class="pull-right" role="presentation"><a href="#prediction" aria-controls="prediction" role="tab" data-toggle="tab">Prognosis</a></li>
-                <li ng-show="model.savingGoal" class="pull-right" role="presentation">
-                    <a href="#saving" aria-controls="saving" role="tab" data-toggle="tab">
-                        Savings
-                    </a>
-                </li>
-            </ul>
+                <span style="height:300px;width:390px !important;" class="hidden-sm hidden-md hidden-lg" data-highchart="{{model.drilldownGraphTot}}"></span>
 
-            <ul class="nav nav-stacked nav-pills visible-xs" role="tablist" style="margin-bottom: 40px;margin-top: -40px;">
-                <li role="presentation" class="active"><a href="#expense" aria-controls="expense" role="tab" data-toggle="tab" title="Shows an overview for all your registered transactions">All transactions</a></li>
-                <li role="presentation"><a href="#income" aria-controls="income" role="tab" data-toggle="tab" reflow-charts title="Shows an overview for the transactions during the year @DateTime.Now.Year">Current year</a></li>
-                <li ng-show="model.savingGoal" role="presentation">
-                    <a href="#saving" aria-controls="saving" role="tab" data-toggle="tab">
-                        Savings
-                    </a>
-                </li>
-            </ul>
-
-            <!-- Tab panes -->
-            <div class="tab-content">
-                <div role="tabpanel" class="tab-pane active" id="expense">
-
-                    <div class="col-xs-12">
-
-                        <div class="row visible-xs">
-                            <div class="col-xs-12">
-
-                                <div class="col-xs-5 text-right text-muted" style="font-size:18px;">Income</div>
-                                <div class="col-xs-7" style="font-size:18px;">{{ model.totalIncome | currencyFormatter}} {{model.currency}}</div>
-                            </div>
-                        </div>
-
-                        <div class="row visible-xs" style="margin-bottom: 40px;">
-                            <div class="col-xs-12">
-
-                                <div class="col-xs-5 text-right text-muted" style="font-size:18px;">Expenses</div>
-                                <div class="col-xs-7" style="font-size:18px;">{{ model.totalExpenses | currencyFormatter}} {{model.currency}}</div>
-                            </div>
-                        </div>
-
-                        <div class="row" style="margin-top: 10px;">
-
-                            <div class="col-xs-12 col-lg-6 no-padding" budget-gauge2="Avgerage daily" gauge-in="{{model.averageDailyIncome}}" gauge-out="{{model.averageDailyExpenses}}" gauge-goal="{{model.expensesGoal * 12.0 / 365.0}}"></div>
-                            <div class="col-xs-12 col-lg-6" budget-gauge2="Average monthly" gauge-in="{{model.averageMonthlyIncome}}" gauge-out="{{model.averageMonthlyExpenses}}" gauge-goal="{{model.expensesGoal}}"></div>
-
-                        </div>
-
-
-                        <div class="row" style="margin-top: 20px;">
-
-
-                            <div class="col-xs-12">
-
-                                <span style="height:500px;width:1123px !important;" class="visible-lg" data-highchart="{{model.drilldownGraphTot}}"></span>
-
-                                <span style="height:500px;width:923px !important;" class="visible-md" data-highchart="{{model.drilldownGraphTot}}"></span>
-
-                                <span style="height:500px;width:703px !important;" class="visible-sm" data-highchart="{{model.drilldownGraphTot}}"></span>
-
-                            </div>
-
-                        </div>
-
-                    </div>
-                </div>
-                <div role="tabpanel" class="tab-pane" id="income">
-                    <div class="col-xs-12">
-
-                        <div class="row visible-xs">
-                            <div class="col-xs-12">
-
-                                <div class="col-xs-5 text-right text-muted" style="font-size:18px;">Income</div>
-                                <div class="col-xs-7" style="font-size:18px;">{{ model.ytdIncome | currencyFormatter}} {{model.currency}}</div>
-                            </div>
-                        </div>
-
-                        <div class="row visible-xs" style="margin-bottom: 40px;">
-                            <div class="col-xs-12">
-
-                                <div class="col-xs-5 text-right text-muted" style="font-size:18px;">Expenses</div>
-                                <div class="col-xs-7" style="font-size:18px;">{{ model.ytdExpenses | currencyFormatter}} {{model.currency}}</div>
-                            </div>
-                        </div>
-
-                        <div class="row" style="margin-top: 10px;">
-
-                            <div class="col-xs-12 col-lg-6 no-padding" budget-gauge2="This month (@(DateHelper.GetMonthText(DateTime.Now)))" gauge-in="{{model.currentMonthIncome}}" gauge-out="{{model.currentMonthExpenses}}" gauge-goal="{{model.expensesGoal}}"></div>
-                            <div class="col-xs-12 col-lg-6" budget-gauge2="Year-to-date (@DateTime.Now.Year)" gauge-in="{{model.ytdIncome}}" gauge-out="{{model.ytdExpenses}}" gauge-goal="{{model.expensesGoal * @DateTime.Now.Month}}"></div>
-
-
-                        </div>
-
-                        <div class="row" style="margin-top: 20px;">
-
-
-                            <div class="col-xs-12">
-
-                                <span style="height:500px;width:1123px !important;" class="visible-lg" data-highchart="{{model.drilldownGraphYtd}}"></span>
-
-                                <span style="height:500px;width:923px !important;" class="visible-md" data-highchart="{{model.drilldownGraphYtd}}"></span>
-
-                                <span style="height:500px;width:703px !important;" class="visible-sm" data-highchart="{{model.drilldownGraphYtd}}"></span>
-
-                            </div>
-
-                        </div>
-
-                    </div>
-                </div>
-                <div role="tabpanel" class="tab-pane" id="saving">
-
-                    <div class="col-xs-12 text-center">
-
-                        <svg xmlns="http://www.w3.org/2000/svg" width="80px" height="70px" viewBox="0 0 300 275" version="1.1">
-
-                            <g>
-                                <polygon fill="#F0F088" stroke="#000000" stroke-width="2" points="150,25  179,111 269,111 197,165 223,251 150,200 77,251  103,165 31,111 121,111" />
-
-                                <text x="150" y="168" text-anchor="middle" font-size="55px">{{starCountPos}}</text>
-                            </g>
-                        </svg>
-
-
-                        <svg xmlns="http://www.w3.org/2000/svg" width="80px" height="70px" viewBox="0 0 300 275" version="1.1">
-
-                            <g>
-                                <polygon fill="#E87C7C" stroke="#000000" stroke-width="2" points="150,25  179,111 269,111 197,165 223,251 150,200 77,251  103,165 31,111 121,111" />
-
-                                <text x="150" y="168" text-anchor="middle" font-size="55px">{{starCountNeg}}</text>
-                            </g>
-                        </svg>
-
-                    </div>
-
-                    <div class="col-xs-12" ng-repeat="goal in model.savingGoals">
-
-                        <h3>{{goal.date | date : 'MMM, yyyy'}} <i ng-show="model.savingGoal <= goal.saved" style="color:#F0F088;" class="glyphicon glyphicon-star"></i> </h3>
-
-                        <div class="progress">
-                            <div class="progress-bar {{goal.saved >= model.savingGoal ? 'progress-bar-success':''}}" role="progressbar" aria-valuenow="goal.saved" aria-valuemin="0" aria-valuemax="100" style="width:{{ goal.percentage }}%">
-                            </div>
-                        </div>
-                        <div class="text-center">
-                            {{goal.saved | currencyFormatter}}/{{model.savingGoal | currencyFormatter}} {{model.currency}}
-                        </div>
-
-                    </div>
-
-                </div>
-                <div role="tabpanel" class="tab-pane" id="prediction">
-                    <div class="col-xs-12">
-
-                        <div class="row" style="margin-top: 20px;">
-
-
-                            <div class="col-xs-12">
-
-                                <span style="height:400px;width:1123px !important;" class="visible-lg" data-prog-highchart="{{model.prognosisChart}}"></span>
-
-                                <span style="height:400px;width:923px !important;" class="visible-md" data-prog-highchart="{{model.prognosisChart}}"></span>
-
-                                <span style="height:400px;width:703px !important;" class="visible-sm" data-prog-highchart="{{model.prognosisChart}}"></span>
-
-                            </div>
-
-                            <div class="col-xs-12">
-
-                                <span style="height:400px;width:1123px !important;" class="visible-lg" data-legend="false" data-prog-highchart="{{model.scpExpensesChart}}"></span>
-
-                                <span style="height:400px;width:923px !important;" class="visible-md" data-legend="false" data-prog-highchart="{{model.scpExpensesChart}}"></span>
-
-                                <span style="height:400px;width:703px !important;" class="visible-sm" data-legend="false" data-prog-highchart="{{model.scpExpensesChart}}"></span>
-
-                            </div>
-
-                        </div>
-
-                        <div class="row" style="margin-top: 20px;">
-
-
-                            <div class="col-xs-12">
-
-                                <span style="height:400px;width:1123px !important;" class="visible-lg" data-prog-highchart="{{model.prognosisIncomeChart}}"></span>
-
-                                <span style="height:400px;width:923px !important;" class="visible-md" data-prog-highchart="{{model.prognosisIncomeChart}}"></span>
-
-                                <span style="height:400px;width:703px !important;" class="visible-sm" data-prog-highchart="{{model.prognosisIncomeChart}}"></span>
-
-                            </div>
-
-                        </div>
-
-                    </div>
-                </div>
             </div>
-            <hr />
+            <div class="col-xs-12 col-lg-6 text-center">
+                <h3>Current year</h3>
+
+                <span style="height:300px;width:565px !important;" class="visible-lg visible-sm" data-highchart="{{model.drilldownGraphYtd}}"></span>
+
+                <span style="height:300px;width:923px !important;" class="visible-md" data-highchart="{{model.drilldownGraphYtd}}"></span>
+
+                <span style="height:300px;width:390px !important;" class="hidden-sm hidden-md hidden-lg" data-highchart="{{model.drilldownGraphYtd}}"></span>
+
+            </div>
+        </div>
+
+        <hr />
+
+        <div class="row">
+
+            <div class="col-xs-12 col-lg-6">
+
+                <span style="height:300px;width:565px !important;" class="visible-lg visible-sm" data-prog-highchart="{{model.prognosisChart}}"></span>
+
+                <span style="height:300px;width:923px !important;" class="visible-md" data-prog-highchart="{{model.prognosisChart}}"></span>
+
+                <span style="height:300px;width:390px !important;" class="hidden-sm hidden-md hidden-lg" data-prog-highchart="{{model.prognosisChart}}"></span>
+
+            </div>
+
+            <div class="col-xs-12 col-lg-6">
+
+                <span style="height:300px;width:565px !important;" class="visible-lg visible-sm" data-prog-highchart="{{model.prognosisIncomeChart}}"></span>
+
+                <span style="height:300px;width:923px !important;" class="visible-md" data-prog-highchart="{{model.prognosisIncomeChart}}"></span>
+
+                <span style="height:300px;width:390px !important;" class="hidden-sm hidden-md hidden-lg" data-prog-highchart="{{model.prognosisIncomeChart}}"></span>                
+
+            </div>
+
+        </div>
+
+        <hr />
+
+        <div class="row">
+
+            <div class="col-xs-12 text-center">
+
+                <span style="height:400px;width:1123px !important;" class="visible-lg" data-legend="false" data-prog-highchart="{{model.scpExpensesChart}}"></span>
+
+                <span style="height:400px;width:923px !important;" class="visible-md" data-legend="false" data-prog-highchart="{{model.scpExpensesChart}}"></span>
+
+                <span style="height:400px;width:703px !important;" class="visible-sm" data-legend="false" data-prog-highchart="{{model.scpExpensesChart}}"></span>
+
+                <span style="height:400px;width:390px !important;" class="hidden-sm hidden-md hidden-lg" data-legend="false" data-prog-highchart="{{model.scpExpensesChart}}"></span>
+
+            </div>
+
         </div>
     }
 
@@ -258,10 +120,9 @@
 
             return {
                 model:@Html.Raw(Model.ToJson())
-                };
+            };
 
         });
 
     })();
-
 </script>

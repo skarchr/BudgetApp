@@ -76,7 +76,7 @@
 
                     scope.intervals = arrayGenerator(100, 5, roundedMax / 5);
 
-                    var pxLength = roundedMax / 50;
+                    var pxLength = roundedMax / 24;
 
 
                     scope.income = 25 + (scope.gaugeIn * 10 / pxLength);
@@ -592,8 +592,12 @@
                             },
                             yAxis: {
                                 title: {
-                                    text: model.currency
+                                    text: ' '
+                                },
+                                labels: {
+                                    align: 'left'
                                 }
+
                             },
                             series: model.series,
                             drilldown: {
@@ -1074,11 +1078,14 @@
 
                             yAxis: {
                                 title: {
-                                    text: model.currency
+                                    text: ' '
                                 },
                                 plotLines: model.plotLinesY,
                                 max: model.max,
-                                min : model.min
+                                min: model.min,
+                                labels: {
+                                    align: 'left'
+                                }
 
                             },
                             series: model.series

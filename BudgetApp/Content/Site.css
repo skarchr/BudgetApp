@@ -529,3 +529,11 @@ hr.blue {
 .no-padding {
     padding: 0;
 }
+
+.hs-image-label {
+    width: 18px;
+}
+
+hr {
+    border-top: 1px solid #0094ff;
+}
