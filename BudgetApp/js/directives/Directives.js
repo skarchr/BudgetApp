@@ -1054,7 +1054,7 @@
                             },
                             type: 'treemap',
                             drillUpButton: {
-                                position: { y: -20, x:-10, align:'right' },
+                                position: { y: -30, x:-10, align:'right' },
                                 theme: {
                                     fill: 'white',
                                     'stroke-width': 1,

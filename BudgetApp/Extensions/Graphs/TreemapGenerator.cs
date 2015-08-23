@@ -56,7 +56,7 @@ namespace BudgetApp.Extensions.Graphs
                     result.Add(new Treemap
                     {
                         Id = trans.Key.ToLower(),
-                        Name = trans.Key,
+                        Name = CategoryExt.CamelCaseToNormal(trans.Key),
                         Parent = category.ToLower(),
                         Value = value
                     });
