@@ -12,7 +12,7 @@ namespace BudgetApp.Extensions
     {
         public static string ToJson(this object obj)
         {
-            var js = JsonSerializer.Create(new JsonSerializerSettings { DateFormatHandling = DateFormatHandling.IsoDateFormat, ContractResolver = new CamelCasePropertyNamesContractResolver()});
+            var js = JsonSerializer.Create(new JsonSerializerSettings { DateFormatHandling = DateFormatHandling.IsoDateFormat, ContractResolver = new CamelCasePropertyNamesContractResolver(), NullValueHandling = NullValueHandling.Ignore });
             js.DateTimeZoneHandling = DateTimeZoneHandling.Local;
             js.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
 

@@ -10,20 +10,13 @@
     @if (!Model.Any())
     {
 
-        <div class="jumbotron" fade-in="100">
+        <div class="jumbotron text-center" fade-in="100" style="margin-top:-50px;background-color: white;">
 
-            <div id="icon" style="width: 30%;">
-                <object>
-                    <img src="~/Content/images/logo_pig.svg" id="svg" />
-                </object>
-            </div>
-
-            <h1 class="hidden-xs hidden-sm text-center" style="margin-top: -40px;">You have no mappgings registered</h1>
-            <h2 class="visible-xs visible-sm text-center">You have no mappings registered</h2>
+            <h3>No mapping registered</h3>
 
             <div class="row">
                 <div class="col-xs-12 text-center">
-                    @Html.ActionLink("Add mapping", "Create", null, new { @class = "btn btn-primary btn-xlg" })
+                    @Html.ActionLink("Add your first!", "Create", null, new { @class = "btn btn-primary" })
                 </div>
             </div>
 

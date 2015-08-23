@@ -23,6 +23,7 @@
     }
 
     angular.module('budgetApp')
+
         .directive('budgetGauge2', function () {
 
             var arrayGenerator = function (interval, amount, input) {
@@ -1016,6 +1017,95 @@
                 };
             }
         ])
+
+        .directive('treemapChart', [function() {
+
+            return {
+                restrict: 'A',
+                scope: {
+                    treemapChart:'@'
+                },
+                link:function(scope, elem) {
+                    
+                    var model = JSON.parse(scope.treemapChart);
+
+                    Highcharts.setOptions({ lang: { drillUpText: 'Back' } });
+
+                    $(elem[0]).highcharts({
+                        chart: {
+                            style: {
+                                fontFamily: "'Franklin Gothic Medium', 'Franklin Gothic', 'ITC Franklin Gothic', Arial, sans-serif !important"
+                            },
+                            events: {
+                                redraw: function () {
+
+                                    if (this.series[0].rootNode === '')
+                                        $(elem[0]).highcharts().setTitle({ text: 'Expenses' });
+                                }
+                            }
+                        },
+                        credits: false,
+                        series: [{
+                            events: {
+                                click: function (e) {
+                                    if(e.point.parent === undefined)
+                                        $(elem[0]).highcharts().setTitle({ text: e.point.name});
+                                }
+                            },
+                            type: 'treemap',
+                            drillUpButton: {
+                                position: { y: -20, x:-10, align:'right' },
+                                theme: {
+                                    fill: 'white',
+                                    'stroke-width': 1,
+                                    stroke: 'silver',
+                                    heigth:50,
+                                    r: 4,
+                                    states: {
+                                        hover: {
+                                            fill: '#cccccc',
+                                            stroke: '#adadad !important',
+                                        },
+                                        select: {
+                                            stroke: '#adadad',
+                                            fill: '#bada55'
+                                        }
+                                    }
+                                }
+                            },
+                            layoutAlgorithm: 'squarified',
+                            allowDrillToNode: true,
+                            dataLabels: {
+                                enabled: false
+                            },
+                            levelIsConstant: false,
+                            levels: [{
+                                level: 1,
+                                dataLabels: {
+                                    enabled: true
+                                },
+                                borderWidth: 3
+                            }],
+                            data: model
+                        }],
+                        tooltip: {
+                            enabled: true,
+                            pointFormat: '<span style="color:{point.color}">\u25CF</span> {point.name}: <b>{point.value:.1f}</b><br/>'
+                        },
+                        title: {
+                            text: 'Expenses',
+                            style: {
+                                fontSize: '18px',
+                                color: '#000'
+                            }
+                        }
+                    });
+
+                }
+            };
+
+        }])
+
         .directive('progHighchart', [
             function() {
 
