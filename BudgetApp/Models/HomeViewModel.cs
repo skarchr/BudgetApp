@@ -161,6 +161,11 @@ namespace BudgetApp.Models
                return Transactions.Where(s => s.Date.Year == DateTime.Now.Year && CategoryExt.GetMainCategory(s.Category.Value) == Categories.Income).Sum(s => s.Amount);
             }
         }
+
+        public string TreemapChart
+        {
+            get { return TreemapGenerator.CreateChart(Transactions).ToJson(); }
+        }
     }
 
     public class SavingModel

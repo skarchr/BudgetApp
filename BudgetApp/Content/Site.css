@@ -138,9 +138,9 @@ textarea {
 }
 
 .btn-xlg {
-    font-size: 30px;
+    font-size: 25px;
     margin-top: 10%;
-    width: 100%;
+    width: 80%;
     padding-bottom: 2%;
     padding-top: 2%;
 }
@@ -528,4 +528,12 @@ hr.blue {
 }
 .no-padding {
     padding: 0;
+}
+
+.hs-image-label {
+    width: 18px;
+}
+
+hr {
+    border-top: 2px solid #0094ff;
 }

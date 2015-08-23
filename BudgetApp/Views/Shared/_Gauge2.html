@@ -1,86 +1,84 @@
 ﻿
 <div ng-controller="gaugeController">   
 
-    <svg width="580" height="110">
+    <svg width="280" height="110">
 
         <defs>
             <style type="text/css">
-                
-                 .gauge-lines > line {
-                     fill: #313131;
-                     stroke-width: 1px;
-                     stroke: #313131;
-                 }
+                .gauge-lines > line {
+                    fill: #313131;
+                    stroke-width: 1px;
+                    stroke: #313131;
+                }
 
-                 .gauge-lines > text {
-                     fill: #313131;
-                 }
+                .gauge-lines > text {
+                    fill: #313131;
+                }
 
                 .gauge-goal > line {
                     stroke-width: 2px;
                     stroke: red;
                 }
 
-                 .gauge-goal > text {
-                     fill: red;
-                 }
+                .gauge-goal > text {
+                    fill: red;
+                }
 
-                 .gauge-income > polygon {
-                     stroke-width: 1px;
-                     stroke:#9cf5df;
-                     fill: #9cf5df;
-                 }
+                .gauge-income > polygon {
+                    stroke-width: 1px;
+                    stroke: #9cf5df;
+                    fill: #9cf5df;
+                }
 
-                 .gauge-income > line {
-                     stroke-width: 14px;
-                     stroke:#9cf5df;
-                 }
+                .gauge-income > line {
+                    stroke-width: 14px;
+                    stroke: #9cf5df;
+                }
 
-                 .gauge-income > text {
-                     fill:#3fbd9f;
-                     font-size: 14px;
-                 }
+                .gauge-income > text {
+                    fill: #3fbd9f;
+                    font-size: 14px;
+                }
 
-                 .gauge-expenses > polygon {
-                     stroke-width: 1px;
-                     stroke:#f2aeae;
-                     fill: #f2aeae;
-                 }
+                .gauge-expenses > polygon {
+                    stroke-width: 1px;
+                    stroke: #f2aeae;
+                    fill: #f2aeae;
+                }
 
-                 .gauge-expenses > line {
-                     stroke-width: 14px;
-                     stroke:#f2aeae;
-                 }
+                .gauge-expenses > line {
+                    stroke-width: 14px;
+                    stroke: #f2aeae;
+                }
 
-                 .gauge-expenses > text {
-                     fill:#cc6161;
-                     font-size: 14px;
-                 }
+                .gauge-expenses > text {
+                    fill: #cc6161;
+                    font-size: 14px;
+                }
 
-                 .gauge-balance > rect,.gauge-balance > text {
-                     -webkit-transition: all 1s;
-                     -moz-transition: all 1s;
-                     -ms-transition: all 1s;
-                     -o-transition: all 1s;
-                     transition: all 1s;
-                 }
+                .gauge-balance > rect, .gauge-balance > text {
+                    -webkit-transition: all 1s;
+                    -moz-transition: all 1s;
+                    -ms-transition: all 1s;
+                    -o-transition: all 1s;
+                    transition: all 1s;
+                }
 
-                 .gauge-balance:hover > text {
-                     fill: #428bca !important;
-                 }
+                .gauge-balance:hover > text {
+                    fill: #428bca !important;
+                }
 
-                 .gauge-balance:hover > rect {
-                     fill: #428bca !important;
-                 }
-
+                .gauge-balance:hover > rect {
+                    fill: #428bca !important;
+                }
             </style>
         </defs>
 
-        <g class="gauge-container-2">            
-            <text style="font-size:20px;" x="0" y="20" >{{budgetGauge2}}</text>
-            <rect ng-attr-x="{{xOffset}}" ng-attr-y="{{yOffset}}" width="552" height="30" style="stroke:#000;stroke-width: 1px; fill:#fff" />
+        <g class="gauge-container-2">
+            <text style="font-size:20px;" x="0" y="20">{{budgetGauge2}}</text>
+            <rect ng-attr-x="{{xOffset}}" ng-attr-y="{{yOffset}}" width="276" height="30" style="stroke:#000;stroke-width: 1px; fill:#fff" />
         </g>
-        
+
         <g class="gauge-income" ng-show="gaugeIn !== undefined">
 
             <text ng-attr-x="{{xOffset + income}}" ng-attr-y="{{yOffset - 8}}" text-anchor="middle"> {{displayIn | currencyFormatter}} </text>
@@ -92,8 +90,8 @@
             <line ng-attr-x1="{{xOffset + 1}}" ng-attr-y1="{{yOffset + 22}}" ng-attr-x2="{{xOffset + expenses}}" ng-attr-y2="{{yOffset + 22}}" />
         </g>
 
-        <g class="gauge-balance">            
-            <rect style="fill:{{findColor(income, expenses)}};stroke:0;" ng-attr-x="{{findBalance(income, expenses)}}" ng-attr-y="{{yOffset + 1}}" height="28" ng-attr-width="{{findWidth(income, expenses)}}" />            
+        <g class="gauge-balance">
+            <rect style="fill:{{findColor(income, expenses)}};stroke:0;" ng-attr-x="{{findBalance(income, expenses)}}" ng-attr-y="{{yOffset + 1}}" height="28" ng-attr-width="{{findWidth(income, expenses)}}" />
             <text alignment-baseline="middle" text-anchor="{{ findPlacement(income, expenses) }}" style="fill:white;font-size:14px;z-index: 1000;" ng-attr-x="{{ findXPos(income, expenses) }}" ng-attr-y="{{yOffset + 60}}">{{(displayIn - displayOut) | currencyFormatter}}</text>
         </g>
 
@@ -107,5 +105,7 @@
 
 
     </svg>
+
+
 
 </div>

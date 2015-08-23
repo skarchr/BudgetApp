@@ -25,7 +25,7 @@ namespace BudgetApp.Extensions.Graphs
 
             
 
-            var series = CreateSeries(filteredTransactions, DateHelper.ShortMonths);
+            var series = CreateSeries(filteredTransactions, DateHelper.ShortMonths, income);
 
             var predicted = CreatePredictedSeries(filteredTransactions);
 
@@ -88,7 +88,7 @@ namespace BudgetApp.Extensions.Graphs
         }
  
 
-        private static List<Series> CreateSeries(List<Transaction> transactions, List<string> categories)
+        private static List<Series> CreateSeries(List<Transaction> transactions, List<string> categories, bool income)
         {
             var dict = new Dictionary<int, List<Transaction>>();
             var series = new List<Series>();
@@ -135,7 +135,7 @@ namespace BudgetApp.Extensions.Graphs
 
                 series.Add(new Series
                 {
-                    Color = HighchartUtilities.Colors[mainIndex%HighchartUtilities.Colors.Count],
+                    Color = income ? "#48DDb8" : "#b94a48",
                     Id = year.Key.ToString().ToLower(),
                     Name = year.Key.ToString(),
                     Data = data,

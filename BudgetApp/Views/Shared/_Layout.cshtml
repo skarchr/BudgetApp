@@ -31,18 +31,22 @@
                         <div class="col-xs-4">
                             <a href="@Url.Action("Index", "Home")" title="Dashboard">
                                 <img src="../../Content/images/logo.svg" id="svg1" height="70" />
-                                <img src="../../Content/images/logo_inverted.svg" height="70" id="svg2" />                                
+                                <img src="../../Content/images/logo_inverted.svg" height="70" id="svg2" />
                             </a>
                         </div>
                         <div class="col-xs-4 text-center" style="padding-top: 18px;">
 
                             <ul class="list-unstyled list-inline hidden-xs hidden-sm">
-                                <li><a href="@Url.Action("Create", "Transactions")" class="btn btn-default btn-nav btn-sm text-center @(ViewBag.Title == "Add Transaction" ? "active":"")" title="Add transaction" style="min-width: 80px;">
-                                        <i class="glyphicon glyphicon-plus-sign"></i>
-                                    </a></li>
-                                <li><a href="@Url.Action("Upload", "Transactions")" class="btn btn-default btn-nav btn-sm text-center @(ViewBag.Title == "Import Transactions" ? "active" : "")" title="Import transactions" style="min-width: 80px;">
-                                        <i class="glyphicon glyphicon-import"></i>
-                                    </a></li>
+                                <li>
+                                    <a href="@Url.Action("Create", "Transactions")" class="btn btn-default btn-nav btn-sm text-center @(ViewBag.Title == "Add Transaction" ? "active":"")" title="Add transaction" style="min-width: 80px;">
+                                              <i class="glyphicon glyphicon-plus-sign"></i>
+                                          </a>
+                                </li>
+                                <li>
+                                    <a href="@Url.Action("Upload", "Transactions")" class="btn btn-default btn-nav btn-sm text-center @(ViewBag.Title == "Import Transactions" ? "active" : "")" title="Import transactions" style="min-width: 80px;" >
+                                              <i class="glyphicon glyphicon-import"></i>
+                                          </a>
+                                </li>
                             </ul>
 
                         </div>
@@ -59,7 +63,7 @@
             @RenderBody()
 
 
-            <footer data-fade-in="600" class="text-center" style="margin-top:100px; ">
+            <footer class="text-center" style="margin-top:100px; ">
                 
                 @{
                     if (ConfigurationManager.AppSettings["debugmode"] == "true")
