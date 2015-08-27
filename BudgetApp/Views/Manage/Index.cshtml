@@ -11,26 +11,27 @@
     <div class="col-xs-12" ng-controller="currencyController">
 
         <div class="form-horizontal">
-
-            <div class="col-md-12">
-
+            
+            <div class="col-md-3">
                 <div class="form-group">
-                    <label for="picture" class="control-label col-sm-5"></label>
-                    <div class="col-sm-7">
-                        <img gravatar-src="'@User.Identity.Name'" gravatar-size="200" style="border:2px solid #0094ff;padding:2px; -ms-border-radius: 4px; border-radius: 4px;">
+
+                    <div class="col-sm-offset-3 col-md-12">
+                        <img gravatar-src="'@User.Identity.Name'" gravatar-size="200" style="border:2px solid #0094ff;padding:2px; -ms-border-radius: 104px; border-radius: 104px;" />
+                        
+                        <br />
+
+                        <a href="#" style="margin-left: 52px;" class="red" data-toggle="modal" data-target="#deleteModal">Delete account</a>
+
                     </div>
                 </div>
 
-                <div class="form-group" style="margin-bottom: 20px;">
-                    <label for="delete" class="control-label col-sm-5"></label>
-                    <div class="col-sm-7" style="padding-top:7px;">
-                        <a href="#" class="red" data-toggle="modal" data-target="#deleteModal">Delete account</a>
-                    </div>
-                </div>
-                <hr />
+            </div>
+
+            <div class="col-sm-12 col-md-9">
+
                 <div class="form-group">
-                    <label for="Username" class="control-label col-sm-5">Email</label>
-                    <div class="col-sm-7" style="padding-top:4px;">
+                    <label for="Username" class="control-label col-sm-3">Email</label>
+                    <div class="col-sm-9" style="padding-top:4px;">
                         <strong style="font-size:18px;"> @User.Identity.Name</strong>
                         @if (Model.EmailConfirmed)
                         {
@@ -44,8 +45,8 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="Password" class="control-label col-sm-5">Password</label>
-                    <div class="col-sm-7" style="padding-top:7px;">
+                    <label for="Password" class="control-label col-sm-3">Password</label>
+                    <div class="col-sm-9" style="padding-top:7px;">
                         @if (Model.HasPassword)
                         {
                             @Html.ActionLink("Change", "ChangePassword", null, new { @class = "clingy" })
@@ -60,8 +61,8 @@
                 
 
                     <div class="form-group">
-                        <label for="twoFactor" class="control-label col-sm-5">Two-factor authentication</label>
-                        <div class="col-sm-7" style="padding-top:3px;">
+                        <label for="twoFactor" class="control-label col-sm-3">Two-factor authentication</label>
+                        <div class="col-sm-9" style="padding-top:3px;">
                             @if (Model.EmailConfirmed)
                             {
                                 if (Model.TwoFactor)
@@ -95,18 +96,17 @@
                     </div>
                 
                 <div class="form-group">
-                    <label for="External" class="control-label col-sm-5">External logins</label>
-                    <div class="col-sm-7">                        
+                    <label for="External" class="control-label col-sm-3" style="padding-top:12px;">External logins</label>
+                    <div class="col-sm-9">                        
                         
                         @Html.Partial("_ExternalLogins", Model.ManageLogins)
 
                     </div>
                 </div>
-                <hr />
 
                 <div class="form-group">
-                    <label for="Currency" class="control-label col-sm-5">Currency</label>
-                    <div class="col-sm-7">
+                    <label for="Currency" class="control-label col-sm-3">Currency</label>
+                    <div class="col-sm-9">
                         <select class="form-control" id="Currency" name="Currency" ng-model="model.currency" required ng-change="dirty = true">
                             <option class="text-muted" value="">-- Currency --</option>
                             <option ng-repeat="currency in currencies" value="{{currency.cc}}" title="{{currency.name}}">{{currency.cc}}</option>
@@ -115,8 +115,8 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="Account" class="control-label col-sm-5">Country</label>
-                    <div class="col-sm-7">
+                    <label for="Account" class="control-label col-sm-3">Country</label>
+                    <div class="col-sm-9">
                         <select class="form-control" id="Country" name="Country" ng-model="model.country" required ng-change="dirty = true">
                             <option class="text-muted" value="">-- Country --</option>
                             <option ng-repeat="country in countries" value="{{country.name}}">{{country.name}}</option>
@@ -125,23 +125,23 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="Transactions" class="control-label col-sm-5">Saving</label>
-                    <div class="col-sm-7">
+                    <label for="Transactions" class="control-label col-sm-3">Saving</label>
+                    <div class="col-sm-9">
                         @Html.TextBoxFor(m => m.MonthlySavingGoal, new { @class = "form-control", @placeholder = "Monthly saving goal", @ng_model = "model.monthlySavingGoal", @ng_change = "dirty = true", @ng_pattern = "regexDouble" })
                         <span class="currency-label">{{model.currency}}</span>
                     </div>
                 </div>
 
                 <div class="form-group" style="margin-bottom: 35px;">
-                    <label for="Transactions" class="control-label col-sm-5">Expenses</label>
-                    <div class="col-sm-7">
+                    <label for="Transactions" class="control-label col-sm-3">Expenses</label>
+                    <div class="col-sm-9">
                         @Html.TextBoxFor(m => m.MonthlyExpensesGoal, new { @class = "form-control", @placeholder = "Monthly expenses goal", @ng_model = "model.monthlyExpensesGoal", @ng_change = "dirty = true", @ng_pattern = "regexDouble" })
                         <span class="currency-label">{{model.currency}}</span>
                     </div>
                 </div>
 
                 <div class="form-group">
-                    <div class="col-sm-offset-5 col-sm-7">
+                    <div class="col-sm-offset-3 col-sm-9">
                         <button style="width:280px;" class="btn btn-primary" ng-disabled="!dirty" ng-click="saveProfile()">Save changes</button>
                     </div>
                 </div>

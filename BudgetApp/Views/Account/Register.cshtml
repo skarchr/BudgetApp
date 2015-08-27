@@ -9,93 +9,110 @@
 {
     @Html.AntiForgeryToken()
 
-    <div class="row" ng-controller="loginController" style="margin-top: -70px;">
+    <div class="row" ng-controller="loginController" style="margin-top: -10px;">
 
-        <div class="col-md-12 text-center">
 
-            <div id="icon" data-logo="18" style="max-width: 360px;min-width:200px;">
-                <object>
-                    <img src="~/Content/images/logo.svg" id="svg" />
-                </object>
+        <h1 class="text-center">Register</h1>
+
+        <hr />
+
+        <div class="form-horizontal" style="margin-top: 40px;">
+            <div class="col-md-3" data-slide-down>
+                <div class="form-group">
+
+                    <div class="col-sm-offset-3 col-md-12">
+                        <img gravatar-src="model.Email" gravatar-size="200" style="border:2px solid #0094ff;padding:2px; -ms-border-radius: 104px; border-radius: 104px;" />
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-9" data-slide-down>
+                <div class="form-group">
+                    <label for="Email" class="control-label col-sm-3">Email <span class="required-tag"></span></label>
+                    <div class="col-sm-9 form-inline" style="padding-top:4px;">
+
+                        @Html.TextBoxFor(m => m.Email, new { @class = "form-control", @placeholder = "A confirmation email will be sent", @ng_model = "model.Email", @required = "required", @type = "email" })
+
+                        <span class="text-danger" ng-show="registerform.Email.$invalid && registerform.Email.$touched && model.Email !== '' && !loading">Invalid email address</span>
+                        <span class="text-danger" ng-show="userExist === 'True' && registerform.Email.$valid">Email already in use!</span>
+                        <span class="text-muted" ng-show="loading">Checking...</span>
+                        <span class="text-success" ng-show="registerform.Email.$valid && !loading && userExist === 'False'"> OK! </span>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="Country" class="control-label col-sm-3">Country</label>
+                    <div class="col-sm-9 form-inline" style="padding-top:4px;">
+
+                        <select class="form-control" id="Country" name="Country" ng-model="model.Country">
+                            <option class="text-muted" value=""></option>
+                            <option ng-repeat="country in countries" value="{{country.name}}">{{country.name}}</option>
+                        </select>
+
+                        <span class="text-success" ng-show="registerform.Country.$valid && registerform.Country.$touched && model.Country !== ''">OK!</span>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="Currency" class="control-label col-sm-3">Currency <span class="required-tag"></span></label>
+                    <div class="col-sm-9 form-inline" style="padding-top:4px;">
+
+                        <select class="form-control" id="Currency" name="Currency" ng-model="model.Currency" required>
+                            <option class="text-muted" value=""></option>
+                            <option ng-repeat="currency in currencies" value="{{currency.cc}}" title="{{currency.name}}">{{currency.cc}}</option>
+                        </select>
+
+                        <label class="text-danger" ng-show="registerform.Currency.$invalid && registerform.Currency.$dirty">Mandatory field</label>
+                        <label class="text-success" ng-show="registerform.Currency.$valid">OK!</label>
+
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="Password" class="control-label col-sm-3">Password <span class="required-tag"></span></label>
+                    <div class="col-sm-9 form-inline" style="padding-top:4px;">
+
+                        @Html.PasswordFor(m => m.Password, new { @class = "form-control", @placeholder = "Minimum 6 characters", @ng_model = "model.Password", @required = "required", @ng_minlength = "6" })
+
+                        <span class="text-danger" ng-show="registerform.Password.$invalid && registerform.Password.$touched && registerform.Password.$error.minlength">Minimum 6 characters</span>
+                        <span class="text-success" ng-show="registerform.Password.$valid && registerform.Password.$touched">OK!</span>
+
+                    </div>
+
+                    <svg class="col-sm-offset-3" height="6px" width="300px" style="padding-left:15px;float:left;">
+
+                        <rect ng-show="passwordStrength >= 1" x="0" y="1" width="69" height="6" style="fill:#3da13e;" />
+                        <rect ng-show="passwordStrength >= 2" x="70" y="1" width="69" height="6" style="fill:#3da13e;" />
+                        <rect ng-show="passwordStrength >= 3" x="140" y="1" width="69" height="6" style="fill:#3da13e;" />
+                        <rect ng-show="passwordStrength >= 4" x="210" y="1" width="69" height="6" style="fill:#3da13e;" />
+
+                    </svg>
+
+                </div>
+
+                <div class="form-group">
+                    <label for="ConfirmPassword" class="control-label col-sm-3">Confirm password <span class="required-tag"></span></label>
+                    <div class="col-sm-9 form-inline" style="padding-top:4px;">
+
+                        @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control", @ng_model = "model.ConfirmPassword", @required = "required", @ng_disabled = "registerform.Password.$invalid && registerform.Password.$pristine" })
+
+                        <span class="text-danger" ng-show="model.ConfirmPassword !== model.Password && registerform.ConfirmPassword.$touched && registerform.Password.$dirty">Passwords doesn't match!</span>
+                        <span class="text-success" ng-show="model.ConfirmPassword === model.Password && model.ConfirmPassword !== undefined">OK!</span>
+                    </div>
+
+                </div>
+
+                <div class="form-group">
+                    <div class="col-sm-offset-3 col-sm-9">
+                        <input type="submit" ng-disabled="registerform.$invalid || (model.Password !== model.ConfirmPassword) || userExist === 'True' || loading" class="btn btn-primary" value="Register" />
+                        @Html.ActionLink("Cancel", "Login", "Account", new { @class = "btn btn-link" })
+                    </div>
+                </div>
+
             </div>
 
         </div>
-        <div data-slide-down data-prevent="@Html.ViewData.ModelState.IsValid" class="col-xs-12">
 
-            <h4 class="text-center">Register</h4>
-
-            <div class="row text-center" style="max-width: 300px; margin-left: auto;margin-right: auto;">
-                
-                <div class="col-xs-10" style="padding:10px;">
-                    @Html.TextBoxFor(m => m.Email, new { @class = "form-control", @placeholder = "Email", @ng_model = "model.Email", @required = "required", @type = "email" })
-                </div>
-                <div class="col-xs-2">
-                    <label class="control-label col-xs-12 label-validator text-danger" ng-show="registerform.Email.$invalid && registerform.Email.$touched && model.Email !== null && !loading"></label>
-                    <label class="control-label col-xs-12 label-validator user-exist" ng-show="userExist === 'True' && registerform.Email.$valid" ></label>
-                    <label class="control-label col-xs-12 label-validator text-success" ng-show="registerform.Email.$valid && !loading && userExist === 'False'"></label>
-                    <label class="control-label col-xs-12 label-validator text-info" ng-show="loading"></label>
-                </div>
-            </div>
-            
-            <div class="row text-center" style="max-width: 300px; margin-left: auto;margin-right: auto;">
-                
-                <div class="col-xs-10" style="padding:10px;">
-                    <select class="form-control center" id="Country" name="Country" ng-model="model.Country" required>
-                        <option class="text-muted" value="">-- Country --</option>
-                        <option ng-repeat="country in countries" value="{{country.name}}">{{country.name}}</option>
-                    </select>
-                </div>
-                <div class="col-xs-2">
-                    <label class="control-label col-xs-12 label-validator text-danger" ng-show="registerform.Country.$invalid && registerform.Country.$dirty"></label>
-                    <label class="control-label col-xs-12 label-validator text-success" ng-show="registerform.Country.$valid"></label>
-                </div>
-            </div>
-            
-            <div class="row text-center" style="max-width: 300px; margin-left: auto;margin-right: auto;">
-
-                <div class="col-xs-10" style="padding:10px;">
-                    <select class="form-control center" id="Currency" name="Currency" ng-model="model.Currency" required>
-                        <option class="text-muted" value="">-- Currency --</option>
-                        <option ng-repeat="currency in currencies" value="{{currency.cc}}" title="{{currency.name}}">{{currency.cc}}</option>
-                    </select>
-                </div>
-                <div class="col-xs-2">
-                    <label class="control-label col-xs-12 label-validator text-danger" ng-show="registerform.Currency.$invalid && registerform.Currency.$dirty"></label>
-                    <label class="control-label col-xs-12 label-validator text-success" ng-show="registerform.Currency.$valid"></label>
-                </div>
-            </div>
-            
-            <div class="row text-center" style="max-width: 300px; margin-left: auto;margin-right: auto;">
-
-                <div class="col-xs-10" style="padding:10px;">
-                    <span class="col-xs-12 strength-{{passwordStrength}}" style="margin-left: 70px;margin-top: 3px;position: absolute;z-index: -1"></span>
-                    @Html.PasswordFor(m => m.Password, new { @class = "form-control center", @placeholder = "Password", @ng_model = "model.Password", @required = "required", @ng_minlength = "6", @style = "background:none;" })
-                </div>
-                <div class="col-xs-2">
-                    <label class="control-label col-xs-12 label-validator text-danger" ng-show="registerform.Password.$invalid && registerform.Password.$touched"></label>
-                    <label class="control-label col-xs-12 label-validator text-success" ng-show="registerform.Password.$valid && registerform.Password.$touched"></label>                    
-                </div>
-            </div>
-            
-            <div class="row text-center" style="max-width: 300px; margin-left: auto;margin-right: auto;">
-
-                <div class="col-xs-10" style="padding:10px;">
-                    @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control center", @placeholder = "Confirm password", @ng_model = "model.ConfirmPassword", @required = "required" })
-                </div>
-                <div class="col-xs-2">
-                    <label class="control-label col-xs-12 label-validator text-danger" ng-show="model.ConfirmPassword !== model.Password && registerform.ConfirmPassword.$touched && registerform.Password.$dirty"></label>
-                    <label class="control-label col-xs-12 label-validator text-success" ng-show="model.ConfirmPassword === model.Password && model.ConfirmPassword !== undefined"></label>
-                </div>
-            </div>
-
-            <div class="form-group">
-                <div class="col-md-12 text-center">
-                    <input type="submit" ng-disabled="registerform.$invalid || (model.Password !== model.ConfirmPassword) || userExist === 'True' || loading" class="btn btn-primary" value="Register" />
-                    @Html.ActionLink("Cancel", "Login", "Account", new { @class = "btn btn-link" })
-                </div>
-            </div>
-
-        </div>
     </div>
 
 
