@@ -44,7 +44,7 @@
 
 
         $scope.saveProfile = function() {
-            if ($scope.model.currency !== undefined && $scope.model.country !== undefined) {
+            if ($scope.model.currency !== undefined) {
 
                 $http.post('../Manage/SaveProfile', {
                         currency: $scope.model.currency,

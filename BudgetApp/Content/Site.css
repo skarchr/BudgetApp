@@ -167,7 +167,7 @@ textarea {
 }
 
 .table-same-width > thead > tr > th, .table-same-width > tbody > tr > td {
-    width: 20px;
+   
     text-align: center;
 }
 
@@ -232,7 +232,24 @@ textarea {
     cursor: pointer;
 }
 
+.required-tag:after {
+    content:'*'
+}
+
+.required-tag {
+    color: #b94a48;
+    font-size: 16px;
+    float: right;
+    position: absolute;
+    margin-left: 2px;
+    margin-top: -2px;
+}
+
 @media (max-width: 470px) {
+    .required-tag {
+        display: none;
+    }
+
     #menu {
         margin-top: -6px !important;
     }
@@ -542,17 +559,4 @@ hr {
     -ms-border-radius: 104px;
     border-radius: 104px;
     -webkit-border-radius: 104px;
-}
-
-.required-tag:after {
-    content:'*'
-}
-
-.required-tag {
-    color: #b94a48;
-    font-size: 16px;
-    float: right;
-    position: absolute;
-    margin-left: 2px;
-    margin-top: -2px;
 }

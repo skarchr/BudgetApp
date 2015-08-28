@@ -10,7 +10,7 @@
 
 
 
-<div class="row" style="margin-top: 30px;" ng-controller="transactionController">
+<div class="row" style="margin-top: -10px;" ng-controller="transactionController">
 
 
     <div class="col-xs-12" fade-in="200">
@@ -133,7 +133,7 @@
         else
         {
 
-            <div class="row" style="margin-top: 20px;">
+            <div class="row" style="margin-top: 0px;">
 
                 <div class="col-xs-12">
 
@@ -213,7 +213,8 @@
                                     </th>
                                 </tr>
                                 <tr>
-                                    <th class="hidden-xs">#</th>
+                                    <th class="hidden-xs" style="width: 50px !important;">#</th>
+                                    <th class="hidden"></th>
                                     <th class="hidden"></th>
                                     <th class="hidden"></th>
                                     <th sortable-table-header="amount">Amount (@Model.Currency)</th>
@@ -224,7 +225,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr ng-repeat="row in range.transactions | orderBy:predicate:reverse | filter: querystring[$index] | startFrom:(currentPage - 1)*numPerPage | limitTo:numPerPage">
+                                <tr ng-repeat="row in range.transactions | orderBy:predicate:reverse | filter: querystring[$index] | startFrom:(currentPage - 1)*numPerPage | limitTo:numPerPage" style="{{row.categoryType === 'Income' ? 'color:#1CA784;':''}}">
                                     <td class="hidden-xs">
 
                                         <span class="percentage-row" ng-show="row.category !== 'Salary' && row.category !== 'OtherIncome'">
@@ -237,12 +238,13 @@
                                     </td>
                                     <td class="hidden">{{row.mainCategory}}</td>
                                     <td class="hidden">{{row.categoryText}}</td>
+                                    <td class="hidden">{{row.categoryType}}</td>
                                     <td>{{row.amount | currencyFormatter}}</td>
                                     <td style="text-align:left;padding-left: 20px;">
                                         <img class="hidden-xs hidden-sm" style="position: absolute;" height="20" ng-src="{{getIcon(row.category)}}" alt="{{row.category}}" />
                                         <span style="padding-left: 30px;">{{row.category | camelCaseToNormal}}</span>
                                     </td>
-                                    <td class="hidden-xs hidden-sm" style="text-align: left" title="{{row.description}}">{{row.description | maxLength : 25}}</td>
+                                    <td class="hidden-xs hidden-sm" style="text-align: left" title="{{row.description}}">{{row.description | maxLength : 70}}</td>
                                     <td class="hidden-md hidden-xs hidden-sm">{{row.date | date}}</td>
                                     <td class="text-right">
                                         <a class="link edit-link" href="{{urls.edit}}/{{row.transactionId}}" title="Edit"><i class="glyphicon glyphicon-pencil"></i></a>

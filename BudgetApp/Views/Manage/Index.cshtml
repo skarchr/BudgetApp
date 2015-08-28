@@ -117,8 +117,8 @@
                 <div class="form-group">
                     <label for="Account" class="control-label col-sm-3">Country</label>
                     <div class="col-sm-9">
-                        <select class="form-control" id="Country" name="Country" ng-model="model.country" required ng-change="dirty = true">
-                            <option class="text-muted" value="">-- Country --</option>
+                        <select class="form-control" id="Country" name="Country" ng-model="model.country" ng-change="dirty = true">
+                            <option class="text-muted" value=""></option>
                             <option ng-repeat="country in countries" value="{{country.name}}">{{country.name}}</option>
                         </select>
                     </div>

@@ -1,20 +1,18 @@
 ﻿@using BudgetApp.Extensions
+@using BudgetApp.Models
 @model BudgetApp.Models.RegisterViewModel
 @{
     ViewBag.Title = "Register";
 }
 
+<h1 class="text-center">Register</h1>
+<hr />
 
 @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form", @name = "registerform" }))
 {
     @Html.AntiForgeryToken()
 
     <div class="row" ng-controller="loginController" style="margin-top: -10px;">
-
-
-        <h1 class="text-center">Register</h1>
-
-        <hr />
 
         <div class="form-horizontal" style="margin-top: 40px;">
             <div class="col-md-3" data-slide-down>
@@ -26,14 +24,15 @@
                 </div>
             </div>
 
-            <div class="col-md-9" data-slide-down>
+            <div class="col-md-9" data-slide-down>                               
+
                 <div class="form-group">
                     <label for="Email" class="control-label col-sm-3">Email <span class="required-tag"></span></label>
                     <div class="col-sm-9 form-inline" style="padding-top:4px;">
 
                         @Html.TextBoxFor(m => m.Email, new { @class = "form-control", @placeholder = "A confirmation email will be sent", @ng_model = "model.Email", @required = "required", @type = "email" })
 
-                        <span class="text-danger" ng-show="registerform.Email.$invalid && registerform.Email.$touched && model.Email !== '' && !loading">Invalid email address</span>
+                        <span class="text-danger" ng-show="registerform.Email.$invalid && registerform.Email.$touched && registerform.Email.$dirty && model.Email !== '' && !loading">Invalid email address</span>
                         <span class="text-danger" ng-show="userExist === 'True' && registerform.Email.$valid">Email already in use!</span>
                         <span class="text-muted" ng-show="loading">Checking...</span>
                         <span class="text-success" ng-show="registerform.Email.$valid && !loading && userExist === 'False'"> OK! </span>
@@ -49,7 +48,7 @@
                             <option ng-repeat="country in countries" value="{{country.name}}">{{country.name}}</option>
                         </select>
 
-                        <span class="text-success" ng-show="registerform.Country.$valid && registerform.Country.$touched && model.Country !== ''">OK!</span>
+                        <span class="text-success" ng-show="registerform.Country.$valid && registerform.Country.$dirty && model.Country !== ''">Awesome!</span>
                     </div>
                 </div>
 
@@ -90,7 +89,7 @@
 
                 </div>
 
-                <div class="form-group">
+                <div class="form-group" style="margin-top: -8px;">
                     <label for="ConfirmPassword" class="control-label col-sm-3">Confirm password <span class="required-tag"></span></label>
                     <div class="col-sm-9 form-inline" style="padding-top:4px;">
 
@@ -104,8 +103,13 @@
 
                 <div class="form-group">
                     <div class="col-sm-offset-3 col-sm-9">
-                        <input type="submit" ng-disabled="registerform.$invalid || (model.Password !== model.ConfirmPassword) || userExist === 'True' || loading" class="btn btn-primary" value="Register" />
-                        @Html.ActionLink("Cancel", "Login", "Account", new { @class = "btn btn-link" })
+                        <input type="submit" ng-disabled="registerform.$invalid || (model.Password !== model.ConfirmPassword) || userExist === 'True' || loading" class="btn btn-primary" style="width:280px;" value="Register" />                        
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <div class="col-sm-offset-3 col-sm-9">
+                        @Html.ActionLink("Cancel", "Login", "Account", new { @class="btn btn-default form-control", @style="width:280px;" })
                     </div>
                 </div>
 
@@ -118,6 +122,39 @@
 
 }
 
+<div class="row" ng-controller="loginController" style="margin-top: 40px;">
+    <div class="form-horizontal">
+
+        <div class="col-md-offset-3 col-md-9">
+            
+            <div class="form-group">
+
+                <label class="col-sm-3 control-label"></label>
+                <div class="col-sm-9">
+
+                    Or register with:
+
+                </div>
+
+
+            </div>
+
+            <div class="form-group">
+
+                <label class="col-sm-3 control-label"></label>
+                <div class="col-sm-9">
+
+                    @Html.Partial("_ExternalLoginsListPartial", new ExternalLoginListViewModel { ReturnUrl = ViewBag.ReturnUrl })
+
+                </div>
+
+
+            </div>
+
+        </div>
+
+    </div>
+</div>
 
 @Html.Partial("_LoginModel", Html.Raw(Model.ToJson()))
 
