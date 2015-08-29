@@ -74,7 +74,7 @@ p {
 }
 
 
-.ng-hide-add {
+.flip-in.ng-hide-add {
     -webkit-animation:0.5s flipOutX ease;
     -moz-animation:0.5s flipOutX ease;
     -ms-animation:0.5s flipOutX ease;
@@ -83,10 +83,18 @@ p {
 }
 
 /* when showing the picture */
-.ng-hide-remove {
+.flip-in.ng-hide-remove {
     -webkit-animation:0.5s flipInX ease;
     -moz-animation:0.5s flipInX ease;
     -ms-animation:0.5s flipInX ease;
     -o-animation:0.5s flipInX ease;
     animation:0.5s flipInX ease;
+}
+
+.tada {
+    -webkit-animation:1.0s tada ease;
+    -moz-animation:1.0s tada ease;
+    -ms-animation:1.0s tada ease;
+    -o-animation:1.0s tada ease;
+    animation:1.0s tada ease;
 }
