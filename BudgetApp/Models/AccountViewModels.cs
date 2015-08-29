@@ -81,6 +81,11 @@ namespace BudgetApp.Models
         public string Country { get; set; }
 
         [Required]
+        [EmailAddress]
+        [Display(Name = "Email")]
+        public bool DisclaimerAgreed { get; set; }
+
+        [Required]
         [Display(Name = "Currency")]
         public string Currency { get; set; }
 

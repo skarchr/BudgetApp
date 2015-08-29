@@ -560,3 +560,30 @@ hr {
     border-radius: 104px;
     -webkit-border-radius: 104px;
 }
+
+p {
+    color: black;
+    margin-top: 0px;
+    font-family: sans-serif;
+    letter-spacing: 0px;
+    font-size: 14px;
+    font-weight: normal;
+}
+
+.list-title {
+    font-size: 18px;
+}
+
+ul > li > ul > li > span {
+    padding-right: 10px;
+    font-family: 'Franklin Gothic Medium', 'Franklin Gothic', 'ITC Franklin Gothic', Arial, sans-serif;
+}
+
+ul > li > ul > li {
+    font-family: sans-serif;
+}
+
+ul > li > ul > li > ul > li > span {
+    margin-left: 10px;
+    padding-right: 10px;
+}

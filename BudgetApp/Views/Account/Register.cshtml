@@ -8,13 +8,16 @@
 <h1 class="text-center">Register</h1>
 <hr />
 
-@using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form", @name = "registerform" }))
-{
-    @Html.AntiForgeryToken()
+<div class="row" ng-controller="loginController" style="margin-top: -10px;">
 
-    <div class="row" ng-controller="loginController" style="margin-top: -10px;">
+    @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form", @name = "registerform" }))
+    {
+        @Html.AntiForgeryToken()
+
+
 
         <div class="form-horizontal" style="margin-top: 40px;">
+
             <div class="col-md-3" data-slide-down>
                 <div class="form-group">
 
@@ -24,7 +27,7 @@
                 </div>
             </div>
 
-            <div class="col-md-9" data-slide-down>                               
+            <div class="col-md-9" data-slide-down>
 
                 <div class="form-group">
                     <label for="Email" class="control-label col-sm-3">Email <span class="required-tag"></span></label>
@@ -101,15 +104,27 @@
 
                 </div>
 
+                <div class="form-group" style="margin-top: 30px;margin-bottom: 30px;">
+                    <label class="control-label col-sm-3"></label>
+                    <div class="col-sm-9 form-inline" style="padding-top:4px;">
+                        <div class="checkbox">
+                            <label>
+                                @Html.CheckBoxFor(m => m.DisclaimerAgreed, new { @ng_model = "model.DisclaimerAgreed", @required = "required" }) I have read the <a href="#" data-toggle="modal" data-target="#disclaimerModal"> disclaimer</a> and agree to its <br /> terms of use.
+                            </label>
+                        </div>
+                    </div>
+
+                </div>
+
                 <div class="form-group">
                     <div class="col-sm-offset-3 col-sm-9">
-                        <input type="submit" ng-disabled="registerform.$invalid || (model.Password !== model.ConfirmPassword) || userExist === 'True' || loading" class="btn btn-primary" style="width:280px;" value="Register" />                        
+                        <input type="submit" ng-disabled="registerform.$invalid || (model.Password !== model.ConfirmPassword) || userExist === 'True' || loading" class="btn btn-primary" style="width:280px;" value="Register" />
                     </div>
                 </div>
-                
+
                 <div class="form-group">
                     <div class="col-sm-offset-3 col-sm-9">
-                        @Html.ActionLink("Cancel", "Login", "Account", new { @class="btn btn-default form-control", @style="width:280px;" })
+                        @Html.ActionLink("Cancel", "Login", "Account", new { @class = "btn btn-default form-control", @style = "width:280px;" })
                     </div>
                 </div>
 
@@ -117,16 +132,17 @@
 
         </div>
 
-    </div>
+    }
+    
+    @Html.Partial("_Disclaimer")
 
-
-}
+</div>
 
 <div class="row" ng-controller="loginController" style="margin-top: 40px;">
     <div class="form-horizontal">
 
         <div class="col-md-offset-3 col-md-9">
-            
+
             <div class="form-group">
 
                 <label class="col-sm-3 control-label"></label>
@@ -155,6 +171,7 @@
 
     </div>
 </div>
+
 
 @Html.Partial("_LoginModel", Html.Raw(Model.ToJson()))
 

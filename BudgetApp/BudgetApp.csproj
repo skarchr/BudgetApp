@@ -673,6 +673,7 @@
     <Content Include="Views\Transactions\Index.cshtml" />
     <Content Include="Views\Transactions\Edit.cshtml" />
     <Content Include="Views\Manage\_ExternalLogins.cshtml" />
+    <Content Include="Views\Shared\_Disclaimer.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\uploads\" />
