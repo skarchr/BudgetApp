@@ -22,7 +22,7 @@
                 <div class="form-group">
 
                     <div class="col-sm-offset-3 col-md-12">
-                        <img gravatar-src="model.Email" gravatar-size="200" style="border:2px solid #0094ff;padding:2px; -ms-border-radius: 104px; border-radius: 104px;" />
+                        <img ng-show="registerform.Email.$valid && registerform.Email.$touched && !loading" class="flip-in" gravatar-src="model.Email" gravatar-size="200" style="border:2px solid #0094ff;padding:2px; -ms-border-radius: 104px; border-radius: 104px;" />
                     </div>
                 </div>
             </div>
@@ -37,7 +37,7 @@
 
                         <span class="text-danger" ng-show="registerform.Email.$invalid && registerform.Email.$touched && registerform.Email.$dirty && model.Email !== '' && !loading">Invalid email address</span>
                         <span class="text-danger" ng-show="userExist === 'True' && registerform.Email.$valid">Email already in use!</span>
-                        <span class="text-muted" ng-show="loading">Checking...</span>
+                        @*<span class="text-muted" ng-show="loading">Checking...</span>*@
                         <span class="text-success" ng-show="registerform.Email.$valid && !loading && userExist === 'False'"> OK! </span>
                     </div>
                 </div>
@@ -96,7 +96,7 @@
                     <label for="ConfirmPassword" class="control-label col-sm-3">Confirm password <span class="required-tag"></span></label>
                     <div class="col-sm-9 form-inline" style="padding-top:4px;">
 
-                        @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control", @ng_model = "model.ConfirmPassword", @required = "required", @ng_disabled = "registerform.Password.$invalid && registerform.Password.$pristine" })
+                        @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control", @ng_model = "model.ConfirmPassword", @required = "required", @ng_disabled = "model.Password === '' || model.Password === undefined" })
 
                         <span class="text-danger" ng-show="model.ConfirmPassword !== model.Password && registerform.ConfirmPassword.$touched && registerform.Password.$dirty">Passwords doesn't match!</span>
                         <span class="text-success" ng-show="model.ConfirmPassword === model.Password && model.ConfirmPassword !== undefined">OK!</span>
@@ -109,7 +109,9 @@
                     <div class="col-sm-9 form-inline" style="padding-top:4px;">
                         <div class="checkbox">
                             <label>
-                                @Html.CheckBoxFor(m => m.DisclaimerAgreed, new { @ng_model = "model.DisclaimerAgreed", @required = "required" }) I have read the <a href="#" data-toggle="modal" data-target="#disclaimerModal"> disclaimer</a> and agree to its <br /> terms of use.
+                                @Html.CheckBoxFor(m => m.DisclaimerAgreed, new { @ng_model = "model.DisclaimerAgreed", @required = "required" }) I have read the
+                                <a href="#" data-toggle="modal" data-target="#disclaimerModal"> disclaimer</a> and agree to its <br /> terms of use.
+                                <span style="color:#b94a48;font-size: 16px;">*</span>
                             </label>
                         </div>
                     </div>
@@ -133,7 +135,7 @@
         </div>
 
     }
-    
+
     @Html.Partial("_Disclaimer")
 
 </div>

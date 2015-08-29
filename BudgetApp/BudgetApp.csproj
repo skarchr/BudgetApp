@@ -596,11 +596,6 @@
     <Content Include="bower_components\angular-toastr\.npmignore" />
     <Content Include="bower_components\angular-toastr\bower.json" />
     <Content Include="bower_components\angular-toastr\README.md" />
-    <Content Include="bower_components\angular-animate\.bower.json" />
-    <Content Include="bower_components\angular-animate\angular-animate.min.js.map" />
-    <Content Include="bower_components\angular-animate\bower.json" />
-    <Content Include="bower_components\angular-animate\package.json" />
-    <Content Include="bower_components\angular-animate\README.md" />
     <Content Include="js\resources\countries.json" />
     <Content Include="bower_components\angular-bootstrap\.bower.json" />
     <Content Include="bower_components\angular-bootstrap\bower.json" />
@@ -611,6 +606,11 @@
     <Content Include="bower_components\toastr\README.md" />
     <Content Include="bower_components\toastr\toastr.less" />
     <Content Include="bower_components\toastr\toastr.scss" />
+    <Content Include="bower_components\angular-animate\.bower.json" />
+    <Content Include="bower_components\angular-animate\angular-animate.min.js.map" />
+    <Content Include="bower_components\angular-animate\bower.json" />
+    <Content Include="bower_components\angular-animate\package.json" />
+    <Content Include="bower_components\angular-animate\README.md" />
     <None Include="Properties\PublishProfiles\MvcP.pubxml" />
     <None Include="Properties\PublishProfiles\MvcPWy.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />

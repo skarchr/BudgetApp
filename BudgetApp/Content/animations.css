@@ -74,3 +74,19 @@ p {
 }
 
 
+.ng-hide-add {
+    -webkit-animation:0.5s flipOutX ease;
+    -moz-animation:0.5s flipOutX ease;
+    -ms-animation:0.5s flipOutX ease;
+    -o-animation:0.5s flipOutX ease;
+    animation:0.5s flipOutX ease;
+}
+
+/* when showing the picture */
+.ng-hide-remove {
+    -webkit-animation:0.5s flipInX ease;
+    -moz-animation:0.5s flipInX ease;
+    -ms-animation:0.5s flipInX ease;
+    -o-animation:0.5s flipInX ease;
+    animation:0.5s flipInX ease;
+}
