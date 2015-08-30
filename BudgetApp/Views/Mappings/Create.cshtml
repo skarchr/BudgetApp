@@ -24,41 +24,49 @@
         @using (Html.BeginForm("Create", "Mappings", FormMethod.Post, new { name = "addForm" }))
         {
             @Html.AntiForgeryToken()
-            <div class="col-xs-12">                
+            <div class="form-horizontal">
 
-                <div class="row form-member">
-                    <div class="col-xs-12 member-label">
-                        <span>Category</span>
+
+                <div class="col-md-offset-3 col-md-9">
+
+                    <div class="form-group">
+                        <label for="Category" class="control-label col-sm-3">Category <span class="required-tag"></span></label>
+                        <div class="col-sm-9 form-inline" style="padding-top:4px;">
+
+                            @Html.DropDownGroupListFor(model => model.Category, Dropdownlist.GroupedCategories(Model != null ? Model.Category.ToString() : ""), " ", new { @class = "form-control", @required = "required", @ng_model = "model.category" })
+
+                            <label class="text-danger" ng-show="addForm.Category.$invalid && addForm.Category.$dirty">Required</label>
+                            <label class="text-success" ng-show="addForm.Category.$valid && addForm.Category.$touched">OK!</label>
+                        </div>
                     </div>
-                    <div class="col-xs-10 member-control">
-                        @Html.DropDownGroupListFor(model => model.Category, Dropdownlist.GroupedCategories(Model != null ? Model.Category.ToString() : ""), " ", new { @class = "form-control", @required = "required", @ng_model = "model.category" })
+
+                    <div class="form-group">
+                        <label for="Description" class="control-label col-sm-3">Description <span class="required-tag"></span></label>
+                        <div class="col-sm-9 form-inline" style="padding-top:4px;">
+
+                            @Html.TextAreaFor(model => model.TextDescription, new { @class = "form-control", @required = "required", @ng_model = "model.textDescription" })
+
+                            <label class="text-danger" ng-show="addForm.TextDescription.$invalid && addForm.TextDescription.$touched">Required</label>
+                            <label class="text-success" ng-show="addForm.TextDescription.$valid && addForm.TextDescription.$touched">OK!</label>
+                        </div>
                     </div>
-                    <div class="col-xs-2">
-                        <label style="padding-top:6px;" class="control-label col-xs-12 label-validator text-danger" ng-show="addForm.Category.$invalid && addForm.Category.$dirty"></label>
-                        <label style="padding-top:6px;" class="control-label col-xs-12 label-validator text-success" ng-show="addForm.Category.$valid"></label>
+
+                    <div class="form-group">
+                        <label class="control-label col-sm-3"></label>
+                        <div class="col-sm-9 form-inline" style="padding-top:4px;">
+                            <input type="submit" value="Create mapping" class="btn btn-primary {{addForm.$valid ? 'tada':''}}" ng-disabled="addForm.$invalid" style="width:280px;" />
+                        </div>
                     </div>
+
+                    <div class="form-group">
+                        <label class="control-label col-sm-3"></label>
+                        <div class="col-sm-9 form-inline" style="padding-top:4px;">
+                            @Html.ActionLink("Cancel", "Index", "Mappings", null, new { @class = "btn btn-default", @style = "width:280px;" })
+                        </div>
+                    </div>
+
                 </div>
 
-                <div class="row form-member">
-                    <div class="col-xs-12 member-label">
-                        <span>Description</span>
-                    </div>
-                    <div class="col-xs-10 member-control">
-                        @Html.TextAreaFor(model => model.TextDescription, new { @class = "form-control", @required = "required", @ng_model = "model.textDescription" })
-                    </div>
-                    <div class="col-xs-2">
-                        <label style="padding-top:6px;" class="control-label col-xs-12 label-validator text-danger" ng-show="addForm.TextDescription.$invalid && addForm.TextDescription.$touched"></label>
-                        <label style="padding-top:6px;" class="control-label col-xs-12 label-validator text-success" ng-show="addForm.TextDescription.$valid"></label>
-                    </div>
-                </div>
-
-
-                <div class="row form-member">
-                    <div class="col-xs-12">
-                        <input type="submit" value="Add" class="btn btn-primary" ng-disabled="addForm.$invalid" />
-                        @Html.ActionLink("Cancel", "Index", "Mappings", null, new { @clas = "btn btn-link" })
-                    </div>
-                </div>
             </div>
         }
 

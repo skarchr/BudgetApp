@@ -6,7 +6,7 @@
 
         $scope.model = importModel.model;
 
-        $scope.regexDouble = /^(\d+(?:[\.\,]\d{1,2})?)$/;
+        $scope.regexDouble = /^(\d+(?:[\.]\d{1,2})?)$/;
 
     }]);
 
