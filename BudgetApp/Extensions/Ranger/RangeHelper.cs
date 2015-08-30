@@ -45,7 +45,7 @@ namespace BudgetApp.Extensions.Ranger
                         StartDate = DateHelper.GetWeekStartDate(year.Key, week.Key),
                         EndDate = DateHelper.GetWeekEndDate(year.Key, week.Key),
                         Transactions = week.Value.OrderByDescending(s => s.Date).ToList(),
-                        Graph = GraphBuilder.TransactionDrilldownGraph(week.Value, currency).ToJson()
+                        Graph = GraphBuilder.DrilldownGraph(week.Value, currency, "column", true).ToJson()// TransactionDrilldownGraph(week.Value, currency).ToJson()
                     });
                 }
             }
@@ -91,7 +91,7 @@ namespace BudgetApp.Extensions.Ranger
                         StartDate = new DateTime(year.Key, month.Key, 1),
                         EndDate = new DateTime(year.Key, month.Key, DateTime.DaysInMonth(year.Key, month.Key)),
                         Transactions = month.Value.OrderByDescending(s => s.Date).ToList(),
-                        Graph = GraphBuilder.TransactionDrilldownGraph(month.Value, currency).ToJson()
+                        Graph = GraphBuilder.DrilldownGraph(month.Value, currency, "column", true).ToJson() // TransactionDrilldownGraph(month.Value, currency).ToJson()
                     });
                 }
             }
@@ -127,7 +127,7 @@ namespace BudgetApp.Extensions.Ranger
                     StartDate = new DateTime(year.Key, 1, 1),
                     EndDate = new DateTime(year.Key, 12, 31),
                     Transactions = year.Value.OrderByDescending(s => s.Date).ToList(),
-                    Graph = GraphBuilder.TransactionDrilldownGraph(year.Value, currency).ToJson()
+                    Graph = GraphBuilder.DrilldownGraph(year.Value, currency, "column", true).ToJson() //TransactionDrilldownGraph(year.Value, currency).ToJson()
                 });
 
             }

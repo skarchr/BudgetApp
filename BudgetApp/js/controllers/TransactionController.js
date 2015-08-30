@@ -75,7 +75,7 @@
 
         $scope.model = addTransactionModel.model;
 
-        $scope.regexDouble = /^(\d+(?:[\.\,]\d{1,2})?)$/;
+        $scope.regexDouble = /^(\d+(?:[\.]\d{1,2})?)$/;
 
     }]);
 
@@ -85,6 +85,7 @@
 
         $scope.model.date = new Date(editTransactionModel.model.date);
 
+        $scope.regexDouble = /^(\d+(?:[\.]\d{1,2})?)$/;
 
     }]);
 

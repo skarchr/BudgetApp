@@ -9,9 +9,11 @@ namespace BudgetApp.Models
         [Display(Name = "Email")]
         public string Email { get; set; }
 
-        [Required]
         [Display(Name = "Country")]
         public string Country { get; set; }
+
+        [Required]
+        public bool DisclaimerAgreed { get; set; }
 
         [Required]
         [Display(Name = "Currency")]
@@ -77,9 +79,11 @@ namespace BudgetApp.Models
         [Display(Name = "Email")]
         public string Email { get; set; }
 
-        [Required]
         [Display(Name = "Country")]
         public string Country { get; set; }
+
+        [Required]
+        public bool DisclaimerAgreed { get; set; }
 
         [Required]
         [Display(Name = "Currency")]

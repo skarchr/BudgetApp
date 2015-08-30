@@ -47,5 +47,13 @@ namespace BudgetApp.Models
                 return HighchartUtilities.Colors[Extensions.CategoryExt.GetCategoryColor(Category)];
             }
         }
+
+        public string CategoryType
+        {
+            get
+            {
+                return Category != null ? CategoryExt.GetMainCategory(Category.Value) == "Income" ? "Income" : "Expenses" : null;
+            }
+        }
     }
 }

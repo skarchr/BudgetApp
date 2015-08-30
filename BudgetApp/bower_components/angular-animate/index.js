@@ -1,2 +1,3 @@
 require('./angular-animate');
-module.exports = 'ngAnimate';
+
+module.exports = angular-animate;

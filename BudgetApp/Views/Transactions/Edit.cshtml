@@ -2,86 +2,80 @@
 @model BudgetApp.Models.Transaction
 
 @{
-    ViewBag.Title = "Transactions";
+    ViewBag.Title = "Edit transaction";
 }
 
-<div style="margin-top:30px;">
+<div class="row" style="margin-top: 40px;" ng-controller="editTransactionController">
+    @using (Html.BeginForm("Edit", "Transactions", FormMethod.Post, new { name = "addForm", @class="form-horizontal" }))
+    {
+        @Html.AntiForgeryToken()
+        @Html.HiddenFor(model => model.TransactionId)
+        @Html.HiddenFor(model => model.UserName)
+        @Html.HiddenFor(model => model.Created)
 
-    <div class="row" style="margin-top: 40px;" ng-controller="editTransactionController">
-        @using (Html.BeginForm("Edit", "Transactions", FormMethod.Post, new { name = "addForm" }))
-        {
-            @Html.AntiForgeryToken()
-            @Html.HiddenFor(model => model.TransactionId)
-            @Html.HiddenFor(model => model.UserName)
-            @Html.HiddenFor(model => model.Created)
-            <div class="col-xs-12">
+        <div class="col-md-offset-3 col-md-9">
 
-                <h2 class="text-center" style="margin-top: -50px;">Edit transaction</h2>
+            <div class="form-group">
+                <label for="Amount" class="control-label col-sm-3">Amount <span class="required-tag"></span></label>
+                <div class="col-sm-9 form-inline" style="padding-top:4px;">
 
-                <div class="row form-member">
-                    <div class="member-label col-xs-12">
-                        <span>Amount</span>
-                    </div>
-                    <div class="col-xs-10 member-control">
-                        @Html.TextBoxFor(m => m.Amount, new { @class = "form-control", @placeholder = "Amount", @ng_model = "model.amount", @required = "required", @ng_pattern = "regexDouble" })
-                    </div>
-                    <div class="col-xs-2">
-                        <label style="padding-top:6px;" class="control-label col-xs-12 label-validator text-danger" ng-show="addForm.Amount.$invalid && addForm.Amount.$touched"></label>
-                        <label style="padding-top:6px;" class="control-label col-xs-12 label-validator text-success" ng-show="addForm.Amount.$valid"></label>
-                    </div>
-                </div>
+                    @Html.TextBoxFor(m => m.Amount, new { @class = "form-control", @placeholder = "#.##", @ng_model = "model.amount", @required = "required", @ng_pattern = "regexDouble" })
 
-                <div class="row form-member">
-                    <div class="col-xs-12 member-label">
-                        <span>Category</span>
-                    </div>
-                    <div class="col-xs-10 member-control">
-                        @Html.DropDownGroupListFor(model => model.Category, Dropdownlist.GroupedCategories(Model != null ? Model.Category.ToString() : ""), " ", new { @class = "form-control", @required = "required", @ng_model = "model.category" })
-                    </div>
-                    <div class="col-xs-2">
-                        <label style="padding-top:6px;" class="control-label col-xs-12 label-validator text-danger" ng-show="addForm.Category.$invalid && addForm.Category.$dirty"></label>
-                        <label style="padding-top:6px;" class="control-label col-xs-12 label-validator text-success" ng-show="addForm.Category.$valid"></label>
-                    </div>
-                </div>
-
-                <div class="row form-member">
-                    <div class="col-xs-12 member-label">
-                        <span>Description</span>
-                    </div>
-                    <div class="col-xs-10 member-control">
-                        @Html.TextAreaFor(model => model.Description, new { @class = "form-control", @required = "required", @ng_model = "model.description" })
-                    </div>
-                    <div class="col-xs-2">
-                        <label style="padding-top:6px;" class="control-label col-xs-12 label-validator text-danger" ng-show="addForm.Description.$invalid && addForm.Description.$touched"></label>
-                        <label style="padding-top:6px;" class="control-label col-xs-12 label-validator text-success" ng-show="addForm.Description.$valid"></label>
-                    </div>
-                </div>
-
-
-                <div class="row form-member">
-                    <div class="col-xs-12 member-label">
-                        <span>Date</span>
-                    </div>
-                    <div class="col-xs-10 member-control">
-                        @Html.TextBoxFor(model => model.Date, new { @class = "form-control", @required = "required", @ng_model = "model.date", max = DateTime.Now.ToString("yyyy-MM-dd"), @type = "date" })
-                    </div>
-                    <div class="col-xs-2">
-                        <label style="padding-top:6px;" class="control-label col-xs-12 label-validator text-danger" ng-show="addForm.Date.$invalid && addForm.Date.$touched"></label>
-                        <label style="padding-top:6px;" class="control-label col-xs-12 label-validator text-success" ng-show="addForm.Date.$valid"></label>
-                    </div>
-                </div>
-
-
-                <div class="row form-member">
-                    <div class="col-xs-12">
-                        <input type="submit" value="Edit" class="btn btn-primary" ng-disabled="addForm.$invalid" />
-                        @Html.ActionLink("Cancel", "Index", "Transactions", null, new { @clas = "btn btn-link" })
-                    </div>
+                    <span class="text-danger" ng-show="addForm.Amount.$invalid && addForm.Amount.$touched">Invalid format (#.##)</span>
+                    <span class="text-success" ng-show="addForm.Amount.$valid && addForm.Amount.$touched">OK!</span>
                 </div>
             </div>
-        }
 
-    </div>
+            <div class="form-group">
+                <label for="Category" class="control-label col-sm-3">Category <span class="required-tag"></span></label>
+                <div class="col-sm-9 form-inline" style="padding-top:4px;">
+
+                    @Html.DropDownGroupListFor(model => model.Category, Dropdownlist.GroupedCategories(Model != null ? Model.Category.ToString() : ""), " ", new { @class = "form-control", @required = "required", @ng_model = "model.category" })
+
+                    <span class="text-danger" ng-show="addForm.Category.$invalid && addForm.Category.$dirty">Invalid format</span>
+                    <span class="text-success" ng-show="addForm.Category.$valid && addForm.Category.$touched">OK!</span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="Description" class="control-label col-sm-3">Description <span class="required-tag"></span></label>
+                <div class="col-sm-9 form-inline" style="padding-top:4px;">
+
+                    @Html.TextAreaFor(model => model.Description, new { @class = "form-control", @required = "required", @ng_model = "model.description" })
+
+                    <span class="text-danger" ng-show="addForm.Description.$invalid && addForm.Description.$touched">Invalid format</span>
+                    <span class="text-success" ng-show="addForm.Description.$valid && addForm.Description.$touched">OK!</span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="Date" class="control-label col-sm-3">Date <span class="required-tag"></span></label>
+                <div class="col-sm-9 form-inline" style="padding-top:4px;">
+
+                    @Html.TextBoxFor(model => model.Date, new { @class = "form-control", @required = "required", @ng_model = "model.date", max = DateTime.Now.ToString("yyyy-MM-dd"), @type = "date" })
+
+                    <span class="text-danger" ng-show="addForm.Date.$invalid && addForm.Date.$touched">Invalid format</span>
+                    <span class="text-success" ng-show="addForm.Date.$valid && addForm.Date.$touched">OK!</span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-sm-offset-3 col-sm-9">
+                    <input type="submit" value="Edit" class="btn btn-primary {{addForm.$valid ? 'tada':''}}" ng-disabled="addForm.$invalid" style="width:280px;" />
+                   
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <div class="col-sm-offset-3 col-sm-9">
+
+                    @Html.ActionLink("Cancel", "Index", "Transactions", null, new { @class = "btn btn-default", @style = "width:280px;" })
+                </div>
+            </div>
+
+        </div>
+    }
+
 </div>
 
 <script>
