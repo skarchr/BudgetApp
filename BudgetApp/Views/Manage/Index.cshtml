@@ -15,7 +15,7 @@
             <div class="col-md-3">
                 <div class="form-group">
 
-                    <div class="col-sm-offset-3 col-md-12">
+                    <div class="col-sm-offset-3 col-md-12 flip-in" ng-show="flipIn">
                         <img gravatar-src="'@User.Identity.Name'" gravatar-size="200" style="border:2px solid #0094ff;padding:2px; -ms-border-radius: 104px; border-radius: 104px;" />
                         
                         <br />
@@ -60,40 +60,40 @@
 
                 
 
-                    <div class="form-group">
-                        <label for="twoFactor" class="control-label col-sm-3">Two-factor authentication</label>
-                        <div class="col-sm-9" style="padding-top:3px;">
-                            @if (Model.EmailConfirmed)
+                <div class="form-group">
+                    <label for="twoFactor" class="control-label col-sm-3">Two-factor authentication</label>
+                    <div class="col-sm-9" style="padding-top:3px;">
+                        @if (Model.EmailConfirmed)
+                        {
+                            if (Model.TwoFactor)
                             {
-                                if (Model.TwoFactor)
+                                using (Html.BeginForm("DisableTwoFactorAuthentication", "Manage", FormMethod.Post, new {@class = "form-horizontal", role = "form"}))
                                 {
-                                    using (Html.BeginForm("DisableTwoFactorAuthentication", "Manage", FormMethod.Post, new {@class = "form-horizontal", role = "form"}))
-                                    {
-                                        @Html.AntiForgeryToken()
-                                        <text>
-                                            Enabled
-                                            <input type="submit" value="Disable" class="btn btn-link" style="margin-top: -3px;" />
-                                        </text>
-                                    }
-                                }
-                                else
-                                {
-                                    using (Html.BeginForm("EnableTwoFactorAuthentication", "Manage", FormMethod.Post, new {@class = "form-horizontal", role = "form"}))
-                                    {
-                                        @Html.AntiForgeryToken()
-                                        <text>
-                                            <input type="submit" value="Enable" class="btn btn-link" style="margin-top: -3px; padding-left: 0;" />
-                                            Disabled
-                                        </text>
-                                    }
+                                    @Html.AntiForgeryToken()
+                                    <text>
+                                        Enabled
+                                        <input type="submit" value="Disable" class="btn btn-link" style="margin-top: -3px;" />
+                                    </text>
                                 }
                             }
                             else
                             {
-                                <div class="text-muted" style="margin-top:4px;">You need to confirm your email first!</div>
+                                using (Html.BeginForm("EnableTwoFactorAuthentication", "Manage", FormMethod.Post, new {@class = "form-horizontal", role = "form"}))
+                                {
+                                    @Html.AntiForgeryToken()
+                                    <text>
+                                        <input type="submit" value="Enable" class="btn btn-link" style="margin-top: -3px; padding-left: 0;" />
+                                        Disabled
+                                    </text>
+                                }
                             }
-                        </div>
+                        }
+                        else
+                        {
+                            <div class="text-muted" style="margin-top:4px;">You need to confirm your email first!</div>
+                        }
                     </div>
+                </div>
                 
                 <div class="form-group">
                     <label for="External" class="control-label col-sm-3" style="padding-top:12px;">External logins</label>

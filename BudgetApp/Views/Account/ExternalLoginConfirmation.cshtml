@@ -4,78 +4,104 @@
     ViewBag.Title = "Register";
 }
 
-@using (Html.BeginForm("ExternalLoginConfirmation", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form", @name = "registerform" }))
-{
-    @Html.AntiForgeryToken()
+<h1 class="text-center">Register (part 2) <small>...authenticated with @ViewBag.LoginProvider</small></h1>
+<hr />
 
-    <div class="row" style="margin-top: -70px;" ng-controller="loginController">       
+<div class="row" ng-controller="toastrController"></div>
 
-        <div class="col-md-12 text-center">
-            
-            <div id="icon" data-logo="18" style="width:40%;min-width: 220px;">
-                <object>
-                    <img src="~/Content/images/logo.svg" id="svg" />
-                </object>
+<div class="row" style="margin-top: 30px;" ng-controller="loginController">
+
+    @using (Html.BeginForm("ExternalLoginConfirmation", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form", @name = "registerform" }))
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-horizontal">
+
+            <div class="col-md-3" data-slide-down data-prevent="@Html.ViewData.ModelState.IsValid">
+                <div class="form-group">
+
+                    <div class="col-sm-offset-3 col-md-12">
+                        <img ng-show="registerform.Email.$valid && !loading" class="flip-in" gravatar-src="model.Email" gravatar-size="200" style="border:2px solid #0094ff;padding:2px; -ms-border-radius: 104px; border-radius: 104px;" />
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-9" data-slide-down>
+                
+                <div class="form-group">
+                    <label for="Email" class="control-label col-sm-3">Email <span class="required-tag"></span></label>
+                    <div class="col-sm-9 form-inline" style="padding-top:4px;">
+
+                        @Html.TextBoxFor(m => m.Email, new { @class = "form-control", @placeholder = "A confirmation email will be sent", @ng_model = "model.Email", @required = "required", @type = "email" })
+
+                        <span class="text-danger" ng-show="registerform.Email.$invalid && registerform.Email.$touched && registerform.Email.$dirty && model.Email !== '' && !loading">Invalid email address</span>
+                        <span class="text-danger" ng-show="userExist === 'True' && registerform.Email.$valid">Email already in use!</span>
+                        <img ng-show="loading" src="../../Content/images/gears.svg" alt="" />
+                        <span class="text-success" ng-show="registerform.Email.$valid && !loading && userExist === 'False'"> OK! </span>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="Country" class="control-label col-sm-3">Country</label>
+                    <div class="col-sm-9 form-inline" style="padding-top:4px;">
+
+                        <select class="form-control" id="Country" name="Country" ng-model="model.Country">
+                            <option class="text-muted" value=""></option>
+                            <option ng-repeat="country in countries" value="{{country.name}}">{{country.name}}</option>
+                        </select>
+
+                        <span class="text-success" ng-show="registerform.Country.$valid && registerform.Country.$dirty && model.Country !== ''">Awesome!</span>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="Currency" class="control-label col-sm-3">Currency <span class="required-tag"></span></label>
+                    <div class="col-sm-9 form-inline" style="padding-top:4px;">
+
+                        <select class="form-control" id="Currency" name="Currency" ng-model="model.Currency" required>
+                            <option class="text-muted" value=""></option>
+                            <option ng-repeat="currency in currencies" value="{{currency.cc}}" title="{{currency.name}}">{{currency.cc}}</option>
+                        </select>
+
+                        <label class="text-danger" ng-show="registerform.Currency.$invalid && registerform.Currency.$dirty">Mandatory field</label>
+                        <label class="text-success" ng-show="registerform.Currency.$valid">OK!</label>
+
+                    </div>
+                </div>
+                
+                <div class="form-group" style="margin-top: 30px;margin-bottom: 30px;">
+                    <label class="control-label col-sm-3"></label>
+                    <div class="col-sm-9 form-inline" style="padding-top:4px;">
+                        <div class="checkbox">
+                            <label>
+                                @Html.CheckBoxFor(m => m.DisclaimerAgreed, new { @ng_model = "model.DisclaimerAgreed", @required = "required" }) I have read the
+                                <a href="#" data-toggle="modal" data-target="#disclaimerModal"> disclaimer</a> and agree to its <br /> terms of use.
+                                <span style="color:#b94a48;font-size: 16px;">*</span>
+                            </label>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="form-group">
+                    <div class="col-sm-offset-3 col-sm-9">
+                        <input type="submit" ng-disabled="registerform.$invalid || (model.Password !== model.ConfirmPassword) || userExist === 'True' || loading" class="btn btn-primary {{!(registerform.$invalid || (model.Password !== model.ConfirmPassword) || userExist === 'True' || loading) ? 'tada':''}}" style="width:280px;" value="Register" />
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-sm-offset-3 col-sm-9">
+                        @Html.ActionLink("Cancel", "Login", "Account", new { @class = "btn btn-default form-control", @style = "width:280px;" })
+                    </div>
+                </div>
+
             </div>
 
         </div>
-        <div data-slide-down data-prevent="@Html.ViewData.ModelState.IsValid" class="col-md-12">
-            <h4 class="text-center">You've successfully authenticated with <strong>@ViewBag.LoginProvider</strong></h4>
+    }
+    @Html.Partial("_Disclaimer")
 
-            <div class="row text-center" style="max-width: 300px; margin-left: auto;margin-right: auto;">
-
-                <div class="col-xs-10" style="padding:10px;">
-                    @Html.TextBoxFor(m => m.Email, new { @class = "form-control", @placeholder = "Email", @ng_model = "model.Email", @required = "required", @type = "email" })
-                </div>
-                <div class="col-xs-2">
-                    <label class="control-label col-xs-12 label-validator text-danger" ng-show="registerform.Email.$invalid && registerform.Email.$touched && model.Email !== null && !loading"></label>
-                    <label class="control-label col-xs-12 label-validator user-exist" ng-show="userExist === 'True' && registerform.Email.$valid"></label>
-                    <label class="control-label col-xs-12 label-validator text-success" ng-show="registerform.Email.$valid && !loading && userExist === 'False'"></label>
-                    <label class="control-label col-xs-12 label-validator text-info" ng-show="loading"></label>
-                </div>
-            </div>
-
-            <div class="row text-center" style="max-width: 300px; margin-left: auto;margin-right: auto;">
-
-                <div class="col-xs-10" style="padding:10px;">
-                    <select class="form-control center" id="Country" name="Country" ng-model="model.Country" required>
-                        <option class="text-muted" value="">-- Country --</option>
-                        <option ng-repeat="country in countries" value="{{country.name}}">{{country.name}}</option>
-                    </select>
-                </div>
-                <div class="col-xs-2">
-                    <label class="control-label col-xs-12 label-validator text-danger" ng-show="registerform.Country.$invalid && registerform.Country.$dirty"></label>
-                    <label class="control-label col-xs-12 label-validator text-success" ng-show="registerform.Country.$valid"></label>
-                </div>
-            </div>
-
-            <div class="row text-center" style="max-width: 300px; margin-left: auto;margin-right: auto;">
-
-                <div class="col-xs-10" style="padding:10px;">
-                    <select class="form-control center" id="Currency" name="Currency" ng-model="model.Currency" required>
-                        <option class="text-muted" value="">-- Currency --</option>
-                        <option ng-repeat="currency in currencies" value="{{currency.cc}}" title="{{currency.name}}">{{currency.cc}}</option>
-                    </select>
-                </div>
-                <div class="col-xs-2">
-                    <label class="control-label col-xs-12 label-validator text-danger" ng-show="registerform.Currency.$invalid && registerform.Currency.$dirty"></label>
-                    <label class="control-label col-xs-12 label-validator text-success" ng-show="registerform.Currency.$valid"></label>
-                </div>
-            </div>
-
-            <div class="form-group">
-                <div class="col-xs-12 text-center">
-                    <input type="submit" ng-disabled="registerform.$invalid || userExist === 'True' || loading" class="btn btn-primary" value="Register" />
-                    @Html.ActionLink("Cancel", "Login", "Account", new { @class = "btn btn-link" })
-                </div>
-            </div>
-
-        </div>
-
-    </div>
-
-}
-
+</div>
 
 
 @Html.Partial("_LoginModel", Html.Raw(Model.ToJson()))

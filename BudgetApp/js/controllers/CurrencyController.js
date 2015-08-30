@@ -1,6 +1,6 @@
 ﻿(function () {
     'use strict';
-    angular.module('budgetApp').controller('currencyController', ['$scope', '$http', 'toastr', 'userModel', 'commonService', function ($scope, $http, toastr, userModel, commonService) {
+    angular.module('budgetApp').controller('currencyController', ['$scope', '$http', '$timeout', 'toastr', 'userModel', 'commonService', function ($scope, $http, $timeout, toastr, userModel, commonService) {
 
         $scope.dirty = false;
 
@@ -8,6 +8,17 @@
 
         $scope.regexDouble = /^(\d+(?:[\.\,]\d{1,2})?)$/;
 
+        $scope.flipIn = false;
+
+        var runAnimation = function() {
+
+            $timeout(function() {
+
+                $scope.flipIn = true;
+
+            }, 500);
+
+        }();
         
 
         $scope.getIcon = function (input) {

@@ -18,23 +18,23 @@
 
         <div class="form-horizontal" style="margin-top: 40px;">
 
-            <div class="col-xs-12" style="margin-top: -30px;">
+            @*<div class="col-xs-12" style="margin-top: -30px;">
                 <div class="alert alert-info alert-dismissible fade in">
                     <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
                     <h4>Hi, my name is BudgetApp!</h4>
                     <p class="text-info">
-                        I am a web site created by my creator in order to unfold his creativity, broaden his competence, and enhace his skills.
-                        In addition to this, my creator wanted to get better control of his economy, so, as a consequence, I exist. He also enjoys the open source community,
+                        I am a web site created in order to unfold a developer's creativity, broaden his competence, and enhace his skills.
+                        In addition to this my creator wanted to get better control of his economy, and I exist because of that. He also enjoys the open source community,
                         in fact, I wouldn't exist without it. Therefore, you can see how I was made at <a href="http://github.com/skarchr/BudgetApp" target="_blank">GitHub</a>.
                     </p>
                 </div>
-            </div>
+            </div>*@
 
             <div class="col-md-3" data-slide-down>
                 <div class="form-group">
 
                     <div class="col-sm-offset-3 col-md-12">
-                        <img ng-show="registerform.Email.$valid && registerform.Email.$touched && !loading" class="flip-in" gravatar-src="model.Email" gravatar-size="200" style="border:2px solid #0094ff;padding:2px; -ms-border-radius: 104px; border-radius: 104px;" />
+                        <img ng-show="registerform.Email.$valid && !loading" class="flip-in" gravatar-src="model.Email" gravatar-size="200" style="border:2px solid #0094ff;padding:2px; -ms-border-radius: 104px; border-radius: 104px;" />
                     </div>
                 </div>
             </div>
@@ -49,7 +49,7 @@
 
                         <span class="text-danger" ng-show="registerform.Email.$invalid && registerform.Email.$touched && registerform.Email.$dirty && model.Email !== '' && !loading">Invalid email address</span>
                         <span class="text-danger" ng-show="userExist === 'True' && registerform.Email.$valid">Email already in use!</span>
-                        @*<span class="text-muted" ng-show="loading">Checking...</span>*@
+                        <img ng-show="loading" src="../../Content/images/gears.svg" alt="" />
                         <span class="text-success" ng-show="registerform.Email.$valid && !loading && userExist === 'False'"> OK! </span>
                     </div>
                 </div>
