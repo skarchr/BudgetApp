@@ -174,7 +174,7 @@ namespace BudgetApp.Extensions.Graphs
 
                     if (DateTime.Now >= new DateTime(year.Key, i, 1))
                     {
-                        if (!(year.Key <= DateTime.Now.Year) || !(i >= DateTime.Now.Month))
+                        if (!(year.Key == DateTime.Now.Year && i == DateTime.Now.Month))
                         {
                             data.Add(new Data
                             {
