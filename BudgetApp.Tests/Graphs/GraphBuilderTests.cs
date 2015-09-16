@@ -137,7 +137,7 @@ namespace BudgetApp.Tests.Graphs
 
             var result = GraphBuilder.OverviewGraph(model, new ApplicationUser { Currency = "NOK" });
 
-            result.Categories[0].Should().Be("2014");
+            result.XAxis[0].Categories[0].Should().Be("2014");
 
             result.Series[0].Name.Should().Be("Expenses");
             result.Series[0].Data[0].X.Should().Be(0);
@@ -167,7 +167,7 @@ namespace BudgetApp.Tests.Graphs
 
             var result = GraphBuilder.OverviewGraph(model, new ApplicationUser { Currency = "NOK" });
 
-            result.Categories[0].Should().Be("Jan");
+            result.XAxis[0].Categories[0].Should().Be("Jan");
 
             result.Series[0].Name.Should().Be("Expenses");
             result.Series[0].Data[0].X.Should().Be(0);
@@ -216,8 +216,8 @@ namespace BudgetApp.Tests.Graphs
 
             var result = GraphBuilder.OverviewGraph(model, new ApplicationUser{Currency = "NOK"});
 
-            result.PlotLinesX[0].Value.Should().Be(0.5);
-            result.PlotLinesX[0].Label.Text.Should().Be("2014");
+            result.XAxis[0].PlotLines[0].Value.Should().Be(0.5);
+            result.XAxis[0].PlotLines[0].Label.Text.Should().Be("2014");
 
         }
 

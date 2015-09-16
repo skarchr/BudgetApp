@@ -19,7 +19,7 @@ namespace BudgetApp.Extensions.Graphs
 
             var plotlinesX = CreatePlotLineX(rangeViewers);
 
-            var plotLinesY = new List<PlotLines>();
+            var plotLinesY = new List<PlotLine>();
 
             if (user.MonthlyExpensesGoal != null)
             {
@@ -29,7 +29,7 @@ namespace BudgetApp.Extensions.Graphs
                     goal = rangeViewers[0].Range == Range.Annual ? user.MonthlyExpensesGoal.Value * 12 : rangeViewers[0].Range == Range.Month ?  user.MonthlyExpensesGoal.Value : 0.0;
 
                 plotLinesY.Add(
-                    new PlotLines
+                    new PlotLine
                     {
                         Color = ColorExpense,
                         DashStyle = "dash",
@@ -60,14 +60,29 @@ namespace BudgetApp.Extensions.Graphs
                 {
                     CreateSeries(rangeViewers, true), CreateSeries(rangeViewers, false), CreateBalanceSeries(rangeViewers)
                 },
-                PlotLinesY = plotLinesY,
-                PlotLinesX = plotlinesX
+                XAxis = new List<Axis>
+                {
+                    new Axis
+                    {
+                        Id = "x-line",
+                        Categories = categories,
+                        PlotLines = plotlinesX
+                    }
+                },
+                YAxis = new List<Axis>
+                {
+                    new Axis
+                    {
+                        Id = "y-line",
+                        PlotLines = plotLinesY
+                    }
+                }
             };
         }
 
-        private static List<PlotLines> CreatePlotLineX(List<RangeViewer> rangeViewers)
+        private static List<PlotLine> CreatePlotLineX(List<RangeViewer> rangeViewers)
         {
-            var result = new List<PlotLines>();
+            var result = new List<PlotLine>();
             var list = new Dictionary<int,int>();            
 
             for (var i = 0; i < rangeViewers.Count; i++)
@@ -84,7 +99,7 @@ namespace BudgetApp.Extensions.Graphs
 
             foreach (var i in list)
             {
-                result.Add(new PlotLines
+                result.Add(new PlotLine
                 {
                     Color = "#c0c0c0",
                     DashStyle = "",

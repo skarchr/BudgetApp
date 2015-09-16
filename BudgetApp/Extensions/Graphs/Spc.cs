@@ -25,8 +25,8 @@ namespace BudgetApp.Extensions.Graphs
             var categories = new List<string>();
 
             var serie = new List<Series>();
-            var plotlinesY = new List<PlotLines>();
-            var plotlinesX = new List<PlotLines>();
+            var plotlinesY = new List<PlotLine>();
+            var plotlinesX = new List<PlotLine>();
             int? max = null;
 
             if (transactions.Count > 0)
@@ -44,7 +44,7 @@ namespace BudgetApp.Extensions.Graphs
 
                     plotlinesY.Add(
 
-                        new PlotLines
+                        new PlotLine
                         {
                             Color = "rgb(72, 221, 184)",
                             DashStyle = "dash",
@@ -65,7 +65,7 @@ namespace BudgetApp.Extensions.Graphs
 
                     plotlinesY.Add(
 
-                        new PlotLines
+                        new PlotLine
                         {
                             Color = "#b94a48",
                             DashStyle = "dash",
@@ -86,7 +86,7 @@ namespace BudgetApp.Extensions.Graphs
 
                     plotlinesY.Add(
 
-                        new PlotLines
+                        new PlotLine
                         {
                             Color = "#b94a48",
                             DashStyle = "dash",
@@ -109,15 +109,30 @@ namespace BudgetApp.Extensions.Graphs
 
             return new Highchart
             {
-                Max = max,
-                PlotLinesY = plotlinesY,
-                PlotLinesX = plotlinesX,
                 Categories = categories,
                 Currency = currency,
                 Series = serie,
                 Title = new Title
                 {
-                    Text = "SPC (expenses)"
+                    Text = string.Format("SPC ({0})", range == Range.Annual ? "daily" : range.ToString().ToLower() + "ly")
+                },
+                XAxis = new List<Axis>
+                {
+                    new Axis
+                    {
+                        Id = "x-line",
+                        Categories = categories,
+                        PlotLines = plotlinesX
+                    }
+                },
+                YAxis = new List<Axis>
+                {
+                    new Axis
+                    {
+                        Id = "y-line",
+                        PlotLines = plotlinesY,
+                        Max = max
+                    }
                 }
             };
         }
@@ -251,9 +266,9 @@ namespace BudgetApp.Extensions.Graphs
             return data;
         }
 
-        private static List<PlotLines> CreatePlotLineX(List<Data> data)
+        private static List<PlotLine> CreatePlotLineX(List<Data> data)
         {
-            var result = new List<PlotLines>();
+            var result = new List<PlotLine>();
             var list = new Dictionary<int, int>();
 
             for (var i = 0; i < data.Count; i++)
@@ -270,7 +285,7 @@ namespace BudgetApp.Extensions.Graphs
 
             foreach (var i in list)
             {
-                result.Add(new PlotLines
+                result.Add(new PlotLine
                 {
                     Color = "#c0c0c0",
                     DashStyle = "",
