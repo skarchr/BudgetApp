@@ -4,22 +4,50 @@ namespace BudgetApp.Models
 {
     public class Highchart
     {
+        public Highchart()
+        {
+            XAxis = null;
+            YAxis = null;
+        }
+
         public List<string> Categories { get; set; }
         public List<Series> Series { get; set; }
         public Drilldown Drilldown { get; set; }
         public Title Title { get; set; }
         public string Currency { get; set; }
-        public List<PlotLines> PlotLinesX { get; set; }
-        public List<PlotLines> PlotLinesY { get; set; }
         public string Type { get; set; }
 
-        public int? Max { get; set; }
-        public int? Min { get; set; }
+        public List<Axis> XAxis { get; set; }
+        public List<Axis> YAxis { get; set; }
     }
 
-    public class PlotLines
+    public class Axis
     {
-        public PlotLines()
+        public Axis()
+        {
+            Title = new Title
+            {
+                Text = " "
+            };
+        }
+        public Labels Labels { get; set; }
+        public int? Max { get; set; }
+        public int? Min { get; set; }
+        public string Id { get; set; }
+        public bool Opposite { get; set; }
+        public List<string> Categories { get; set; }
+        public List<PlotLine> PlotLines { get; set; }
+        public Title Title { get; set; }
+    }
+
+    public class Labels
+    {
+        public Style Style { get; set; }
+    }
+
+    public class PlotLine
+    {
+        public PlotLine()
         {
             ZIndex = 5;
             DashStyle = "Solid";
@@ -116,7 +144,9 @@ namespace BudgetApp.Models
             DashStyle = "Solid";
             Marker = new Marker();
         }
-
+        
+        public int? XAxis { get; set; }
+        public int? YAxis { get; set; }
         public bool Visible { get; set; }
         public string Type { get; set; }
         public string Id { get; set; }

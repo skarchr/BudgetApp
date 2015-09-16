@@ -1125,7 +1125,7 @@
 
                         $(elem[0]).highcharts({
                             chart: {
-                                type:'line',
+                                type: 'line',
                                 style: {
                                     fontFamily: "'Franklin Gothic Medium', 'Franklin Gothic', 'ITC Franklin Gothic', Arial, sans-serif !important"
                                 },
@@ -1160,27 +1160,10 @@
                                 }
 
                             },
-                            xAxis: {
-                                type: 'category',
-                                categories: model.categories,
-                                plotLines: model.plotLinesX
-                            },
-
-                            yAxis: {
-                                title: {
-                                    text: ' '
-                                },
-                                plotLines: model.plotLinesY,
-                                max: model.max,
-                                min: model.min,
-                                labels: {
-                                    align: 'left'
-                                }
-
-                            },
-                            series: model.series
+                            series: model.series,
+                            xAxis: model.xAxis,
+                            yAxis: model.yAxis
                         });
-
 
                     }
                 }

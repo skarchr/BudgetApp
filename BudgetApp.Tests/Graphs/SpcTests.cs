@@ -40,8 +40,8 @@ namespace BudgetApp.Tests.Graphs
             result.Series[0].Data[3].Y.Should().Be(150);
             result.Series[0].Data[3].X.Should().Be(3);
 
-            result.PlotLinesY[0].Value.Should().Be(125);
-            Math.Round(result.PlotLinesY[1].Value, 1).Should().Be(1068.7);
+            result.YAxis[0].PlotLines[0].Value.Should().Be(125);
+            Math.Round(result.YAxis[0].PlotLines[1].Value, 1).Should().Be(1068.7);
         }
 
         [Test]
@@ -86,7 +86,7 @@ namespace BudgetApp.Tests.Graphs
             result.Categories[1].Should().Be("Jan");
             result.Series[0].Data[1].Year.Should().Be(2014);
 
-            result.PlotLinesX[0].Value.Should().Be(0.5);
+            result.XAxis[0].PlotLines[0].Value.Should().Be(0.5);
         }
 
 

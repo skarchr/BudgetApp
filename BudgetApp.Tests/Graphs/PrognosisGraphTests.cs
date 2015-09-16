@@ -36,7 +36,7 @@ namespace BudgetApp.Tests.Graphs
             result.Series[0].Data[2].Y.Should().Be(800);
 
             result.Series[0].Data[3].X.Should().Be(3);
-            result.Series[0].Data[3].Y.Should().Be(1000);
+            result.Series[0].Data[3].Y.Should().Be(1000);            
         }
 
         private List<Transaction> CreateTransactions()
@@ -71,7 +71,7 @@ namespace BudgetApp.Tests.Graphs
         }
 
         [Test]
-        public void This_Year_Predicted()
+        public void This_Year_Expenses()
         {
 
             var trans = new List<Transaction>
@@ -92,15 +92,43 @@ namespace BudgetApp.Tests.Graphs
             result.Series[1].Data[0].X.Should().Be(0);
             result.Series[1].Data[0].Y.Should().Be(1);
 
-            result.Series[0].Name.Should().Be("Predicted (" + DateTime.Now.Year + ")");
+            result.Series[0].Name.Should().Be("Expenses (" + DateTime.Now.Year + ")");
             result.Series[0].Data[0].X.Should().Be(0);
             result.Series[0].Data[0].Y.Should().Be(1);
 
             result.Series[0].Data[1].X.Should().Be(1);
-            result.Series[0].Data[1].Y.Should().Be(2);
+            result.Series[0].Data[1].Y.Should().Be(0);
 
-            result.Series[0].Data[11].X.Should().Be(11);
-            result.Series[0].Data[11].Y.Should().Be(12);
+        }
+
+        [Test]
+        public void This_Year_Income()
+        {
+
+            var month = DateTime.Now.Month - 1;
+
+            var trans = new List<Transaction>
+            {
+                new Transaction
+                {
+                    Date = new DateTime(DateTime.Now.Year,DateTime.Now.Month,1),
+                    Amount = 1,
+                    Category = Category.Salary
+                }
+            };
+
+            var result = Prognosis.CreateChart(trans, "NOK", true);
+
+            result.Series.Count.Should().Be(2);
+
+            result.Series[1].Name.Should().Be(DateTime.Now.Year.ToString());
+            result.Series[1].Data[month].X.Should().Be(month);
+            result.Series[1].Data[month].Y.Should().Be(1);
+
+            result.Series[0].Name.Should().Be("Income (" + DateTime.Now.Year + ")");
+            result.Series[0].Data[month].X.Should().Be(month);
+            result.Series[0].Data[month].Y.Should().Be(1);
+            result.Series[0].Data[month].Color.Should().Be("#0094f4");
 
         }
 
