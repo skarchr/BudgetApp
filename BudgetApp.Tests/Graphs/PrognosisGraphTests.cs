@@ -105,16 +105,15 @@ namespace BudgetApp.Tests.Graphs
         public void This_Year_Income()
         {
 
-            var month = DateTime.Now.Month - 1;
 
             var trans = new List<Transaction>
             {
                 new Transaction
                 {
-                    Date = new DateTime(DateTime.Now.Year,DateTime.Now.Month,1),
+                    Date = new DateTime(DateTime.Now.Year,1,1),
                     Amount = 1,
                     Category = Category.Salary
-                }
+                },
             };
 
             var result = Prognosis.CreateChart(trans, "NOK", true);
@@ -122,13 +121,13 @@ namespace BudgetApp.Tests.Graphs
             result.Series.Count.Should().Be(2);
 
             result.Series[1].Name.Should().Be(DateTime.Now.Year.ToString());
-            result.Series[1].Data[month].X.Should().Be(month);
-            result.Series[1].Data[month].Y.Should().Be(1);
+            result.Series[1].Data[0].X.Should().Be(0);
+            result.Series[1].Data[0].Y.Should().Be(1);
 
             result.Series[0].Name.Should().Be("Income (" + DateTime.Now.Year + ")");
-            result.Series[0].Data[month].X.Should().Be(month);
-            result.Series[0].Data[month].Y.Should().Be(1);
-            result.Series[0].Data[month].Color.Should().Be("#0094f4");
+            result.Series[0].Data[0].X.Should().Be(0);
+            result.Series[0].Data[0].Y.Should().Be(1);
+            result.Series[0].Data[0].Color.Should().Be("#C0C0C0");
 
         }
 

@@ -166,7 +166,7 @@ namespace BudgetApp.Extensions.Graphs
             var data = new List<Data>();
 
             var index = 0;
-            while (startDate <= endDate)
+            while (startDate <= endDate && startDate != DateTime.Now)
             {
                 categories.Add(startDate.ToString("d.MMM"));
 
@@ -174,8 +174,8 @@ namespace BudgetApp.Extensions.Graphs
                 {
                     X = index,
                     Y = transactions.Where(s => s.Date == startDate).Sum(s => s.Amount),
-                    DataLabels = new DataLabels { Enabled = false }
-                });
+                    DataLabels = new DataLabels {Enabled = false}
+                });                                
 
                 startDate = startDate.AddDays(1);
                 index++;
@@ -206,15 +206,18 @@ namespace BudgetApp.Extensions.Graphs
             foreach (var ran in dict)
             {
                 categories.Add(range == Range.Week ? ran.Key.ToString() : DateHelper.GetMonthText(ran.Key, true));
-
-                data.Add(new Data
+                
+                if (ran.Key != DateHelper.GetWeekNumber(DateTime.Now))
                 {
-                    X = index,
-                    Y = ran.Value.Sum(s => s.Amount),
-                    DataLabels = new DataLabels{Enabled = false},
-                    Year = ran.Value.First().Date.Year
-                });
-                index++;
+                    data.Add(new Data
+                    {
+                        X = index,
+                        Y = ran.Value.Sum(s => s.Amount),
+                        DataLabels = new DataLabels {Enabled = false},
+                        Year = ran.Value.First().Date.Year
+                    });
+                    index++;
+                }
             }
 
             return data;
@@ -252,14 +255,17 @@ namespace BudgetApp.Extensions.Graphs
                 {
                     categories.Add(DateHelper.GetMonthText(month.Key, true));
 
-                    data.Add(new Data
+                    if (!(year.Key == DateTime.Now.Year && month.Key == DateTime.Now.Month))
                     {
-                        X = index,
-                        Y = month.Value.Sum(s => s.Amount),
-                        DataLabels = new DataLabels { Enabled = false },
-                        Year = month.Value.First().Date.Year
-                    });
-                    index++;
+                        data.Add(new Data
+                        {
+                            X = index,
+                            Y = month.Value.Sum(s => s.Amount),
+                            DataLabels = new DataLabels { Enabled = false },
+                            Year = month.Value.First().Date.Year
+                        });
+                        index++;
+                    }                    
                 }
             }
 
