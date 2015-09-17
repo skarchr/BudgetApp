@@ -1,0 +1,56 @@
+﻿
+@model List<BudgetApp.Models.ApplicationUser>
+
+@{
+    ViewBag.Title = "Admin";
+}
+
+<h1>Users</h1>
+
+<span class="pull-right">Amount of users: @Model.Count</span>
+
+<table class="table table-bordered table-condensed table-striped" fade-in="200">
+    <thead>
+        <tr>
+            <th>Username</th>
+            <th>Email confirmed</th>
+            <th>Two-factor auth</th>
+            <th>Access failed count</th>
+            <th>Lockout end date</th>
+            <th>Roles</th>
+        </tr>
+    </thead>
+    <tbody>
+
+        @{
+            foreach (var user in Model)
+            {
+                <tr>
+                    <td>
+                        @user.UserName
+                    </td>
+                    <td>
+                        <span class="text-success @(user.EmailConfirmed ? "":"hidden")">
+                            <i class="glyphicon glyphicon-ok"></i>
+                        </span>
+                    </td>
+                    <td>
+                        <span class="pull-right text-success @(user.TwoFactorEnabled ? "":"hidden")">
+                            <i class="glyphicon glyphicon-lock"></i>
+                        </span>
+                    </td>
+                    <td>@user.AccessFailedCount</td>
+                    <td>@(user.LockoutEndDateUtc != null ? user.LockoutEndDateUtc.Value.ToString("dd.MM.yyyy hh:mm:ss") : "")</td>
+                    <td>
+                        @foreach (var role in user.Roles)
+                        {
+                            <span>@role.RoleId</span>
+                        }
+                    </td>
+
+                </tr>
+            }
+
+        }
+    </tbody>
+</table>
