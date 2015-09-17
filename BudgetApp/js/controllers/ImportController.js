@@ -8,6 +8,8 @@
 
         $scope.regexDouble = /^(\d+(?:[\.]\d{1,2})?)$/;
 
+        $scope.req = true;
+
     }]);
 
 })();
