@@ -7,7 +7,7 @@
     ViewBag.Title = "Import Transactions";
 }
 
-<div style="margin-top: 60px;" ng-controller="importController">
+<div ng-controller="importController">
 
     <div class="row">
         <div class="col-xs-12">
@@ -36,16 +36,16 @@
                                 <td class="text-center" style="padding-top:12px;">@(i + 1)</td>
                                 <td style="padding-top:12px;" class="text-center">@Html.HiddenFor(m => Model.Transactions[i].Date, new { @ng_required = "model[" + i + "].import", @ng_model = "model[" + i + "].date" }) @Model.Transactions[i].Date.ToString("dd.MM.yyyy")</td>
                                 <td class="text-center">
-                                    @Html.TextBoxFor(m => Model.Transactions[i].Description, new { @class = "form-control", @style = "max-width:100%;width:100%", @ng_required = "model[" + i + "].import", @ng_model = "model[" + i + "].description" })
+                                    @Html.TextBoxFor(m => Model.Transactions[i].Description, new { @class = "form-control", @style = "max-width:100%;width:100%", @ng_required="req ? model[" + i + "].import : false", @ng_model = "model[" + i + "].description" })
                                 </td>
                                 <td style="padding-top: 11px;">
-                                    <span class="btn btn-primary btn-xs" data-toggle="modal" data-target="#myModal" ng-click="mapping.textDescription = '@Model.Transactions[i].Description'; mapping.category = null;">
+                                    <span title="Add mapping" class="btn btn-primary btn-xs" data-backdrop="static" data-keyboard="false" data-toggle="modal" data-target="#myModal" ng-click="mapping.textDescription = '@Model.Transactions[i].Description'; mapping.category = null; req = false;">
                                         M
                                     </span>
                                 </td>
-                                <td class="text-center">@Html.TextBoxFor(m => Model.Transactions[i].Amount, new { @class = "form-control", @style = "max-width:100%;width:100%", @ng_required = "model[" + i + "].import", @ng_pattern = "regexDouble" })</td>
+                                <td class="text-center">@Html.TextBoxFor(m => Model.Transactions[i].Amount, new { @class = "form-control", @style = "max-width:100%;width:100%", @ng_required = "req ? model[" + i + "].import : false", @ng_pattern = "regexDouble" })</td>
                                 <td class="text-center">
-                                    @Html.DropDownGroupListFor(model => model.Transactions[i].Category, Dropdownlist.GroupedCategories(Model != null ? Model.Transactions[i].Category.ToString() : ""), " ", new { @class = "form-control", @ng_required = "model[" + i + "].import", @ng_model = "model[" + i + "].category", @style = "max-width:100%;width:100%", })
+                                    @Html.DropDownGroupListFor(model => model.Transactions[i].Category, Dropdownlist.GroupedCategories(Model != null ? Model.Transactions[i].Category.ToString() : ""), " ", new { @class = "form-control", @ng_required = "req ? model[" + i + "].import : false", @ng_model = "model[" + i + "].category", @style = "max-width:100%;width:100%", })
                                 </td>
                                 <td class="text-center">
 
@@ -62,46 +62,48 @@
                     </tbody>
                 </table>
 
-
-                <input type="submit" name="import" value="Import" class="btn btn-primary" ng-disabled="importForm.$invalid" />
-                @Html.ActionLink("Cancel", "Index", "Home", new { @class = "btn btn-link" })
-
-
+                <div class="col-xs-12 text-center">
+                    <input type="submit" name="import" style="width: 280px;" value="Import transactions" class="btn btn-primary {{importForm.$valid ? 'tada':''}}" ng-disabled="importForm.$invalid" />                    
+                </div>
+                
 
 
                 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                <button ng-click="req = true;" type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                                 <h4 class="modal-title" id="myModalLabel">Add mapping</h4>
                             </div>
                             <div class="modal-body">
 
                                 @Html.AntiForgeryToken()
                                 
-                                
-                                <div class="row form-member">
-                                    <div class="member-label col-xs-12">
-                                        <span>Category</span>
+                                <div class="form-horizontal">
+                                    
+                                    <div class="form-group">
+                                        <label for="Category" class="control-label col-sm-3">Category <span class="required-tag"></span></label>
+                                        <div class="col-sm-9 form-inline" style="padding-top:4px;">
+
+                                            @Html.DropDownGroupListFor(model => model.Mapping.Category, Dropdownlist.GroupedCategories(""), " ", new { @class = "form-control", @ng_model = "mapping.category" })
+
+                                        </div>
                                     </div>
-                                    <div class="col-xs-10 member-control">
-                                        @Html.DropDownGroupListFor(model => model.Mapping.Category, Dropdownlist.GroupedCategories(""), " ", new { @class = "form-control", @ng_model = "mapping.category" })
-                                    </div>                                    
-                                </div>
-                                
-                                <div class="row form-member">
-                                    <div class="member-label col-xs-12">
-                                        <span>Description</span>
+                                    
+                                    <div class="form-group">
+                                        <label for="Description" class="control-label col-sm-3">Description <span class="required-tag"></span></label>
+                                        <div class="col-sm-9 form-inline" style="padding-top:4px;">
+
+                                           @Html.TextAreaFor(model => model.Mapping.TextDescription, new { @ng_model = "mapping.textDescription", @class = "form-control" })
+
+                                        </div>
                                     </div>
-                                    <div class="col-xs-10 member-control">
-                                        @Html.TextAreaFor(model => model.Mapping.TextDescription, new { @ng_model = "mapping.textDescription", @class="form-control" })
-                                    </div>
-                                </div>                                
+
+                                </div>                             
 
                             </div>
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="req = true;">Close</button>
                                 <input type="submit" value="Save mapping" name="inlineMapping" class="btn btn-primary" ng-disabled="!mapping.category || !mapping.textDescription" />
                             </div>
                         </div>

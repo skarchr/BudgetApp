@@ -101,7 +101,8 @@ namespace BudgetApp.Importer
 
             foreach (var mapping in mappings)
             {
-                if (descriptions.Contains(mapping.TextDescription))
+
+                if (descriptions != null && descriptions.Contains(mapping.TextDescription))
                 {
                     return mapping.Category;
                 }

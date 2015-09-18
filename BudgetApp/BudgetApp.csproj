@@ -182,6 +182,8 @@
     <Compile Include="Constants\Categories.cs" />
     <Compile Include="Constants\HighchartUtilities.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\AdminController.cs" />
+    <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\MappingsController.cs" />
@@ -551,6 +553,7 @@
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
     <Content Include="js\app\BudgetApp.js" />
+    <Content Include="js\controllers\AdminController.js" />
     <Content Include="js\controllers\CurrencyController.js" />
     <Content Include="js\controllers\GaugeController.js" />
     <Content Include="js\controllers\HomeController.js" />
@@ -673,6 +676,7 @@
     <Content Include="Views\Transactions\Edit.cshtml" />
     <Content Include="Views\Manage\_ExternalLogins.cshtml" />
     <Content Include="Views\Shared\_Disclaimer.cshtml" />
+    <Content Include="Views\Admin\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\uploads\" />

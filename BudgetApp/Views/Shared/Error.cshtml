@@ -1,37 +1,38 @@
-﻿@model System.Web.Mvc.HandleErrorInfo
+﻿@using System.Configuration
+@model System.Web.Mvc.HandleErrorInfo
 
 @{
     ViewBag.Title = "Error";
 }
 
 
-<div class="row" ng-controller="loginController" style="margin-top: -70px;">
-
-    <div class="col-md-12 text-center">
-
-        <div id="icon" data-logo="40" style="width:40%;min-width: 200px;">
-            <object>
-                <img src="~/Content/images/logo.svg" id="svg" />
-            </object>
-        </div>
-
-    </div>
-</div>
-
-<div class="row">
-
-    @{
-        if (String.IsNullOrEmpty(ViewBag.errorMessage))
-        {
-            <div class="alert alert-danger">An error occurred while processing your request.</div>
-        }
-        else
-        {
-            <div class="alert alert-info text-center">@ViewBag.errorMessage</div>
-        }
-    }
-    <div class="col-xs-12 text-center">
-        @Html.ActionLink("Click here to Log in", "Login", "Account", new { @class = "text-center" })
-    </div>
+<div class="row text-center">
     
+    <div class="col-xs-12" style="margin-bottom: -60px;">
+        <img src="../../Content/images/logo.svg" alt="" height="250" />
+    </div>
+    <div class="col-xs-12">
+        <span style="font-size:100px;">Oooops!</span>
+        <h2>Something went wrong!</h2>
+    </div>
+
+    
+    
+    @{
+        if (ConfigurationManager.AppSettings["debugmode"] == "true")
+        {
+            <h4 class="text-left">Action: @Model.ActionName</h4>
+            <h4 class="text-left">Controller: @Model.ControllerName</h4>
+
+            <p class="alert alert-warning text-left">
+                @Model.Exception
+            </p>
+        }
+        
+        if (!Request.IsAuthenticated)
+         {
+             @Html.ActionLink("Go to log in page","Login", "Account", null, new { @class="btn btn-link" })
+         }
+    }
+
 </div>
