@@ -51,6 +51,7 @@ namespace BudgetApp
                    "~/js/controllers/ToastrController.js",
                    "~/js/controllers/MappingsController.js",
                    "~/js/controllers/ImportController.js",
+                   "~/js/controllers/AdminController.js",
                    "~/js/controllers/LoginController.js"));
 
          bundles.Add(new StyleBundle("~/Content/css").Include(

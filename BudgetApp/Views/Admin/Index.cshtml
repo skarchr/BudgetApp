@@ -5,52 +5,119 @@
     ViewBag.Title = "Admin";
 }
 
-<h1>Users</h1>
+<div ng-controller="adminController">
 
-<span class="pull-right">Amount of users: @Model.Count</span>
+    <h1>Users</h1>
+    <span class="pull-right">Total users: @Model.Count</span>
 
-<table class="table table-bordered table-condensed table-striped" fade-in="200">
-    <thead>
-        <tr>
-            <th>Username</th>
-            <th>Email confirmed</th>
-            <th>Two-factor auth</th>
-            <th>Access failed count</th>
-            <th>Lockout end date</th>
-            <th>Roles</th>
-        </tr>
-    </thead>
-    <tbody>
+    <table class="table table-bordered table-condensed table-striped" fade-in="200">
+        <thead>
+            <tr>
+                <th class="text-center"></th>
+                <th class="text-center">Username</th>
+                <th class="text-center">Email confirmed</th>
+                <th class="text-center">Two-factor auth</th>
+                <th class="text-center">Access failed count</th>
+                <th class="text-center">Lockout end-date (UTC)</th>
+                <th class="text-center"></th>
+            </tr>
+        </thead>
+        <tbody>
 
-        @{
-            foreach (var user in Model)
-            {
-                <tr>
-                    <td>
-                        @user.UserName
-                    </td>
-                    <td>
-                        <span class="text-success @(user.EmailConfirmed ? "":"hidden")">
-                            <i class="glyphicon glyphicon-ok"></i>
-                        </span>
-                    </td>
-                    <td>
-                        <span class="pull-right text-success @(user.TwoFactorEnabled ? "":"hidden")">
-                            <i class="glyphicon glyphicon-lock"></i>
-                        </span>
-                    </td>
-                    <td>@user.AccessFailedCount</td>
-                    <td>@(user.LockoutEndDateUtc != null ? user.LockoutEndDateUtc.Value.ToString("dd.MM.yyyy hh:mm:ss") : "")</td>
-                    <td>
-                        @foreach (var role in user.Roles)
-                        {
-                            <span>@role.RoleId</span>
-                        }
-                    </td>
+            @{
+                foreach (var user in Model.OrderByDescending(s => s.Roles.Count).ThenBy(r => r.UserName))
+                {
+                    <tr>
+                        <td class="text-center">
+                            @if (user.Roles.Count(s => s.RoleId == "1") == 1)
+                            {
+                                <i class="glyphicon glyphicon-star text-warning"></i>
+                            }
+                        </td>
+                        <td>
+                            @user.UserName
+                        </td>
+                        <td class="text-center">
+                            <span class="text-success @(user.EmailConfirmed ? "":"hidden")">
+                                <i class="glyphicon glyphicon-ok"></i>
+                            </span>
+                        </td>
+                        <td class="text-center">
+                            <span class="text-success @(user.TwoFactorEnabled ? "":"hidden")">
+                                <i class="glyphicon glyphicon-lock"></i>
+                            </span>
+                        </td>
+                        <td class="text-center">@user.AccessFailedCount</td>
+                        <td class="text-center">
 
-                </tr>
+                            @if (user.LockoutEndDateUtc != null)
+                            {
+
+                                if (user.LockoutEndDateUtc > DateTime.Now.ToUniversalTime())
+                                {
+                                    @user.LockoutEndDateUtc.Value.ToString("dd.MM.yyyy hh:mm:ss")
+                                }
+
+                            }
+
+                        </td>
+                        <td class="text-center">
+                            @if (user.Roles.Count(s => s.RoleId == "1") == 0)
+                            {
+                                <button ng-click="usernameSelected = '@user.UserName'" class="btn btn-danger btn-xs" data-toggle="modal" data-target="#adminModal" data-backdrop="static" data-keyboard="false">
+                                    <i class="glyphicon glyphicon-trash"></i>
+                                </button>
+                            }
+
+                        </td>
+                    </tr>
+                }
+
             }
+        </tbody>
+    </table>
+    
+    <!-- Button trigger modal -->
+    
 
-        }
-    </tbody>
-</table>
+    <!-- Modal -->
+    <div class="modal fade" id="adminModal" tabindex="-1" role="dialog" aria-labelledby="adminModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" ng-click="usernameSelected = '';" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="adminModalLabel">Delete user</h4>
+                </div>
+                <div class="modal-body">                    
+                    <p>This action CANNOT be undone. This will permanently delete <strong>{{usernameSelected}}'s</strong> account, transactions and mappings.</p>
+                    <br />
+                    <span>Are you sure you want to delete this account?</span>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="usernameSelected = '';">No</button>
+                    <a href="{{urls.del}}?username={{usernameSelected}}" class="btn btn-danger">Yes, I'am sure</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+<script>
+
+    (function() {
+        'use strict';
+
+        angular.module('budgetApp').factory('adminModel', function() {
+
+            return {
+                urls: {
+                    del: '@Url.Action("DeleteProfile")'
+                }
+            };
+
+        });
+
+    })();
+
+</script>

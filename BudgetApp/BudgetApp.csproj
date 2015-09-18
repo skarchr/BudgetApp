@@ -553,6 +553,7 @@
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
     <Content Include="js\app\BudgetApp.js" />
+    <Content Include="js\controllers\AdminController.js" />
     <Content Include="js\controllers\CurrencyController.js" />
     <Content Include="js\controllers\GaugeController.js" />
     <Content Include="js\controllers\HomeController.js" />
