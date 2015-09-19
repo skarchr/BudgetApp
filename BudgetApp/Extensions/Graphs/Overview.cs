@@ -51,7 +51,6 @@ namespace BudgetApp.Extensions.Graphs
             return new Highchart
             {
                 Currency = user.Currency,
-                Categories = categories,
                 Title = new Title
                 {
                     Text = "Overview"

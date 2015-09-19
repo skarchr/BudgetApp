@@ -399,9 +399,8 @@
                                 
                             },
                             xAxis: {
-                                categories: model.categories,
-                                plotLines: scope.range !== 'Annual' ? model.plotLinesX : null,
-                                type: 'category',
+                                categories: model.xAxis[0].categories,
+                                plotLines: scope.range !== 'Annual' ? model.xAxis[0].plotLines : null,
                                 title: {
                                     text: scope.range !== undefined && scope.range === 'Week' ? scope.range : ''
                                 },
@@ -416,7 +415,7 @@
                                 title: {
                                     text: model.currency
                                 },
-                                plotLines: scope.range === 'Month' || scope.range === 'Annual' ? model.plotLinesY : null
+                                plotLines: scope.range === 'Month' || scope.range === 'Annual' ? model.yAxis[0].plotLines : null
                             },
                             series: model.series
                         });
