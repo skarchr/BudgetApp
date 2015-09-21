@@ -1027,7 +1027,7 @@
                 link:function(scope, elem) {
                     
                     var model = JSON.parse(scope.treemapChart);
-
+                    console.log(model);
                     Highcharts.setOptions({ lang: { drillUpText: 'Back' } });
 
                     $(elem[0]).highcharts({

@@ -8,6 +8,12 @@
             var imageName = "";
 
             switch (value) {
+                case "Atm":
+                    imageName = "atm2.png";
+                    break;
+                case "ATM":
+                    imageName = "atm2.png";
+                    break;
                 case "Expenses":
                     imageName = "hand132.png";
                     break;

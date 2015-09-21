@@ -494,6 +494,7 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\images\airplane73.png" />
     <Content Include="Content\images\apple55.png" />
+    <Content Include="Content\images\atm2.png" />
     <Content Include="Content\images\bus21.png" />
     <Content Include="Content\images\car95.png" />
     <Content Include="Content\images\currency.png" />
@@ -530,6 +531,7 @@
     <Content Include="Content\images\question30.png" />
     <Content Include="Content\images\real-estate.png" />
     <Content Include="Content\images\rss22.png" />
+    <Content Include="Content\images\screenshots\dashboard.PNG" />
     <Content Include="Content\images\shopping82.png" />
     <Content Include="Content\images\square131.png" />
     <Content Include="Content\images\strength_2.svg" />

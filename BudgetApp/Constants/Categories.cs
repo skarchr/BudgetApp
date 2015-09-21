@@ -16,6 +16,7 @@ namespace BudgetApp.Constants
         public const string Saving = "Saving";
         public const string Shelter = "Shelter";
         public const string Transport = "Transport";
+        public const string Atm = "ATM";
 
         public static readonly Dictionary<string, List<Category>> Grouped = new Dictionary<string, List<Category>>
             {
@@ -54,8 +55,7 @@ namespace BudgetApp.Constants
                         Category.Hobby,
                         Category.Phone,
                         Category.Subscriptions,
-                        Category.Travel,
-
+                        Category.Travel,                        
                         Category.OtherPersonal
                     }
                 },
@@ -85,7 +85,13 @@ namespace BudgetApp.Constants
 
                         Category.OtherTransportation
                     }
-                }                
+                },
+                {
+                    Atm, new List<Category>
+                    {
+                        Category.ATM
+                    }
+                }
             };
     }
 }

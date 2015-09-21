@@ -59,11 +59,13 @@ namespace BudgetApp.Extensions
                 case Categories.Personal:
                     return 3;
                 case Categories.Saving:
-                    return 4;
+                    return 7;
                 case Categories.Shelter:
                     return 5;
                 case Categories.Transport:
                     return 6;
+                case Categories.Atm:
+                    return 4;
                 default:
                     return 0;
             }
