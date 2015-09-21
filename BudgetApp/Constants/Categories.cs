@@ -26,7 +26,8 @@ namespace BudgetApp.Constants
                         Category.DebtReduction,
                         Category.Dental,
                         Category.Insurance,
-                        Category.Medical,
+                        Category.Medical,                                            
+                        Category.Workout,   
                         Category.OtherFixed
                     }
                 },
@@ -55,7 +56,7 @@ namespace BudgetApp.Constants
                         Category.Hobby,
                         Category.Phone,
                         Category.Subscriptions,
-                        Category.Travel,                        
+                        Category.Travel,                         
                         Category.OtherPersonal
                     }
                 },

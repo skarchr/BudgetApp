@@ -80,6 +80,7 @@ namespace BudgetApp.Models
         ,
         Saving,
         [Description("ATM")]
-        ATM
+        ATM,
+        Workout
     }
 }

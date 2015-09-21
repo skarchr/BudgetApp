@@ -500,6 +500,7 @@
     <Content Include="Content\images\currency.png" />
     <Content Include="Content\images\currency2.png" />
     <Content Include="Content\images\facebook.png" />
+    <Content Include="Content\images\favicon.png" />
     <Content Include="Content\images\for3.png" />
     <Content Include="Content\images\fork28.png" />
     <Content Include="Content\images\gift2.png" />
@@ -548,6 +549,7 @@
     <Content Include="Content\images\tribal.png" />
     <Content Include="Content\images\twitter.png" />
     <Content Include="Content\images\two123.png" />
+    <Content Include="Content\images\upper20.png" />
     <Content Include="Content\images\user91.png" />
     <Content Include="Content\images\videogame.png" />
     <Content Include="favicon.ico" />

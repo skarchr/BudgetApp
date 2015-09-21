@@ -134,7 +134,9 @@
                 case "Saving":
                     imageName = "piggy9.png";
                     break;
-                    
+                case "Workout":
+                    imageName = "upper20.png";
+                    break;
                 default:
                     imageName = "question30.png";
             }
