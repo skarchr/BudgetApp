@@ -38,10 +38,10 @@ namespace BudgetApp.Tests.Graphs
             result[0].Name.Should().Be("Groceries");
             result[0].Id.Should().Be("groceries");
             result[0].Value.Should().Be(500);
-            result[0].Parent.Should().Be("food");
+            result[0].Parent.Should().Be("food_main");
 
             result[1].Name.Should().Be("Food");
-            result[1].Id.Should().Be("food");
+            result[1].Id.Should().Be("food_main");
             result[1].Value.Should().Be(500);
             result[1].Color.Should().Be("#A7DBD8");
         }
@@ -74,25 +74,25 @@ namespace BudgetApp.Tests.Graphs
             result[0].Name.Should().Be("Groceries");
             result[0].Id.Should().Be("groceries");
             result[0].Value.Should().Be(500);
-            result[0].Parent.Should().Be("food");
+            result[0].Parent.Should().Be("food_main");
 
             result[1].Name.Should().Be("Restaurant");
             result[1].Id.Should().Be("restaurant");
             result[1].Value.Should().Be(900);
-            result[1].Parent.Should().Be("food");
+            result[1].Parent.Should().Be("food_main");
 
             result[2].Name.Should().Be("Food");
-            result[2].Id.Should().Be("food");
+            result[2].Id.Should().Be("food_main");
             result[2].Value.Should().Be(1400);
             result[2].Color.Should().Be("#A7DBD8");
 
             result[3].Name.Should().Be("Phone");
             result[3].Id.Should().Be("phone");
             result[3].Value.Should().Be(200);
-            result[3].Parent.Should().Be("personal");
+            result[3].Parent.Should().Be("personal_main");
 
             result[4].Name.Should().Be("Personal");
-            result[4].Id.Should().Be("personal");
+            result[4].Id.Should().Be("personal_main");
             result[4].Value.Should().Be(200);
             result[4].Color.Should().Be("#E0E4CC");
         }

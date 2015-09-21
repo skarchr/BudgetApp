@@ -57,7 +57,7 @@ namespace BudgetApp.Extensions.Graphs
                     {
                         Id = trans.Key.ToLower(),
                         Name = CategoryExt.CamelCaseToNormal(trans.Key),
-                        Parent = category.ToLower(),
+                        Parent = category.ToLower() + "_main",
                         Value = value
                     });
 
@@ -68,7 +68,7 @@ namespace BudgetApp.Extensions.Graphs
                 {
                     Value = mainCatTotal,
                     Name = category,
-                    Id = category.ToLower(),
+                    Id = category.ToLower() + "_main",
                     Color = HighchartUtilities.Colors[CategoryExt.GetCategoryColor(category)]
                 });
 

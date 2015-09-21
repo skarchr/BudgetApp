@@ -78,6 +78,9 @@ namespace BudgetApp.Models
         #endregion
 
         ,
-        Saving
+        Saving,
+        [Description("ATM")]
+        ATM,
+        Workout
     }
 }

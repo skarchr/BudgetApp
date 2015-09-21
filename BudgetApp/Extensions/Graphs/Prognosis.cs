@@ -34,6 +34,38 @@ namespace BudgetApp.Extensions.Graphs
 
             var plotPredicted = PredictedEndOfYear(predicted, income);
 
+            if (series.Count > 1)
+            {
+                var lastSeries = series.Last();
+
+                if (lastSeries.Data.Last().X <= 10 && lastSeries.Name == DateTime.Now.Year.ToString())
+                {
+                    series.Add(new Series
+                    {
+                        Name = string.Format("Prediction ({0})", DateTime.Now.Year),
+                        Color = income ? "#48DDb8" : "#b94a48",
+                        DashStyle = "dash",
+                        Data = new List<Data>
+                {
+                    new Data
+                    {
+                        X = lastSeries.Data.Last().X,
+                        Y = lastSeries.Data.Last().Y,
+                        DataLabels = new DataLabels{Enabled = false}
+                    },
+
+                    new Data
+                    {                        
+                        X = 11,
+                        Y = plotPredicted.Value,
+                    }
+                }
+                    });
+                }
+            }
+
+            
+            
             return new Highchart
             {
                 
@@ -57,18 +89,13 @@ namespace BudgetApp.Extensions.Graphs
                     {
                         Id = "line-series",
                         Opposite = true,
-                        PlotLines = new List<PlotLine>
-                        {
-                            plotPredicted
-                        },
                         Labels = new Labels
                         {
                             Style = new Style
                             {
                                 Color = income ? "#48DDb8" : "#b94a48"
                             }
-                        },
-                        Max = (int?)plotPredicted.Value
+                        }
                     },
                     new Axis
                     {

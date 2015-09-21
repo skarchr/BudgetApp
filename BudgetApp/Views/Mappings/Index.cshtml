@@ -12,17 +12,25 @@
 
         <div class="jumbotron text-center" fade-in="100" style="margin-top:-50px;background-color: white;">
 
-            <h3>No mapping registered</h3>
+            <h3>No mappings registered</h3>
 
             <div class="row">
                 <div class="col-xs-12 text-center">
                     @Html.ActionLink("Add your first!", "Create", null, new { @class = "btn btn-primary" })
                 </div>
             </div>
+            <br />
+            <br />
+            <p class="text-left">
+                <strong>What is a mapping:</strong>
+                
+                <br />
+                
+                A mapping is a connection between a transaction and category; so that you don't have to categories all the transactions you import.
+
+            </p>
 
         </div>
-
-
     }
     else
     {
@@ -67,7 +75,7 @@
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                         <h4 class="modal-title" id="myModalLabel">
-                            <img ng-src="{{getIcon(filteredCategory)}}"  height="24" />
+                            <img ng-src="{{getIcon(filteredCategory)}}" height="24" />
                             {{ filteredCategory !== '' ? (filteredCategory | camelCaseToNormal) : 'All'}}
                         </h4>
                     </div>

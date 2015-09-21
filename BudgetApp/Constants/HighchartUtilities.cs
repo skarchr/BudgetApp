@@ -15,7 +15,8 @@ namespace BudgetApp.Constants
             "#E0E4CC",
             "#48DDb8",
             "#F38630",
-            "#A9DEF9"
+            "#A9DEF9",
+            "#009900"
         }; 
 
     }

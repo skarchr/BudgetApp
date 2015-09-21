@@ -8,6 +8,12 @@
             var imageName = "";
 
             switch (value) {
+                case "Atm":
+                    imageName = "atm2.png";
+                    break;
+                case "ATM":
+                    imageName = "atm2.png";
+                    break;
                 case "Expenses":
                     imageName = "hand132.png";
                     break;
@@ -128,7 +134,9 @@
                 case "Saving":
                     imageName = "piggy9.png";
                     break;
-                    
+                case "Workout":
+                    imageName = "upper20.png";
+                    break;
                 default:
                     imageName = "question30.png";
             }

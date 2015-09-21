@@ -358,7 +358,7 @@
                         $(elem[0]).highcharts({
                             chart: {
                                 style: {
-                                    fontFamily: "'Franklin Gothic Medium', 'Franklin Gothic', 'ITC Franklin Gothic', Arial, sans-serif !important"
+                                    fontFamily: "Tahoma, Geneva, sans-serif !important"
                                 },
                                 type: 'column',
                                 plotBackgroundColor: null,
@@ -399,9 +399,8 @@
                                 
                             },
                             xAxis: {
-                                categories: model.categories,
-                                plotLines: scope.range !== 'Annual' ? model.plotLinesX : null,
-                                type: 'category',
+                                categories: model.xAxis[0].categories,
+                                plotLines: scope.range !== 'Annual' ? model.xAxis[0].plotLines : null,
                                 title: {
                                     text: scope.range !== undefined && scope.range === 'Week' ? scope.range : ''
                                 },
@@ -416,7 +415,7 @@
                                 title: {
                                     text: model.currency
                                 },
-                                plotLines: scope.range === 'Month' || scope.range === 'Annual' ? model.plotLinesY : null
+                                plotLines: scope.range === 'Month' || scope.range === 'Annual' ? model.yAxis[0].plotLines : null
                             },
                             series: model.series
                         });
@@ -517,7 +516,7 @@
                         $(elem[0]).highcharts({
                             chart: {
                                 style: {
-                                    fontFamily: "'Franklin Gothic Medium', 'Franklin Gothic', 'ITC Franklin Gothic', Arial, sans-serif !important"
+                                    fontFamily: "Tahoma, Geneva, sans-serif !important"
                                 },
                                 plotBackgroundColor: null,
                                 plotBorderWidth: null,
@@ -881,7 +880,7 @@
                             type: 'gauge',
                             height: 180,
                             style: {
-                                fontFamily: "'Franklin Gothic Medium', 'Franklin Gothic', 'ITC Franklin Gothic', Arial, sans-serif !important"
+                                fontFamily: "Tahoma, Geneva, sans-serif !important"
                             }
                         },
 
@@ -1028,13 +1027,13 @@
                 link:function(scope, elem) {
                     
                     var model = JSON.parse(scope.treemapChart);
-
+                    console.log(model);
                     Highcharts.setOptions({ lang: { drillUpText: 'Back' } });
 
                     $(elem[0]).highcharts({
                         chart: {
                             style: {
-                                fontFamily: "'Franklin Gothic Medium', 'Franklin Gothic', 'ITC Franklin Gothic', Arial, sans-serif !important"
+                                fontFamily: "Tahoma, Geneva, sans-serif !important"
                             },
                             events: {
                                 redraw: function () {
@@ -1127,7 +1126,7 @@
                             chart: {
                                 type: 'line',
                                 style: {
-                                    fontFamily: "'Franklin Gothic Medium', 'Franklin Gothic', 'ITC Franklin Gothic', Arial, sans-serif !important"
+                                    fontFamily: "Tahoma, Geneva, sans-serif !important"
                                 },
                                 plotBackgroundColor: null,
                                 plotBorderWidth: null,
