@@ -11,18 +11,21 @@
     @if (Model.Transactions.Count == 0)
     {
 
-        <div class="jumbotron text-center" fade-in="500" style="margin-top:-40px;background-color:white;">                        
-            
-            <h1>Welcome to BudgetApp!</h1>
+        <div class="jumbotron text-center" fade-in="500" style="margin-top:-40px;background-color:white;">
 
-            <div id="icon">
-                <object>
-                    <img src="~/Content/images/logo_pig.svg" id="svg" />
-                </object>
-            </div>
-            
-            
-            <h3>Get control of your transactions!</h3>
+            <h1>Welcome to BudgetApp!</h1>
+            <br />
+            <p style="font-size: 18px;;">
+                This is the dashboard page.
+                <br /><br />
+                Here you will see charts based on the transactions you have added giving you a better insight on your budget.                
+            </p>
+            <br />
+            <img src="../../Content/images/screenshots/dashboard.PNG" alt="" height="300" style="border:2px solid #0094ff;" />
+            <p>Here's an example of how this page might look like.</p>
+
+
+
         </div>
 
     }
@@ -33,7 +36,7 @@
                 <h3>All transactions</h3>
 
                 <span style="height:300px;width:565px !important;" class="visible-lg visible-sm" data-highchart="{{model.drilldownGraphTot}}"></span>
-                
+
                 <span style="height:300px;width:923px !important;" class="visible-md" data-highchart="{{model.drilldownGraphTot}}"></span>
 
                 <span style="height:300px;width:390px !important;" class="hidden-sm hidden-md hidden-lg" data-highchart="{{model.drilldownGraphTot}}"></span>
@@ -49,9 +52,9 @@
                 <span style="height:300px;width:390px !important;" class="hidden-sm hidden-md hidden-lg" data-highchart="{{model.drilldownGraphYtd}}"></span>
 
             </div>
-                        
+
         </div>
-        
+
         <hr />
 
         <div class="row">
@@ -62,10 +65,10 @@
 
                 <span style="height:300px;width:923px !important;" class="visible-md" data-prog-highchart="{{model.prognosisIncomeChart}}"></span>
 
-                <span style="height:300px;width:390px !important;" class="hidden-sm hidden-md hidden-lg" data-prog-highchart="{{model.prognosisIncomeChart}}"></span>                
+                <span style="height:300px;width:390px !important;" class="hidden-sm hidden-md hidden-lg" data-prog-highchart="{{model.prognosisIncomeChart}}"></span>
 
             </div>
-            
+
             <div class="col-xs-12 col-lg-6">
 
                 <span style="height:300px;width:565px !important;" class="visible-lg visible-sm" data-prog-highchart="{{model.prognosisChart}}"></span>
@@ -106,7 +109,7 @@
             </div>
 
         </div>
-        
+
     }
 
 
@@ -120,7 +123,7 @@
 
             return {
                 model:@Html.Raw(Model.ToJson())
-            };
+                };
 
         });
 
