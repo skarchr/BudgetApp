@@ -358,7 +358,7 @@
                         $(elem[0]).highcharts({
                             chart: {
                                 style: {
-                                    fontFamily: "'Franklin Gothic Medium', 'Franklin Gothic', 'ITC Franklin Gothic', Arial, sans-serif !important"
+                                    fontFamily: "Tahoma, Geneva, sans-serif !important"
                                 },
                                 type: 'column',
                                 plotBackgroundColor: null,
@@ -516,7 +516,7 @@
                         $(elem[0]).highcharts({
                             chart: {
                                 style: {
-                                    fontFamily: "'Franklin Gothic Medium', 'Franklin Gothic', 'ITC Franklin Gothic', Arial, sans-serif !important"
+                                    fontFamily: "Tahoma, Geneva, sans-serif !important"
                                 },
                                 plotBackgroundColor: null,
                                 plotBorderWidth: null,
@@ -880,7 +880,7 @@
                             type: 'gauge',
                             height: 180,
                             style: {
-                                fontFamily: "'Franklin Gothic Medium', 'Franklin Gothic', 'ITC Franklin Gothic', Arial, sans-serif !important"
+                                fontFamily: "Tahoma, Geneva, sans-serif !important"
                             }
                         },
 
@@ -1033,7 +1033,7 @@
                     $(elem[0]).highcharts({
                         chart: {
                             style: {
-                                fontFamily: "'Franklin Gothic Medium', 'Franklin Gothic', 'ITC Franklin Gothic', Arial, sans-serif !important"
+                                fontFamily: "Tahoma, Geneva, sans-serif !important"
                             },
                             events: {
                                 redraw: function () {
@@ -1126,7 +1126,7 @@
                             chart: {
                                 type: 'line',
                                 style: {
-                                    fontFamily: "'Franklin Gothic Medium', 'Franklin Gothic', 'ITC Franklin Gothic', Arial, sans-serif !important"
+                                    fontFamily: "Tahoma, Geneva, sans-serif !important"
                                 },
                                 plotBackgroundColor: null,
                                 plotBorderWidth: null,
