@@ -5,124 +5,132 @@
     ViewBag.Title = "Mappings";
 }
 
-<div style="margin-top: 30px;" ng-controller="mappingsController">
+<div ng-controller="mappingsController">
+
 
     @if (!Model.Any())
     {
-
-        <div class="jumbotron text-center" fade-in="100" style="margin-top:-50px;background-color: white;">
-
-            <h3>No mappings registered</h3>
-
-            <div class="row">
-                <div class="col-xs-12 text-center">
-                    @Html.ActionLink("Add your first!", "Create", null, new { @class = "btn btn-primary" })
-                </div>
-            </div>
-            <br />
-            <br />
-            <p class="text-left">
-                <strong>What is a mapping:</strong>
-                
-                <br />
-                
-                A mapping is a connection between a transaction and category; so that you don't have to categories all the transactions you import.
-
-            </p>
-
-        </div>
-    }
-    else
-    {
-
         <div class="row">
-            <div class="col-xs-12 col-md-4 text-center" ng-click="filteredCategory = 'All'" data-toggle="modal" data-target=".bs-example-modal-lg">
+            <div class="col-xs-12">
+                <div class="alert alert-info">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <strong>Mapping</strong> /ˈmæp ɪŋ/
 
-                <div class="panel panel-default panel-mapping">
+                    <br />
+                    is the process of creating data element mappings between two distinct data models.
 
-                    <div class="panel-body">
-                        <span class="badge badge-mapping" ng-show="model.length > 0">{{model.length}}</span>
+                    <br />
+                    <br />
+                    <strong>What does that mean?</strong>
+                    <br />
+                    These mappings are used when you import transactions from an excel file. During the import the "BudgetApp" will try to categorize each
+                    transaction based on their textual description by comparing them to your mappings.
 
-                        <img ng-src="{{getIcon('All')}}" alt="" />
-                        <h4>All</h4>
-                        <span class="add" style="float:right" ng-click="go('All')"><i class="glyphicon glyphicon-plus-sign"></i></span>
-                    </div>
-                </div>
-
-            </div>
-
-            <div class="col-xs-12 col-md-4 text-center" ng-repeat="category in categories | orderBy : category" ng-click="setCategory(category)" data-toggle="modal" data-target=".bs-example-modal-lg">
-
-                <div class="panel panel-default panel-mapping">
-
-                    <div class="panel-body">
-                        <span class="badge badge-mapping" ng-show="countCategory(category) > 0">{{countCategory(category)}}</span>
-
-                        <img ng-src="{{getIcon(category)}}" alt="" />
-                        <h4>{{category | camelCaseToNormal }}</h4>
-                        <span class="add" style="float:right" ng-click="go(category)"><i class="glyphicon glyphicon-plus-sign"></i></span>
-                    </div>
-                </div>
-
-            </div>
-        </div>
-
-
-        <div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-lg">
-                <div class="modal-content">
-
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title" id="myModalLabel">
-                            <img ng-src="{{getIcon(filteredCategory)}}" height="24" />
-                            {{ filteredCategory !== '' ? (filteredCategory | camelCaseToNormal) : 'All'}}
-                        </h4>
-                    </div>
-                    <div class="modal-body">
-
-                        <table class="table table-condensed table-hover">
-                            <thead>
-                                <tr>
-                                    <th class="hidden-xs">#</th>
-                                    <th ng-show="filteredCategory === 'All'">Category</th>
-                                    <th>Text Description</th>
-                                    <th class="hidden-xs">Created</th>
-                                    <th></th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr ng-repeat="row in model | filter : (filteredCategory !== 'All' ? filteredCategory : '')">
-                                    <td class="hidden-xs">{{$index + 1}}</td>
-                                    <td ng-show="filteredCategory === 'All'"> {{row.category | camelCaseToNormal}}</td>
-                                    <td>{{row.textDescription}}</td>
-                                    <td class="hidden-xs">{{row.created | date}}</td>
-                                    <td class="text-right">
-                                        <a class="link edit-link" href="{{urls.edit}}/{{row.mappingId}}" title="Edit"><i class="glyphicon glyphicon-pencil"></i></a>
-                                        <a class="link delete-link" href="{{urls.del}}/{{row.mappingId}}" title="Delete">
-                                            <i class="glyphicon glyphicon-trash"></i>
-                                        </a>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td colspan="5" ng-show="(model | filter : (filteredCategory !== 'All' ? filteredCategory : '')).length === 0" class="text-warning">
-                                        No mappings created {{filteredCategory !== 'All' ? ' for "'+(filteredCategory | camelCaseToNormal)+'"' : ''}}
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-success pull-right" ng-click="go(filteredCategory)">Create Mapping</button>
-                    </div>
-
+                    <br />
+                    <br />
+                    <strong>Why would i use them?</strong>
+                    <br />
+                    If you can download transaction data from your bank they usually contain a textual description in order to identify the source.
+                    This can be explained further with an example: "08.09 NOK 259.00 ITUNES.COM/BILL Kurs: 1.0000". In this example I would map the word "ITUNES.COM/BILL" or maybe just "ITUNES" to the "Entertainment"
+                    category. This means that everytime I import transactions that contain these words it will automatically set the right category.
+                    <br />
+                    <br />
+                    TL;DR: Less work when importing and to save time.
                 </div>
             </div>
         </div>
-
     }
+
+    <div class="row">
+        <div class="col-xs-12 col-md-3 text-center" ng-click="filteredCategory = 'All'" data-toggle="modal" data-target=".bs-example-modal-lg">
+
+            <div class="panel panel-default panel-mapping">
+
+                <div class="panel-body">
+                    <span class="badge badge-mapping" ng-show="model.length > 0">{{model.length}}</span>
+
+                    <img ng-src="{{getIcon('All')}}" alt="" />
+                    <h4>All</h4>
+
+                </div>
+            </div>
+
+        </div>
+
+        <div class="col-xs-12 col-md-3 text-center" ng-repeat="category in categories | orderBy : category" ng-click="setCategory(category)" data-toggle="modal" data-target=".bs-example-modal-lg">
+
+            <div class="panel panel-default panel-mapping">
+
+                <div class="panel-body">
+                    <span class="badge badge-mapping" ng-show="countCategory(category) > 0">{{countCategory(category)}}</span>
+
+                    <img ng-src="{{getIcon(category)}}" alt="" />
+                    <h4>{{category | camelCaseToNormal }}</h4>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+    <div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">
+                        <img ng-src="{{getIcon(filteredCategory)}}" height="24" />
+                        {{ filteredCategory !== '' ? (filteredCategory | camelCaseToNormal) : 'All'}}
+                    </h4>
+                </div>
+                <div class="modal-body">
+
+                    <table class="table table-condensed table-hover">
+                        <thead>
+                            <tr>
+                                <th class="hidden-xs">#</th>
+                                <th ng-show="filteredCategory === 'All'">Category</th>
+                                <th>Text Description</th>
+                                <th class="hidden-xs">Created</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="row in model | filter : (filteredCategory !== 'All' ? filteredCategory : '')">
+                                <td class="hidden-xs">{{$index + 1}}</td>
+                                <td ng-show="filteredCategory === 'All'"> {{row.category | camelCaseToNormal}}</td>
+                                <td>{{row.textDescription}}</td>
+                                <td class="hidden-xs">{{row.created | date}}</td>
+                                <td class="text-right">
+                                    <a class="link edit-link" href="{{urls.edit}}/{{row.mappingId}}" title="Edit"><i class="glyphicon glyphicon-pencil"></i></a>
+                                    <a class="link delete-link" href="{{urls.del}}/{{row.mappingId}}" title="Delete">
+                                        <i class="glyphicon glyphicon-trash"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="5" ng-show="(model | filter : (filteredCategory !== 'All' ? filteredCategory : '')).length === 0" class="text-warning">
+                                    No mappings created {{filteredCategory !== 'All' ? ' for "'+(filteredCategory | camelCaseToNormal)+'"' : ''}}
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-success pull-right" ng-click="go(filteredCategory)">Create Mapping</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
 </div>
 
 

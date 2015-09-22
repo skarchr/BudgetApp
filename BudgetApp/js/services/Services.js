@@ -137,6 +137,9 @@
                 case "Workout":
                     imageName = "upper20.png";
                     break;
+                case "Fuel":
+                    imageName = "fuel4.png";
+                    break;
                 default:
                     imageName = "question30.png";
             }
