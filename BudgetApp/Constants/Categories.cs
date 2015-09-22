@@ -83,7 +83,7 @@ namespace BudgetApp.Constants
                     {
                         Category.Car,
                         Category.CollectiveTransport,
-
+                        Category.Fuel,
                         Category.OtherTransportation
                     }
                 },

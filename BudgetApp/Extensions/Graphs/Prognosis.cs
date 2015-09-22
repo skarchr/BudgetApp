@@ -46,7 +46,7 @@ namespace BudgetApp.Extensions.Graphs
                         Color = income ? "#48DDb8" : "#b94a48",
                         DashStyle = "dash",
                         Data = new List<Data>
-                {
+                    {
                     new Data
                     {
                         X = lastSeries.Data.Last().X,
