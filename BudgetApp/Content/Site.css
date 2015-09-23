@@ -117,7 +117,8 @@ textarea {
     min-height: 78px !important;
 }
 .no-scroll-top {
-    min-height: 52px !important;  
+    min-height: 52px !important;
+    background-color: #fff;
     height: 48px;  
 }
 
