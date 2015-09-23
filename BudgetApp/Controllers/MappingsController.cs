@@ -10,6 +10,7 @@ using BudgetApp.Models;
 
 namespace BudgetApp.Controllers
 {
+    [Authorize]
     public class MappingsController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
