@@ -102,39 +102,25 @@ textarea {
     display: block;
 }
 
-.no-scroll-top > .container > .row > .col-xs-4 > a > #svg1 {
-    display: none;
-}
-
-.no-scroll-top > .container > .row > .col-xs-4 > a > #svg2 {
-    display: inline-block;
-}
-
-.scroll-top > .container > .row > .col-xs-4 > a > #svg2 {
-    display: none;
-}
-
-.scroll-top > .container > .row > .col-xs-4 > a > #svg1 {
-    display: inline-block;
-}
-
 .no-scroll-top, .scroll-top {
-    -webkit-transition: background-color 1.0s, padding-top 1.0s ;
-    -moz-transition: background-color 1.0s, padding-top 1.0s ;
-    -ms-transition: background-color 1.0s, padding-top 1.0s ;
-    -o-transition: background-color 1.0s, padding-top 1.0s ;
-    transition: background-color 1.0s, padding-top 1.0s ;
+    -webkit-transition: padding-top 1.0s ;
+    -moz-transition: padding-top 1.0s ;
+    -ms-transition: padding-top 1.0s ;
+    -o-transition:  padding-top 1.0s ;
+    transition: padding-top 1.0s ;
 }
 
 .scroll-top {
     border-bottom: none;
-    padding-top: 10px;
-    background-color: rgba(255,255,255,0.0) !important;
+    padding-top: 14px;
     border-bottom: 2px solid #0094ff !important;
+    min-height: 78px !important;
 }
 .no-scroll-top {
-    background-color: rgba(0, 148, 244, 0.90);
+    background-color: #0094ff;
     border-bottom: 2px solid #0094ff;
+    min-height: 52px !important;  
+    height: 48px;  
 }
 
 .btn-xlg {
@@ -251,15 +237,15 @@ textarea {
     }
 
     #menu {
-        margin-top: -6px !important;
+        margin-top: -20px !important;
     }
 
     #icon {
         min-width: 288px !important;
     }
 
-    .dropdown-menu.text-left {
-        top: 45px !important;
+    .dropdown-menu.text-left  {
+        top: 32px !important;
         margin: 2px -267px 0 !important;
         width: 379px;
     }
@@ -267,6 +253,10 @@ textarea {
     .dropdown-menu.text-left > li > a {
         padding-left: 30px;
         font-size: 30px;
+    }
+
+    .dropdown-menu.text-left > li:first-child > a {
+        padding-top: 30px;
     }
 
     .btn-range {
@@ -437,14 +427,18 @@ th {
 }
 
 .dropdown-menu {
-    top: 51px;
-    margin-right: 6px;
+    top: 37px;
     border-radius: 0;
+    margin-right: -5px;
     box-shadow: none;
     border-right: 2px solid #0094ff;
     border-bottom: 2px solid #0094ff;
     border-left: 2px solid #0094ff;
-    border-top: 2px solid white;
+    border-top: 1px solid #0094ff;
+}
+
+.scroll-top > .container > .row > .text-right > #logoutForm > .list-unstyled > .dropdown > .dropdown-menu {
+    top: 23px;
 }
 
 .dropdown-menu > li > a {
@@ -462,8 +456,9 @@ th {
     color: #0094ff;
 }
 
-.dropdown-menu > .active > a {
-  background-color: #0094ff;
+.dropdown-menu > .active > a, .dropdown-menu > .active > a:hover {
+  background-color: #fff;
+    color: #0094ff;
 }
 
 .btn-nav {
