@@ -44,6 +44,14 @@
                                 
                                 .dropdown.open > a > svg > g.ring > circle {
                                      fill: #fff !important;
+                                    stroke-width: 23 !important;
+                                    stroke: #0094FF;
+                                }
+
+                                .dropdown.open > a > svg > g.ring > circle {
+                                     fill: #fff !important;
+                                    stroke-width: 23;
+                                    stroke: #0094FF;
                                 }
 
                                 .dropdown.open > a > svg > g.stripes > rect.upper {
@@ -93,7 +101,6 @@
                         if (User.IsInRole("Administrators"))
                         {
                             <li class="@(ViewBag.Title == "Admin" ? "active" : "")">@Html.ActionLink("Admin", "Index", "Admin")</li>
-                            <li role="separator" class="divider"></li>
                         }
                     } 
                     <li class="@(ViewBag.Title == "Dashboard" ? "active" : "")">@Html.ActionLink("Dashboard", "Index", "Home")</li>                                       

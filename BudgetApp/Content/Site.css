@@ -113,12 +113,10 @@ textarea {
 .scroll-top {
     border-bottom: none;
     padding-top: 14px;
-    border-bottom: 2px solid #0094ff !important;
+    border-bottom: 0;
     min-height: 78px !important;
 }
 .no-scroll-top {
-    background-color: #0094ff;
-    border-bottom: 2px solid #0094ff;
     min-height: 52px !important;  
     height: 48px;  
 }
@@ -427,18 +425,14 @@ th {
 }
 
 .dropdown-menu {
-    top: 37px;
-    border-radius: 0;
+    top: 23px;
+    border-radius: 20px;
     margin-right: -5px;
     box-shadow: none;
     border-right: 2px solid #0094ff;
     border-bottom: 2px solid #0094ff;
     border-left: 2px solid #0094ff;
-    border-top: 1px solid #0094ff;
-}
-
-.scroll-top > .container > .row > .text-right > #logoutForm > .list-unstyled > .dropdown > .dropdown-menu {
-    top: 23px;
+    border-top: 2px solid #0094ff;
 }
 
 .dropdown-menu > li > a {
@@ -452,12 +446,12 @@ th {
 }
 
 .dropdown-menu > li > a:hover {
-    background-color: white;
+    background: none;
     color: #0094ff;
 }
 
 .dropdown-menu > .active > a, .dropdown-menu > .active > a:hover {
-  background-color: #fff;
+  background:none;
     color: #0094ff;
 }
 
