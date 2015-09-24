@@ -466,7 +466,7 @@ th {
     border-radius: 0;
 }
 
-.btn-nav:hover {
+.btn-nav:hover, .btn-nav.active  {
     color: #0094ff;
     background-color: #fff;
     border: 2px solid #0094ff;
