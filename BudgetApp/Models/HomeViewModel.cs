@@ -23,6 +23,11 @@ namespace BudgetApp.Models
         public string PrognosisIncomeChart { get { return GraphBuilder.PrognosisGraph(Transactions, Currency, true).ToJson(); } }
         public string ScpExpensesChart { get; set; }
 
+        public string BurnRateChart
+        {
+            get { return GraphBuilder.BurnRateGraph(Transactions, ExpensesGoal, Currency).ToJson(); }
+        }
+
         public List<SavingModel> SavingGoals
         {
             get { return SavingHelper.CreateSavingsList(Transactions, SavingGoal); }

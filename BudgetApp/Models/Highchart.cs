@@ -151,6 +151,7 @@ namespace BudgetApp.Models
         public string Type { get; set; }
         public string Id { get; set; }
         public string Color { get; set; }
+        public string NegativeColor { get; set; }
         public string Name { get; set; }
         public List<Data> Data { get; set; }
         public string DashStyle { get; set; }

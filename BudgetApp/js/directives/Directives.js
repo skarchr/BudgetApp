@@ -1027,7 +1027,7 @@
                 link:function(scope, elem) {
                     
                     var model = JSON.parse(scope.treemapChart);
-                    console.log(model);
+
                     Highcharts.setOptions({ lang: { drillUpText: 'Back' } });
 
                     $(elem[0]).highcharts({
@@ -1167,6 +1167,63 @@
                     }
                 }
             }
-        ]);
+        ])
+    .directive('burnRate', [function() {
+
+        return {
+            restrict: 'A',
+            scope: {
+                burnRate: '@'
+            },
+            link: function(scope, elem, attrs) {
+                
+                var model = JSON.parse(scope.burnRate);
+                $(elem[0]).highcharts({
+                    chart: {
+                        zoomType: 'x'
+                    },
+                    credits: false,
+                    title: {
+                        text: ' ',
+                    },
+                    subtitle: {
+                        text: ' '
+                    },
+                    xAxis: {
+                        type: 'datetime',
+                        tickInterval: null,
+                        //only if there are atleast 3 days left
+                        plotLines: model.xAxis[0].plotLines
+                    },
+                    yAxis: {
+                        title: {
+                            text: ' '
+                        },
+                        endOnTick: true
+                    },
+                    legend: {
+                        enabled: false
+                    },
+                    plotOptions: {
+                        area: {
+                            marker: {
+                                radius: 0
+                            },
+                            lineWidth: 1,
+                            states: {
+                                hover: {
+                                    lineWidth: 2
+                                }
+                            },
+                            threshold: 0
+                        }
+                    },
+                    series: model.series
+                });
+
+            }
+        };
+
+    }]);
 
 })();
