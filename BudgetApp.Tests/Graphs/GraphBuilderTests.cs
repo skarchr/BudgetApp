@@ -110,10 +110,10 @@ namespace BudgetApp.Tests.Graphs
             var result = GraphBuilder.DailyExpensesGraph(CreateTransactions());
 
 
-            result.Series[0].Data[0].X.Should().Be(1388530800000);
+            result.Series[0].Data[0].X.Should().Be(1388534400000);
             result.Series[0].Data[0].Y.Should().Be(240.0);
 
-            result.Series[0].Data[1].X.Should().Be(1388617200000);
+            result.Series[0].Data[1].X.Should().Be(1388620800000);
             result.Series[0].Data[1].Y.Should().Be(60.0);
 
         }

@@ -20,7 +20,7 @@ namespace BudgetApp.Extensions.Graphs
 
         public static long ConvertDateToMilliSeconds(DateTime date)
         {
-            return (date.ToUniversalTime().Ticks - ((new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc)).Ticks)) / 10000;
+            return (date.Ticks - ((new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Local)).Ticks)) / 10000;
         }
 
         public static Highchart OverviewGraph(List<RangeViewer> rangeviewers, ApplicationUser user)
@@ -46,6 +46,11 @@ namespace BudgetApp.Extensions.Graphs
         public static Highchart SpcGraph(List<Transaction> transactions, string currency, Range range)
         {
             return Spc.CreateChart(transactions, currency, range);
+        }
+
+        public static Highchart BurnRateGraph(List<Transaction> transactions, double? expensesGoal, string currency)
+        {
+            return BurnRate.CreateChart(transactions, DateTime.Now, expensesGoal, currency);
         }
     }
 }

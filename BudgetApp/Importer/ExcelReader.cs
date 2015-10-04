@@ -29,11 +29,19 @@ namespace BudgetApp.Importer
             excelReader.Read(); //skip first row
             while (excelReader.Read())
             {
-                //TODO: might take into account cultureinfo eventually
-                var date = Convert.ToDateTime(excelReader.GetString(0), new CultureInfo("nb-NO"));
-                var desc = excelReader.GetString(1);
-
                 
+                DateTime date = DateTime.Now;
+
+                try
+                {
+                    date = Convert.ToDateTime(excelReader.GetString(0), new CultureInfo("nb-NO"));
+                }
+                catch (Exception)
+                {
+                    date = Convert.ToDateTime(excelReader.GetDateTime(0), new CultureInfo("nb-NO"));
+                }
+
+                var desc = excelReader.GetString(1);
 
                 var amount = FindAmount(excelReader);
                 var cat = FindCategory(excelReader.GetString(1), userName);

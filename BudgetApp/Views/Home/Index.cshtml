@@ -18,13 +18,13 @@
             <p style="font-size: 18px;">
                 This is the dashboard page.
                 <br /><br />
-                Here you will see graphical charts based on the transactions you have added.                
+                Here you will see graphical charts based on the transactions you have added.
             </p>
             <br />
             <div class="row">
-                <img class="col-xs-12 col-sm-offset-2 col-sm-8 col-md-offset-3 col-md-6" src="../../Content/images/screenshots/dashboard.PNG" alt="" style="border:2px solid #0094ff;" />  
+                <img class="col-xs-12 col-sm-offset-2 col-sm-8 col-md-offset-3 col-md-6" src="../../Content/images/screenshots/dashboard.PNG" alt="" style="border:2px solid #0094ff;" />
             </div>
-                      
+
             <p class="col-xs-12">Here's an example of how this page might look like.</p>
 
         </div>
@@ -33,16 +33,6 @@
     else
     {
         <div class="row">
-            <div class="col-xs-12 col-lg-6 text-center">
-                <h3>All transactions</h3>
-
-                <span style="height:300px;width:565px !important;" class="visible-lg visible-sm" data-highchart="{{model.drilldownGraphTot}}"></span>
-
-                <span style="height:300px;width:923px !important;" class="visible-md" data-highchart="{{model.drilldownGraphTot}}"></span>
-
-                <span style="height:300px;width:390px !important;" class="hidden-sm hidden-md hidden-lg" data-highchart="{{model.drilldownGraphTot}}"></span>
-
-            </div>
             <div class="col-xs-12 col-lg-6 text-center">
                 <h3>Year-To-Date</h3>
 
@@ -54,9 +44,18 @@
 
             </div>
 
-        </div>
+            <div class="col-xs-12 col-lg-6 text-center">
+                <h3>Burn rate (@DateHelper.GetMonthText(DateTime.Now))</h3>
 
-        <hr />
+                <span style="height:300px;width:565px !important;" class="visible-lg visible-sm" data-burn-rate="{{model.burnRateChart}}"></span>
+
+                <span style="height:300px;width:923px !important;" class="visible-md" data-burn-rate="{{model.burnRateChart}}"></span>
+
+                <span style="height:300px;width:390px !important;" class="hidden-sm hidden-md hidden-lg" data-burn-rate="{{model.burnRateChart}}"></span>
+
+            </div>
+
+        </div>
 
         <div class="row">
 
@@ -82,34 +81,45 @@
 
         </div>
 
+        <div class="row">
+
+            <div class="col-xs-12 col-lg-6 text-center">
+
+                <span style="height:300px;width:565px !important;" class="visible-lg visible-sm" data-legend="false" data-prog-highchart="{{model.scpExpensesChart}}"></span>
+
+                <span style="height:300px;width:923px !important;" class="visible-md" data-legend="false" data-prog-highchart="{{model.scpExpensesChart}}"></span>
+
+                <span style="height:300px;width:390px !important;" class="hidden-sm hidden-md hidden-lg" data-legend="false" data-prog-highchart="{{model.scpExpensesChart}}"></span>
+
+            </div>
+
+        </div>
+
         <hr />
 
         <div class="row">
 
-            <div class="col-xs-12">
-                <span style="height:400px;width:1160px !important;" class="visible-lg" data-treemap-chart="{{model.treemapChart}}"></span>
-                <span style="height:400px;width:923px !important;" class="visible-md" data-treemap-chart="{{model.treemapChart}}"></span>
-                <span style="height:400px;width:565px !important;" class="visible-sm" data-treemap-chart="{{model.treemapChart}}"></span>
+            <div class="col-xs-12 col-lg-6 text-center">
+                <h3>All transactions</h3>
+
+                <span style="height:300px;width:565px !important;" class="visible-lg visible-sm" data-highchart="{{model.drilldownGraphTot}}"></span>
+
+                <span style="height:300px;width:923px !important;" class="visible-md" data-highchart="{{model.drilldownGraphTot}}"></span>
+
+                <span style="height:300px;width:390px !important;" class="hidden-sm hidden-md hidden-lg" data-highchart="{{model.drilldownGraphTot}}"></span>
+
+            </div>
+
+            <div class="col-xs-12 col-lg-6 text-center">
+
+                <span style="height:300px;width:565px !important;" class="visible-lg visible-sm" data-treemap-chart="{{model.treemapChart}}"></span>
+                <span style="height:300px;width:923px !important;" class="visible-md" data-treemap-chart="{{model.treemapChart}}"></span>
                 <span style="height:400px;width:390px !important;" class="hidden-sm hidden-md hidden-lg" data-treemap-chart="{{model.treemapChart}}"></span>
             </div>
 
         </div>
 
-        <div class="row">
 
-            <div class="col-xs-12 text-center">
-
-                <span style="height:400px;width:1160px !important;" class="visible-lg" data-legend="false" data-prog-highchart="{{model.scpExpensesChart}}"></span>
-
-                <span style="height:400px;width:923px !important;" class="visible-md" data-legend="false" data-prog-highchart="{{model.scpExpensesChart}}"></span>
-
-                <span style="height:400px;width:703px !important;" class="visible-sm" data-legend="false" data-prog-highchart="{{model.scpExpensesChart}}"></span>
-
-                <span style="height:400px;width:390px !important;" class="hidden-sm hidden-md hidden-lg" data-legend="false" data-prog-highchart="{{model.scpExpensesChart}}"></span>
-
-            </div>
-
-        </div>
 
     }
 

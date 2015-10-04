@@ -191,6 +191,7 @@
     <Compile Include="Extensions\CategoryExt.cs" />
     <Compile Include="Extensions\DateHelper.cs" />
     <Compile Include="Extensions\Dropdownlist.cs" />
+    <Compile Include="Extensions\Graphs\BurnRate.cs" />
     <Compile Include="Extensions\Graphs\DailyExpenses.cs" />
     <Compile Include="Extensions\Graphs\GraphBuilder.cs" />
     <Compile Include="Extensions\Graphs\Overview.cs" />
