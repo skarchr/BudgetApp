@@ -142,6 +142,10 @@ textarea {
     padding: 5px 5px;
 }
 
+.table-same-width {
+    margin-bottom: 30px !important;
+}
+
 .table-same-width > thead > tr > th:first-child, .table-same-width > tbody > tr > td:first-child {
     text-align: left;
     padding-left: 15px;

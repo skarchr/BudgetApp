@@ -143,12 +143,50 @@ namespace BudgetApp.Extensions.Graphs
         private static Series CreateActualSeries(List<Transaction> transactions, DateTime currentDate, string currency, double expensesGoal, out double left)
         {
             var startDate = new DateTime(currentDate.Year, currentDate.Month, 1);
-
+            var goal = expensesGoal;
+            var series = new Series
+            {
+                Type = "area",
+                Name = string.Format("{0} left", currency),
+                Color = "#0094ff",
+                NegativeColor = "#ff2a3e",
+                Data = new List<Data>
+                {
+                    new Data
+                    {
+                        X = GraphBuilder.ConvertDateToMilliSeconds(new DateTime(currentDate.Year, currentDate.Month, 1)),
+                        Y = goal,
+                        DataLabels = new DataLabels
+                        {
+                            Enabled = false
+                        }
+                    }
+                },
+                Marker = new Marker
+                {
+                    Radius = 0
+                }
+            };
             var data = new List<Data>();
+
+            left = expensesGoal;
+
+            if (startDate == currentDate)
+                return series;
+
+            startDate = startDate.AddDays(1);
 
             while (startDate <= currentDate)
             {
-                expensesGoal = expensesGoal - transactions.Where(s => s.Date == startDate).Sum(s => s.Amount);
+                if (startDate.Day == 2)
+                {
+                    expensesGoal = expensesGoal - transactions.Where(s => s.Date == startDate || s.Date == startDate.AddDays(-1)).Sum(s => s.Amount);
+                }
+                else
+                {
+                    expensesGoal = expensesGoal - transactions.Where(s => s.Date == startDate).Sum(s => s.Amount);
+                }
+                
 
                 data.Add(new Data
                 {
@@ -165,18 +203,9 @@ namespace BudgetApp.Extensions.Graphs
 
             left = expensesGoal;
 
-            return new Series
-            {
-                Type = "area",
-                Name = string.Format("{0} left", currency),
-                Color = "#0094ff",
-                NegativeColor = "#ff2a3e",
-                Data = data,
-                Marker = new Marker
-                {
-                    Radius = 0
-                }
-            };
+            series.Data.AddRange(data);
+
+            return series;
         }
     }
 }

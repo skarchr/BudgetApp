@@ -30,6 +30,31 @@ namespace BudgetApp.Tests.Graphs
         }
 
         [Test]
+        public void FirstdayinmonthWithExpense()
+        {
+            var date1 = new DateTime(2014, 1, 1);
+
+            var result = BurnRate.CreateChart(new List<Transaction>
+            {
+                new Transaction
+                {
+                    Amount = 500,
+                    Category = Category.Saving,
+                    Date = date1
+                }
+            }, date1, 25000, "NOK");
+
+            result.Series.Count.Should().Be(3);
+
+            result.Series[0].Data.Count.Should().Be(1);
+            result.Series[0].Data[0].X.Should().Be(GraphBuilder.ConvertDateToMilliSeconds(date1));
+            result.Series[0].Data[0].Y.Should().Be(25000);
+
+            result.Series[1].Data[0].X.Should().Be(GraphBuilder.ConvertDateToMilliSeconds(date1));
+            result.Series[1].Data[0].Y.Should().Be(25000);
+        }
+
+        [Test]
         public void OneExpenseForCurrentMonth()
         {
             var date1 = new DateTime(2014,1,1);
@@ -46,7 +71,10 @@ namespace BudgetApp.Tests.Graphs
 
             result.Series.Count.Should().Be(3);
             result.Series[0].Data[0].X.Should().Be(GraphBuilder.ConvertDateToMilliSeconds(date1));
-            result.Series[0].Data[0].Y.Should().Be(24500);
+            result.Series[0].Data[0].Y.Should().Be(25000);
+
+            result.Series[0].Data[1].X.Should().Be(GraphBuilder.ConvertDateToMilliSeconds(date1.AddDays(1)));
+            result.Series[0].Data[1].Y.Should().Be(24500);
         }
 
         [Test]
@@ -86,7 +114,7 @@ namespace BudgetApp.Tests.Graphs
             result.Series[0].Data.Count.Should().Be(6);
 
             result.Series[0].Data[0].X.Should().Be(GraphBuilder.ConvertDateToMilliSeconds(date1));
-            result.Series[0].Data[0].Y.Should().Be(24500);
+            result.Series[0].Data[0].Y.Should().Be(25000);
 
             result.Series[0].Data[1].X.Should().Be(GraphBuilder.ConvertDateToMilliSeconds(date1.AddDays(1)));
             result.Series[0].Data[1].Y.Should().Be(24500);
