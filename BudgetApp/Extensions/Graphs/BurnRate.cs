@@ -155,7 +155,7 @@ namespace BudgetApp.Extensions.Graphs
                 {
                     new Data
                     {
-                        X = GraphBuilder.ConvertDateToMilliSeconds(new DateTime(currentDate.Year, currentDate.Month, 1).AddMinutes(-1)),
+                        X = GraphBuilder.ConvertDateToMilliSeconds(new DateTime(currentDate.Year, currentDate.Month, 1).AddDays(-1)),
                         Y = goal,
                         DataLabels = new DataLabels
                         {

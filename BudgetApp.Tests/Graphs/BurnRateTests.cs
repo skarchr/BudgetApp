@@ -47,7 +47,7 @@ namespace BudgetApp.Tests.Graphs
             result.Series.Count.Should().Be(3);
 
             result.Series[0].Data.Count.Should().Be(2);
-            result.Series[0].Data[0].X.Should().Be(GraphBuilder.ConvertDateToMilliSeconds(date1.AddMinutes(-1)));
+            result.Series[0].Data[0].X.Should().Be(GraphBuilder.ConvertDateToMilliSeconds(date1.AddDays(-1)));
             result.Series[0].Data[0].Y.Should().Be(25000);
 
             result.Series[0].Data[1].X.Should().Be(GraphBuilder.ConvertDateToMilliSeconds(date1));
@@ -73,7 +73,7 @@ namespace BudgetApp.Tests.Graphs
             }, date1.AddDays(1), 25000, "NOK");
 
             result.Series.Count.Should().Be(3);
-            result.Series[0].Data[0].X.Should().Be(GraphBuilder.ConvertDateToMilliSeconds(date1.AddMinutes(-1)));
+            result.Series[0].Data[0].X.Should().Be(GraphBuilder.ConvertDateToMilliSeconds(date1.AddDays(-1)));
             result.Series[0].Data[0].Y.Should().Be(25000);
 
             result.Series[0].Data[1].X.Should().Be(GraphBuilder.ConvertDateToMilliSeconds(date1));
@@ -116,7 +116,7 @@ namespace BudgetApp.Tests.Graphs
             result.Series.Count.Should().Be(3);
             result.Series[0].Data.Count.Should().Be(7);
 
-            result.Series[0].Data[0].X.Should().Be(GraphBuilder.ConvertDateToMilliSeconds(date1.AddMinutes(-1)));
+            result.Series[0].Data[0].X.Should().Be(GraphBuilder.ConvertDateToMilliSeconds(date1.AddDays(-1)));
             result.Series[0].Data[0].Y.Should().Be(25000);
 
             result.Series[0].Data[1].X.Should().Be(GraphBuilder.ConvertDateToMilliSeconds(date1));
