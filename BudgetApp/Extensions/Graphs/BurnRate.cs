@@ -143,6 +143,7 @@ namespace BudgetApp.Extensions.Graphs
         private static Series CreateActualSeries(List<Transaction> transactions, DateTime currentDate, string currency, double expensesGoal, out double left)
         {
             var startDate = new DateTime(currentDate.Year, currentDate.Month, 1);
+
             var goal = expensesGoal;
             var series = new Series
             {
@@ -154,7 +155,7 @@ namespace BudgetApp.Extensions.Graphs
                 {
                     new Data
                     {
-                        X = GraphBuilder.ConvertDateToMilliSeconds(new DateTime(currentDate.Year, currentDate.Month, 1)),
+                        X = GraphBuilder.ConvertDateToMilliSeconds(new DateTime(currentDate.Year, currentDate.Month, 1).AddMinutes(-1)),
                         Y = goal,
                         DataLabels = new DataLabels
                         {
@@ -169,23 +170,10 @@ namespace BudgetApp.Extensions.Graphs
             };
             var data = new List<Data>();
 
-            left = expensesGoal;
-
-            if (startDate == currentDate)
-                return series;
-
-            startDate = startDate.AddDays(1);
-
             while (startDate <= currentDate)
             {
-                if (startDate.Day == 2)
-                {
-                    expensesGoal = expensesGoal - transactions.Where(s => s.Date == startDate || s.Date == startDate.AddDays(-1)).Sum(s => s.Amount);
-                }
-                else
-                {
-                    expensesGoal = expensesGoal - transactions.Where(s => s.Date == startDate).Sum(s => s.Amount);
-                }
+
+                expensesGoal = expensesGoal - transactions.Where(s => s.Date == startDate).Sum(s => s.Amount);
                 
 
                 data.Add(new Data

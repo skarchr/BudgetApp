@@ -46,12 +46,15 @@ namespace BudgetApp.Tests.Graphs
 
             result.Series.Count.Should().Be(3);
 
-            result.Series[0].Data.Count.Should().Be(1);
-            result.Series[0].Data[0].X.Should().Be(GraphBuilder.ConvertDateToMilliSeconds(date1));
+            result.Series[0].Data.Count.Should().Be(2);
+            result.Series[0].Data[0].X.Should().Be(GraphBuilder.ConvertDateToMilliSeconds(date1.AddMinutes(-1)));
             result.Series[0].Data[0].Y.Should().Be(25000);
 
+            result.Series[0].Data[1].X.Should().Be(GraphBuilder.ConvertDateToMilliSeconds(date1));
+            result.Series[0].Data[1].Y.Should().Be(24500);
+
             result.Series[1].Data[0].X.Should().Be(GraphBuilder.ConvertDateToMilliSeconds(date1));
-            result.Series[1].Data[0].Y.Should().Be(25000);
+            result.Series[1].Data[0].Y.Should().Be(24500);
         }
 
         [Test]
@@ -70,10 +73,10 @@ namespace BudgetApp.Tests.Graphs
             }, date1.AddDays(1), 25000, "NOK");
 
             result.Series.Count.Should().Be(3);
-            result.Series[0].Data[0].X.Should().Be(GraphBuilder.ConvertDateToMilliSeconds(date1));
+            result.Series[0].Data[0].X.Should().Be(GraphBuilder.ConvertDateToMilliSeconds(date1.AddMinutes(-1)));
             result.Series[0].Data[0].Y.Should().Be(25000);
 
-            result.Series[0].Data[1].X.Should().Be(GraphBuilder.ConvertDateToMilliSeconds(date1.AddDays(1)));
+            result.Series[0].Data[1].X.Should().Be(GraphBuilder.ConvertDateToMilliSeconds(date1));
             result.Series[0].Data[1].Y.Should().Be(24500);
         }
 
@@ -111,25 +114,28 @@ namespace BudgetApp.Tests.Graphs
             }, date1.AddDays(5), 25000, "NOK");
 
             result.Series.Count.Should().Be(3);
-            result.Series[0].Data.Count.Should().Be(6);
+            result.Series[0].Data.Count.Should().Be(7);
 
-            result.Series[0].Data[0].X.Should().Be(GraphBuilder.ConvertDateToMilliSeconds(date1));
+            result.Series[0].Data[0].X.Should().Be(GraphBuilder.ConvertDateToMilliSeconds(date1.AddMinutes(-1)));
             result.Series[0].Data[0].Y.Should().Be(25000);
 
-            result.Series[0].Data[1].X.Should().Be(GraphBuilder.ConvertDateToMilliSeconds(date1.AddDays(1)));
+            result.Series[0].Data[1].X.Should().Be(GraphBuilder.ConvertDateToMilliSeconds(date1));
             result.Series[0].Data[1].Y.Should().Be(24500);
 
-            result.Series[0].Data[2].X.Should().Be(GraphBuilder.ConvertDateToMilliSeconds(date1.AddDays(2)));
+            result.Series[0].Data[2].X.Should().Be(GraphBuilder.ConvertDateToMilliSeconds(date1.AddDays(1)));
             result.Series[0].Data[2].Y.Should().Be(24500);
 
-            result.Series[0].Data[3].X.Should().Be(GraphBuilder.ConvertDateToMilliSeconds(date1.AddDays(3)));
-            result.Series[0].Data[3].Y.Should().Be(24000);
+            result.Series[0].Data[3].X.Should().Be(GraphBuilder.ConvertDateToMilliSeconds(date1.AddDays(2)));
+            result.Series[0].Data[3].Y.Should().Be(24500);
 
-            result.Series[0].Data[4].X.Should().Be(GraphBuilder.ConvertDateToMilliSeconds(date1.AddDays(4)));
+            result.Series[0].Data[4].X.Should().Be(GraphBuilder.ConvertDateToMilliSeconds(date1.AddDays(3)));
             result.Series[0].Data[4].Y.Should().Be(24000);
 
-            result.Series[0].Data[5].X.Should().Be(GraphBuilder.ConvertDateToMilliSeconds(date1.AddDays(5)));
-            result.Series[0].Data[5].Y.Should().Be(23500);
+            result.Series[0].Data[5].X.Should().Be(GraphBuilder.ConvertDateToMilliSeconds(date1.AddDays(4)));
+            result.Series[0].Data[5].Y.Should().Be(24000);
+
+            result.Series[0].Data[6].X.Should().Be(GraphBuilder.ConvertDateToMilliSeconds(date1.AddDays(5)));
+            result.Series[0].Data[6].Y.Should().Be(23500);
 
             result.Series[1].Data[0].X.Should().Be(GraphBuilder.ConvertDateToMilliSeconds(date1.AddDays(5)));
             result.Series[1].Data[0].Y.Should().Be(23500);
