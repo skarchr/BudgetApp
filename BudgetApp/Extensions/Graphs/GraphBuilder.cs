@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using BudgetApp.Constants;
 using BudgetApp.Models;
 
 namespace BudgetApp.Extensions.Graphs

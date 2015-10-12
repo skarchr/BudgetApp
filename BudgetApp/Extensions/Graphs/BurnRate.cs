@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using BudgetApp.Constants;
 using BudgetApp.Models;
 
@@ -172,10 +171,8 @@ namespace BudgetApp.Extensions.Graphs
 
             while (startDate <= currentDate)
             {
-
-                expensesGoal = expensesGoal - transactions.Where(s => s.Date == startDate).Sum(s => s.Amount);
+                expensesGoal = Math.Round(expensesGoal - transactions.Where(s => s.Date == startDate).Sum(s => s.Amount), 1);
                 
-
                 data.Add(new Data
                 {
                     X = GraphBuilder.ConvertDateToMilliSeconds(startDate),

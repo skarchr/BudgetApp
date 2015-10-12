@@ -51,13 +51,14 @@ namespace BudgetApp.Extensions.Graphs
                             Width = 2,
                             Label = new Label
                             {
-                                Text = "Median",
+                                Text = string.Format("Median: {0,10:# ##0.00}, Mean: {1,10:# ##0.00}", median, serie[0].Data.Average(s => s.Y)),
                                 Style = new Style
                                 {
-                                    Color = "rgb(72, 221, 184)"
+                                    FontSize = "10px",
+                                    FontWeight = "bold"
                                 },
-                                Y = 14,
-                                X = -5,
+                                Y = -130,
+                                VerticalAlign = "top",
                                 Align = "right"
                             },
                             Value = median
@@ -70,17 +71,6 @@ namespace BudgetApp.Extensions.Graphs
                             Color = "#b94a48",
                             DashStyle = "dash",
                             Width = 1,
-                            Label = new Label
-                            {
-                                Text = "UCL",
-                                Style = new Style
-                                {
-                                    Color = "#b94a48"
-                                },
-                                Y = 14,
-                                X = -5,
-                                Align = "right"
-                            },
                             Value = median + (3 * stdDev)
                         });
 
@@ -91,17 +81,6 @@ namespace BudgetApp.Extensions.Graphs
                             Color = "#b94a48",
                             DashStyle = "dash",
                             Width = 1,
-                            Label = new Label
-                            {
-                                Text = "LCL",
-                                Style = new Style
-                                {
-                                    Color = "#b94a48"
-                                },
-                                Y = -6,
-                                X = -5,
-                                Align = "right"
-                            },
                             Value = median - (3 * stdDev)
                         });
                 }
@@ -114,7 +93,7 @@ namespace BudgetApp.Extensions.Graphs
                 Series = serie,
                 Title = new Title
                 {
-                    Text = string.Format("SPC ({0})", range == Range.Annual ? "daily" : range.ToString().ToLower() + "ly")
+                    Text = "Statistical process control"
                 },
                 XAxis = new List<Axis>
                 {
@@ -154,7 +133,7 @@ namespace BudgetApp.Extensions.Graphs
                 Data = range != Range.Annual ?
                         range == Range.Week ? CreateWeekData(transactions, range, out categories) : CreateMonthData(transactions, out categories) :
                         CreateDayData(transactions, transactions.First().Date, endDate, out categories),
-                Name = "SPC",
+                Name = "Expenses",
                 Id = "spc_expenses"
             };
 

@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using BudgetApp.Constants;
+﻿using System.Collections.Generic;
 using BudgetApp.Models;
 
 namespace BudgetApp.Extensions.Graphs
