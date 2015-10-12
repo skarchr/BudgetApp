@@ -170,6 +170,11 @@ namespace BudgetApp.Models
         {
             get { return TreemapGenerator.CreateChart(Transactions).ToJson(); }
         }
+
+        public string TreemapChartYTD
+        {
+            get { return TreemapGenerator.CreateChart(Transactions.Where(s => s.Date.Year == DateTime.Now.Year).ToList()).ToJson(); }
+        }
     }
 
     public class SavingModel

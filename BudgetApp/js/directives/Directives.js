@@ -530,13 +530,7 @@
                                     }
                                 }
                             },
-                            title: {
-                                text: ' ',
-                                style: {
-                                    fontSize: '18px',
-                                    color: '#313131'
-                                }
-                            },
+                            title: model.title,
                             tooltip: {
                                 enabled: false,
                                 pointFormat: '{series.name}: <b>{point.y:.1f} </b>'
@@ -1092,11 +1086,7 @@
                             pointFormat: '<span style="color:{point.color}">\u25CF</span> {point.name}: <b>{point.value:.1f}</b><br/>'
                         },
                         title: {
-                            text: 'Expenses',
-                            style: {
-                                fontSize: '18px',
-                                color: '#000'
-                            }
+                            text: 'Overview: Expenses'
                         }
                     });
 
@@ -1183,15 +1173,14 @@
                         zoomType: 'x'
                     },
                     credits: false,
-                    title: {
-                        text: ' ',
-                    },
+                    title: model.title,
                     subtitle: {
                         text: ' '
                     },
                     xAxis: {
                         type: 'datetime',
-                        tickInterval: null,
+                        //tickInterval: null,
+                        labels:{ enabled:false },
                         //only if there are atleast 3 days left
                         plotLines: model.xAxis[0].plotLines
                     },
