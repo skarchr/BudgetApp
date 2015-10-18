@@ -10,7 +10,7 @@ namespace BudgetApp.Models
     public class HomeViewModel
     {
         public List<Transaction> Transactions { get; set; }
-
+        public ChartRange ChartRange { get; set; }
         public string DailyExpensesGraph { get; set; }
         public string TransactionDrilldownGraph { get; set; }
         public string DrilldownGraphTot { get; set; }

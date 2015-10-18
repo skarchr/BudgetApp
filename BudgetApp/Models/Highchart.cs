@@ -14,6 +14,7 @@ namespace BudgetApp.Models
         public List<Series> Series { get; set; }
         public Drilldown Drilldown { get; set; }
         public Title Title { get; set; }
+        public Title SubTitle { get; set; }
         public string Currency { get; set; }
         public string Type { get; set; }
 
