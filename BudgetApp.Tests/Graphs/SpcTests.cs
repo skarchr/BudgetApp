@@ -68,6 +68,103 @@ namespace BudgetApp.Tests.Graphs
 
         }
 
+        [Test]
+        public void BadTrend()
+        {
+            var startDate = new DateTime(2014, 1, 1);
+
+            var trans = CreateBadTrends(startDate);
+
+            var result = Spc.CreateChart(trans, "NOK");
+            result.Series[0].Data.Count.Should().Be(25);
+
+            result.Series[0].Data[24].Y.Should().Be(2100);
+            result.XAxis[0].Categories[24].Should().Be("1.jan");
+
+            result.Series.Count.Should().Be(2);
+            result.Series[1].Data.Count.Should().Be(8);
+            result.Series[1].Data[7].Y.Should().Be(2100);
+            result.Series[1].Data[7].X.Should().Be(24);
+        }
+
+        [Test]
+        public void BadTrend_Multiple()
+        {
+            var startDate = new DateTime(2014, 1, 1);
+
+            var trans = CreateBadTrends(startDate);
+
+            trans.AddRange(CreateBadTrends(startDate.AddDays(-9)));
+
+            var result = Spc.CreateChart(trans, "NOK");
+            result.Series[0].Data.Count.Should().Be(25);
+
+            result.Series[0].Data[24].Y.Should().Be(2100);
+            result.XAxis[0].Categories[24].Should().Be("1.jan");
+
+            result.Series.Count.Should().Be(2);
+            result.Series[1].Data.Count.Should().Be(16);
+
+            result.Series[1].Data[15].Y.Should().Be(2100);
+            result.Series[1].Data[15].X.Should().Be(24);
+        }
+
+        private static List<Transaction> CreateBadTrends(DateTime startDate)
+        {
+            var trans = new List<Transaction>
+            {
+                new Transaction
+                {
+                    Amount = 1500,
+                    Date = startDate.AddDays(-7),
+                    Category = Category.Appearance
+                },
+                new Transaction
+                {
+                    Amount = 1600,
+                    Date = startDate.AddDays(-6),
+                    Category = Category.Appearance
+                },
+                new Transaction
+                {
+                    Amount = 1700,
+                    Date = startDate.AddDays(-5),
+                    Category = Category.Appearance
+                },
+                new Transaction
+                {
+                    Amount = 1700,
+                    Date = startDate.AddDays(-4),
+                    Category = Category.Appearance
+                },
+                new Transaction
+                {
+                    Amount = 1800,
+                    Date = startDate.AddDays(-3),
+                    Category = Category.Appearance
+                },
+                new Transaction
+                {
+                    Amount = 1900,
+                    Date = startDate.AddDays(-2),
+                    Category = Category.Appearance
+                },
+                new Transaction
+                {
+                    Amount = 2000,
+                    Date = startDate.AddDays(-1),
+                    Category = Category.Appearance
+                },
+                new Transaction
+                {
+                    Amount = 2100,
+                    Date = startDate,
+                    Category = Category.Appearance
+                }
+            };
+            return trans;
+        }
+
         private List<Transaction> createTransactions(DateTime start, DateTime end)
         {
             return new List<Transaction>
