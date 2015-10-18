@@ -63,9 +63,9 @@
             <div class="col-xs-12 col-lg-6 text-center">
                 
                 <div style="position: absolute;margin-top: 8px;margin-left: 10px;z-index: 100">
-                    @Html.ActionLink("M", "ChangeRange", "Home", new { range = ChartRange.Monthly }, new { @class="btn btn-default btn-xs " +(Model.ChartRange == ChartRange.Monthly ? "active":"") })
-                    @Html.ActionLink("W", "ChangeRange", "Home", new { range = ChartRange.Weekly }, new { @class = "btn btn-default btn-xs " + (Model.ChartRange == ChartRange.Weekly ? "active" : "") })
-                    @Html.ActionLink("D", "ChangeRange", "Home", new { range = ChartRange.Daily }, new { @class = "btn btn-default btn-xs " + (Model.ChartRange == ChartRange.Daily ? "active" : "") })
+                    @Html.ActionLink("M", "ChangeRange", "Home", new { range = ChartRange.Monthly }, new { @class="btn btn-default btn-xs " +(Model.ChartRange == ChartRange.Monthly ? "active":""), @title="Monthly" })
+                    @Html.ActionLink("W", "ChangeRange", "Home", new { range = ChartRange.Weekly }, new { @class = "btn btn-default btn-xs " + (Model.ChartRange == ChartRange.Weekly ? "active" : ""), @title = "Weekly" })
+                    @Html.ActionLink("D", "ChangeRange", "Home", new { range = ChartRange.Daily }, new { @class = "btn btn-default btn-xs " + (Model.ChartRange == ChartRange.Daily ? "active" : ""), @title = "Daily" })
                 </div>
 
                 <span style="height:300px;width:565px !important;" class="visible-lg visible-sm" data-legend="false" data-prog-highchart="{{model.scpExpensesChart}}"></span>
@@ -127,7 +127,7 @@
 
             return {
                 model:@Html.Raw(Model.ToJson())
-                };
+            };
 
         });
 

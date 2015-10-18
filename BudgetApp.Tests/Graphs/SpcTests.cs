@@ -11,8 +11,6 @@ namespace BudgetApp.Tests.Graphs
     [TestFixture]
     public class SpcTests
     {
-        //TODO make tests for median, ucl and lcl
-
         [Test]
         public void Last_Weeks_No_Transactions()
         {
