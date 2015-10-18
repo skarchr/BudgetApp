@@ -19,7 +19,7 @@ namespace BudgetApp.Extensions.Graphs
 
         }
 
-        public static Highchart CreateChart(List<Transaction> transactions, string currency, Range range = Range.Annual)
+        public static Highchart CreateChart(List<Transaction> transactions, string currency, ChartRange range = ChartRange.Daily)
         {
 
             var categories = new List<string>();
@@ -28,6 +28,8 @@ namespace BudgetApp.Extensions.Graphs
             var plotlinesY = new List<PlotLine>();
             var plotlinesX = new List<PlotLine>();
             int? max = null;
+
+            transactions = transactions.Where(s => (CategoryExt.GetMainCategory(s.Category.Value) != Categories.Income)).ToList();
 
             if (transactions.Count > 0)
             {
@@ -42,25 +44,31 @@ namespace BudgetApp.Extensions.Graphs
 
                     plotlinesX = CreatePlotLineX(serie[0].Data);
 
+                    plotlinesX.Add(new PlotLine
+                    {
+                        Label = new Label
+                        {
+                            Text = string.Format("Median: {0,10:# ##0.00}, Mean: {1,10:# ##0.00}", median, serie[0].Data.Average(s => s.Y)),
+                            Style = new Style
+                            {
+                                FontSize = "10px",
+                                FontWeight = "bold"
+                            },
+                            VerticalAlign = "bottom",
+                            Align = "right",
+                            Y = -5
+                        },
+                        Value = 24,
+                        Width = 2
+                    });
+
                     plotlinesY.Add(
 
                         new PlotLine
                         {
                             Color = "rgb(72, 221, 184)",
                             DashStyle = "dash",
-                            Width = 2,
-                            Label = new Label
-                            {
-                                Text = string.Format("Median: {0,10:# ##0.00}, Mean: {1,10:# ##0.00}", median, serie[0].Data.Average(s => s.Y)),
-                                Style = new Style
-                                {
-                                    FontSize = "10px",
-                                    FontWeight = "bold"
-                                },
-                                Y = -130,
-                                VerticalAlign = "top",
-                                Align = "right"
-                            },
+                            Width = 2,                            
                             Value = median
                         });
 
@@ -116,33 +124,35 @@ namespace BudgetApp.Extensions.Graphs
             };
         }
 
-        private static Series CreateSeries(List<Transaction> transactions, Range range, out List<string> categories)
+        private static Series CreateSeries(List<Transaction> transactions, ChartRange range, out List<string> categories)
         {
-            transactions = transactions.Where(s => (CategoryExt.GetMainCategory(s.Category.Value) != Categories.Income)).ToList();
-
-            var endDate = transactions.OrderByDescending(s => s.Date).First().Date;
-
-            var addedDays = -25 * ( range != null ? range == Range.Week ? 7 : range == Range.Month ? 30 : 1 : 1 );
-
-            transactions = transactions.Where(s => s.Date >= endDate.AddDays(addedDays)).OrderBy(s => s.Date).ToList();
+            var data = range == ChartRange.Monthly
+                ? CreateMonthData(transactions, out categories)
+                : range == ChartRange.Weekly
+                    ? CreateWeekData(transactions, out categories)
+                    : CreateDayData(transactions, out categories);
 
             return new Series
             {
                 Color = "rgb(0, 148, 244)",
                 Type = "line",
-                Data = range != Range.Annual ?
-                        range == Range.Week ? CreateWeekData(transactions, range, out categories) : CreateMonthData(transactions, out categories) :
-                        CreateDayData(transactions, transactions.First().Date, endDate, out categories),
+                Data = data,
                 Name = "Expenses",
                 Id = "spc_expenses"
             };
 
         }
 
-        private static List<Data> CreateDayData(List<Transaction> transactions, DateTime startDate, DateTime endDate, out List<string> categories)
+        private static List<Data> CreateDayData(List<Transaction> transactions, out List<string> categories)
         {
             categories = new List<string>();
             var data = new List<Data>();
+
+            var endDate = transactions.OrderByDescending(s => s.Date).First().Date;
+            var startDate = endDate.AddDays(-24);
+
+            if (transactions.Count == 0)
+                return data;
 
             var index = 0;
             while (startDate <= endDate && startDate != DateTime.Now)
@@ -153,8 +163,8 @@ namespace BudgetApp.Extensions.Graphs
                 {
                     X = index,
                     Y = transactions.Where(s => s.Date == startDate).Sum(s => s.Amount),
-                    DataLabels = new DataLabels {Enabled = false}
-                });                                
+                    DataLabels = new DataLabels { Enabled = false }
+                });
 
                 startDate = startDate.AddDays(1);
                 index++;
@@ -162,41 +172,65 @@ namespace BudgetApp.Extensions.Graphs
             return data;
         }
 
-        private static List<Data> CreateWeekData(List<Transaction> transactions, Range range, out List<string> categories)
+        private static List<Data> CreateWeekData(List<Transaction> transactions, out List<string> categories)
         {
             categories = new List<string>();
             var data = new List<Data>();
 
-            var dict = new Dictionary<int, List<Transaction>>();
+            var endDate = transactions.OrderByDescending(s => s.Date).First().Date;
+            var startDate = endDate.AddDays(-175);
 
-            foreach (var expense in transactions)
+            transactions = transactions.Where(s => s.Date >= startDate).ToList();
+
+            var dateRange = new List<DateTime>();
+
+            var initDate = endDate;
+
+            if (DateHelper.GetWeekNumber(endDate) == DateHelper.GetWeekNumber(DateTime.Now) && endDate.Year == DateTime.Now.Year)
+                initDate = initDate.AddDays(-7);
+            
+            var dateIndex = 0;
+
+            while (dateIndex <= 24)
             {
-                var ran = range == Range.Week ? DateHelper.GetWeekNumber(expense.Date) : expense.Date.Month;
+                dateRange.Add(initDate);
 
-                if (!dict.ContainsKey(ran))
-                {
-                    dict.Add(ran, new List<Transaction>());
-                }
-
-                dict[ran].Add(expense);
+                initDate = initDate.AddDays(-7);
+                dateIndex++;
             }
 
             var index = 0;
-            foreach (var ran in dict)
+            foreach (var date in dateRange.OrderBy(s => s))
             {
-                categories.Add(range == Range.Week ? ran.Key.ToString() : DateHelper.GetMonthText(ran.Key, true));
-                
-                if (ran.Key != DateHelper.GetWeekNumber(DateTime.Now))
+                var week = DateHelper.GetWeekNumber(date);
+
+                if (week == 53)
                 {
+                    categories.Add("1");
+
                     data.Add(new Data
                     {
                         X = index,
-                        Y = ran.Value.Sum(s => s.Amount),
-                        DataLabels = new DataLabels {Enabled = false},
-                        Year = ran.Value.First().Date.Year
+                        Y = transactions.Where(s => DateHelper.GetWeekNumber(s.Date) == week || DateHelper.GetWeekNumber(s.Date) == 1).Sum(s => s.Amount),
+                        DataLabels = new DataLabels { Enabled = false },
+                        Year = date.Year
                     });
-                    index++;
+
                 }
+                else
+                {
+                    categories.Add(week.ToString());
+
+                    data.Add(new Data
+                    {
+                        X = index,
+                        Y = transactions.Where(s => DateHelper.GetWeekNumber(s.Date) == week).Sum(s => s.Amount),
+                        DataLabels = new DataLabels { Enabled = false },
+                        Year = date.Year
+                    });
+                }
+                
+                index++;
             }
 
             return data;
@@ -206,46 +240,46 @@ namespace BudgetApp.Extensions.Graphs
         {
             categories = new List<string>();
             var data = new List<Data>();
-            var dict = new Dictionary<int, Dictionary<int, List<Transaction>>>();
 
-            foreach (var transaction in transactions)
+            var endDate = transactions.OrderByDescending(s => s.Date).First().Date;
+            var startDate = new DateTime(endDate.AddMonths(-25).Year, endDate.AddMonths(-25).Month, 1);
+
+            transactions = transactions.Where(s => s.Date >= startDate).ToList();
+
+            var dateRange = new List<DateTime>();
+
+            var initDate = endDate;
+
+            if (endDate.Month == DateTime.Now.Month && endDate.Year == DateTime.Now.Year)
+                initDate = initDate.AddMonths(-1);
+
+            var dateIndex = 0;
+
+            while (dateIndex <= 24)
             {
-                var year = transaction.Date.Year;
+                dateRange.Add(initDate);
 
-                if (!dict.ContainsKey(year))
-                {
-                    dict.Add(year, new Dictionary<int, List<Transaction>>());
-                }
-
-                var month = transaction.Date.Month;
-
-                if (!dict[year].ContainsKey(month))
-                {
-                    dict[year].Add(month, new List<Transaction>());
-                }
-
-                dict[year][month].Add(transaction);
+                initDate = initDate.AddMonths(-1);
+                dateIndex++;
             }
 
             var index = 0;
-            foreach (var year in dict)
+            foreach (var date in dateRange.OrderBy(s => s))
             {
-                foreach (var month in year.Value)
-                {
-                    categories.Add(DateHelper.GetMonthText(month.Key, true));
+                var month = date.Month;
+                
+                categories.Add(DateHelper.GetMonthText(month,true));
 
-                    if (!(year.Key == DateTime.Now.Year && month.Key == DateTime.Now.Month))
-                    {
-                        data.Add(new Data
-                        {
-                            X = index,
-                            Y = month.Value.Sum(s => s.Amount),
-                            DataLabels = new DataLabels { Enabled = false },
-                            Year = month.Value.First().Date.Year
-                        });
-                        index++;
-                    }                    
-                }
+                data.Add(new Data
+                {
+                    X = index,
+                    Y = transactions.Where(s => s.Date.Month == month && s.Date.Year == date.Year).Sum(s => s.Amount),
+                    DataLabels = new DataLabels {Enabled = false},
+                    Year = date.Year
+                });
+                
+
+                index++;
             }
 
             return data;

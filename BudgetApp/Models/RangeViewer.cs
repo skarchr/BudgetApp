@@ -12,6 +12,11 @@ namespace BudgetApp.Models
         Annual, Month, Week
     }
 
+    public enum ChartRange
+    {
+        Daily, Weekly, Monthly
+    }
+
     public class RangeViewer
     {
         public int Year { get; set; }

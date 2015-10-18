@@ -1,4 +1,5 @@
 ﻿@using BudgetApp.Extensions
+@using BudgetApp.Models
 @model BudgetApp.Models.HomeViewModel
 @{
     ViewBag.Title = "Dashboard";
@@ -60,13 +61,20 @@
         <div class="row">
             
             <div class="col-xs-12 col-lg-6 text-center">
+                
+                <div style="position: absolute;margin-top: 8px;margin-left: 10px;z-index: 100">
+                    @Html.ActionLink("M", "ChangeRange", "Home", new { range = ChartRange.Monthly }, new { @class="btn btn-default btn-xs " +(Model.ChartRange == ChartRange.Monthly ? "active":""), @title="Monthly" })
+                    @Html.ActionLink("W", "ChangeRange", "Home", new { range = ChartRange.Weekly }, new { @class = "btn btn-default btn-xs " + (Model.ChartRange == ChartRange.Weekly ? "active" : ""), @title = "Weekly" })
+                    @Html.ActionLink("D", "ChangeRange", "Home", new { range = ChartRange.Daily }, new { @class = "btn btn-default btn-xs " + (Model.ChartRange == ChartRange.Daily ? "active" : ""), @title = "Daily" })
+                </div>
 
                 <span style="height:300px;width:565px !important;" class="visible-lg visible-sm" data-legend="false" data-prog-highchart="{{model.scpExpensesChart}}"></span>
 
                 <span style="height:300px;width:923px !important;" class="visible-md" data-legend="false" data-prog-highchart="{{model.scpExpensesChart}}"></span>
 
                 <span style="height:300px;width:390px !important;" class="hidden-sm hidden-md hidden-lg" data-legend="false" data-prog-highchart="{{model.scpExpensesChart}}"></span>
-
+                
+                
             </div>
 
             <div class="col-xs-12 col-lg-6">
@@ -119,7 +127,7 @@
 
             return {
                 model:@Html.Raw(Model.ToJson())
-                };
+            };
 
         });
 
