@@ -33,7 +33,16 @@ namespace BudgetApp.Extensions.Graphs
 
             if (transactions.Count > 0)
             {
-                serie.Add(CreateSeries(transactions, range, out categories));
+                var spcSeries = CreateSeries(transactions, range, out categories);
+
+                serie.Add(spcSeries);
+
+                var badTrend = CreateTrendSeries(spcSeries.Data);
+
+                if (badTrend.Data.Count >= 7)
+                {
+                    serie.Add(badTrend);
+                }
 
                 if (serie.First().Data.Count > 0)
                 {
@@ -68,6 +77,7 @@ namespace BudgetApp.Extensions.Graphs
                         {
                             Color = "rgb(72, 221, 184)",
                             DashStyle = "dash",
+                            ZIndex = 0,
                             Width = 2,                            
                             Value = median
                         });
@@ -78,6 +88,7 @@ namespace BudgetApp.Extensions.Graphs
                         {
                             Color = "#b94a48",
                             DashStyle = "dash",
+                            ZIndex = 0,
                             Width = 1,
                             Value = median + (3 * stdDev)
                         });
@@ -88,6 +99,7 @@ namespace BudgetApp.Extensions.Graphs
                         {
                             Color = "#b94a48",
                             DashStyle = "dash",
+                            ZIndex = 0,
                             Width = 1,
                             Value = median - (3 * stdDev)
                         });
@@ -142,6 +154,50 @@ namespace BudgetApp.Extensions.Graphs
             };
 
         }
+
+        private static Series CreateTrendSeries(List<Data> actualData)
+        {
+            var data = new List<Data>();
+
+            var temp = new List<Data>();
+
+            double? amount = 0.0;
+            foreach (var ad in actualData)
+            {
+                var tmpData = new Data
+                {
+                    X = ad.X,
+                    Y = ad.Y,
+                    DataLabels = new DataLabels {Enabled = false}
+                };
+
+                if (amount <= ad.Y && amount != 0.0)
+                {                   
+                    temp.Add(tmpData);
+                }
+                else 
+                {
+                    if(temp.Count >= 7 && amount > ad.Y)
+                        data.AddRange(temp);
+
+                    temp = new List<Data> { tmpData };
+                }
+
+                amount = ad.Y;
+            }
+
+            if(temp.Count >= 7)
+                data.AddRange(temp);
+
+            return new Series
+            {
+                Color = "rgb(255, 42, 62)",
+                Type = "scatter",
+                Data = data,
+                Name = "Increasing trend",
+                Id = "spc_expenses"
+            };
+        } 
 
         private static List<Data> CreateDayData(List<Transaction> transactions, out List<string> categories)
         {

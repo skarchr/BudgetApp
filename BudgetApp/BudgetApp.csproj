@@ -684,6 +684,7 @@
     <Content Include="Views\Manage\_ExternalLogins.cshtml" />
     <Content Include="Views\Shared\_Disclaimer.cshtml" />
     <Content Include="Views\Admin\Index.cshtml" />
+    <Content Include="Views\Shared\_GoogleAnalytics.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\uploads\" />
