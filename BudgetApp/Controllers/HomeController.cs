@@ -26,7 +26,10 @@ namespace BudgetApp.Controllers
 
             var expenses = transactions.Where(s => (CategoryExt.GetMainCategory(s.Category.Value) != Categories.Income)).OrderBy(s => s.Date);
 
-            var timeSpan = (expenses.Last().Date - expenses.First().Date).Days;
+            var timeSpan = 0;
+            
+            if(expenses.Count() > 1)
+                timeSpan = (expenses.Last().Date - expenses.First().Date).Days;
 
             var range = timeSpan >= 700 ?
                 ChartRange.Monthly :

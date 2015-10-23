@@ -1,4 +1,4 @@
-# BudgetApp (v.0.2)
+# BudgetApp (v.0.3)
 A webpage for storing and displaying transaction data.
 
 ## Rationale
