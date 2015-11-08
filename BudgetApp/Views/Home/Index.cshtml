@@ -34,11 +34,18 @@
     else
     {       
         
-        <div class="row">            
+        <div class="row">
             
-            <div class="col-xs-12">
+            <div class="col-xs-12 text-right">
+                <a style="margin-right: 10px;" href="@Url.Action("DownloadCurrentYear", "Home")" title="Download an excelfile containing all transactions from @DateTime.Now.Year">
+                    <i class=" glyphicon glyphicon-download"></i> Download
+                </a>
             </div>
 
+        </div>
+        
+        <div class="row">            
+                        
             <div class="col-xs-12 col-lg-6 text-center">
 
                 <span style="height:300px;width:565px !important;" class="visible-lg visible-sm" data-treemap-chart="{{model.treemapChartYTD}}"></span>
