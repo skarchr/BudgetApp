@@ -30,6 +30,8 @@ namespace BudgetApp.Tests.Graphs
             result.Series[0].Data[21].Y.Should().Be(100);
             result.Series[0].Data[24].Y.Should().Be(1500);
             result.XAxis[0].Categories[24].Should().Be("4.jan");
+
+            result.Series.Count.Should().Be(1);
         }
 
         [Test]
@@ -47,6 +49,9 @@ namespace BudgetApp.Tests.Graphs
 
             result.Series[0].Data[24].Y.Should().Be(1500);
             result.Categories[24].Should().Be(DateHelper.GetWeekNumber(date1.AddDays(175)).ToString());
+
+            result.Series.Count.Should().Be(1);
+
 
         }
 

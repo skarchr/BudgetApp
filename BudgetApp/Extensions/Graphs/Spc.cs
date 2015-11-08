@@ -103,6 +103,8 @@ namespace BudgetApp.Extensions.Graphs
                             Width = 1,
                             Value = median - (3 * stdDev)
                         });
+
+
                 }
             }
 
@@ -136,6 +138,18 @@ namespace BudgetApp.Extensions.Graphs
             };
         }
 
+        private static Series CreateBoxPlotSeries(List<Data> data)
+        {
+            return new Series
+            {
+                Color = "rgb(0, 148, 244)",
+                Type = "boxplot",
+                Data = data,
+                Name = "Boxplot",
+                Id = "boxplot"
+            };
+        }
+
         private static Series CreateSeries(List<Transaction> transactions, ChartRange range, out List<string> categories)
         {
             var data = range == ChartRange.Monthly
@@ -152,6 +166,7 @@ namespace BudgetApp.Extensions.Graphs
                 Name = "Expenses",
                 Id = "spc_expenses"
             };
+
 
         }
 
@@ -231,6 +246,7 @@ namespace BudgetApp.Extensions.Graphs
         private static List<Data> CreateWeekData(List<Transaction> transactions, out List<string> categories)
         {
             categories = new List<string>();
+
             var data = new List<Data>();
 
             var endDate = transactions.OrderByDescending(s => s.Date).First().Date;
@@ -260,32 +276,27 @@ namespace BudgetApp.Extensions.Graphs
             {
                 var week = DateHelper.GetWeekNumber(date);
 
+                List<Transaction> trans;
+
                 if (week == 53)
                 {
                     categories.Add("1");
-
-                    data.Add(new Data
-                    {
-                        X = index,
-                        Y = transactions.Where(s => DateHelper.GetWeekNumber(s.Date) == week || DateHelper.GetWeekNumber(s.Date) == 1).Sum(s => s.Amount),
-                        DataLabels = new DataLabels { Enabled = false },
-                        Year = date.Year
-                    });
-
+                    trans = transactions.Where(s => DateHelper.GetWeekNumber(s.Date) == week || DateHelper.GetWeekNumber(s.Date) == 1).ToList();                    
                 }
                 else
                 {
                     categories.Add(week.ToString());
-
-                    data.Add(new Data
-                    {
-                        X = index,
-                        Y = transactions.Where(s => DateHelper.GetWeekNumber(s.Date) == week).Sum(s => s.Amount),
-                        DataLabels = new DataLabels { Enabled = false },
-                        Year = date.Year
-                    });
+                    trans = transactions.Where(s => DateHelper.GetWeekNumber(s.Date) == week).ToList();
                 }
-                
+
+                data.Add(new Data
+                {
+                    X = index,
+                    Y = trans.Sum(s => s.Amount),
+                    DataLabels = new DataLabels { Enabled = false },
+                    Year = date.Year
+                });
+
                 index++;
             }
 

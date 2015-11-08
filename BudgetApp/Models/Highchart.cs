@@ -126,6 +126,13 @@ namespace BudgetApp.Models
         public int Year { get; set; }
         public double? Y { get; set; }
         public double X { get; set; }
+
+        public double? Q1 { get; set; }
+        public double? Q3 { get; set; }
+        public double? High { get; set; }
+        public double? Low { get; set; }
+        public double? Median { get; set; }
+
         public string Color { get; set; }
         public string Drilldown { get; set; }
         public string Name { get; set; }
