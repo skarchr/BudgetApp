@@ -1,0 +1,68 @@
+﻿@using BudgetApp.Extensions
+@model string
+
+<div class="row">
+    <div id="boxplotCanvas"></div>
+</div>
+
+
+<script>
+    (function() {
+        'use strict';
+        
+        Highcharts.setOptions({ lang: { drillUpText: 'Back' } });
+
+        var model = @Html.Raw(Model);
+
+        $('#boxplotCanvas').highcharts({
+            chart: {
+                type: 'line',
+                style: {
+                    fontFamily: "Tahoma, Geneva, sans-serif !important"
+                },
+                plotBackgroundColor: null,
+                plotBorderWidth: null,
+                plotShadow: false
+            },
+            exporting: {
+                enabled: true,
+                buttons: {
+                    contextButton: {
+                        align:'left'
+                    }
+                }
+            },
+            title: {
+                text: model.title.text,
+                style: {
+                    fontSize: '18px',
+                    color: '#313131'
+                }
+            },
+            tooltip: {
+                enabled: true,
+                pointFormat: '{series.name}: <b>{point.y:.1f} </b>'
+            },
+            legend: {
+                enabled: true,
+                align: 'right',
+                verticalAlign: 'bottom',
+                layout: 'horizontal',
+                y: 20
+            },
+            credits: false,
+            plotOptions: {
+                series: {
+                    dataLabels: {
+                        enabled: false
+                    }
+                }
+
+            },
+            series: model.series,
+            xAxis: model.xAxis,
+            yAxis: model.yAxis
+        });
+
+    })();
+</script>

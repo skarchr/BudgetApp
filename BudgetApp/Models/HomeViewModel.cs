@@ -24,7 +24,7 @@ namespace BudgetApp.Models
 
         public string BurnRateChart
         {
-            get { return GraphBuilder.BurnRateGraph(Transactions, ExpensesGoal, Currency).ToJson(); }
+            get { return GraphBuilder.BurnRateGraph(Transactions, DateTime.Now, ExpensesGoal, Currency).ToJson(); }
         }
 
         public List<SavingModel> SavingGoals
