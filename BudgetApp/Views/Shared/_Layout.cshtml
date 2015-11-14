@@ -17,7 +17,7 @@
           href="../../Content/images/favicon.png" />
     </head>
     <body style="@(User.Identity.IsAuthenticated ? "" : "padding-top: 10px;")">
-        
+                
         <div class="row" ng-show="hideOnDomReady">
 
             <div class="spinner">
@@ -185,7 +185,7 @@
             </div>
 
         }
-        <div class="container body-content" ng-cloak scroll-position>
+        <div class="container body-content" ng-cloak scroll-position>           
 
             @RenderBody()
 

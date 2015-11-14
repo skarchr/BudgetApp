@@ -10,8 +10,10 @@
                 link: function(scope, elem) {
 
 
-                    $(elem[0]).on('click', function () {
-                        console.log(scope.$parent.chartModel);
+                    $(elem[0]).on('click', function (e) {
+
+                        e.preventDefault();
+
                         $http({
                             method: 'POST',
                             data: JSON.stringify(scope.$parent.chartModel),

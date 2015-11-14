@@ -8,13 +8,14 @@
         $scope.selected = 'charts';
 
         $scope.chartModel = {
-            name: '',
+            name: reportFactory.model.name,
             fromDate: new Date( Date.parse(reportFactory.model.fromDate) ),
             toDate: new Date(Date.parse(reportFactory.model.toDate)),
             range: reportFactory.model.range,
             categories: reportFactory.model.categories,
             isDrilldown: false,
-            chartType: 'column'
+            chartType: 'column',
+            byYear: reportFactory.model.byYear
         };
 
         $scope.toggleCategory = function(category) {
