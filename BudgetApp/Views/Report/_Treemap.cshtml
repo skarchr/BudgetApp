@@ -1,0 +1,94 @@
+﻿@using BudgetApp.Extensions
+@model string
+
+<div class="row">
+    <div id="treemapCanvas"></div>
+</div>
+
+
+<script>
+    (function() {
+        'use strict';
+        
+        Highcharts.setOptions({ lang: { drillUpText: 'Back' } });
+
+        var model = @Html.Raw(Model);
+
+        Highcharts.setOptions({ lang: { drillUpText: 'Back' } });
+
+        $("#treemapCanvas").highcharts({
+            chart: {
+                style: {
+                    fontFamily: "Tahoma, Geneva, sans-serif !important"
+                },
+                events: {
+                    redraw: function () {
+
+                        if (this.series[0].rootNode === '')
+                            $("#treemapCanvas").highcharts().setTitle({ text: 'Expenses' });
+                    }
+                }
+            },
+            exporting: {
+                enabled: true,
+                buttons: {
+                    contextButton: {
+                        align:'left'
+                    }
+                }
+            },
+            credits: true,
+            series: [{
+                events: {
+                    click: function (e) {
+                        if (e.point.parent === undefined)
+                            $("#treemapCanvas").highcharts().setTitle({ text: e.point.name });
+                    }
+                },
+                type: 'treemap',
+                drillUpButton: {
+                    position: { y: -30, x: -10, align: 'right' },
+                    theme: {
+                        fill: 'white',
+                        'stroke-width': 1,
+                        stroke: 'silver',
+                        heigth: 50,
+                        r: 4,
+                        states: {
+                            hover: {
+                                fill: '#cccccc',
+                                stroke: '#adadad !important',
+                            },
+                            select: {
+                                stroke: '#adadad',
+                                fill: '#bada55'
+                            }
+                        }
+                    }
+                },
+                layoutAlgorithm: 'squarified',
+                allowDrillToNode: true,
+                dataLabels: {
+                    enabled: false
+                },
+                levelIsConstant: false,
+                levels: [{
+                    level: 1,
+                    dataLabels: {
+                        enabled: true
+                    },
+                    borderWidth: 3
+                }],
+                data: model
+            }],
+            tooltip: {
+                enabled: true,
+                pointFormat: '<span style="color:{point.color}">\u25CF</span> {point.name}: <b>{point.value:.1f}</b><br/>'
+            },
+            title: {
+                text: 'Overview: Expenses'
+            }
+        });
+
+    })();
+</script>

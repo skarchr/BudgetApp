@@ -1,0 +1,157 @@
+﻿@using BudgetApp.Controllers
+@using BudgetApp.Extensions
+@using Microsoft.Ajax.Utilities
+@model ReportController.ReportViewModel
+
+@{
+    ViewBag.Title = "Report";
+}
+
+<div class="row" ng-controller="reportController">
+
+    <div class="col-xs-12" style="border:2px solid #0094FF; -ms-border-radius: 40px; border-radius: 40px;">
+
+        <ul class="list-unstyled list-inline" role="tablist" style="margin-top:-20px;">
+            <li role="presentation" class="active">
+                <a href="#chart" aria-controls="chart" role="tab" data-toggle="tab" class="btn btn-default btn-nav btn-sm btn-round text-center {{selected === 'charts' ? 'active':''}}" style="min-width: 40px;" ng-click="selected = 'charts'">
+                    <i class="glyphicon glyphicon-signal"></i>
+                </a>
+            </li>
+            <li role="presentation" style="margin-left: -10px;">
+                <a href="#table" aria-controls="table" role="tab" data-toggle="tab" class="btn btn-default btn-nav btn-sm btn-round text-center {{selected === 'tables' ? 'active':''}}" style="min-width: 40px;" ng-click="selected = 'tables'">
+                    <i class="glyphicon glyphicon-th"></i>
+                </a>
+            </li>
+        </ul>
+
+        @using (Html.BeginForm("DownloadExcelFile", "Report", FormMethod.Post, new { @class = "form-horizontal", @name = "chartForm" }))
+        {
+            <div class="form-group" ng-show="selected !== 'tables'">
+                <label class="col-sm-2 control-label">Choose chart</label>
+                <div class="col-sm-10">
+                    <ul class="list-unstyled">
+                        @foreach (var chart in Model.Charts)
+                        {
+                            <li>
+                                <div class="radio">
+                                    <label>
+                                        <input type="radio" name="Name" id="Name" ng-model="chartModel.name" value="@chart" />
+                                        @chart.Replace('_', ' ')
+                                    </label>
+                                </div>
+                            </li>
+                        }
+                    </ul>
+
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-sm-2 control-label">From date</label>
+                <div class="col-sm-10">
+                    <input type="date" class="form-control" name="FromDate" id="FromDate" ng-model="chartModel.fromDate" max="{{chartModel.toDate | date: 'yyyy-MM-dd'}}" required />                    
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-sm-2 control-label">To date</label>
+                <div class="col-sm-10">                    
+                    <input type="date" class="form-control" name="ToDate" id="ToDate" ng-model="chartModel.toDate" min="{{chartModel.fromDate | date: 'yyyy-MM-dd'}}" max="{{today | date: 'yyyy-MM-dd'}}" required />
+                </div>
+            </div>
+            
+
+            <div class="form-group">
+                <label class="col-sm-2 control-label">Categories</label>
+                <div class="col-sm-10 form-inline">
+                    <ul class="list-unstyled list-inline">
+                        
+                        @Html.DropDownListFor(s => s.Categories, new SelectList(Model.Categories.Select(x => new { Value = x, Text = CategoryExt.CamelCaseToNormal(x) }), "Value", "Text"), new { @multiple="multiple", @ng_model="chartModel.categories", @class="form-control", @style="height:200px;" })
+
+                    </ul>
+
+                </div>
+            </div>
+
+            <div class="form-group" ng-show="selected === 'tables'">
+                <label class="col-sm-2 control-label">Sheets by</label>
+                <div class="col-sm-10 form-inline">
+                    <div class="radio">
+                        <label>
+                            <input type="radio" name="ByYear" id="ByYear" ng-model="chartModel.byYear" value="true" checked="checked" />
+                            Year
+                        </label>
+                    </div>
+                    <div class="radio">
+                        <label>
+                            <input type="radio" name="ByYear" id="ByYear" ng-model="chartModel.byYear" value="false" />
+                            Category
+                        </label>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="form-group" ng-show="chartModel.name === '@ReportController.SPC' && selected === 'charts'">
+                <label class="col-sm-2 control-label">Range</label>
+                <div class="col-sm-10 form-inline">
+                    <select name="Range" ng-model="chartModel.range" class="form-control">
+                        <option value="0">Daily</option>
+                        <option value="1">Weekly</option>
+                        <option value="2">Monthly</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group" ng-show="chartModel.name === '@ReportController.Drilldown' && selected === 'charts'">
+                <label class="col-sm-2 control-label">Chart type</label>
+                <div class="col-sm-10 form-inline">
+                    <select name="ChartType" ng-model="chartModel.chartType" class="form-control">
+                        <option value="column">Column</option>
+                        <option value="pie">Pie</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group" ng-show="selected === 'charts'">
+                <div class="col-sm-offset-2 col-sm-10 form-inline">
+                    <button ng-disabled="chartForm.$invalid || chartModel.categories.length === 0" class="btn btn-primary" data-get-chart-view>Generate chart</button>
+                </div>
+            </div>
+
+            <div class="form-group" ng-show="selected === 'tables'">
+                <div class="col-sm-offset-2 col-sm-10 form-inline">
+                    <button ng-disabled="chartModel.categories.length === 0" class="btn btn-primary" type="submit">
+                        Download Excel file
+                    </button>
+                </div>
+            </div>
+        }
+
+        <!-- Tab panes -->
+        <div class="tab-content" style="margin-bottom: 40px;">
+            <div role="tabpanel" class="tab-pane active" id="chart">
+                <div id="chartView"></div>
+            </div>
+            <div role="tabpanel" class="tab-pane" id="table">
+
+            </div>
+        </div>
+
+
+    </div>
+
+</div>
+<script src="~/bower_components/highstock-release/modules/exporting.js"></script>
+<script src="~/js/directives/ReportDirectives.js"></script>
+<script>
+    (function() {
+        'use strict';
+
+        angular.module('budgetApp').factory('reportFactory', function() {
+            return {
+                model:@Html.Raw(Model.ToJson())
+                };
+        });
+
+    })();
+</script>

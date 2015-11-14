@@ -87,7 +87,7 @@
                     </svg>
 
                 </a>
-                <ul class="dropdown-menu text-left">
+                <ul class="dropdown-menu text-left" style="box-shadow: 3px 5px 18px grey;">
                     <li class="visible-xs visible-sm"><a href="@Url.Action("Create", "Transactions")" title="Add transaction">Add</a></li>
                     <li class="visible-sm"><a href="@Url.Action("Upload", "Transactions")" title="Import transactions">Import</a></li>
                     <li role="separator" class="divider visible-xs visible-sm"></li>
@@ -100,6 +100,7 @@
                     <li class="@(ViewBag.Title == "Dashboard" ? "active" : "")">@Html.ActionLink("Dashboard", "Index", "Home")</li>                                       
                     <li class="@(ViewBag.Title == "Transactions" ? "active" : "")">@Html.ActionLink("Transactions", "Index", "Transactions")</li>
                     <li class="@(ViewBag.Title == "Mappings" ? "active" : "")">@Html.ActionLink("Mappings", "Index", "Mappings")</li>
+                    <li class="@(ViewBag.Title == "Reports" ? "active" : "")">@Html.ActionLink("Reports", "Index", "Report")</li>
                     <li class="@(ViewBag.Title == "Manage" ? "active" : "")">
                         <a href="@Url.Action("Index", "Manage", null)" title="Profile">
                             Profile

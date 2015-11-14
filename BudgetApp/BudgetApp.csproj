@@ -190,6 +190,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\MappingsController.cs" />
+    <Compile Include="Controllers\ReportController.cs" />
     <Compile Include="Controllers\TransactionsController.cs" />
     <Compile Include="Extensions\CategoryExt.cs" />
     <Compile Include="Extensions\DateHelper.cs" />
@@ -570,9 +571,11 @@
     <Content Include="js\controllers\ImportController.js" />
     <Content Include="js\controllers\LoginController.js" />
     <Content Include="js\controllers\MappingsController.js" />
+    <Content Include="js\controllers\ReportController.js" />
     <Content Include="js\controllers\ToastrController.js" />
     <Content Include="js\controllers\TransactionController.js" />
     <Content Include="js\directives\Directives.js" />
+    <Content Include="js\directives\ReportDirectives.js" />
     <Content Include="js\filters\Filters.js" />
     <Content Include="js\services\Services.js" />
     <Content Include="js\templates\SelectCategory.html" />
@@ -688,6 +691,12 @@
     <Content Include="Views\Shared\_Disclaimer.cshtml" />
     <Content Include="Views\Admin\Index.cshtml" />
     <Content Include="Views\Shared\_GoogleAnalytics.cshtml" />
+    <Content Include="Views\Report\Index.cshtml" />
+    <Content Include="Views\Report\_ReportChart.cshtml" />
+    <Content Include="Views\Report\_ReportTable.cshtml" />
+    <Content Include="Views\Report\_Boxplot.cshtml" />
+    <Content Include="Views\Report\_Treemap.cshtml" />
+    <Content Include="Views\Report\_Drilldown.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\uploads\" />

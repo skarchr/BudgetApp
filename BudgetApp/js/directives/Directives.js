@@ -403,6 +403,8 @@
                     },
                     link: function(scope, elem, attrs) {
 
+                        console.log('Using...');
+
                         var model = JSON.parse(scope.highchart);
 
                         Highcharts.setOptions({ lang: { drillUpText: 'Back' } });

@@ -48,6 +48,7 @@ namespace BudgetApp
                    "~/js/controllers/GaugeController.js",
                    "~/js/controllers/CurrencyController.js",
                    "~/js/controllers/HomeController.js",
+                   "~/js/controllers/ReportController.js",
                    "~/js/controllers/ToastrController.js",
                    "~/js/controllers/MappingsController.js",
                    "~/js/controllers/ImportController.js",
