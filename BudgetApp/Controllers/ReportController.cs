@@ -25,11 +25,12 @@ namespace BudgetApp.Controllers
             public string Name { get; set; }
             public DateTime FromDate { get; set; }
             public DateTime ToDate { get; set; }
-            public List<Category> Categories { get; set; }
             public bool IsDrilldown { get; set; }
             public ChartRange Range { get; set; }
             public string ChartType { get; set; }
 
+            public List<string> Categories { get; set; }
+            
             public List<string> Charts
             {
                 get
@@ -50,19 +51,51 @@ namespace BudgetApp.Controllers
         {
             var transactions = db.Transactions.Where(s => s.UserName == User.Identity.Name).OrderBy(s => s.Date).ToList();
 
+            var categories = CreateCategoryList();
+
             return View(new ReportViewModel
             {
                 FromDate = transactions.FirstOrDefault() != null ? transactions.First().Date : DateTime.Now,
-                ToDate = transactions.LastOrDefault() != null ? transactions.Last().Date : DateTime.Now
+                ToDate = transactions.LastOrDefault() != null ? transactions.Last().Date : DateTime.Now,
+                Categories = categories
             });
         }
 
+        private List<string> CreateCategoryList()
+        {
+            var categories = new List<string>();
+
+            foreach (var hovedCat in Constants.Categories.Grouped)
+            {
+                categories.AddRange(hovedCat.Value.Select(category => category.ToString()));
+            }
+            return categories;
+        }
+
+        [HttpPost]
         public ActionResult CreateChart(ReportViewModel model)
         {
-            var transactions = db.Transactions.Where(s => s.UserName == User.Identity.Name && s.Date >= model.FromDate && s.Date <= model.ToDate).ToList();
+            var transactions = FilterTransactions(db.Transactions.Where(s => s.UserName == User.Identity.Name).ToList(), model);
 
             return PartialView(FindPartialView(model), FindChart(model, transactions));
         }
+
+        private List<Transaction> FilterTransactions(List<Transaction> transactions, ReportViewModel model)
+        {
+            var result = DateFilter(transactions, model);
+
+            return CategoryFilter(result, model);
+        }
+
+        public List<Transaction> DateFilter(List<Transaction> transactions, ReportViewModel model)
+        {
+            return transactions.Where(s => s.Date >= model.FromDate && s.Date <= model.ToDate).ToList();
+        }
+
+        public List<Transaction> CategoryFilter(List<Transaction> transactions, ReportViewModel model)
+        {
+            return transactions.Where(t => model.Categories.Contains(t.Category.Value.ToString())).ToList();
+        } 
 
         private string FindChart(ReportViewModel model, List<Transaction> transactions)
         {
@@ -94,6 +127,12 @@ namespace BudgetApp.Controllers
         public ActionResult CreateTable()
         {
             return PartialView("_ReportTable");
+        }
+
+        public class CategoryViewModel
+        {
+            public string Category { get; set; }
+            public bool IsChecked { get; set; }
         }
     }
 }

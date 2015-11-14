@@ -11,7 +11,7 @@
 
 
                     $(elem[0]).on('click', function () {
-
+                        console.log(scope.$parent.chartModel);
                         $http({
                             method: 'POST',
                             data: JSON.stringify(scope.$parent.chartModel),

@@ -12,9 +12,22 @@
             fromDate: new Date( Date.parse(reportFactory.model.fromDate) ),
             toDate: new Date(Date.parse(reportFactory.model.toDate)),
             range: reportFactory.model.range,
-            categories: [],
+            categories: reportFactory.model.categories,
             isDrilldown: false,
             chartType: 'column'
+        };
+
+        $scope.toggleCategory = function(category) {
+
+            console.log(category);
+
+            var index = $scope.chartModel.categories.indexOf(category);
+
+            if (index > -1) {
+                $scope.chartModel.categories.splice(index, 1);
+            } else {
+                $scope.chartModel.categories.push(category);
+            }
         };
 
         $scope.today = new Date();
