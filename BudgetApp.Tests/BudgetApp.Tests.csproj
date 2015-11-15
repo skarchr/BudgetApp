@@ -81,6 +81,7 @@
     <Compile Include="Graphs\BurnRateTests.cs" />
     <Compile Include="Graphs\GraphBuilderTests.cs" />
     <Compile Include="Graphs\PrognosisGraphTests.cs" />
+    <Compile Include="Graphs\BoxPlotTests.cs" />
     <Compile Include="Graphs\SpcTests.cs" />
     <Compile Include="Graphs\TreemapTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

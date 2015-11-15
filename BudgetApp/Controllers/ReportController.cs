@@ -18,7 +18,7 @@ namespace BudgetApp.Controllers
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
-        //public const string BoxPlot = "_BoxPlot";
+        public const string BoxPlot = "_BoxPlot";
         public const string SPC = "_SPC";
         public const string Treemap = "_Treemap";
         public const string Drilldown = "_Drilldown";
@@ -40,7 +40,7 @@ namespace BudgetApp.Controllers
                 {
                     return new List<string>
                     {
-                        //BoxPlot,
+                        BoxPlot,
                         SPC,
                         Drilldown,
                         Treemap
@@ -61,7 +61,7 @@ namespace BudgetApp.Controllers
                 FromDate = transactions.FirstOrDefault() != null ? transactions.First().Date : DateTime.Now,
                 ToDate = transactions.LastOrDefault() != null ? transactions.Last().Date : DateTime.Now,
                 Categories = categories,
-                Name = SPC
+                Name = BoxPlot
             });
         }
 
@@ -81,7 +81,7 @@ namespace BudgetApp.Controllers
         {
             var transactions = FilterTransactions(db.Transactions.Where(s => s.UserName == User.Identity.Name).ToList(), model);
 
-            return PartialView(FindPartialView(model), FindChart(model, transactions));
+            return PartialView(model.Name, FindChart(model, transactions));
         }
 
         private List<Transaction> FilterTransactions(List<Transaction> transactions, ReportViewModel model)
@@ -103,34 +103,21 @@ namespace BudgetApp.Controllers
 
         private string FindChart(ReportViewModel model, List<Transaction> transactions)
         {
+            var currency = db.Users.First(s => s.UserName == User.Identity.Name).Currency;
+
             switch (model.Name)
             {
-                //case BoxPlot:
+                case BoxPlot:
+                    return GraphBuilder.BoxPlotGraph(transactions, currency, model.Range).ToJson();
                 case SPC:
-                    return GraphBuilder.SpcGraph(transactions, "Nok", model.Range).ToJson();
+                    return GraphBuilder.SpcGraph(transactions, currency, model.Range).ToJson();
                 case Treemap:
                     return TreemapGenerator.CreateChart(transactions).ToJson();
                 case Drilldown:
-                    return GraphBuilder.DrilldownGraph(transactions, "NOK", model.ChartType ?? model.ChartType, true).ToJson();
+                    return GraphBuilder.DrilldownGraph(transactions, currency, model.ChartType ?? model.ChartType, true).ToJson();
                 default:
                     throw new ArgumentException("No such graph exists!");
             }
-        }
-
-        private string FindPartialView(ReportViewModel model)
-        {
-            switch (model.Name)
-            {
-                case SPC:
-                    return "_BoxPlot";
-                default:
-                    return model.Name;
-            }
-        }
-
-        public ActionResult CreateTable()
-        {
-            return PartialView("_ReportTable");
         }
 
         [HttpPost]
@@ -207,7 +194,6 @@ namespace BudgetApp.Controllers
                         worksheet.Cells[1, 1].Value = "Date";
                         worksheet.Cells[1, 2].Value = "Description";
                         worksheet.Cells[1, 3].Value = "Amount";
-                        worksheet.Cells[1, 4].Value = "Category";
 
                         using (var range = worksheet.Cells[1, 1, 1, 4])
                         {
@@ -224,7 +210,6 @@ namespace BudgetApp.Controllers
                             worksheet.Cells[rowNumber, 1].Value = trans.Date;
                             worksheet.Cells[rowNumber, 2].Value = trans.Description;
                             worksheet.Cells[rowNumber, 3].Value = trans.Amount;
-                            worksheet.Cells[rowNumber, 4].Value = CategoryExt.CamelCaseToNormal(trans.Category.ToString());
 
                             rowNumber++;
                         }
