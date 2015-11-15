@@ -145,7 +145,7 @@ namespace BudgetApp.Extensions.Graphs
                 categories.Add(startDate.ToString("d.MMM"));
                 var trans = transactions.Where(s => s.Date == startDate).Select(s => s.Amount).ToList();
 
-                var median = trans.Median();
+                var median = Math.Round(trans.Median(), 2);
 
                 data.Add(new Data
                 {
@@ -153,8 +153,8 @@ namespace BudgetApp.Extensions.Graphs
                     Median = median,
                     Low = trans.Count > 0 ? trans.Min() : median,
                     High = trans.Count > 0 ? trans.Max() : median,
-                    Q1 = trans.Count(s => s < median) > 0 ? trans.Where(s => s < median).Median() : median,
-                    Q3 = trans.Count(s => s > median) > 0 ? trans.Where(s => s > median).Median() : median,
+                    Q1 = trans.Count(s => s < median) > 0 ? Math.Round(trans.Where(s => s < median).Median(),2) : median,
+                    Q3 = trans.Count(s => s > median) > 0 ? Math.Round(trans.Where(s => s > median).Median(), 2) : median,
                     DataLabels = new DataLabels {Enabled = false}
                 });
                 

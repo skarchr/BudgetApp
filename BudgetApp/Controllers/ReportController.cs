@@ -194,7 +194,6 @@ namespace BudgetApp.Controllers
                         worksheet.Cells[1, 1].Value = "Date";
                         worksheet.Cells[1, 2].Value = "Description";
                         worksheet.Cells[1, 3].Value = "Amount";
-                        worksheet.Cells[1, 4].Value = "Category";
 
                         using (var range = worksheet.Cells[1, 1, 1, 4])
                         {
@@ -211,7 +210,6 @@ namespace BudgetApp.Controllers
                             worksheet.Cells[rowNumber, 1].Value = trans.Date;
                             worksheet.Cells[rowNumber, 2].Value = trans.Description;
                             worksheet.Cells[rowNumber, 3].Value = trans.Amount;
-                            worksheet.Cells[rowNumber, 4].Value = CategoryExt.CamelCaseToNormal(trans.Category.ToString());
 
                             rowNumber++;
                         }
