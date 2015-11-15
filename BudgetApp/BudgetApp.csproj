@@ -200,6 +200,7 @@
     <Compile Include="Extensions\Graphs\GraphBuilder.cs" />
     <Compile Include="Extensions\Graphs\Overview.cs" />
     <Compile Include="Extensions\Graphs\Prognosis.cs" />
+    <Compile Include="Extensions\Graphs\BoxPlot.cs" />
     <Compile Include="Extensions\Graphs\Spc.cs" />
     <Compile Include="Extensions\Graphs\TransactionDrilldown.cs" />
     <Compile Include="Extensions\Graphs\TreemapGenerator.cs" />
@@ -694,10 +695,10 @@
     <Content Include="Views\Shared\_GoogleAnalytics.cshtml" />
     <Content Include="Views\Report\Index.cshtml" />
     <Content Include="Views\Report\_ReportChart.cshtml" />
-    <Content Include="Views\Report\_ReportTable.cshtml" />
     <Content Include="Views\Report\_Boxplot.cshtml" />
     <Content Include="Views\Report\_Treemap.cshtml" />
     <Content Include="Views\Report\_Drilldown.cshtml" />
+    <Content Include="Views\Report\_SPC.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\uploads\" />

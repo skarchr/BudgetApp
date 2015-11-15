@@ -31,7 +31,7 @@ namespace BudgetApp.Extensions.Statistics
         public static double Median(this IEnumerable<double> source)
         {
             if (!source.Any())
-                return -1;
+                return 0;
 
             var sortedList = from number in source
                              orderby number

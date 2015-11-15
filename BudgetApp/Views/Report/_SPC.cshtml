@@ -2,7 +2,7 @@
 @model string
 
 <div class="row">
-    <div id="boxplotCanvas"></div>
+    <div id="spcCanvas"></div>
 </div>
 
 
@@ -14,7 +14,7 @@
 
         var model = @Html.Raw(Model);
 
-        $('#boxplotCanvas').highcharts({
+        $('#spcCanvas').highcharts({
             chart: {
                 type: 'line',
                 style: {
@@ -39,8 +39,16 @@
                     color: '#313131'
                 }
             },
+            tooltip: {
+                enabled: true,
+                pointFormat: '{series.name}: <b>{point.y:.1f} </b>'
+            },
             legend: {
-                enabled: false
+                enabled: true,
+                align: 'right',
+                verticalAlign: 'bottom',
+                layout: 'horizontal',
+                y: 20
             },
             credits: false,
             plotOptions: {

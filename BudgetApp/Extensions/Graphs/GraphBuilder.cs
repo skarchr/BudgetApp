@@ -46,6 +46,11 @@ namespace BudgetApp.Extensions.Graphs
             return Spc.CreateChart(transactions, currency, range);
         }
 
+        public static Highchart BoxPlotGraph(List<Transaction> transactions, string currency, ChartRange range)
+        {
+            return BoxPlot.CreateChart(transactions, currency, range);
+        }
+
         public static Highchart BurnRateGraph(List<Transaction> transactions, DateTime month, double? expensesGoal, string currency)
         {
             return BurnRate.CreateChart(transactions, month, expensesGoal, currency);
