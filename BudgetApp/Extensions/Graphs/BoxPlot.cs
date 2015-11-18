@@ -155,7 +155,8 @@ namespace BudgetApp.Extensions.Graphs
                     High = trans.Count > 0 ? trans.Max() : median,
                     Q1 = trans.Count(s => s < median) > 0 ? Math.Round(trans.Where(s => s < median).Median(),2) : median,
                     Q3 = trans.Count(s => s > median) > 0 ? Math.Round(trans.Where(s => s > median).Median(), 2) : median,
-                    DataLabels = new DataLabels {Enabled = false}
+                    DataLabels = new DataLabels {Enabled = false},
+                    Year = startDate.Year
                 });
                 
 
@@ -208,7 +209,7 @@ namespace BudgetApp.Extensions.Graphs
                     trans = transactions.Where(s => DateHelper.GetWeekNumber(s.Date) == week).Select(s => s.Amount).ToList();
                 }
 
-                var median = trans.Median();
+                var median = Math.Round(trans.Median(),2);
 
                 data.Add(new Data
                 {
@@ -216,9 +217,10 @@ namespace BudgetApp.Extensions.Graphs
                     Median = median,
                     Low = trans.Count > 0 ? trans.Min() : median,
                     High = trans.Count > 0 ? trans.Max() : median,
-                    Q1 = trans.Count(s => s < median) > 0 ? trans.Where(s => s < median).Median() : median,
-                    Q3 = trans.Count(s => s > median) > 0 ? trans.Where(s => s > median).Median() : median,
-                    DataLabels = new DataLabels { Enabled = false }
+                    Q1 = trans.Count(s => s < median) > 0 ? Math.Round(trans.Where(s => s < median).Median(),2) : median,
+                    Q3 = trans.Count(s => s > median) > 0 ? Math.Round(trans.Where(s => s > median).Median(),2) : median,
+                    DataLabels = new DataLabels { Enabled = false },
+                    Year = DateHelper.GetWeekEndDate(date.Year, DateHelper.GetWeekNumber(date)).Year
                 });
 
                 index++;
@@ -257,7 +259,7 @@ namespace BudgetApp.Extensions.Graphs
 
                 var trans = transactions.Where(s => s.Date.Month == date.Month && s.Date.Year == date.Year).Select(s => s.Amount).ToList();
 
-                var median = trans.Median();
+                var median = Math.Round(trans.Median(),2);
 
                 data.Add(new Data
                 {
@@ -265,9 +267,10 @@ namespace BudgetApp.Extensions.Graphs
                     Median = median,
                     Low = trans.Count > 0 ? trans.Min() : median,
                     High = trans.Count > 0 ? trans.Max() : median,
-                    Q1 = trans.Count(s => s < median) > 0 ? trans.Where(s => s < median).Median() : median,
-                    Q3 = trans.Count(s => s > median) > 0 ? trans.Where(s => s > median).Median() : median,
-                    DataLabels = new DataLabels { Enabled = false }
+                    Q1 = trans.Count(s => s < median) > 0 ? Math.Round(trans.Where(s => s < median).Median(),2) : median,
+                    Q3 = trans.Count(s => s > median) > 0 ? Math.Round(trans.Where(s => s > median).Median(),2) : median,
+                    DataLabels = new DataLabels { Enabled = false },
+                    Year = date.Year
                 });
                 
 

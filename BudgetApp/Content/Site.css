@@ -582,3 +582,7 @@ ul > li > ul > li > ul > li > span {
     margin-left: 10px;
     padding-right: 10px;
 }
+
+.dropdown-menu {
+    padding: 5px;
+}

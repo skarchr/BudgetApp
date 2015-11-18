@@ -49,10 +49,19 @@
                 <label for="Date" class="control-label col-sm-3">Date <span class="required-tag"></span></label>
                 <div class="col-sm-9 form-inline" style="padding-top:4px;">
 
-                    @Html.TextBoxFor(model => model.Date, new { @class = "form-control", @required = "required", @ng_model = "model.date", max = DateTime.Now.ToString("yyyy-MM-dd"), @type = "date" })
-
-                    <span class="text-danger" ng-show="addForm.Date.$invalid && addForm.Date.$touched">Invalid format</span>
-                    <span class="text-success" ng-show="addForm.Date.$valid">OK!</span>
+                    @Html.HiddenFor(model => model.Date, new {@required = "required", @ng_model = "model.date", @type="date", @style="display:none;" })
+                    
+                   
+                    <span class="input-group">
+                        <input style="width: 240px;" name="Date" id="Date" type="text" class="form-control" datepicker-popup="dd.MM.yyyy" max-date="today" ng-model="model.date" is-open="opened" datepicker-options="dateOptions" ng-required="true" close-text="Close" />
+                        <span class="input-group-btn" style="width:0;padding:1px !important;">
+                            <button type="button" class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+                        </span>
+                        
+                    </span>
+                    
+                    @*<span class="text-danger" ng-show="addForm.Date.$invalid && addForm.Date.$touched">Invalid format</span>
+                    <span class="text-success" ng-show="addForm.Date.$valid">OK!</span>*@
                 </div>
             </div>
                 

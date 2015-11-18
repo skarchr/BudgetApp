@@ -239,8 +239,6 @@
                         overviewHighchart: '@',
                         range: '@',
                         id: '@',
-                        totalIncome: '@',
-                        totalExpenses: '@',
                         currency: '@'
                     },
                     link: function(scope, elem, attrs) {
@@ -346,45 +344,6 @@
 
                         });
 
-                        var chart = $(elem[0]).highcharts();
-                        var currency = scope.currency !== undefined ? ' ' + scope.currency : '';
-
-                        if (scope.totalIncome !== undefined) {
-
-                            var text = formatNumber(JSON.parse(scope.totalIncome.replace(',', '.')));
-
-                            chart.renderer.label(text + currency, 70, 10, 'callout', 1)
-                                .css({
-                                    color: '#FFFFFF'
-                                })
-                                .attr({
-                                    fill: 'rgba(72, 221, 184,0.70)', //'rgba(255, 0, 0, 0.90)',
-                                    padding: 2,
-                                    r: 4,
-                                    zIndex: 6,
-                                    title: 'Total income'
-                                })
-                                .add();
-                        }
-
-                        if (scope.totalExpenses !== undefined) {
-
-                            var text1 = formatNumber(JSON.parse(scope.totalExpenses.replace(',', '.')));
-
-                            chart.renderer.label(text1 + currency, 70, 32, 'callout', 1)
-                                .css({
-                                    color: '#FFFFFF'
-                                })
-                                .attr({
-                                    fill: '#E87C7C',
-                                    stroke: 'rgb(0,0,0)',
-                                    padding: 2,
-                                    r: 4,
-                                    zIndex: 6,
-                                    title: 'Total expenses'
-                                })
-                                .add();
-                        }
 
                     }
                 }
@@ -402,8 +361,6 @@
                         index : '@'
                     },
                     link: function(scope, elem, attrs) {
-
-                        console.log('Using...');
 
                         var model = JSON.parse(scope.highchart);
 
@@ -711,6 +668,25 @@
                             }],
                             data: model
                         }],
+                        plotOptions: {
+                            treemap: {
+                                borderColor:'#fff',
+                                dataLabels: {
+                                    useHTML:true,
+                                    align:'center',
+                                    formatter: function () {
+                                        if (this.point.shapeArgs.width < 20 || this.point.shapeArgs.height < 20) {
+                                            return '';
+
+                                        } else if (this.point.shapeArgs.width < 50 || this.point.shapeArgs.height < 50) {
+                                            return '<div style="text-align:center;"><span>' + this.key + '</span></div>';
+                                        } else {
+                                            return '<div style="text-align:center;"><span>' + this.key + '</span><br/><span style="font-size:10px;">' + formatNumber(this.point.value) + '</span></div>';
+                                        }
+                                    }
+                                }
+                            }
+                        },
                         tooltip: {
                             enabled: true,
                             pointFormat: '<span style="color:{point.color}">\u25CF</span> {point.name}: <b>{point.value:.1f}</b><br/>'
@@ -764,11 +740,11 @@
                                 pointFormat: '{series.name}: <b>{point.y:.1f} </b>'
                             },
                             legend: {
-                                enabled: scope.legend === undefined,
-                                align: 'right',
-                                verticalAlign: 'bottom',
-                                layout: 'horizontal',
-                                y: 20
+                                enabled: false //scope.legend === undefined,
+                                //align: 'right',
+                                //verticalAlign: 'bottom',
+                                //layout: 'horizontal',
+                                //y: 20
                             },
                             credits: false,
                             plotOptions: {

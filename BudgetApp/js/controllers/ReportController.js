@@ -9,8 +9,8 @@
 
         $scope.chartModel = {
             name: reportFactory.model.name,
-            fromDate: new Date( Date.parse(reportFactory.model.fromDate) ),
-            toDate: new Date(Date.parse(reportFactory.model.toDate)),
+            fromDate: reportFactory.model.fromDate,
+            toDate: reportFactory.model.toDate,
             range: reportFactory.model.range,
             categories: reportFactory.model.categories,
             isDrilldown: false,
@@ -34,6 +34,35 @@
         $scope.today = new Date();
 
         $scope.tableModel = {};
+
+        $scope.opened = false;
+        $scope.opened2 = false;
+
+        $scope.open = function ($event) {
+            $event.preventDefault();
+            $event.stopPropagation();
+            $scope.opened2 = false;
+            $scope.opened = true;
+        };
+
+        $scope.open2 = function ($event) {
+            $event.preventDefault();
+            $event.stopPropagation();
+            $scope.opened = false;
+            $scope.opened2 = true;
+        };
+
+        $scope.dateOptions = {
+            formatYear: 'yy',
+            startingDay: 1
+        };
+
+        $scope.formats = ['yyyy-MM-dd', 'yyyy/MM/dd', 'dd.MM.yyyy', 'shortDate'];
+        $scope.format = $scope.formats[2];
+
+        $scope.disabled = function (date, mode) {
+            return (mode === 'day' && (date.getDay() === 0 || date.getDay() === 6));
+        };
 
     }]);
 

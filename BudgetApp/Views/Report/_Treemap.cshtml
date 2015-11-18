@@ -10,6 +10,18 @@
     (function() {
         'use strict';
         
+        var formatNumber = function (number) {
+            var numb = number.toFixed(2) + '';
+            var x = numb.split(' ');
+            var x1 = x[0];
+            var x2 = x.length > 1 ? '.' + x[1] : '';
+            var rgx = /(\d+)(\d{3})/;
+            while (rgx.test(x1)) {
+                x1 = x1.replace(rgx, '$1' + ' ' + '$2');
+            }
+            return x1 + x2;
+        };
+
         Highcharts.setOptions({ lang: { drillUpText: 'Back' } });
 
         var model = @Html.Raw(Model);
@@ -81,12 +93,34 @@
                 }],
                 data: model
             }],
+            plotOptions: {
+                treemap: {
+                    borderColor:'#fff',
+                    dataLabels: {
+                        style: {
+                          textShadow:''
+                        },
+                        useHTML:true,
+                        align:'center',
+                        formatter: function () {
+                            if (this.point.shapeArgs.width < 20 || this.point.shapeArgs.height < 20) {
+                                return '';
+
+                            } else if (this.point.shapeArgs.width < 50 || this.point.shapeArgs.height < 50) {
+                                return '<div style="text-align:center;"><span>' + this.key + '</span></div>';
+                            } else {
+                                return '<div style="text-align:center;"><span>' + this.key + '</span><br/><span style="font-size:10px;">' + formatNumber(this.point.value) + '</span></div>';
+                            }
+                        }
+                    }
+                }
+            },
             tooltip: {
                 enabled: true,
                 pointFormat: '<span style="color:{point.color}">\u25CF</span> {point.name}: <b>{point.value:.1f}</b><br/>'
             },
             title: {
-                text: 'Overview: Expenses'
+                text: 'Expenses'
             }
         });
 

@@ -75,6 +75,21 @@
 
         $scope.model = addTransactionModel.model;
 
+        $scope.opened = false;
+
+        $scope.open = function ($event) {
+            $event.preventDefault();
+            $event.stopPropagation();
+            $scope.opened = true;
+        };
+
+        $scope.today = new Date();
+
+        $scope.dateOptions = {
+            formatYear: 'yy',
+            startingDay: 1
+        };
+
         $scope.regexDouble = /^(\d+(?:[\.]\d{1,2})?)$/;
 
     }]);
