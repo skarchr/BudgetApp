@@ -18,8 +18,8 @@ namespace BudgetApp.Models
         public double? ExpensesGoal { get; set; }
         public double? SavingGoal { get; set; }
         public string Currency { get; set; }
-        public string PrognosisChart { get { return GraphBuilder.PrognosisGraph(Transactions, Currency).ToJson(); } }
-        public string PrognosisIncomeChart { get { return GraphBuilder.PrognosisGraph(Transactions, Currency, true).ToJson(); } }
+        public string PrognosisChart { get { return GraphBuilder.PrognosisGraph(Transactions.Where(s => s.Date.Year == DateTime.Now.Year).ToList(), Currency).ToJson(); } }
+        public string PrognosisIncomeChart { get { return GraphBuilder.PrognosisGraph(Transactions.Where(s => s.Date.Year == DateTime.Now.Year).ToList(), Currency, true).ToJson(); } }
         public string ScpExpensesChart { get; set; }
 
         public string BurnRateChart

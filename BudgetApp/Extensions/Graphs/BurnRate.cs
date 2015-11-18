@@ -38,7 +38,7 @@ namespace BudgetApp.Extensions.Graphs
                 Currency = currency,
                 Title = new Title
                 {
-                    Text = "Burn rate (monthly goal)"
+                    Text = string.Format("Burn rate ({0})", expensesGoal == null ? "Expenses goal" : expensesGoal.Value.ToString())
                 },
                 Series = series,
                 XAxis = new List<Axis>
