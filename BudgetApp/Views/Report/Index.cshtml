@@ -26,6 +26,39 @@
 
         @using (Html.BeginForm("DownloadExcelFile", "Report", FormMethod.Post, new { @class = "form-horizontal", @name = "chartForm" }))
         {
+
+            <div class="form-group">
+                <label class="col-sm-2 control-label">From</label>
+                <div class="col-sm-10">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <p class="input-group">
+                                <input type="text" class="form-control" datepicker-popup="{{format}}" max-date="chartModel.toDate" ng-model="chartModel.fromDate" is-open="opened" datepicker-options="dateOptions" ng-required="true" close-text="Close" />
+                                <span class="input-group-btn" style="width:0;padding:1px !important;">
+                                    <button type="button" class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+                                </span>
+                            </p>
+                        </div>
+                    </div>                    
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-sm-2 control-label">To</label>
+                <div class="col-sm-10">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <p class="input-group">
+                                <input type="text" class="form-control" datepicker-popup="{{format}}" ng-model="chartModel.toDate" is-open="opened2" min-date="chartModel.fromDate" max-date="today" datepicker-options="dateOptions" ng-required="true" close-text="Close" />
+                                <span class="input-group-btn" style="width:0;padding:1px !important;">
+                                    <button type="button" class="btn btn-default" ng-click="open2($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+                                </span>
+                            </p>
+                        </div>
+                    </div>                    
+                </div>
+            </div>
+
             <div class="form-group" ng-show="selected !== 'tables'">
                 <label class="col-sm-2 control-label">Choose chart</label>
                 <div class="col-sm-10">
@@ -44,22 +77,7 @@
                     </ul>
 
                 </div>
-            </div>
-
-            <div class="form-group">
-                <label class="col-sm-2 control-label">From</label>
-                <div class="col-sm-10">
-                    <input type="date" class="form-control" name="FromDate" id="FromDate" ng-model="chartModel.fromDate" max="{{chartModel.toDate | date: 'yyyy-MM-dd'}}" required />                    
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label class="col-sm-2 control-label">To</label>
-                <div class="col-sm-10">                    
-                    <input type="date" class="form-control" name="ToDate" id="ToDate" ng-model="chartModel.toDate" min="{{chartModel.fromDate | date: 'yyyy-MM-dd'}}" max="{{today | date: 'yyyy-MM-dd'}}" required />
-                </div>
-            </div>
-            
+            </div>          
 
             <div class="form-group">
                 <label class="col-sm-2 control-label">Categories</label>
