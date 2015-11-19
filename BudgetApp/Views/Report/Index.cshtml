@@ -36,7 +36,7 @@
                             <p class="input-group">
                                 <input type="text" class="form-control" datepicker-popup="{{format}}" max-date="chartModel.toDate" ng-model="chartModel.fromDate" is-open="opened" datepicker-options="dateOptions" ng-required="true" close-text="Close" />
                                 <span class="input-group-btn" style="width:0;padding:0px !important;">
-                                    <button type="button" class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+                                    <button type="button" class="btn btn-default" ng-click="open($event)" style="padding-bottom: 7px;"><i class="glyphicon glyphicon-calendar"></i></button>
                                 </span>
                             </p>
                         </div>
@@ -53,7 +53,7 @@
                             <p class="input-group">
                                 <input type="text" class="form-control" datepicker-popup="{{format}}" ng-model="chartModel.toDate" is-open="opened2" min-date="chartModel.fromDate" max-date="today" datepicker-options="dateOptions" ng-required="true" close-text="Close" />
                                 <span class="input-group-btn" style="width:0;padding:0px !important;">
-                                    <button type="button" class="btn btn-default" ng-click="open2($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+                                    <button type="button" class="btn btn-default" ng-click="open2($event)" style="padding-bottom: 7px;"><i class="glyphicon glyphicon-calendar"></i></button>
                                 </span>
                             </p>
                         </div>
