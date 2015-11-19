@@ -9,7 +9,7 @@
 
         $scope.chartModel = {
             name: reportFactory.model.name,
-            fromDate: reportFactory.model.fromDate,
+            fromDate:  reportFactory.model.fromDate,
             toDate: reportFactory.model.toDate,
             range: reportFactory.model.range,
             categories: reportFactory.model.categories,

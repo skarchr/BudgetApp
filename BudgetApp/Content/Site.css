@@ -429,7 +429,7 @@ th {
     max-width: 280px;
 }
 
-.dropdown-menu {
+.dropdown-menu.header {
     top: 23px;
     border-radius: 20px;
     margin-right: -5px;
