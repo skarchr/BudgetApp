@@ -5,6 +5,7 @@ using System.Drawing;
 using System.Dynamic;
 using System.IO;
 using System.Linq;
+using System.Web.Helpers;
 using System.Web.Mvc;
 using BudgetApp.Extensions;
 using BudgetApp.Extensions.Graphs;
@@ -32,6 +33,7 @@ namespace BudgetApp.Controllers
             public ChartRange Range { get; set; }
             public string ChartType { get; set; }
             public bool ByYear { get; set; }
+            public string SearchString { get; set; }
             public List<string> Categories { get; set; }
             
             public List<string> Charts
@@ -82,6 +84,20 @@ namespace BudgetApp.Controllers
             var transactions = FilterTransactions(db.Transactions.Where(s => s.UserName == User.Identity.Name).ToList(), model);
 
             return PartialView(model.Name, FindChart(model, transactions));
+        }
+
+        [HttpPost]
+        public JsonResult SearchTransactions(ReportViewModel model)
+        {
+
+            var transactions = FilterTransactions(db.Transactions.Where(s => s.UserName == User.Identity.Name).ToList(), model);
+
+            if (!string.IsNullOrEmpty(model.SearchString))
+            {
+                transactions = transactions.Where(s => s.Description.ToLower().Contains(model.SearchString.ToLower())).OrderByDescending(s => s.Date).ToList();
+            }
+
+            return new JsonResult {Data = transactions.ToJson()};
         }
 
         private List<Transaction> FilterTransactions(List<Transaction> transactions, ReportViewModel model)
@@ -136,86 +152,99 @@ namespace BudgetApp.Controllers
                 // add a new worksheet to the empty workbook
 
 
-                if (model.ByYear)
+                if (transactions.Count > 0)
                 {
-                    foreach (var transaction in transactions.GroupBy(s => s.Date.Year))
+                    if (model.ByYear)
                     {
-                        ExcelWorksheet worksheet = package.Workbook.Worksheets.Add(transaction.Key.ToString());
-
-                        // Add some formatting to the worksheet
-                        worksheet.DefaultRowHeight = 12;
-                        worksheet.HeaderFooter.FirstFooter.LeftAlignedText = string.Format("Generated: {0}", DateTime.Now.ToShortDateString());
-                        worksheet.Row(1).Height = 20;
-                        worksheet.Column(1).Style.Numberformat.Format = "dd.MM.yyyy";
-
-                        // Start adding the header
-                        // First of all the first row
-                        worksheet.Cells[1, 1].Value = "Date";
-                        worksheet.Cells[1, 2].Value = "Description";
-                        worksheet.Cells[1, 3].Value = "Amount";
-                        worksheet.Cells[1, 4].Value = "Category";
-
-                        using (var range = worksheet.Cells[1, 1, 1, 4])
+                        foreach (var transaction in transactions.GroupBy(s => s.Date.Year))
                         {
-                            range.Style.Font.Bold = true;
-                            range.Style.Font.Color.SetColor(Color.MediumBlue);
-                            range.Style.ShrinkToFit = false;
-                            range.AutoFitColumns();
+                            ExcelWorksheet worksheet = package.Workbook.Worksheets.Add(transaction.Key.ToString());
+
+                            // Add some formatting to the worksheet
+                            worksheet.DefaultRowHeight = 12;
+                            worksheet.HeaderFooter.FirstFooter.LeftAlignedText = string.Format("Generated: {0}",
+                                DateTime.Now.ToShortDateString());
+                            worksheet.Row(1).Height = 20;
+                            worksheet.Column(1).Style.Numberformat.Format = "dd.MM.yyyy";
+
+                            // Start adding the header
+                            // First of all the first row
+                            worksheet.Cells[1, 1].Value = "Date";
+                            worksheet.Cells[1, 2].Value = "Description";
+                            worksheet.Cells[1, 3].Value = "Amount";
+                            worksheet.Cells[1, 4].Value = "Category";
+
+                            using (var range = worksheet.Cells[1, 1, 1, 4])
+                            {
+                                range.Style.Font.Bold = true;
+                                range.Style.Font.Color.SetColor(Color.MediumBlue);
+                                range.Style.ShrinkToFit = false;
+                                range.AutoFitColumns();
+                            }
+
+                            var rowNumber = 2;
+
+                            foreach (var trans in transaction)
+                            {
+                                worksheet.Cells[rowNumber, 1].Value = trans.Date;
+                                worksheet.Cells[rowNumber, 2].Value = trans.Description;
+                                worksheet.Cells[rowNumber, 3].Value = trans.Amount;
+                                worksheet.Cells[rowNumber, 4].Value =
+                                    CategoryExt.CamelCaseToNormal(trans.Category.ToString());
+
+                                rowNumber++;
+                            }
+
                         }
-
-                        var rowNumber = 2;
-
-                        foreach (var trans in transaction)
+                    }
+                    else
+                    {
+                        foreach (var transaction in transactions.GroupBy(s => s.Category))
                         {
-                            worksheet.Cells[rowNumber, 1].Value = trans.Date;
-                            worksheet.Cells[rowNumber, 2].Value = trans.Description;
-                            worksheet.Cells[rowNumber, 3].Value = trans.Amount;
-                            worksheet.Cells[rowNumber, 4].Value = CategoryExt.CamelCaseToNormal(trans.Category.ToString());
+                            ExcelWorksheet worksheet = package.Workbook.Worksheets.Add(CategoryExt.CamelCaseToNormal(transaction.Key.ToString()));
 
-                            rowNumber++;
+                            // Add some formatting to the worksheet
+                            worksheet.DefaultRowHeight = 12;
+                            worksheet.HeaderFooter.FirstFooter.LeftAlignedText = string.Format("Generated: {0}", DateTime.Now.ToShortDateString());
+                            worksheet.Row(1).Height = 20;
+                            worksheet.Column(1).Style.Numberformat.Format = "dd.MM.yyyy";
+
+                            // Start adding the header
+                            // First of all the first row
+                            worksheet.Cells[1, 1].Value = "Date";
+                            worksheet.Cells[1, 2].Value = "Description";
+                            worksheet.Cells[1, 3].Value = "Amount";
+
+                            using (var range = worksheet.Cells[1, 1, 1, 4])
+                            {
+                                range.Style.Font.Bold = true;
+                                range.Style.Font.Color.SetColor(Color.MediumBlue);
+                                range.Style.ShrinkToFit = false;
+                                range.AutoFitColumns();
+                            }
+
+                            var rowNumber = 2;
+
+                            foreach (var trans in transaction)
+                            {
+                                worksheet.Cells[rowNumber, 1].Value = trans.Date;
+                                worksheet.Cells[rowNumber, 2].Value = trans.Description;
+                                worksheet.Cells[rowNumber, 3].Value = trans.Amount;
+
+                                rowNumber++;
+                            }
+
                         }
-
                     }
                 }
                 else
                 {
-                    foreach (var transaction in transactions.GroupBy(s => s.Category))
-                    {
-                        ExcelWorksheet worksheet = package.Workbook.Worksheets.Add(CategoryExt.CamelCaseToNormal(transaction.Key.ToString()));
+                    ExcelWorksheet worksheet = package.Workbook.Worksheets.Add("Not found");
 
-                        // Add some formatting to the worksheet
-                        worksheet.DefaultRowHeight = 12;
-                        worksheet.HeaderFooter.FirstFooter.LeftAlignedText = string.Format("Generated: {0}", DateTime.Now.ToShortDateString());
-                        worksheet.Row(1).Height = 20;
-                        worksheet.Column(1).Style.Numberformat.Format = "dd.MM.yyyy";
-
-                        // Start adding the header
-                        // First of all the first row
-                        worksheet.Cells[1, 1].Value = "Date";
-                        worksheet.Cells[1, 2].Value = "Description";
-                        worksheet.Cells[1, 3].Value = "Amount";
-
-                        using (var range = worksheet.Cells[1, 1, 1, 4])
-                        {
-                            range.Style.Font.Bold = true;
-                            range.Style.Font.Color.SetColor(Color.MediumBlue);
-                            range.Style.ShrinkToFit = false;
-                            range.AutoFitColumns();
-                        }
-
-                        var rowNumber = 2;
-
-                        foreach (var trans in transaction)
-                        {
-                            worksheet.Cells[rowNumber, 1].Value = trans.Date;
-                            worksheet.Cells[rowNumber, 2].Value = trans.Description;
-                            worksheet.Cells[rowNumber, 3].Value = trans.Amount;
-
-                            rowNumber++;
-                        }
-
-                    }
+                    worksheet.Cells[1, 1].Value = "No transactions found";
                 }
+
+                
 
 
                 
