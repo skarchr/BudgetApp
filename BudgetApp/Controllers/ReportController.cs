@@ -5,6 +5,7 @@ using System.Drawing;
 using System.Dynamic;
 using System.IO;
 using System.Linq;
+using System.Web.Helpers;
 using System.Web.Mvc;
 using BudgetApp.Extensions;
 using BudgetApp.Extensions.Graphs;
@@ -32,6 +33,7 @@ namespace BudgetApp.Controllers
             public ChartRange Range { get; set; }
             public string ChartType { get; set; }
             public bool ByYear { get; set; }
+            public string SearchString { get; set; }
             public List<string> Categories { get; set; }
             
             public List<string> Charts
@@ -82,6 +84,20 @@ namespace BudgetApp.Controllers
             var transactions = FilterTransactions(db.Transactions.Where(s => s.UserName == User.Identity.Name).ToList(), model);
 
             return PartialView(model.Name, FindChart(model, transactions));
+        }
+
+        [HttpPost]
+        public JsonResult SearchTransactions(ReportViewModel model)
+        {
+
+            var transactions = FilterTransactions(db.Transactions.Where(s => s.UserName == User.Identity.Name).ToList(), model);
+
+            if (!string.IsNullOrEmpty(model.SearchString))
+            {
+                transactions = transactions.Where(s => s.Description.ToLower().Contains(model.SearchString.ToLower())).OrderByDescending(s => s.Date).ToList();
+            }
+
+            return new JsonResult {Data = transactions.ToJson()};
         }
 
         private List<Transaction> FilterTransactions(List<Transaction> transactions, ReportViewModel model)

@@ -22,6 +22,11 @@
                     <i class="glyphicon glyphicon-th"></i>
                 </a>
             </li>
+            <li role="presentation" style="margin-left: -10px;">
+                <a href="#search" aria-controls="table" role="tab" data-toggle="tab" class="btn btn-default btn-nav btn-sm btn-round text-center {{selected === 'search' ? 'active':''}}" style="min-width: 40px;" ng-click="selected = 'search'">
+                    <i class="glyphicon glyphicon-search"></i>
+                </a>
+            </li>
         </ul>
 
         @using (Html.BeginForm("DownloadExcelFile", "Report", FormMethod.Post, new { @class = "form-horizontal", @name = "chartForm" }))
@@ -30,11 +35,11 @@
             <div class="form-group">
                 <label class="col-sm-2 control-label">From</label>
                 <div class="col-sm-10">
-                    @Html.HiddenFor(m => m.FromDate, new { @ng_model = "chartModel.fromDate", @type="text", @style="display:none;" })
+                    @*@Html.TextBoxFor(m => m.FromDate, new { @ng_model = "chartModel.fromDate", @type="text" })*@
                     <div class="row">
                         <div class="col-md-6">
                             <p class="input-group">
-                                <input type="text" class="form-control" datepicker-popup="{{format}}" max-date="chartModel.toDate" ng-model="chartModel.fromDate" is-open="opened" datepicker-options="dateOptions" ng-required="true" close-text="Close" />
+                                <input type="text" name="FromDate" id="FromDate" class="form-control" datepicker-popup="{{format}}" max-date="chartModel.toDate" ng-model="chartModel.fromDate" is-open="opened" datepicker-options="dateOptions" ng-required="true" close-text="Close" />
                                 <span class="input-group-btn" style="width:0;padding:0px !important;">
                                     <button type="button" class="btn btn-default" ng-click="open($event)" style="padding-bottom: 7px;"><i class="glyphicon glyphicon-calendar"></i></button>
                                 </span>
@@ -47,11 +52,11 @@
             <div class="form-group">
                 <label class="col-sm-2 control-label">To</label>
                 <div class="col-sm-10">
-                    @Html.HiddenFor(m => m.ToDate, new { @ng_model = "chartModel.toDate", @type = "text", @style = "display:none;" })
+                    @Html.TextBoxFor(m => m.ToDate, new { @ng_model = "chartModel.toDate", @type = "text", @style = "display:none;" })
                     <div class="row">
                         <div class="col-md-6">
                             <p class="input-group">
-                                <input type="text" class="form-control" datepicker-popup="{{format}}" ng-model="chartModel.toDate" is-open="opened2" min-date="chartModel.fromDate" max-date="today" datepicker-options="dateOptions" ng-required="true" close-text="Close" />
+                                <input type="text" name="ToDate" id="ToDate" class="form-control" datepicker-popup="{{format}}" ng-model="chartModel.toDate" is-open="opened2" min-date="chartModel.fromDate" max-date="today" datepicker-options="dateOptions" ng-required="true" close-text="Close" />
                                 <span class="input-group-btn" style="width:0;padding:0px !important;">
                                     <button type="button" class="btn btn-default" ng-click="open2($event)" style="padding-bottom: 7px;"><i class="glyphicon glyphicon-calendar"></i></button>
                                 </span>
@@ -61,7 +66,7 @@
                 </div>
             </div>
 
-            <div class="form-group" ng-show="selected !== 'tables'">
+            <div class="form-group" ng-show="selected !== 'tables' && selected !== 'search'">
                 <label class="col-sm-2 control-label">Choose chart</label>
                 <div class="col-sm-10">
                     <ul class="list-unstyled">
@@ -90,6 +95,13 @@
 
                     </ul>
 
+                </div>
+            </div>
+
+            <div class="form-group" ng-show="selected === 'search'">
+                <label class="col-sm-2 control-label">Description text</label>
+                <div class="col-sm-10 form-inline">                    
+                    @Html.TextBoxFor(m => m.SearchString, new { @class="form-control", @ng_model="chartModel.searchString" })
                 </div>
             </div>
 
@@ -137,7 +149,7 @@
                     <button ng-disabled="chartForm.$invalid || chartModel.categories.length === 0" class="btn btn-primary" data-get-chart-view>Generate chart</button>
                 </div>
             </div>
-
+            
             <div class="form-group" ng-show="selected === 'tables'">
                 <div class="col-sm-offset-2 col-sm-10 form-inline">
                     <button ng-disabled="chartModel.categories.length === 0" class="btn btn-primary" type="submit">
@@ -145,6 +157,8 @@
                     </button>
                 </div>
             </div>
+
+            
         }
 
         <!-- Tab panes -->
@@ -153,6 +167,68 @@
                 <div id="chartView"></div>
             </div>
             <div role="tabpanel" class="tab-pane" id="table">
+
+            </div>
+            <div role="tabpanel" class="tab-pane" id="search">
+                
+               
+                <div class="row">
+                    <div class="form-group">
+                        <div class="col-sm-offset-2 col-sm-10">
+                            <button ng-disabled="chartModel.categories.length === 0" class="btn btn-primary" ng-click="search()">
+                                Search
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                
+                <div ng-show="searching" style="min-height: 200px;">
+                    
+                    Searching...
+
+                </div>
+                
+                <div ng-show="searchResult.length > 0" style="margin-top: 30px;">
+                    
+                    Found {{searchStorage.length}} transactions that matches the query
+
+                    <table class="table table-condensed table-striped">
+
+                        <thead>
+                            <tr>
+                                <th class="text-center">#</th>
+                                <th class="text-center">Amount</th>
+                                <th class="text-center">Category</th>
+                                <th>Description</th>
+                                <th class="text-center">Date</th>
+                                <th class="text-center">Created</th>
+                                <th class="text-right"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="trans in searchResult">
+                                <td class="text-center">{{$index + 1}}</td>
+                                <td class="text-center">{{trans.amount | currencyFormatter}}</td>
+                                <td class="text-center">{{trans.categoryText}}</td>
+                                <td>{{trans.description}}</td>
+                                <td class="text-center">{{trans.date | date}}</td>
+                                <td class="text-center">{{trans.created | date}}</td>
+                                <td class="text-right">
+                                    <a class="link edit-link" href="{{urls.edit}}/{{trans.transactionId}}" title="Edit"><i class="glyphicon glyphicon-pencil"></i></a>
+                                    <a class="link delete-link" href="{{urls.del}}/{{trans.transactionId}}" title="Delete">
+                                        <i class="glyphicon glyphicon-trash"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <button class="btn btn-primary" style="width:100%;" ng-show="searchStorage.length > searchResult.length" ng-click="loadMore()">Load more</button>
+
+                </div>
+
+                
 
             </div>
         </div>
@@ -169,7 +245,11 @@
 
         angular.module('budgetApp').factory('reportFactory', function() {
             return {
-                model:@Html.Raw(Model.ToJson())
+                model:@Html.Raw(Model.ToJson()),
+                urls: {
+                    del: '@Url.Action("Delete", "Transactions")',
+                    edit: '@Url.Action("Edit", "Transactions")'
+                }
                 };
         });
 
