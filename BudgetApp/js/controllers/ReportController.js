@@ -112,7 +112,7 @@
         };
 
         $scope.formats = ['yyyy-MM-dd', 'yyyy/MM/dd', 'dd.MM.yyyy', 'shortDate'];
-        $scope.format = $scope.formats[2];
+        $scope.format = $scope.formats[0];
 
         $scope.disabled = function (date, mode) {
             return (mode === 'day' && (date.getDay() === 0 || date.getDay() === 6));
