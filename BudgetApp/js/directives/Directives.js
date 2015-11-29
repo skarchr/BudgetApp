@@ -611,6 +611,14 @@
 
                     Highcharts.setOptions({ lang: { drillUpText: 'Back' } });
 
+                    var total = 0;
+                    
+                    for (var i = 0; i < model.length; i++) {
+
+                        if(model[i].parent === undefined)
+                            total += model[i].value;
+                    }
+
                     $(elem[0]).highcharts({
                         chart: {
                             style: {
@@ -619,8 +627,10 @@
                             events: {
                                 redraw: function () {
 
-                                    if (this.series[0].rootNode === '')
-                                        $(elem[0]).highcharts().setTitle({ text: 'Expenses' });
+                                    if (this.series[0].rootNode === '') {
+                                        $(elem[0]).highcharts().setTitle({ text: 'Expenses' }, { text: formatNumber(total) }, false);
+                                    }
+                                        
                                 }
                             }
                         },
@@ -629,7 +639,7 @@
                             events: {
                                 click: function (e) {
                                     if(e.point.parent === undefined)
-                                        $(elem[0]).highcharts().setTitle({ text: e.point.name});
+                                        $(elem[0]).highcharts().setTitle({ text: e.point.name}, { text: formatNumber(e.point.value)}, false);
                                 }
                             },
                             type: 'treemap',
@@ -689,10 +699,15 @@
                         },
                         tooltip: {
                             enabled: true,
-                            pointFormat: '<span style="color:{point.color}">\u25CF</span> {point.name}: <b>{point.value:.1f}</b><br/>'
+                            followPointer: true,
+                            useHTML:true,
+                            pointFormat: '<span style="z-index:9998 !important;"><span style="color:{point.color}">\u25CF</span> {point.name}: <b>{point.value:.1f}</b><br/></span>'
                         },
                         title: {
-                            text: 'Overview: Expenses'
+                            text: 'Expenses'
+                        },
+                        subtitle: {
+                            text: formatNumber(total)
                         }
                     });
 
