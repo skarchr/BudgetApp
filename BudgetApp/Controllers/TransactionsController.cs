@@ -267,7 +267,7 @@ namespace BudgetApp.Controllers
 
             ViewBag.Error = "Please select an excel file!";
 
-            return View("Upload");
+            return View("Upload", model: new ExcelColumns());
         }
 
         [HttpParamAction]
