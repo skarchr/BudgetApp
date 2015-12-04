@@ -10,8 +10,8 @@ namespace BudgetApp.Models
         public ExcelColumns()
         {
             DateCol = 0;
-            DescriptionCol = 1;
-            AmountCols = new List<int> { 2,3,4 };
+            DescriptionCol = 2;
+            AmountCols = new List<int> { 3 };
             DateFormat = "dd.MM.yyyy";
         }
 

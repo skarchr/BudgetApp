@@ -10,8 +10,8 @@
     <div class="col-xs-12 col-md-6">
 
 
-        <h3 class="text-right" style="margin-bottom: 30px;">Setup the excel file you want to upload</h3>
-        
+        <h3 class="text-center" style="margin-bottom: 30px;">Configure uploader</h3>
+
         @using (Html.BeginForm("Upload", "Transactions", FormMethod.Post, new { enctype = "multipart/form-data", @class = "form-horizontal", @name = "uploadForm" }))
         {
 
@@ -39,8 +39,8 @@
             <div class="form-group">
                 <label class="control-label col-sm-5">Amount columns <i class="glyphicon glyphicon-info-sign text-info" title="The amount can only be in one of the added amount columns, otherwise the first column which contains an amount will be chosen"></i> </label>
                 <div class="col-sm-7 form-inline">
-                    <span ng-repeat="am in model.amountCols">
-                        <input type="text" style="max-width: 60px;" class="form-control" ng-model="model.amountCols[$index]" name="AmountCols[{{$index}}]" id="AmountCols[{{$index}}]" required />
+                    <span ng-repeat="am in model.amountCols track by $index">
+                        <input min="0" type="number" style="max-width: 60px;" class="form-control" ng-model="model.amountCols[$index]" name="AmountCols[{{$index}}]" id="AmountCols[{{$index}}]" required />
                         <button type="button" style="position: absolute;margin-left: -23px;margin-top:8px;padding:0px;color:#d9534f;" class="btn btn-link" ng-click="removeAmountCol($index)">
                             <i class="glyphicon glyphicon-remove"></i>
                         </button>
@@ -52,18 +52,17 @@
             </div>
 
             <div class="form-group">
-                <label class="control-label col-sm-5">File</label>
+                <label class="control-label col-sm-5">Select excel file</label>
                 <div class="col-sm-7">
-                    <input type="file" name="File" id="File" class="form-control"  />
+                    <input type="file" name="File" id="File" class="form-control" />
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-offset-5 col-sm-7">
+                    <input ng-disabled="uploadForm.$invalid || model.amountCols.length === 0 || error !== ''" style="width:300px;" type="submit" name="Submit" id="Submit" class="btn btn-primary" value="Upload" />
                 </div>
             </div>
 
-            <br />
-            <div class="form-group">
-                <div class="col-sm-offset-5 col-sm-7">
-                    <input ng-disabled="uploadForm.$invalid || model.amountCols.length === 0" style="width:300px;" type="submit" name="Submit" id="Submit" class="btn btn-primary {{uploadForm.$valid && model.amountCols.length > 0 ? 'tada':''}}" value="Upload" />
-                </div>
-            </div>
 
         }
 
@@ -71,12 +70,16 @@
     <div class="col-xs-12 col-md-6" style="padding-top: 56px;">
 
 
-        <div class="alert alert-danger text-center" ng-hide="uploadForm.$valid && model.amountCols.length > 0" style="margin-top:19px;">
+        <div class="alert alert-danger text-center" ng-hide="uploadForm.$valid && model.amountCols.length > 0 && error === ''" style="margin-top:19px;">
             <span class="glyphicon glyphicon-warning-sign" aria-hidden="true"></span>
             <strong>Your current setup is invalid</strong>
+            <br />
+            <span ng-hide="error !== ''">Make sure all fields are filled!</span>
+            <br />
+            <span ng-show="error !== ''">Index <strong>{{error}}</strong> is dublicated, please select unique indicies for each column!</span>
         </div>
 
-        <table ng-show="uploadForm.$valid && model.amountCols.length > 0" style="border: 1px solid #c0c0c0;background:white;margin-left: auto;margin-right: auto;text-align: center;font-size: {{ max > 6 ? '8px': max > 5 ? '10px' : '14px'}}">
+        <table ng-show="uploadForm.$valid && model.amountCols.length > 0 && error === ''" style="border: 1px solid #c0c0c0;background:white;margin-left: auto;margin-right: auto;text-align: center;font-size: {{ max > 6 ? '8px': max > 5 ? '10px' : '14px'}}">
             <caption>Preview</caption>
             <thead>
                 <tr>
@@ -116,165 +119,146 @@
 
         });
 
-        angular.module('budgetApp').controller('uploadController', ['$scope', 'uploadModel', function($scope,uploadModel) {
+        angular.module('budgetApp').controller('uploadController', [
+            '$scope', 'uploadModel', function($scope, uploadModel) {
 
-            $scope.model = uploadModel.model;
+                var checkModel = function() {
 
-            $scope.formats = ['dd.MM.yyyy', 'yyyy-MM-dd', 'dd/MM/yyyy', 'MM/dd/yyyy'];
-            $scope.max = 0;
-            $scope.preview = [];
+                    var arr = [];
 
-            $scope.addAmountCol = function() {
+                    arr.push($scope.model.dateCol);
+                    arr.push($scope.model.descriptionCol);
 
-                var elem = 2;
-
-                if ($scope.model.amountCols.length > 0) {
-                    elem = Math.max.apply(Math, $scope.model.amountCols) + 1;
-                }
-
-                $scope.model.amountCols.push(elem);
-            };
-
-            $scope.removeAmountCol = function(index) {
-
-                $scope.model.amountCols.splice(index, 1);
-            };
-
-            $scope.listChanged = false;
-
-            $scope.getPreviewText = function(item, index) {
-
-                if (item === 'Date') {
-                    return $scope.model.dateFormat;
-                }
-
-                if (item === 'Description') {
-                    return "A short description text here";
-                }
-
-                if (item === 'Amount') {
-
-                    return 'Number';
-
-                }
-
-                return '';
-
-            };
-
-            $scope.alphabet = ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z'];
-
-            $scope.$watchCollection('model.amountCols', function(newV, oldV) {
-                console.log('fire');
-
-                var list = [
-                {
-                    name: 'Date',
-                    numb: [$scope.model.dateCol]
-                },
-                {
-                    name: 'Description',
-                    numb: [$scope.model.descriptionCol]
-                },
-                {
-                    name: 'Amount',
-                    numb: $scope.model.amountCols
-                }];
-
-                var max = null;
-
-                for (var i = 0; i < list.length; i++) {
-
-
-                    if (Math.max.apply(Math,list[i].numb) > max || max === null) {
-                        max = Math.max.apply(Math,list[i].numb);
+                    for (var i = 0; i < $scope.model.amountCols.length; i++) {
+                        arr.push($scope.model.amountCols[i]);
                     }
-                }
-                $scope.max = max;
+                    var sorted_arr = arr.sort();
+
+                    for (var j = 0; j < arr.length - 1; j++) {
+                        if (sorted_arr[j + 1] == sorted_arr[j]) {
+                            return sorted_arr[j];
+                        }
+                    }
+
+                    return '';
+
+                };
+
+                var updateModels = function() {
+                    var list = [
+                        {
+                            name: 'Date',
+                            numb: [$scope.model.dateCol]
+                        },
+                        {
+                            name: 'Description',
+                            numb: [$scope.model.descriptionCol]
+                        },
+                        {
+                            name: 'Amount',
+                            numb: $scope.model.amountCols
+                        }
+                    ];
+
+
+                    var max = null;
+
+                    for (var i = 0; i < list.length; i++) {
+
+                        if (Math.max.apply(Math, list[i].numb) > max || max === null) {
+                            max = Math.max.apply(Math, list[i].numb);
+                        }
+                    }
+                    $scope.max = max;
+                    $scope.preview = [];
+
+                    for (var j = 0; j <= max; j++) {
+
+                        var found = false;
+
+                        for (var z = 0; z < list.length; z++) {
+
+                            for (var x = 0; x < list[z].numb.length; x++) {
+
+                                if (list[z].numb[x] == j) {
+                                    $scope.preview.push(list[z].name);
+
+                                    found = true;
+                                    break;
+                                }
+
+                            }
+                            if (found)
+                                break;
+                        }
+
+                        if (!found) {
+                            $scope.preview.push('');
+                        }
+
+                    }
+
+                    $scope.error = checkModel();
+                };
+
+                $scope.model = uploadModel.model;
+
+                $scope.error = '';
+
+                $scope.formats = ['dd.MM.yyyy', 'yyyy-MM-dd', 'dd/MM/yyyy', 'MM/dd/yyyy'];
+                $scope.max = 0;
                 $scope.preview = [];
 
-                for (var j = 0; j <= max; j++) {
+                $scope.addAmountCol = function() {
 
-                    var found = false;
+                    var elem = 2;
 
-                    for (var z = 0; z < list.length; z++) {
-
-                        for (var x = 0; x < list[z].numb.length; x++) {
-
-                            if (list[z].numb[x] == j) {
-                                $scope.preview.push(list[z].name);
-                                found = true;
-                                break;
-                            }
-
-                        }
-                        if(found)
-                            break;
+                    if ($scope.model.amountCols.length > 0) {
+                        elem = Math.max.apply(Math, $scope.model.amountCols) + 1;
                     }
 
-                    if(!found)
-                        $scope.preview.push('');
-                }
-            });
+                    $scope.model.amountCols.push(elem);
+                };
 
-            $scope.$watchGroup(['model.dateCol','model.descriptionCol'], function(newV, oldV) {
+                $scope.removeAmountCol = function(index) {
 
-                var list = [
-                {
-                    name: 'Date',
-                    numb: [$scope.model.dateCol]
-                },
-                {
-                    name: 'Description',
-                    numb: [$scope.model.descriptionCol]
-                },
-                {
-                    name: 'Amount',
-                    numb: $scope.model.amountCols
-                }];
+                    $scope.model.amountCols.splice(index, 1);
+                };
 
+                $scope.listChanged = false;
 
-                var max = null;
+                $scope.getPreviewText = function(item, index) {
 
-                for (var i = 0; i < list.length; i++) {
-
-                    if (Math.max.apply(Math,list[i].numb) > max || max === null) {
-                        max = Math.max.apply(Math,list[i].numb);
-                    }
-                }
-                $scope.max = max;
-                $scope.preview = [];
-
-                for (var j = 0; j <= max; j++) {
-
-                    var found = false;
-
-                    for (var z = 0; z < list.length; z++) {
-
-                        for (var x = 0; x < list[z].numb.length; x++) {
-
-                            if (list[z].numb[x] == j) {
-                                $scope.preview.push(list[z].name);
-
-                                found = true;
-                                break;
-                            }
-
-                        }
-                        if(found)
-                            break;
+                    if (item === 'Date') {
+                        return $scope.model.dateFormat;
                     }
 
-                    if (!found) {
-                        $scope.preview.push('');
+                    if (item === 'Description') {
+                        return "A short description text here";
                     }
 
-                }
+                    if (item === 'Amount') {
 
+                        return 'Number';
 
-            });
+                    }
 
-        }]);
+                    return '';
+
+                };
+
+                $scope.alphabet = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'];
+
+                $scope.$watchCollection('model.amountCols', function(newV, oldV) {
+                    updateModels();
+                });
+
+                $scope.$watchGroup(['model.dateCol', 'model.descriptionCol'], function(newV, oldV) {
+                    updateModels();
+                });
+
+            }
+        ]);
 
 
     })();
