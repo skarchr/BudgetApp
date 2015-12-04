@@ -1,45 +1,265 @@
-﻿@{
+﻿@using BudgetApp.Extensions
+@model BudgetApp.Models.ExcelColumns
+
+@{
     ViewBag.Title = "Import Transactions";
 }
 
-<div>
-    
-    <div class="row hidden-xs hidden-sm">
-        <div class="col-xs-12 col-md-offset-3 col-md-6">
-            <div class="alert alert-info">
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-                <strong>Attention!</strong>
-                <br />
-                The Excel spreadsheet should look something like this:
-                <br />
-                <br />
-                <img class="col-xs-12" src="../../Content/images/screenshots/excel.PNG" alt="" />
+<div class="row" ng-controller="uploadController">
+
+    <div class="col-xs-12 col-md-6">
+
+
+        <h3 class="text-center" style="margin-bottom: 30px;">Configure uploader</h3>
+
+        @using (Html.BeginForm("Upload", "Transactions", FormMethod.Post, new { enctype = "multipart/form-data", @class = "form-horizontal", @name = "uploadForm" }))
+        {
+
+            <div class="form-group">
+                <label class="control-label col-sm-5">Date format</label>
+                <div class="col-sm-7">
+                    <input type="text" name="DateFormat" id="DateFormat" class="form-control" ng-model="model.dateFormat" typeahead="format for format in formats | filter:$viewValue | limitTo:8" required />
+                </div>
             </div>
+
+            <div class="form-group">
+                <label class="control-label col-sm-5">Date column</label>
+                <div class="col-sm-7">
+                    <input class="form-control" type="number" ng-model="model.dateCol" name="DateCol" id="DateCol" min="0" required />
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label col-sm-5">Description column</label>
+                <div class="col-sm-7">
+                    <input class="form-control" type="number" ng-model="model.descriptionCol" name="DescriptionCol" id="DescriptionCol" min="0" required />
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label col-sm-5">Amount columns <i class="glyphicon glyphicon-info-sign text-info" title="The amount can only be in one of the added amount columns, otherwise the first column which contains an amount will be chosen"></i> </label>
+                <div class="col-sm-7 form-inline">
+                    <span ng-repeat="am in model.amountCols track by $index">
+                        <input min="0" type="number" style="max-width: 60px;" class="form-control" ng-model="model.amountCols[$index]" name="AmountCols[{{$index}}]" id="AmountCols[{{$index}}]" required />
+                        <button type="button" style="position: absolute;margin-left: -23px;margin-top:8px;padding:0px;color:#d9534f;" class="btn btn-link" ng-click="removeAmountCol($index)">
+                            <i class="glyphicon glyphicon-remove"></i>
+                        </button>
+                    </span>
+                    <button type="button" class="btn btn-link" style="color:#5cb85c;padding:0;" ng-click="addAmountCol()" title="Add column">
+                        <i class="glyphicon glyphicon-plus"></i>
+                    </button>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label col-sm-5">Select excel file</label>
+                <div class="col-sm-7">
+                    <input type="file" name="File" id="File" class="form-control" />
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-offset-5 col-sm-7">
+                    <input ng-disabled="uploadForm.$invalid || model.amountCols.length === 0 || error !== ''" style="width:300px;" type="submit" name="Submit" id="Submit" class="btn btn-primary" value="Upload" />
+                </div>
+            </div>
+
+
+        }
+
+    </div>
+    <div class="col-xs-12 col-md-6" style="padding-top: 56px;">
+
+
+        <div class="alert alert-danger text-center" ng-hide="uploadForm.$valid && model.amountCols.length > 0 && error === ''" style="margin-top:19px;">
+            <span class="glyphicon glyphicon-warning-sign" aria-hidden="true"></span>
+            <strong>Your current setup is invalid</strong>
+            <br />
+            <span ng-hide="error !== ''">Make sure all fields are filled!</span>
+            <br />
+            <span ng-show="error !== ''">Index <strong>{{error}}</strong> is dublicated, please select unique indicies for each column!</span>
         </div>
+
+        <table ng-show="uploadForm.$valid && model.amountCols.length > 0 && error === ''" style="border: 1px solid #c0c0c0;background:white;margin-left: auto;margin-right: auto;text-align: center;font-size: {{ max > 6 ? '8px': max > 5 ? '10px' : '14px'}}">
+            <caption>Preview</caption>
+            <thead>
+                <tr>
+                    <th style="min-width: 30px;border-bottom: 1px solid #c0c0c0;">
+
+                    </th>
+                    <th style="border:1px solid #c0c0c0;border-bottom: 3px solid #c0c0c0;border-top:0;" class="text-center" ng-repeat="column in preview track by $index">{{alphabet[$index]}}</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr title="Showing">
+                    <td style="border-right:3px solid #c0c0c0;border-bottom: 1px solid #c0c0c0;">1</td>
+                    <td style="font-weight: bold;border:1px solid #c0c0c0;min-width: 30px;padding:3px;padding-left:10px;padding-right:10px;" ng-repeat="column in preview track by $index">{{column}}</td>
+                </tr>
+                <tr title="Showing the column indices for each field">
+                    <td style="border-right:3px solid #c0c0c0;border-bottom: 1px solid #c0c0c0;" ">2</td>
+                    <td style="border:1px solid #c0c0c0;padding:3px;padding-left:8px;padding-right:8px;color:#c0c0c0;" ng-repeat="column in preview track by $index">
+                        {{getPreviewText(column)}}
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
     </div>
 
-    <div class="row">
-        <div class="col-xs-12">
-            
+</div>
 
-            @using (Html.BeginForm("Upload", "Transactions", FormMethod.Post, new { enctype = "multipart/form-data" }))
-            {
+<script>
+    (function() {
+        'use strict';
 
-                <div class="form-member">                    
-                    <div class="col-xs-12">
-                        <input type="file" name="file" id="file" class="form-control" style="width: 280px;" />
-                    </div>
-                </div>
-                <br />
-                <div class="form-member">                                           
-                    <div class="col-xs-12">
-                        <input style="width:300px;" type="submit" name="Submit" id="Submit" class="btn btn-primary" value="Upload" />
-                    </div>
-                </div>
+        angular.module('budgetApp').factory('uploadModel', function() {
+
+            return {
+                model: @Html.Raw(Model.ToJson())
+                };
+
+        });
+
+        angular.module('budgetApp').controller('uploadController', [
+            '$scope', 'uploadModel', function($scope, uploadModel) {
+
+                var checkModel = function() {
+
+                    var arr = [];
+
+                    arr.push($scope.model.dateCol);
+                    arr.push($scope.model.descriptionCol);
+
+                    for (var i = 0; i < $scope.model.amountCols.length; i++) {
+                        arr.push($scope.model.amountCols[i]);
+                    }
+                    var sorted_arr = arr.sort();
+
+                    for (var j = 0; j < arr.length - 1; j++) {
+                        if (sorted_arr[j + 1] == sorted_arr[j]) {
+                            return sorted_arr[j];
+                        }
+                    }
+
+                    return '';
+
+                };
+
+                var updateModels = function() {
+                    var list = [
+                        {
+                            name: 'Date',
+                            numb: [$scope.model.dateCol]
+                        },
+                        {
+                            name: 'Description',
+                            numb: [$scope.model.descriptionCol]
+                        },
+                        {
+                            name: 'Amount',
+                            numb: $scope.model.amountCols
+                        }
+                    ];
+
+
+                    var max = null;
+
+                    for (var i = 0; i < list.length; i++) {
+
+                        if (Math.max.apply(Math, list[i].numb) > max || max === null) {
+                            max = Math.max.apply(Math, list[i].numb);
+                        }
+                    }
+                    $scope.max = max;
+                    $scope.preview = [];
+
+                    for (var j = 0; j <= max; j++) {
+
+                        var found = false;
+
+                        for (var z = 0; z < list.length; z++) {
+
+                            for (var x = 0; x < list[z].numb.length; x++) {
+
+                                if (list[z].numb[x] == j) {
+                                    $scope.preview.push(list[z].name);
+
+                                    found = true;
+                                    break;
+                                }
+
+                            }
+                            if (found)
+                                break;
+                        }
+
+                        if (!found) {
+                            $scope.preview.push('');
+                        }
+
+                    }
+
+                    $scope.error = checkModel();
+                };
+
+                $scope.model = uploadModel.model;
+
+                $scope.error = '';
+
+                $scope.formats = ['dd.MM.yyyy', 'yyyy-MM-dd', 'dd/MM/yyyy', 'MM/dd/yyyy'];
+                $scope.max = 0;
+                $scope.preview = [];
+
+                $scope.addAmountCol = function() {
+
+                    var elem = 2;
+
+                    if ($scope.model.amountCols.length > 0) {
+                        elem = Math.max.apply(Math, $scope.model.amountCols) + 1;
+                    }
+
+                    $scope.model.amountCols.push(elem);
+                };
+
+                $scope.removeAmountCol = function(index) {
+
+                    $scope.model.amountCols.splice(index, 1);
+                };
+
+                $scope.listChanged = false;
+
+                $scope.getPreviewText = function(item, index) {
+
+                    if (item === 'Date') {
+                        return $scope.model.dateFormat;
+                    }
+
+                    if (item === 'Description') {
+                        return "A short description text here";
+                    }
+
+                    if (item === 'Amount') {
+
+                        return 'Number';
+
+                    }
+
+                    return '';
+
+                };
+
+                $scope.alphabet = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'];
+
+                $scope.$watchCollection('model.amountCols', function(newV, oldV) {
+                    updateModels();
+                });
+
+                $scope.$watchGroup(['model.dateCol', 'model.descriptionCol'], function(newV, oldV) {
+                    updateModels();
+                });
 
             }
-        </div>
-    </div>
-</div>
+        ]);
+
+
+    })();
+</script>

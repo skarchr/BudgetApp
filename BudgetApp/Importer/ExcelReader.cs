@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using BudgetApp.Controllers;
 using BudgetApp.Models;
 using Excel;
 
@@ -12,7 +13,7 @@ namespace BudgetApp.Importer
     {
         private static readonly ApplicationDbContext Db = new ApplicationDbContext();
 
-        public static List<Transaction> ReadFile(string filePath, string userName, out int found)
+        public static List<Transaction> ReadFile(string filePath, string userName, ExcelColumns excelColumns, out int found)
         {
             found = 0;
 
@@ -30,21 +31,25 @@ namespace BudgetApp.Importer
             while (excelReader.Read())
             {
                 
-                DateTime date = DateTime.Now;
+                var date = DateTime.Now;
+
+                var provider = CultureInfo.InvariantCulture;
 
                 try
                 {
-                    date = Convert.ToDateTime(excelReader.GetString(0), new CultureInfo("nb-NO"));
+                    date = DateTime.ParseExact(excelReader.GetString(excelColumns.DateCol), excelColumns.DateFormat, provider);
+                        //Convert.ToDateTime(excelReader.GetString(excelColumns.DateCol), new CultureInfo("nb-NO"));
                 }
                 catch (Exception)
                 {
-                    date = Convert.ToDateTime(excelReader.GetDateTime(0), new CultureInfo("nb-NO"));
+                    date = excelReader.GetDateTime(excelColumns.DateCol); 
+                    // Convert.ToDateTime(excelReader.GetDateTime(excelColumns.DateCol), new CultureInfo("nb-NO"));
                 }
 
-                var desc = excelReader.GetString(1);
+                var desc = excelReader.GetString(excelColumns.DescriptionCol);
 
-                var amount = FindAmount(excelReader);
-                var cat = FindCategory(excelReader.GetString(1), userName);
+                var amount = FindAmount(excelReader, excelColumns);
+                var cat = FindCategory(excelReader.GetString(excelColumns.DescriptionCol), userName);
 
                 if (amount != null)
                 {
@@ -72,10 +77,9 @@ namespace BudgetApp.Importer
             return transactions;
         }
 
-        private static double? FindAmount(IExcelDataReader excelReader)
+        private static double? FindAmount(IExcelDataReader excelReader, ExcelColumns excelColumns)
         {
-
-            for (var i = 2; i <= 10; i++)
+            foreach (var i in excelColumns.AmountCols)
             {
                 try
                 {
@@ -84,10 +88,10 @@ namespace BudgetApp.Importer
                     if (excelReader[i].GetType().Name == "Double")
                     {
                         return result;
-                    }                    
+                    }
                 }
                 catch
-                {                   
+                {
                 }
             }
             return null;

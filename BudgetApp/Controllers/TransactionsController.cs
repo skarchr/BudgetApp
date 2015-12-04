@@ -220,12 +220,17 @@ namespace BudgetApp.Controllers
         {
             ViewBag.Error = TempData["Error"];
 
-            return View();
+            return View(new ExcelColumns());
         }
 
         [HttpPost]
-        public ActionResult Upload(HttpPostedFileBase file)
+        public ActionResult Upload(ExcelColumns excelColumns)
         {
+            if(excelColumns == null)
+                excelColumns = new ExcelColumns();
+
+            var file = excelColumns.File;
+
             if (file != null && file.ContentLength > 0)
             {
                 var fileName = Path.GetFileName(file.FileName);
@@ -243,7 +248,7 @@ namespace BudgetApp.Controllers
 
                 int found;
 
-                var transactions = ExcelReader.ReadFile(path, User.Identity.Name, out found);
+                var transactions = ExcelReader.ReadFile(path, User.Identity.Name, excelColumns, out found);
 
                 ViewBag.Info = string.Format("Found {0} new transactions", found);
 
@@ -262,7 +267,7 @@ namespace BudgetApp.Controllers
 
             ViewBag.Error = "Please select an excel file!";
 
-            return View("Upload");
+            return View("Upload", model: new ExcelColumns());
         }
 
         [HttpParamAction]
