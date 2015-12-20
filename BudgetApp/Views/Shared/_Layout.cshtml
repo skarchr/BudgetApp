@@ -174,6 +174,11 @@
                                         <i class="glyphicon glyphicon-export"></i>
                                     </a>
                                 </li>
+                                <li>
+                                    <a href="#" data-toggle="modal" data-target="#searchModal" class="btn btn-default btn-nav btn-sm btn-round text-center" title="Search transactions" style="min-width: 40px;">
+                                        <i class="glyphicon glyphicon-search"></i>
+                                    </a>
+                                </li>
                             </ul>
 
                         </div>
@@ -218,11 +223,139 @@
                 </div>
 
             </footer>
+            
+            <div class="modal fade" id="searchModal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel">
+                <div class="modal-dialog modal-lg" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            <h4 class="modal-title" id="searchModalLabel">Search transactions</h4>
+                        </div>
+                        <div class="modal-body" ng-controller="searchController">
+                            
+                            <div class="form-inline">
+                                <input type="text" ng-model="searchString" class="form-control" />
+                                <button ng-disabled="searchString.length === 0" class="btn btn-primary" ng-click="search()">
+                                    Search
+                                </button>
+                            </div>
+
+
+                            <div ng-show="searching" style="min-height: 200px;">
+
+                                Searching...
+
+                            </div>
+
+                            <div ng-show="searchResult.length > 0" style="margin-top: 30px;">
+
+                                Found {{searchStorage.length}} transactions that matches the query
+
+                                <table class="table table-condensed table-striped">
+
+                                    <thead>
+                                        <tr>
+                                            <th class="text-center">#</th>
+                                            <th class="text-center">Amount</th>
+                                            <th class="text-center">Category</th>
+                                            <th>Description</th>
+                                            <th class="text-center">Date</th>
+                                            <th class="text-center">Created</th>
+                                            <th class="text-right"></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="trans in searchResult">
+                                            <td class="text-center">{{$index + 1}}</td>
+                                            <td class="text-center">{{trans.amount | currencyFormatter}}</td>
+                                            <td class="text-center">{{trans.categoryText}}</td>
+                                            <td>{{trans.description}}</td>
+                                            <td class="text-center">{{trans.date | date}}</td>
+                                            <td class="text-center">{{trans.created | date}}</td>
+                                            <td class="text-right">
+                                                <a class="link edit-link" href="/Transactions/Edit/{{trans.transactionId}}" title="Edit"><i class="glyphicon glyphicon-pencil"></i></a>
+                                                <a class="link delete-link" href="/Transactions/Delete/{{trans.transactionId}}" title="Delete">
+                                                    <i class="glyphicon glyphicon-trash"></i>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+
+                                <button class="btn btn-primary" style="width:100%;" ng-show="searchStorage.length > searchResult.length" ng-click="loadMore()">Load more</button>
+
+                            </div>
+                            
+
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
         </div>
         <script>
             (function () {
                 'use strict';
+
+
+                angular.module('budgetApp').controller('searchController', ['$scope', '$timeout','$http', function($scope, $timeout,$http) {
+                    
+                    $scope.searchResult = [];
+                    $scope.searchStorage = [];
+
+                    $scope.searching = false;
+
+                    var start = 0;
+                    var stop = 50;
+
+                    $scope.searchStorage = [];
+
+
+                    $scope.search = function () {
+                        $scope.searchResult = [];
+                        $scope.searching = true;
+                        start = 0;
+                        stop = 50;
+
+                        $timeout(function () {
+
+                            $http({
+                                method: 'POST',
+                                data: { search: $scope.searchString },
+                                url: '/Report/SearchTransactions',
+                                contentType: 'application/json; charset=utf-8',
+
+                            }).then(function successCallback(response) {
+
+                                $scope.searchStorage = JSON.parse(response.data);
+
+                                $scope.searchResult = $scope.searchStorage.slice(start, stop);
+
+                                $scope.searching = false;
+
+                                start += 50;
+                                stop += 50;
+
+                            }, function errorCallback(response) {
+                                console.log('Something went wrong');
+                                $scope.searching = false;
+                            });
+
+                        }, 500);
+                    };
+
+                    $scope.loadMore = function () {
+                        $scope.searchResult = $scope.searchResult.concat($scope.searchStorage.slice(start, stop));
+
+                        start += 50;
+                        stop += 50;
+                    };
+
+
+                }]);
 
                 angular.module('budgetApp').factory('viewBags', function () {
 

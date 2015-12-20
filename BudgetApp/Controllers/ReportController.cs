@@ -33,7 +33,6 @@ namespace BudgetApp.Controllers
             public ChartRange Range { get; set; }
             public string ChartType { get; set; }
             public bool ByYear { get; set; }
-            public string SearchString { get; set; }
             public List<string> Categories { get; set; }
             
             public List<string> Charts
@@ -86,18 +85,32 @@ namespace BudgetApp.Controllers
             return PartialView(model.Name, FindChart(model, transactions));
         }
 
+        //[HttpPost]
+        //public JsonResult SearchTransactions(ReportViewModel model)
+        //{
+
+        //    var transactions = FilterTransactions(db.Transactions.Where(s => s.UserName == User.Identity.Name).ToList(), model);
+
+        //    if (!string.IsNullOrEmpty(model.SearchString))
+        //    {
+        //        transactions = transactions.Where(s => s.Description.ToLower().Contains(model.SearchString.ToLower())).OrderByDescending(s => s.Date).ToList();
+        //    }
+
+        //    return new JsonResult {Data = transactions.ToJson()};
+        //}
+
         [HttpPost]
-        public JsonResult SearchTransactions(ReportViewModel model)
+        public JsonResult SearchTransactions(string search)
         {
 
-            var transactions = FilterTransactions(db.Transactions.Where(s => s.UserName == User.Identity.Name).ToList(), model);
+            var transactions = db.Transactions.Where(s => s.UserName == User.Identity.Name).ToList();
 
-            if (!string.IsNullOrEmpty(model.SearchString))
+            if (!string.IsNullOrEmpty(search))
             {
-                transactions = transactions.Where(s => s.Description.ToLower().Contains(model.SearchString.ToLower())).OrderByDescending(s => s.Date).ToList();
+                transactions = transactions.Where(s => s.Description.ToLower().Contains(search.ToLower())).OrderByDescending(s => s.Date).ToList();
             }
 
-            return new JsonResult {Data = transactions.ToJson()};
+            return new JsonResult { Data = transactions.ToJson() };
         }
 
         private List<Transaction> FilterTransactions(List<Transaction> transactions, ReportViewModel model)
