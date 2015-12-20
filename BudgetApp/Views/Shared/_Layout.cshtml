@@ -165,16 +165,6 @@
 
                             <ul class="list-unstyled list-inline hidden-xs hidden-sm">
                                 <li>
-                                    <a href="@Url.Action("Create", "Transactions")" class="btn btn-default btn-nav btn-sm btn-round text-center @(ViewBag.Title == "Add Transaction" ? "active":"")" title="Add transaction" style="min-width: 40px;">
-                                        <i class="glyphicon glyphicon-plus"></i>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="@Url.Action("Upload", "Transactions")" class="btn btn-default btn-nav btn-sm btn-round text-center @(ViewBag.Title == "Import Transactions" ? "active" : "")" title="Upload transactions from excel file" style="min-width: 40px;" >
-                                        <i class="glyphicon glyphicon-export"></i>
-                                    </a>
-                                </li>
-                                <li>
                                     <a href="#" data-toggle="modal" data-target="#searchModal" class="btn btn-default btn-nav btn-sm btn-round text-center" title="Search transactions" style="min-width: 40px;">
                                         <i class="glyphicon glyphicon-search"></i>
                                     </a>
@@ -234,7 +224,7 @@
                         <div class="modal-body" ng-controller="searchController">
                             
                             <div class="form-inline">
-                                <input type="text" ng-model="searchString" class="form-control" />
+                                <input type="text" ng-model="searchString" class="form-control" ng-keypress="keypressed($event)" />
                                 <button ng-disabled="searchString.length === 0" class="btn btn-primary" ng-click="search()">
                                     Search
                                 </button>
@@ -267,7 +257,7 @@
                                     <tbody>
                                         <tr ng-repeat="trans in searchResult">
                                             <td class="text-center">{{$index + 1}}</td>
-                                            <td class="text-center">{{trans.amount | currencyFormatter}}</td>
+                                            <td class="text-right">{{trans.amount | currencyFormatter}}</td>
                                             <td class="text-center">{{trans.categoryText}}</td>
                                             <td>{{trans.description}}</td>
                                             <td class="text-center">{{trans.date | date}}</td>
@@ -305,7 +295,7 @@
                     
                     $scope.searchResult = [];
                     $scope.searchStorage = [];
-
+                    $scope.searchString = '';
                     $scope.searching = false;
 
                     var start = 0;
@@ -313,6 +303,14 @@
 
                     $scope.searchStorage = [];
 
+                    $scope.keypressed = function (event) {
+
+                        if ($scope.searchString.length > 1 && event.keyCode === 13) {
+
+                            $scope.search();
+
+                        }
+                    };
 
                     $scope.search = function () {
                         $scope.searchResult = [];

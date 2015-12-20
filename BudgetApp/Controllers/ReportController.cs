@@ -85,20 +85,6 @@ namespace BudgetApp.Controllers
             return PartialView(model.Name, FindChart(model, transactions));
         }
 
-        //[HttpPost]
-        //public JsonResult SearchTransactions(ReportViewModel model)
-        //{
-
-        //    var transactions = FilterTransactions(db.Transactions.Where(s => s.UserName == User.Identity.Name).ToList(), model);
-
-        //    if (!string.IsNullOrEmpty(model.SearchString))
-        //    {
-        //        transactions = transactions.Where(s => s.Description.ToLower().Contains(model.SearchString.ToLower())).OrderByDescending(s => s.Date).ToList();
-        //    }
-
-        //    return new JsonResult {Data = transactions.ToJson()};
-        //}
-
         [HttpPost]
         public JsonResult SearchTransactions(string search)
         {
