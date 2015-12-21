@@ -700,6 +700,7 @@
     <Content Include="Views\Report\_Treemap.cshtml" />
     <Content Include="Views\Report\_Drilldown.cshtml" />
     <Content Include="Views\Report\_SPC.cshtml" />
+    <Content Include="Views\Home\About.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\uploads\" />

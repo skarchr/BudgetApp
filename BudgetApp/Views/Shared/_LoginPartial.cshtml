@@ -88,31 +88,35 @@
 
                 </a>
                 <ul class="dropdown-menu header text-left" style="box-shadow: 3px 5px 18px grey;">
-                    <li class="@(ViewBag.Title == "Add Transaction" ? "active" : "")"><a href="@Url.Action("Create", "Transactions")" title="Add transaction">Add</a></li>
-                    <li class="@(ViewBag.Title == "Upload Transactions" ? "active" : "")"><a href="@Url.Action("Upload", "Transactions")" title="Import transactions">Upload</a></li>
-                    <li class="@(ViewBag.Title == "Download" ? "active" : "")">@Html.ActionLink("Download", "Index", "Report")</li>
+                    <li class="@(ViewBag.Title == "Add Transaction" ? "active" : "")"><a href="@Url.Action("Create", "Transactions")" title="Add transaction"> <i class="glyphicon glyphicon-plus-sign"></i> Add</a></li>
+                    <li class="@(ViewBag.Title == "Upload Transactions" ? "active" : "")"><a href="@Url.Action("Upload", "Transactions")" title="Import transactions"><i class="glyphicon glyphicon-upload"></i> Upload</a></li>
                     <li role="separator" class="divider"></li>
                     @{
                         if (User.IsInRole("Administrators"))
                         {
-                            <li class="@(ViewBag.Title == "Admin" ? "active" : "")">@Html.ActionLink("Admin", "Index", "Admin")</li>
+                            <li class="@(ViewBag.Title == "Admin" ? "active" : "")"><a href="@Url.Action("Index", "Admin")"> <i class="glyphicon glyphicon-star-empty"></i> Admin</a></li>
                         }
-                    } 
-                    <li class="@(ViewBag.Title == "Dashboard" ? "active" : "")">@Html.ActionLink("Dashboard", "Index", "Home")</li>                                       
-                    <li class="@(ViewBag.Title == "Transactions" ? "active" : "")">@Html.ActionLink("Transactions", "Index", "Transactions")</li>
-                    <li class="@(ViewBag.Title == "Mappings" ? "active" : "")">@Html.ActionLink("Mappings", "Index", "Mappings")</li>                    
+                    }
+                    <li class="@(ViewBag.Title == "Dashboard" ? "active" : "")"> <a href="@Url.Action("Index","Home")"><i class="glyphicon glyphicon-dashboard"></i> Dashboard </a> </li>
+                    <li class="@(ViewBag.Title == "Download" ? "active" : "")"><a href="@Url.Action("Index","Report")"><i class="glyphicon glyphicon-download"></i> Download</a> </li>
+                    <li class="@(ViewBag.Title == "Transactions" ? "active" : "")"><a href="@Url.Action("Index","Transactions")"><i class="glyphicon glyphicon-transfer"></i> Transactions</a></li>
+                    <li class="@(ViewBag.Title == "Mappings" ? "active" : "")"><a href="@Url.Action("Index","Mappings")"><i class="glyphicon glyphicon-map-marker"></i> Mappings </a></li>
+                    <li class="@(ViewBag.Title == "About" ? "active" : "")"><a href="@Url.Action("About","Home")"><i class="glyphicon glyphicon-info-sign"></i> About</a></li>
                     <li class="@(ViewBag.Title == "Manage" ? "active" : "")">
                         <a href="@Url.Action("Index", "Manage", null)" title="Profile">
+                            <i class="glyphicon glyphicon-user"></i>
                             Profile
                         </a>
                     </li>
                     <li role="separator" class="divider"></li>
                     <li>
                         <a href="javascript:document.getElementById('logoutForm').submit()" title="Log off">
+                            <i class="glyphicon glyphicon-eject"></i>
                             Log off
                         </a>
                     </li>
                 </ul>
+
             </li>
         </ul>
 
