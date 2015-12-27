@@ -38,6 +38,9 @@ namespace BudgetApp.Controllers
         [AllowAnonymous]
         public ActionResult Login(string returnUrl)
         {
+            if (User.Identity.IsAuthenticated)
+                return RedirectToAction("Index", "Home");
+                    
             ViewBag.Info = TempData["Info"];
             ViewBag.Success = TempData["Success"];
 
@@ -182,6 +185,8 @@ namespace BudgetApp.Controllers
         [AllowAnonymous]
         public ActionResult Register()
         {
+            if (User.Identity.IsAuthenticated)
+                return RedirectToAction("Index", "Home");
             return View();
         }
 
@@ -247,6 +252,8 @@ namespace BudgetApp.Controllers
         [AllowAnonymous]
         public ActionResult ForgotPassword()
         {
+            if (User.Identity.IsAuthenticated)
+                return RedirectToAction("Index", "Home");
             return View();
         }
 
