@@ -586,3 +586,11 @@ ul > li > ul > li > ul > li > span {
 .dropdown-menu {
     padding: 5px;
 }
+
+.feature {
+    margin-top: 100px;
+}
+
+.feature > h1 {
+    font-weight: bolder;
+}

@@ -210,6 +210,7 @@
                 <br />
                 <div class="row text-center">
                     <div class="col-xs-12 text-muted">Icons made by <a href="http://www.flaticon.com/authors/freepik" title="Freepik">Freepik</a> from <a href="http://www.flaticon.com" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0">CC BY 3.0</a></div>
+                    <a style="font-size: 18px;" href="https://github.com/skarchr/BudgetApp" target="_blank"><img src="~/Content/images/github.svg" height="25" /> Visit this project on GitHub</a>
                 </div>
 
             </footer>
@@ -221,27 +222,22 @@
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                             <h4 class="modal-title" id="searchModalLabel">Search transactions</h4>
                         </div>
-                        <div class="modal-body" ng-controller="searchController">
+                        <div class="modal-body" ng-controller="searchController" style="padding:5px 0px 0px 0px;">
                             
-                            <div class="form-inline">
+                            <div class="form-inline text-center">
                                 <input type="text" ng-model="searchString" class="form-control" ng-keypress="keypressed($event)" />
                                 <button ng-disabled="searchString.length === 0" class="btn btn-primary" ng-click="search()">
                                     Search
                                 </button>
                             </div>
-
-
-                            <div ng-show="searching" style="min-height: 200px;">
-
+                            
+                            <div ng-show="searching" style="padding-left:5px;">
                                 Searching...
-
                             </div>
 
-                            <div ng-show="searchResult.length > 0" style="margin-top: 30px;">
-
-                                Found {{searchStorage.length}} transactions that matches the query
-
-                                <table class="table table-condensed table-striped">
+                            <div style="margin-top: 30px;">                                
+                                <span class="text-info" style="padding-left:5px;" ng-show="dirty && !searching">Found {{searchStorage.length}} transactions that matches the query</span>
+                                <table class="table table-condensed table-striped" ng-show="searchResult.length > 0">
 
                                     <thead>
                                         <tr>
@@ -250,7 +246,6 @@
                                             <th class="text-center">Category</th>
                                             <th>Description</th>
                                             <th class="text-center">Date</th>
-                                            <th class="text-center">Created</th>
                                             <th class="text-right"></th>
                                         </tr>
                                     </thead>
@@ -261,7 +256,6 @@
                                             <td class="text-center">{{trans.categoryText}}</td>
                                             <td>{{trans.description}}</td>
                                             <td class="text-center">{{trans.date | date}}</td>
-                                            <td class="text-center">{{trans.created | date}}</td>
                                             <td class="text-right">
                                                 <a class="link edit-link" href="/Transactions/Edit/{{trans.transactionId}}" title="Edit"><i class="glyphicon glyphicon-pencil"></i></a>
                                                 <a class="link delete-link" href="/Transactions/Delete/{{trans.transactionId}}" title="Delete">
@@ -296,7 +290,7 @@
                     $scope.searchResult = [];
                     $scope.searchStorage = [];
                     $scope.searchString = '';
-                    $scope.searching = false;
+                    $scope.searching = false;                    
 
                     var start = 0;
                     var stop = 50;
@@ -333,7 +327,7 @@
                                 $scope.searchResult = $scope.searchStorage.slice(start, stop);
 
                                 $scope.searching = false;
-
+                                $scope.dirty = true;
                                 start += 50;
                                 stop += 50;
 
@@ -342,7 +336,7 @@
                                 $scope.searching = false;
                             });
 
-                        }, 500);
+                        }, 500);                        
                     };
 
                     $scope.loadMore = function () {
