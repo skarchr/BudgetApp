@@ -14,11 +14,17 @@ using OfficeOpenXml.Style;
 
 namespace BudgetApp.Controllers
 {
-    [Authorize]
+    
     public class HomeController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
+        public ActionResult About()
+        {
+            return View("About");
+        }
+
+        [Authorize]
         public ActionResult Index()
         {
             if (ConfigurationManager.AppSettings["debugmode"] == "true")
@@ -87,13 +93,13 @@ namespace BudgetApp.Controllers
             return View("Index", model);
         }
 
-
+        [Authorize]
         public ActionResult DownloadCurrentYear()
         {
 
             var ytdTrans = db.Transactions.Where(s => s.UserName == User.Identity.Name && s.Date.Year == DateTime.Now.Year).OrderBy(t => t.Date).ToList();
 
-            var fileName = string.Format("test_budget_app_transactions_{0}.xlsx", DateTime.Now.ToString("ddMMyyyyHHmm"));
+            var fileName = string.Format("budget_app_transactions_{0}.xlsx", DateTime.Now.ToString("ddMMyyyyHHmm"));
 
             var outputDir = Server.MapPath("~/App_Data/downloads/");
             var file = new FileInfo(outputDir + fileName);

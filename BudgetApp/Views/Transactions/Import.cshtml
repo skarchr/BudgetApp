@@ -4,7 +4,7 @@
 
 
 @{
-    ViewBag.Title = "Import Transactions";
+    ViewBag.Title = "Upload Transactions";
 }
 
 <div ng-controller="importController">
@@ -63,7 +63,7 @@
                 </table>
 
                 <div class="col-xs-12 text-center">
-                    <input type="submit" name="import" style="width: 280px;" value="Import transactions" class="btn btn-primary {{importForm.$valid && req ? 'tada':''}}" ng-disabled="importForm.$invalid" />                    
+                    <input type="submit" name="import" style="width: 280px;" value="Save transactions" class="btn btn-primary {{importForm.$valid && req ? 'tada':''}}" ng-disabled="importForm.$invalid" />                    
                 </div>
                 
 

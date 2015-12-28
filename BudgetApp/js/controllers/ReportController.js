@@ -9,16 +9,6 @@
 
         $scope.selected = 'charts';
 
-        $scope.searchResult = [];
-        $scope.searchStorage = [];
-
-        $scope.searching = false;
-
-        var start = 0;
-        var stop = 50;
-
-        $scope.searchStorage = [];
-
         $scope.chartModel = {
             name: reportFactory.model.name,
             fromDate:  reportFactory.model.fromDate,
@@ -31,46 +21,7 @@
             searchString : ''
         };
 
-        $scope.search = function () {
-
-            $scope.searchResult = [];
-            $scope.searching = true;
-            start = 0;
-            stop = 50;
-
-            $timeout(function() {
-                
-                $http({
-                    method: 'POST',
-                    data: JSON.stringify($scope.chartModel),
-                    url: '/Report/SearchTransactions',
-                    contentType: 'application/json; charset=utf-8',
-
-                }).then(function successCallback(response) {
-
-                    $scope.searchStorage = JSON.parse(response.data);
-
-                    $scope.searchResult = $scope.searchStorage.slice(start, stop);
-
-                    $scope.searching = false;
-
-                    start += 50;
-                    stop += 50;
-
-                }, function errorCallback(response) {
-                    console.log('Something went wrong');
-                    $scope.searching = false;
-                });
-
-            }, 500);            
-        };
-
-        $scope.loadMore = function() {
-            $scope.searchResult = $scope.searchResult.concat($scope.searchStorage.slice(start, stop));
-
-            start += 50;
-            stop += 50;
-        };
+        
 
         $scope.toggleCategory = function(category) {
 
