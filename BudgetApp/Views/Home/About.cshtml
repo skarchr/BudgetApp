@@ -67,6 +67,8 @@
 
 
 
+
+
 		
                             <path fill="none" class="blue-stroke" stroke-width="6.9119" stroke-miterlimit="10" d="M525.5,308.8c0,0-1.7-9.7,9.4-23" />
                                     </g>
@@ -179,16 +181,9 @@
                 <div class="col-xs-12">
                     <h1>What is BudgetApp?</h1>
                     <p>
-                        A webpage for storing and displaying transaction data.
+                        A webpage for storing and displaying transaction data
 
-                        <blockquote>
-                            There are three major reasons behind the ignition of this project.
-
-                            Necessity. As a student, trying to make ends meet, I needed to get control of my income and expenses. My solution back then was to add transaction data from my internet bank into google docs. This was an ok solution for a while, but the process of organizing transactions into categories on a monthly basis became too cumbersome in the long run. As a consequence, I promised myself that i would create a webpage to make my life alittle easier.
-
-                            Curiosity. I knew that by creating this webpage I would get the oppertunity to try new technologies, e.g. Azure, Excelreader, authorization/authentication, GitHub and more.
-
-                            Challenge. Working mostly as a front-end developer at my daily job, I now would have the oppertunity to try different roles.
+                        <blockquote style="text-align:justify;">There are three major reasons behind the ignition of this project: <br /><br /><strong>Necessity</strong>. As a student, trying to make ends meet, I needed to get control of my income and expenses. My solution back then was to add transaction data from my internet bank into google docs. This was an ok solution for a while, but the process of organizing transactions into categories on a monthly basis became too cumbersome in the long run. As a consequence, I promised myself that i would create a webpage to make my life alittle easier. <strong>Curiosity</strong>. I knew that by creating this webpage I would get the oppertunity to try new technologies, e.g. Azure, Excelreader, authorization/authentication, GitHub and more. <strong>Challenge</strong>. Working mostly as a front-end developer at my daily job, I now would have the oppertunity to try different roles.
                             <br />
                             <br />
                             - Christian Skar (developer)
@@ -201,7 +196,7 @@
                     <h1>Adding transactions</h1>
                     <p>
                         There are two ways to add transactions; adding <a href="@Url.Action("Create","Transactions")"><i class="glyphicon glyphicon-plus-sign"></i></a> them manually
-                        or by uploading <a href="@Url.Action("Upload","Transactions")"><i class="glyphicon glyphicon-upload"></i></a> an excel file with your transactions.
+                        or by uploading <a href="@Url.Action("Upload","Transactions")"><i class="glyphicon glyphicon-upload"></i></a> an excel file which contains your transactions.
                     </p>
                     <h3>Uploading an excel file</h3>
                     <p>
@@ -251,6 +246,16 @@
                     <p>
                         The dashboard shows graphs based on the current year's transactions.
                         It also contains a link for downloading this year's transaction data as an excel file.
+                        Most of these graphs are interactive and can provide with additional information about the transactions.
+                    </p>
+                </div>
+
+                <div class="col-xs-12">
+                    <h1>Categories</h1>
+                    <p>
+                        Categories are divided into groups which are used by the graphs.
+                        The user is free to interpret these categories as they want.
+                        If there are categories you think should be included, write the developer a message on GitHub (see bottom of page).
                     </p>
                 </div>
 
