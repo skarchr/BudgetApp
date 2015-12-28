@@ -262,7 +262,7 @@
                                     </tbody>
                                 </table>
 
-                                <button class="btn btn-primary" style="width:100%;" ng-show="searchStorage.length > searchResult.length" ng-click="loadMore()">Load more</button>
+                                <button class="btn btn-primary" style="width:100%;" ng-show="(searchStorage.length > searchResult.length) && !searching" ng-click="loadMore()">Load more</button>
 
                             </div>
 
