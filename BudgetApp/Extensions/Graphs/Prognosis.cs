@@ -38,14 +38,16 @@ namespace BudgetApp.Extensions.Graphs
             {
                 var lastSeries = series.Last();
 
-                if (lastSeries.Data.Last().X <= 10 && lastSeries.Name == DateTime.Now.Year.ToString())
+                if (lastSeries.Data.Count > 0)
                 {
-                    series.Add(new Series
+                    if (lastSeries.Data.Last().X <= 10 && lastSeries.Name == DateTime.Now.Year.ToString())
                     {
-                        Name = string.Format("Prediction ({0})", DateTime.Now.Year),
-                        Color = income ? "#48DDb8" : "#b94a48",
-                        DashStyle = "dash",
-                        Data = new List<Data>
+                        series.Add(new Series
+                        {
+                            Name = string.Format("Prediction ({0})", DateTime.Now.Year),
+                            Color = income ? "#48DDb8" : "#b94a48",
+                            DashStyle = "dash",
+                            Data = new List<Data>
                     {
                     new Data
                     {
@@ -60,7 +62,8 @@ namespace BudgetApp.Extensions.Graphs
                         Y = plotPredicted.Value,
                     }
                 }
-                    });
+                        });
+                    }
                 }
             }
 
