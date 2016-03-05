@@ -98,6 +98,7 @@
                         }
                     }
                     <li class="@(ViewBag.Title == "Dashboard" ? "active" : "")"> <a href="@Url.Action("Index","Home")"><i class="glyphicon glyphicon-dashboard"></i> Dashboard </a> </li>
+                    <li class="@(ViewBag.Title == "Dashboard2" ? "active" : "")"> <a href="@Url.Action("Index","Dashboard")"><i class="glyphicon glyphicon-dashboard"></i> Dashboard 2.0 (alpha)</a> </li>
                     <li class="@(ViewBag.Title == "Download" ? "active" : "")"><a href="@Url.Action("Index","Report")"><i class="glyphicon glyphicon-download"></i> Download</a> </li>
                     <li class="@(ViewBag.Title == "Transactions" ? "active" : "")"><a href="@Url.Action("Index","Transactions")"><i class="glyphicon glyphicon-transfer"></i> Transactions</a></li>
                     <li class="@(ViewBag.Title == "Mappings" ? "active" : "")"><a href="@Url.Action("Index","Mappings")"><i class="glyphicon glyphicon-map-marker"></i> Mappings </a></li>

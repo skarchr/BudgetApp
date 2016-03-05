@@ -186,6 +186,7 @@
     <Compile Include="Constants\HighchartUtilities.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AdminController.cs" />
+    <Compile Include="Controllers\DashboardController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
@@ -701,6 +702,7 @@
     <Content Include="Views\Report\_Drilldown.cshtml" />
     <Content Include="Views\Report\_SPC.cshtml" />
     <Content Include="Views\Home\About.cshtml" />
+    <Content Include="Views\Dashboard\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\uploads\" />
