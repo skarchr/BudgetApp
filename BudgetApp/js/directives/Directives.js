@@ -22,7 +22,70 @@
         return (source.charAt(0).toUpperCase() + source.slice(1)).trim();
     }
 
-    angular.module('budgetApp')        
+    angular.module('budgetApp')
+
+        .directive('setDateYear', ['$filter', function ($filter) {
+            return{
+                restrict: 'A',
+                scope: {
+                    setDateYear:'='
+                },
+                link:function(scope, elem) {
+
+                    $(elem[0]).attr('href', 'javscript:void(0)');
+
+                    $(elem[0]).after('<span class="sep">|</span>');
+
+                    $(elem[0]).on('click', function () {
+
+                        var from = $filter('date')(new Date(scope.setDateYear, 0, 1), 'MMMM d, y');
+                        var to = $filter('date')(new Date(scope.setDateYear, 11, 1), 'MMMM d, y');
+
+                        $('#ToDate').val(to);
+                        $('#FromDate').val(from).trigger('change');
+                    });
+                }
+            };
+        }])
+
+        .directive('setDate', ['$filter',function($filter) {
+            return {
+                restrict: 'A',
+                scope: {
+                    mode: '@setDate'
+                },
+                link:function(scope, elem) {
+
+                    $(elem[0]).attr('href', 'javscript:void(0)');
+
+                    $(elem[0]).on('click', function () {
+                        
+                            var today = $filter('date')(new Date(), 'MMMM d, y');
+                            var january = $filter('date')(new Date(new Date().getFullYear(), 0, 1), 'MMMM d, y');
+                            var currentYear = new Date().getFullYear();
+                            var currentMonth = new Date().getMonth();
+                            switch (scope.mode) {
+                                case 'All': 
+                                    var start = $filter('date')(scope.$parent.first, 'MMMM d, y');
+                                    $('#ToDate').val(today);
+                                    $('#FromDate').val(start).trigger('change');
+                                    break;
+                                case 'Month':                                    
+                                    var ytd = $filter('date')(new Date(currentYear, currentMonth, 1), 'MMMM d, y');
+                                    $('#ToDate').val(today);
+                                    $('#FromDate').val(ytd).trigger('change');
+                                    break;
+
+                            default:
+                            }
+
+                        });
+                   
+
+                }
+            };
+        }])
+
         .directive('dropdown', function() {
             return {
                 restrict : 'C',

@@ -1,2 +1,164 @@
-﻿
-<h3>THis is the new dashboard</h3>
+﻿@using BudgetApp.Extensions
+@model BudgetApp.Models.DashboardViewModel
+
+@{
+    ViewBag.Title = "Dashboard";
+}
+
+<script src="~/js/directives/GraphDirectives.js"></script>
+
+<div class="row" ng-controller="dashboardController">
+
+    <div class="row">
+        
+        <div class="col-xs-8">
+
+            <span style="padding:0;padding-right:5px;width:140px;">
+                <a data-set-date="All">All transactions</a>                
+                <span class="sep">|</span>                
+                <a set-date-year="year" ng-repeat="year in years">{{year}}</a>
+                <a data-set-date="Month">Current month</a>
+            </span>          
+        </div>
+        <div class="col-xs-4 text-right">
+            <span style="padding:0;width:140px;">
+                <input ng-click="open($event)" ng-change="submit()" type="text" name="FromDate" id="FromDate" class="datepicker text-center" datepicker-popup="{{format}}" max-date="model.toDate" ng-model="model.fromDate" is-open="opened" datepicker-options="dateOptions" ng-required="true" close-text="Close" />
+            </span>
+
+            <span style="padding:0;width:140px;">
+                <input ng-click="open2($event)" ng-change="submit()" type="text" name="ToDate" id="ToDate" class="datepicker text-center" datepicker-popup="{{format}}" ng-model="model.toDate" is-open="opened2" min-date="model.fromDate" max-date="today" datepicker-options="dateOptions" ng-required="true" close-text="Close" />
+            </span>
+        </div>
+        
+    </div>
+    
+    <div class="row" style="margin-top: 20px;">
+        <div class="col-xs-6">
+            <span class="text-success" style="padding-right:10px;"><i class="glyphicon glyphicon-arrow-right"></i> {{model.income | currencyFormatter }}</span>
+            <span class="text-danger"><i class="glyphicon glyphicon-arrow-left"></i> {{model.expenses | currencyFormatter }}</span>
+        </div>
+        <div class="col-xs-6 text-right">
+            <span class="text-danger {{model.balance > 0 ?'text-success':'text-danger'}}"><i class="glyphicon glyphicon-transfer"></i> {{model.balance | currencyFormatter}}</span>
+        </div>
+    </div>
+
+    <div class="row" style="margin-top:20px;">
+        <div class="col-xs-12 col-md-6 col-lg-4 col-graph">
+            <div ng-show="spinner" class="spinner">
+                <div class="spinner">
+                    <div class="ball"></div>
+                    <p>LOADING</p>
+                </div>
+            </div>
+            <div ng-hide="spinner" class="graph">
+                <span data-treemap-reload ng-model="model.treemapChart"></span>
+            </div>
+        </div>
+        <div class="col-xs-12 col-md-6 col-lg-4 col-graph">
+            <div ng-show="spinner" class="spinner">
+                <div class="spinner">
+                    <div class="ball"></div>
+                    <p>LOADING</p>
+                </div>
+            </div>
+            <div ng-hide="spinner" class="graph">
+                <span data-highchart-reload ng-model="model.transactionGraph"></span>
+            </div>
+        </div>
+        <div class="col-xs-12 col-md-6 col-lg-4 col-graph">
+            <div ng-show="spinner" class="spinner">
+                <div class="spinner">
+                    <div class="ball"></div>
+                    <p>LOADING</p>
+                </div>
+            </div>
+            <div ng-hide="spinner" class="graph">
+                <span data-balance-reload ng-model="model.balanceGraph"></span>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    (function() {
+        'use strict';
+
+        angular.module('budgetApp').factory('dashboardService', ['$http',function($http) {
+
+            var refresh = function(model) {
+                return $http.get('@Url.Action("Refresh", "Dashboard")', { params: { from: model.fromDate, to: model.toDate } });
+            };
+
+            return {
+                model:@Html.Raw(Model.ToJson()),
+                refresh: refresh
+            };
+
+        }]);
+
+        angular.module('budgetApp').controller('dashboardController', ['$scope','$timeout','dashboardService',function($scope,$timeout,dashboardService) {
+
+            $scope.model = dashboardService.model;
+
+            $scope.first = new Date(dashboardService.model.fromDate);
+            $scope.last = new Date(dashboardService.model.toDate);
+
+            $scope.years = [];
+
+
+            for (var i = $scope.first.getFullYear(); i <= $scope.last.getFullYear(); i++) {
+                $scope.years.push(i);
+            }
+
+            $scope.spinner = false;
+
+            $scope.submit = function() {
+                console.log('running');
+                $scope.spinner = true;
+
+                $timeout(function() {
+                    dashboardService.refresh($scope.model).success(function(data) { $scope.model = data; });
+                }, 1500);
+
+
+                $timeout(function() {
+                    $scope.spinner = false;
+                },1700);
+            };
+
+            //Datepicker
+
+            $scope.today = new Date();
+
+            $scope.opened = false;
+            $scope.opened2 = false;
+
+            $scope.open = function ($event) {
+                $event.preventDefault();
+                $event.stopPropagation();
+                $scope.opened2 = false;
+                $scope.opened = true;
+            };
+
+            $scope.open2 = function ($event) {
+                $event.preventDefault();
+                $event.stopPropagation();
+                $scope.opened = false;
+                $scope.opened2 = true;
+            };
+
+            $scope.dateOptions = {
+                formatYear: 'yy',
+                startingDay: 1
+            };
+
+            $scope.formats = ['yyyy-MM-dd', 'yyyy/MM/dd', 'dd.MM.yyyy', 'shortDate','MMMM d, y'];
+            $scope.format = $scope.formats[4];
+
+            $scope.disabled = function (date, mode) {
+                return (mode === 'day' && (date.getDay() === 0 || date.getDay() === 6));
+            };
+
+        }]);
+
+    })();
+</script>

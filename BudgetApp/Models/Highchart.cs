@@ -151,6 +151,7 @@ namespace BudgetApp.Models
             Visible = true;
             DashStyle = "Solid";
             Marker = new Marker();
+            DataGrouping = new DataGrouping();
         }
         
         public int? XAxis { get; set; }
@@ -164,7 +165,16 @@ namespace BudgetApp.Models
         public List<Data> Data { get; set; }
         public string DashStyle { get; set; }
         public Marker Marker { get; set; }
+        public DataGrouping DataGrouping { get; set; }
     }
+
+    public class DataGrouping
+    {
+        public string Approximation { get; set; }
+        public bool Enabled { get; set; }
+        public bool Forced { get; set; }
+    }
+
 
     public class Marker
     {

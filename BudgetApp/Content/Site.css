@@ -594,3 +594,42 @@ ul > li > ul > li > ul > li > span {
 .feature > h1 {
     font-weight: bolder;
 }
+
+.datepicker {
+    width: 140px;
+    border: 1px solid #0094ff;
+}
+
+.sep {
+    padding-left: 4px;
+    padding-right: 4px;
+    color: #adadad;
+}
+.graph-container {
+    border: 1px solid #ececec;
+}
+
+.col-graph {
+    min-height: 305px;
+    height: 305px;
+    padding: 0;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.col-graph > .spinner {
+    min-height: 300px;
+    height: 300px;
+    border:1px solid #0094ff;
+    width: 390px;
+    padding-top: 140px;
+    margin-left: 0;
+    margin-top: 0;
+}
+
+.col-graph > .graph {
+    border:1px solid #0094ff;
+    width: 390px;
+    min-height: 300px;
+    height: 300px;
+}

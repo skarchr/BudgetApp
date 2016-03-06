@@ -17,7 +17,12 @@ namespace BudgetApp.Constants
             "#F38630",
             "#A9DEF9",
             "#009900"
-        }; 
+        };
 
+
+        public static double ConvertToMilliseconds(DateTime date)
+        {
+            return date.Subtract(new DateTime(1970,1,1,0,0,0, DateTimeKind.Utc)).TotalMilliseconds;
+        }
     }
 }
