@@ -80,6 +80,8 @@
     <Compile Include="CategoryTests.cs" />
     <Compile Include="Graphs\BalanceGraphTests.cs" />
     <Compile Include="Graphs\BurnRateTests.cs" />
+    <Compile Include="Graphs\GraphGeneratorTests.cs" />
+    <Compile Include="Graphs\FrequencyGraphTests.cs" />
     <Compile Include="Graphs\GraphBuilderTests.cs" />
     <Compile Include="Graphs\PrognosisGraphTests.cs" />
     <Compile Include="Graphs\BoxPlotTests.cs" />

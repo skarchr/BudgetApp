@@ -22,7 +22,6 @@ namespace BudgetApp.Extensions.Graphs
                 {
                     Text = "Balance"
                 },
-                Type = "candlestick",
                 Series = series
             };
         }
@@ -35,7 +34,7 @@ namespace BudgetApp.Extensions.Graphs
             {
                 Color = "rgb(72, 221, 184)",
                 Name = "Income",
-                Type = "line",
+                Type = "column",
                 Data = incomeData,
                 DataGrouping = new DataGrouping
                 {
@@ -55,18 +54,13 @@ namespace BudgetApp.Extensions.Graphs
             {
                 Color = "rgb(232, 124, 124)",
                 Name = "Expenses",
-                Type = "line",
+                Type = "column",
                 Data = expensesData,
                 DataGrouping = new DataGrouping
                 {
                     Approximation = "sum",
                     Enabled = true,
                     Forced = true
-                },
-                Marker = new Marker
-                {
-                    Enabled = true,
-                    Radius = 1
                 }
             };
             return new List<Series>

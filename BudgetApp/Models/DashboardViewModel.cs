@@ -12,6 +12,19 @@ namespace BudgetApp.Models
         public DateTime FromDate { get; set; }
         public DateTime ToDate { get; set; }
 
+        public DateTime First { get; set; }
+        
+        public Highchart SpcGraph { get; set; }
+        public Highchart BurnGraph { get; set; }
+        public Highchart PrognosisChart { get; set; }
+        public Highchart PrognosisIncomeChart { get; set; }
+
+        public DashboardVariables Variables { get; set; }
+        public DateTime Last { get; set; }
+    }
+
+    public class DashboardVariables
+    {
         public double Income { get; set; }
         public double Expenses { get; set; }
         public double Balance { get; set; }
@@ -19,5 +32,7 @@ namespace BudgetApp.Models
         public List<Treemap> TreemapChart { get; set; }
         public Highchart TransactionGraph { get; set; }
         public Highchart BalanceGraph { get; set; }
+        public Highchart Frequency { get; set; }
+        public Highchart CategoryGraph { get; set; }
     }
 }

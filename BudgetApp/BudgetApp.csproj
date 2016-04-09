@@ -199,6 +199,8 @@
     <Compile Include="Extensions\Graphs\Balance.cs" />
     <Compile Include="Extensions\Graphs\BurnRate.cs" />
     <Compile Include="Extensions\Graphs\DailyExpenses.cs" />
+    <Compile Include="Extensions\Graphs\GraphGenerator.cs" />
+    <Compile Include="Extensions\Graphs\Frequency.cs" />
     <Compile Include="Extensions\Graphs\GraphBuilder.cs" />
     <Compile Include="Extensions\Graphs\Overview.cs" />
     <Compile Include="Extensions\Graphs\Prognosis.cs" />
@@ -248,6 +250,7 @@
     <Compile Include="Models\Category.cs" />
     <Compile Include="Models\DashboardViewModel.cs" />
     <Compile Include="Models\ExcelColumns.cs" />
+    <Compile Include="Models\GraphModel.cs" />
     <Compile Include="Models\Highchart.cs" />
     <Compile Include="Models\HomeViewModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />

@@ -22,11 +22,36 @@ namespace BudgetApp.Controllers
 
             if (transactions.Count == 0)
                 return View();
+            var exp = transactions.Where(s => s.CategoryType == "Expenses").ToList();
+            var timeSpan = 0;
+            if ( exp.Count > 1)
+                timeSpan = (exp.Last().Date - exp.First().Date).Days;
 
-            var from = transactions.First().Date;
-            var to = transactions.Last().Date;
+            var range = timeSpan >= 700 ?
+                ChartRange.Monthly :
+                    timeSpan >= 175 ?
+                    ChartRange.Weekly :
+                    ChartRange.Daily;
 
-            var model = CreateModel(transactions, from, to);
+            var now = DateTime.Now;
+
+            var from = new DateTime(DateTime.Now.Year, DateTime.Now.Month,1);
+            var to = now;
+
+            var userInfo = db.Users.First(s => s.UserName == User.Identity.Name);
+
+            var model = new DashboardViewModel
+            {
+                FromDate = from,
+                ToDate = to,
+                First = transactions.First().Date,
+                Last = transactions.Last().Date,
+                Variables = CreateModel(transactions, from, to),
+                SpcGraph = Spc.CreateChart(exp, "", range),
+                BurnGraph = BurnRate.CreateChart(exp, DateTime.Now, userInfo.MonthlyExpensesGoal,userInfo.Currency),
+                PrognosisChart = GraphBuilder.PrognosisGraph(transactions.Where(s => s.Date.Year == DateTime.Now.Year).ToList(), userInfo.Currency),
+                PrognosisIncomeChart = GraphBuilder.PrognosisGraph(transactions.Where(s => s.Date.Year == DateTime.Now.Year).ToList(), userInfo.Currency, true)
+            };
 
             return View(model);
         }
@@ -39,29 +64,41 @@ namespace BudgetApp.Controllers
             return CreateModel(transactions, from, to).ToJson();
         }
 
-        private DashboardViewModel CreateModel(List<Transaction> transactions, DateTime from, DateTime to)
+        private DashboardVariables CreateModel(List<Transaction> transactions, DateTime from, DateTime to)
         {
-            if (transactions.Count == 0)
-                throw new Exception("No transactions found");
+            var trans = transactions.Where(s => s.Date >= from && s.Date <= to).ToList();
 
-            var income = Math.Round(transactions.Where(
-                s => s.CategoryType == Categories.Income && s.Date >= from &&
-                     s.Date <= to).Sum(t => t.Amount), 1);
-            var expenses = Math.Round(transactions.Where(
-                s =>
-                    s.CategoryType != Categories.Income && s.Date >= from &&
-                    s.Date <= to).Sum(t => t.Amount), 1);
-
-            var result = new DashboardViewModel
+            if (trans.Count == 0)
             {
-                FromDate = from,
-                ToDate = to,
+                return new DashboardVariables
+                {
+                    Income = 0,
+                    Expenses = 0,
+                    Balance = 0,
+                    TreemapChart = TreemapGenerator.CreateChart(trans),
+                    TransactionGraph = GraphBuilder.DrilldownGraph(trans, "", "column", true),
+                    BalanceGraph = GraphGenerator.CreateMonthlyGraph(trans, "Monthly income vs expenses by category", true),
+                    Frequency = Frequency.CreateGraph(trans),
+                    CategoryGraph = GraphGenerator.CreateMonthlyGraph(trans,"Monthly expenses")
+                };
+            }
+                
+
+            var exp = trans.Where(s => s.CategoryType == "Expenses").ToList();
+
+            var income = Math.Round(trans.Where(s => s.CategoryType == "Income").Sum(t => t.Amount), 1);
+            var expenses = Math.Round(exp.Sum(t => t.Amount), 1);
+
+            var result = new DashboardVariables
+            {
                 Income = income,
                 Expenses = expenses,
                 Balance = Math.Round(income - expenses, 0),
-                TreemapChart = TreemapGenerator.CreateChart(transactions.Where(s => s.Date >= from && s.Date <= to).ToList()),
-                TransactionGraph = GraphBuilder.DrilldownGraph(transactions.Where(s => s.Date >= from && s.Date <= to).ToList(), "", "column", true),
-                BalanceGraph = Balance.CreateChart(transactions.Where(s => s.Date >= from && s.Date <= to).ToList())
+                TreemapChart = TreemapGenerator.CreateChart(trans),
+                TransactionGraph = GraphBuilder.DrilldownGraph(trans, "", "column", true),
+                BalanceGraph = GraphGenerator.CreateMonthlyGraph(trans, "Monthly income vs expenses by category", true),                
+                Frequency = Frequency.CreateGraph(exp),
+                CategoryGraph = GraphGenerator.CreateMonthlyGraph(exp, "Monthly expenses by category")
             };
 
             return result;

@@ -10,39 +10,35 @@
 <div class="row" ng-controller="dashboardController">
 
     <div class="row">
-        
         <div class="col-xs-8">
 
             <span style="padding:0;padding-right:5px;width:140px;">
-                <a data-set-date="All">All transactions</a>                
-                <span class="sep">|</span>                
+                <a data-set-date="All">All transactions</a>
+                <span class="sep">|</span>
                 <a set-date-year="year" ng-repeat="year in years">{{year}}</a>
-                <a data-set-date="Month">Current month</a>
-            </span>          
+                <a data-set-date="Month" class="active">Current month</a>
+            </span>
         </div>
         <div class="col-xs-4 text-right">
             <span style="padding:0;width:140px;">
-                <input ng-click="open($event)" ng-change="submit()" type="text" name="FromDate" id="FromDate" class="datepicker text-center" datepicker-popup="{{format}}" max-date="model.toDate" ng-model="model.fromDate" is-open="opened" datepicker-options="dateOptions" ng-required="true" close-text="Close" />
+                <input ng-click="open($event)" type="text" name="FromDate" id="FromDate" ng-change="refreshBtn()" class="datepicker text-center" datepicker-popup="{{format}}" max-date="model.toDate" ng-model="model.fromDate" is-open="opened" datepicker-options="dateOptions" ng-required="true" close-text="Close" />
             </span>
 
             <span style="padding:0;width:140px;">
-                <input ng-click="open2($event)" ng-change="submit()" type="text" name="ToDate" id="ToDate" class="datepicker text-center" datepicker-popup="{{format}}" ng-model="model.toDate" is-open="opened2" min-date="model.fromDate" max-date="today" datepicker-options="dateOptions" ng-required="true" close-text="Close" />
+                <input ng-click="open2($event)" type="text" name="ToDate" id="ToDate" ng-change="refreshBtn()" class="datepicker text-center" datepicker-popup="{{format}}" ng-model="model.toDate" is-open="opened2" min-date="model.fromDate" max-date="today" datepicker-options="dateOptions" ng-required="true" close-text="Close" />
             </span>
+            <button set-date-inactive id="refreshBtn" ng-disabled="disableRefresh" class="btn btn-primary btn-xs" ng-click="submit()"><i class="glyphicon glyphicon-refresh"></i></button>
         </div>
-        
+
     </div>
-    
-    <div class="row" style="margin-top: 20px;">
-        <div class="col-xs-6">
-            <span class="text-success" style="padding-right:10px;"><i class="glyphicon glyphicon-arrow-right"></i> {{model.income | currencyFormatter }}</span>
-            <span class="text-danger"><i class="glyphicon glyphicon-arrow-left"></i> {{model.expenses | currencyFormatter }}</span>
-        </div>
-        <div class="col-xs-6 text-right">
-            <span class="text-danger {{model.balance > 0 ?'text-success':'text-danger'}}"><i class="glyphicon glyphicon-transfer"></i> {{model.balance | currencyFormatter}}</span>
+
+    <div class="row" style="margin-top: 20px;" ng-hide="error">
+        <div class="col-xs-12 text-center">
+            <span style="font-size: 20px;" class="text-danger {{model.variables.balance > 0 ?'text-success':'text-danger'}}"><i class="glyphicon glyphicon-transfer"></i> {{model.variables.balance | currencyFormatter}}</span>
         </div>
     </div>
 
-    <div class="row" style="margin-top:20px;">
+    <div class="row" style="margin-top:20px;" ng-hide="error">
         <div class="col-xs-12 col-md-6 col-lg-4 col-graph">
             <div ng-show="spinner" class="spinner">
                 <div class="spinner">
@@ -51,7 +47,41 @@
                 </div>
             </div>
             <div ng-hide="spinner" class="graph">
-                <span data-treemap-reload ng-model="model.treemapChart"></span>
+                <span data-highchart-reload ng-model="model.variables.transactionGraph"></span>
+            </div>
+        </div>
+
+        <div class="col-xs-12 col-md-6 col-lg-8 col-graph">
+            <div ng-show="spinner" class="spinner">
+                <div class="spinner">
+                    <div class="ball"></div>
+                    <p>LOADING</p>
+                </div>
+            </div>
+            <div ng-hide="spinner" class="graph">
+                <span data-spc-reload ng-model="model.variables.balanceGraph" width="780"></span>
+            </div>
+        </div>        
+        <div class="col-xs-12 col-md-6 col-lg-4 col-graph">
+            <div ng-show="spinner" class="spinner">
+                <div class="spinner">
+                    <div class="ball"></div>
+                    <p>LOADING</p>
+                </div>
+            </div>
+            <div ng-hide="spinner" class="graph">
+                <span data-treemap-reload ng-model="model.variables.treemapChart"></span>
+            </div>
+        </div>
+        <div class="col-xs-12 col-md-6 col-lg-8 col-graph">
+            <div ng-show="spinner" class="spinner">
+                <div class="spinner">
+                    <div class="ball"></div>
+                    <p>LOADING</p>
+                </div>
+            </div>
+            <div ng-hide="spinner" class="graph">
+                <span data-spc-reload ng-model="model.variables.categoryGraph" width="780"></span>
             </div>
         </div>
         <div class="col-xs-12 col-md-6 col-lg-4 col-graph">
@@ -62,19 +92,53 @@
                 </div>
             </div>
             <div ng-hide="spinner" class="graph">
-                <span data-highchart-reload ng-model="model.transactionGraph"></span>
+                <span data-frequency-reload ng-model="model.variables.frequency"></span>
             </div>
         </div>
+    </div>
+    
+    <div class="row" style="margin-top:30px;">
+        <div class="col-xs-4">
+            <hr />
+        </div>
+        <div class="col-xs-4 text-center">
+            <h3 style="margin-top:6px;">Additional info about current year</h3>
+        </div>
+        <div class="col-xs-4">
+            <hr />
+        </div>
+    </div>
+
+
+    <div class="row" style="margin-top: 30px;">
+        
         <div class="col-xs-12 col-md-6 col-lg-4 col-graph">
-            <div ng-show="spinner" class="spinner">
-                <div class="spinner">
-                    <div class="ball"></div>
-                    <p>LOADING</p>
-                </div>
+            <div class="graph">
+                <span data-burn-rate-reload ng-model="model.burnGraph"></span>
             </div>
-            <div ng-hide="spinner" class="graph">
-                <span data-balance-reload ng-model="model.balanceGraph"></span>
+        </div>
+        
+        <div class="col-xs-12 col-md-6 col-lg-8 col-graph">
+            <div class="graph">
+                <span data-spc-reload ng-model="model.spcGraph" width="780"></span>
             </div>
+        </div>
+        <div class="col-xs-12 col-md-6 col-lg-6 col-graph">
+            <div class="graph">
+                <span data-prog-highchart-reload ng-model="model.prognosisIncomeChart" width="580"></span>
+            </div>
+        </div>
+        
+        <div class="col-xs-12 col-md-6 col-lg-6 col-graph">
+            <div class="graph">
+                <span data-prog-highchart-reload ng-model="model.prognosisChart" width="580"></span>
+            </div>
+        </div>
+        
+    </div>
+    <div class="row" style="margin-top: 20px;" ng-show="error">
+        <div class="alert alert-danger text-center" style="font-size:18px;">
+            <i class="glyphicon glyphicon-warning-sign"></i> Something went wrong! Try again!
         </div>
     </div>
 </div>
@@ -99,11 +163,18 @@
 
             $scope.model = dashboardService.model;
 
-            $scope.first = new Date(dashboardService.model.fromDate);
+            $scope.first = new Date(dashboardService.model.first);
             $scope.last = new Date(dashboardService.model.toDate);
 
-            $scope.years = [];
+            $scope.error = false;
 
+            $scope.disableRefresh = true;
+
+            $scope.refreshBtn = function() {
+                $scope.disableRefresh = false;
+            };
+
+            $scope.years = [];
 
             for (var i = $scope.first.getFullYear(); i <= $scope.last.getFullYear(); i++) {
                 $scope.years.push(i);
@@ -112,17 +183,17 @@
             $scope.spinner = false;
 
             $scope.submit = function() {
-                console.log('running');
                 $scope.spinner = true;
-
-                $timeout(function() {
-                    dashboardService.refresh($scope.model).success(function(data) { $scope.model = data; });
-                }, 1500);
-
-
-                $timeout(function() {
-                    $scope.spinner = false;
-                },1700);
+                $scope.error = false;
+                dashboardService.refresh($scope.model)
+                    .success(function(data) {
+                        $scope.model.variables = data;
+                        $scope.spinner = false;
+                    })
+                    .error(function() {
+                        $scope.error = true;
+                    });
+                $scope.disableRefresh = true;
             };
 
             //Datepicker

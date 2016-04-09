@@ -633,3 +633,25 @@ ul > li > ul > li > ul > li > span {
     min-height: 300px;
     height: 300px;
 }
+
+.col-lg-8.col-graph > .graph,.col-lg-8.col-graph > .spinner {
+    width: 790px;
+}
+
+.col-lg-6.col-graph > .graph,.col-lg-6.col-graph > .spinner {
+    width: 590px;
+}
+
+.setting-date-input {
+    -webkit-transition: all 0.5s;
+    -moz-transition: all 0.5s;
+    -ms-transition: all 0.5s;
+    -o-transition: all 0.5s;
+    transition: all 0.5s;
+    color: #428bca;
+}
+
+.setting-date-input.active {
+    color: #122d45;
+    font-weight: bold;
+}

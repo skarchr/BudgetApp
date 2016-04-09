@@ -16,7 +16,8 @@ namespace BudgetApp.Constants
             "#48DDb8",
             "#F38630",
             "#A9DEF9",
-            "#009900"
+            "#009900",
+            "rgb(232, 124, 124)"
         };
 
 

@@ -10,6 +10,7 @@ namespace BudgetApp.Models
             YAxis = null;
         }
 
+        public bool Legend { get; set; }
         public List<string> Categories { get; set; }
         public List<Series> Series { get; set; }
         public Drilldown Drilldown { get; set; }
@@ -126,6 +127,7 @@ namespace BudgetApp.Models
         public int Year { get; set; }
         public double? Y { get; set; }
         public double X { get; set; }
+        public double Z { get; set; }
 
         public double? Q1 { get; set; }
         public double? Q3 { get; set; }

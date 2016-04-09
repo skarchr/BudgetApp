@@ -24,22 +24,303 @@
     angular.module('budgetApp')
 
 
-        .directive('balanceReload', function() {
+        .directive('progHighchartReload', [
+            function () {
+
+                return {
+                    restrict: 'A',
+                    ngModel: 'required',
+                    scope: {
+                        model: '=ngModel',
+                        width:'='
+                    },
+                    link: function (scope, elem, attrs) {
+
+                        var renderGraph = function (model) {
+                            
+                            Highcharts.setOptions({ lang: { drillUpText: 'Back' } });
+
+                            $(elem[0]).highcharts({
+                                chart: {
+                                    type: 'line',
+                                    style: {
+                                        fontFamily: "Tahoma, Geneva, sans-serif !important"
+                                    },
+                                    width: scope.width === undefined ? 380:scope.width,
+                                    height: 300,
+                                    plotBackgroundColor: null,
+                                    plotBorderWidth: null,
+                                    plotShadow: false
+                                },
+                                title: {
+                                    text: model.title.text,
+                                    style: {
+                                        fontSize: '18px',
+                                        color: '#313131'
+                                    }
+                                },
+                                tooltip: {
+                                    enabled: true,
+                                    pointFormat: '{series.name}: <b>{point.y:.1f} </b>'
+                                },
+                                legend: {
+                                    enabled: false
+                                },
+                                credits: false,
+                                plotOptions: {
+                                    series: {
+                                        dataLabels: {
+                                            enabled: false
+                                        }
+                                    }
+
+                                },
+                                series: model.series,
+                                xAxis: model.xAxis,
+                                yAxis: model.yAxis
+                            });
+                        }
+
+                        renderGraph(scope.model);
+
+                        scope.$watch('model', function (nv) {
+                            renderGraph(nv);
+                        });
+                    }
+                }
+            }
+        ])
+
+        .directive('burnRateReload', [function() {
+
+            return {
+                restrict: 'A',
+                ngModel:'required',
+                scope: {
+                    model: '=ngModel'
+                },
+                link: function(scope, elem, attrs) {
+                                  
+                    var renderGraph = function(model) {
+
+                        $(elem[0]).highcharts({
+                            chart: {
+                                zoomType: 'x',
+                                width: 380,
+                                height: 300
+                            },
+                            credits: false,
+                            title: model.title,
+                            subtitle: {
+                                text: ' '
+                            },
+                            xAxis: {
+                                type: 'datetime',
+                                labels: { enabled: false },
+                                plotLines: model.xAxis[0].plotLines
+                            },
+                            yAxis: {
+                                title: {
+                                    text: ' '
+                                },
+                                endOnTick: true
+                            },
+                            legend: {
+                                enabled: false
+                            },
+                            plotOptions: {
+                                area: {
+                                    marker: {
+                                        radius: 0
+                                    },
+                                    lineWidth: 1,
+                                    states: {
+                                        hover: {
+                                            lineWidth: 2
+                                        }
+                                    },
+                                    threshold: 0
+                                }
+                            },
+                            series: model.series
+                        });
+                    };
+
+                    renderGraph(scope.model);
+
+                    scope.$watch('model', function (nv) {
+                        renderGraph(nv);
+                    });
+                }
+            };
+
+        }])
+
+        .directive('frequencyReload', ['commonService', function (commonService) {
             return {
                 restrict: 'A',
                 ngModel: 'required',
                 scope: {
-                    model:'=ngModel'
+                    model: '=ngModel'
+                },
+                link: function (scope, elem) {
+
+                    var renderGraph = function (model) {
+
+                        
+                        $(elem[0]).highcharts({
+
+                            chart: {
+                                type: 'bubble',
+                                plotBorderWidth: 2,
+                                width: 380,
+                                height: 300,
+                                zoomType: 'xy'
+                            },
+                            legend: {
+                                enabled: false
+                            },
+                            credits: false,
+                            title: {
+                                text: 'Frequency'
+                            },
+                            xAxis: {
+                                categories: model.xAxis !== null ? model.xAxis[0]:null,
+                                labels: {
+                                    useHTML: true,
+                                    formatter: function () {
+
+
+                                        var textLabel = '<span class="hidden-sm">' + formatCamelText(this.value) + '</span>';
+
+                                        var img = '<img class="hs-image-label" title="' + formatCamelText(this.value) + '" src="' + commonService.getIconUrl(this.value) + '"/>';
+
+                                        var style = model.type === 'bar' ? 'min-height:50px;min-width:80px;' : 'min-height:50px;';
+
+                                        return '<div class="text-center" style = "' + style + '">' + img + '<br>' + textLabel + '</div>';
+                                    }
+                                    //rotation: -45
+                                }
+                            },
+                            yAxis: {
+                                title: {
+                                    text: ' '
+                                },
+                                min: 0,
+                                maxPadding: 0.2
+                            },
+
+                            tooltip: {
+                                useHTML: true,
+                                headerFormat: '<table style="padding:0;">',
+                                pointFormat: '<tr><th colspan="2"><span style="color:{point.color}">{point.name}</span></th></tr>' +
+                                    '<tr><th>Frequency:</th><td style="text-align:right;">{point.z}</td></tr>' +
+                                    '<tr><th>Sum:</th><td>{point.y}</td></tr>',
+                                footerFormat: '</table>',
+                                followPointer: false
+                            },
+                            series: model.series
+                        });
+
+                    };
+
+                    renderGraph(scope.model);
+
+
+                    scope.$watch('model', function (nv) {
+                        renderGraph(nv);
+                    });
+                }
+            };
+        }])
+
+        .directive('spcReload', function() {
+            return {
+                restrict: 'A',
+                ngModel: 'required',
+                scope: {
+                    model: '=ngModel',
+                    width:'='
                 },
                 link:function(scope, elem) {
 
                     var renderGraph = function(model) {
 
-                        var series = model.series;                        
+                        $(elem[0]).highcharts({
+                            chart: {
+                                type: 'line',
+                                style: {
+                                    fontFamily: "Tahoma, Geneva, sans-serif !important"
+                                },
+                                width: scope.width === undefined ? 380:scope.width,
+                                height: 300,
+                                zoomType:'x'
+                            },
+                            title: {
+                                text: model.title.text,
+                                style: {
+                                    fontSize: '18px',
+                                    color: '#313131'
+                                }
+                            },
+                            tooltip: {
+                                enabled: true,
+                                pointFormat: '<span style="color:{point.color}">\u25CF</span> {series.name}: <b>{point.y:.1f} </b><br>',
+                                shared:true
+                            },
+                            legend: {
+                                enabled: model.legend
+                            },
+                            credits: false,
+                            plotOptions: {
+                                series: {
+                                    dataLabels: {
+                                        enabled: false
+                                    }
+                                }
+
+                            },
+                            series: model.series,
+                            xAxis: model.xAxis,
+                            yAxis: model.yAxis
+                        });
+
+                    };
+
+                    renderGraph(scope.model);
+
+
+                    scope.$watch('model', function (nv) {
+                        renderGraph(nv);
+                    });
+                }
+            };
+        })
+
+        .directive('stockchartReload', function() {
+            return {
+                restrict: 'A',
+                ngModel: 'required',
+                scope: {
+                    model: '=ngModel',
+                    width:'='
+                },
+                link:function(scope, elem) {
+
+                    var renderGraph = function(model) {
+
+                        var series = model.series;
 
                         for (var i = 0; i < model.series.length; i++) {
-                            series[i].dataGrouping.units = [['month', [1]]];
-                            series[i].turboThreshold = 10000;
+
+                            if (model.series[i].data.length > 0) {
+                                
+                                var duration = (model.series[i].data[model.series[i].data.length - 1].x - model.series[i].data[0].x) / 86400000.0;
+
+                                series[i].dataGrouping.units = [['month', [1]]];
+                                series[i].turboThreshold = 100000;
+
+                            }                            
                         }
 
                         $(elem[0]).highcharts('StockChart', {
@@ -48,7 +329,7 @@
                                 style: {
                                     fontFamily: "Tahoma, Geneva, sans-serif !important"
                                 },
-                                width: 380,
+                                width: scope.width === undefined ? 380:scope.width,
                                 height: 300
                             },
                             rangeSelector : {
@@ -56,6 +337,9 @@
                             },
                             legend: {
                                 enabled:true
+                            },
+                            navigator: {
+                                height:25
                             },
                             credits:false,
                             title : model.title,
