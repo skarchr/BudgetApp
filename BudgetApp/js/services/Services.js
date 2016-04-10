@@ -1,11 +1,7 @@
 ﻿(function() {
     'use strict';
 
-    angular.module('budgetApp').factory('commonService', function() {
-
-        var getShrinkStatus = function() {
-            
-        };
+    angular.module('budgetApp').factory('commonService', [function() {
 
         var getIconUrl = function (value) {
 
@@ -154,11 +150,10 @@
 
         return {
             
-            getIconUrl: getIconUrl,
-            getShrinkStatus: getShrinkStatus
+            getIconUrl: getIconUrl
 
         };
 
-    });
+    }]);
 
 })();

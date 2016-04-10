@@ -198,33 +198,33 @@
             </div>
 
         }
-        <div class="body-content" ng-cloak scroll-position ng-controller="sidebarController as vm">
+        <div class="body-content" ng-cloak scroll-position ng-controller="sidebarController">
             
             @if (User.Identity.IsAuthenticated)
             {
-                <div class="sidebar {{vm.shrink ? 'shrink':''}}">
+                <div class="sidebar {{shrink ? 'shrink':''}}">
                     <ul class="list-unstyled">
-                        <li ng-click="vm.shrink = !vm.shrink">                          
-                            <i class="glyphicon glyphicon-align-justify"></i>                          
+                        <li ng-click="toggleShrinkStatus()">
+                            <i class="glyphicon glyphicon-align-justify"></i>
                         </li>
                         <li role="separator" class="divider"></li>
                         <li class="@(ViewBag.Title == "Add Transaction" ? "active" : "")" onclick="javascript: location.href = '@Url.Action("Create", "Transactions")';">
-                            <i class="glyphicon glyphicon-plus-sign"></i> <span class="sidebar-text">Add</span> 
+                            <i class="glyphicon glyphicon-plus-sign"></i> <span class="sidebar-text">Add</span>
                         </li>
                         <li class="@(ViewBag.Title == "Upload Transactions" ? "active" : "")" onclick="javascript: location.href = '@Url.Action("Upload", "Transactions")';">
-                            <i class="glyphicon glyphicon-upload"></i> <span class="sidebar-text">Upload</span> 
+                            <i class="glyphicon glyphicon-upload"></i> <span class="sidebar-text">Upload</span>
                         </li>
                         <li role="separator" class="divider"></li>
                         @{
-                            if (User.IsInRole("Administrators"))
-                            {
-                                <li class="@(ViewBag.Title == "Admin" ? "active" : "")" onclick="javascript: location.href = '@Url.Action("Index", "Admin")';">
-                                    <i class="glyphicon glyphicon-star-empty"></i> <span class="sidebar-text">Admin</span> 
-                                </li>
-                            }
+                if (User.IsInRole("Administrators"))
+                {
+                    <li class="@(ViewBag.Title == "Admin" ? "active" : "")" onclick="javascript: location.href = '@Url.Action("Index", "Admin")';">
+                        <i class="glyphicon glyphicon-star-empty"></i> <span class="sidebar-text">Admin</span>
+                    </li>
+                }
                         }
                         <li class="@(ViewBag.Title == "Dashboard" ? "active" : "")" onclick="javascript: location.href = '@Url.Action("Index","Home")';">
-                            <i class="glyphicon glyphicon-dashboard"></i> <span class="sidebar-text">Dashboard</span> 
+                            <i class="glyphicon glyphicon-dashboard"></i> <span class="sidebar-text">Dashboard</span>
                         </li>
                         <li class="@(ViewBag.Title == "Dashboard" ? "active" : "")" onclick="javascript: location.href = '@Url.Action("Index","Dashboard")';">
                             <i class="glyphicon glyphicon-dashboard"></i> <span class="sidebar-text">Dashboard 2.0 (alpha)</span>
@@ -247,9 +247,9 @@
                     </ul>
 
                 </div>
-                
+
             }
-            <div class="container @(User.Identity.IsAuthenticated ? "{{vm.shrink ? 'shrink':'no-shrink'}}" : "")">
+            <div class="container @(User.Identity.IsAuthenticated ? "{{shrink ? 'shrink':'no-shrink'}}" : "")">
                 @RenderBody()
             </div>
             
