@@ -580,6 +580,7 @@
     <Content Include="js\controllers\LoginController.js" />
     <Content Include="js\controllers\MappingsController.js" />
     <Content Include="js\controllers\ReportController.js" />
+    <Content Include="js\controllers\SidebarController.js" />
     <Content Include="js\controllers\ToastrController.js" />
     <Content Include="js\controllers\TransactionController.js" />
     <Content Include="js\directives\Directives.js" />

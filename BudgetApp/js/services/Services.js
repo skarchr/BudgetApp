@@ -3,6 +3,10 @@
 
     angular.module('budgetApp').factory('commonService', function() {
 
+        var getShrinkStatus = function() {
+            
+        };
+
         var getIconUrl = function (value) {
 
             var imageName = "";
@@ -150,7 +154,8 @@
 
         return {
             
-            getIconUrl: getIconUrl
+            getIconUrl: getIconUrl,
+            getShrinkStatus: getShrinkStatus
 
         };
 

@@ -247,7 +247,7 @@ textarea {
         min-width: 288px !important;
     }
 
-    .dropdown-menu.text-left  {
+    /*.dropdown-menu.text-left  {
         top: 10px !important;
         margin: 2px -267px 0 !important;
         width: 379px;
@@ -260,7 +260,7 @@ textarea {
 
     .dropdown-menu.text-left > li:first-child > a {
         padding-top: 30px;
-    }
+    }*/
 
     .btn-range {
         text-align: center;
@@ -283,9 +283,9 @@ textarea {
 
 @media (max-width: 320px) {
 
-    .dropdown-menu.text-left > li > a {
+    /*.dropdown-menu.text-left > li > a {
         padding-left: 60px;
-    }
+    }*/
 
     .btn-paging > .btn-group > .btn {
         padding: 6px 4px;
@@ -429,7 +429,7 @@ th {
     max-width: 280px;
 }
 
-.dropdown-menu.header {
+/*.dropdown-menu.header {
     top: 23px;
     border-radius: 20px;
     margin-right: -5px;
@@ -458,7 +458,7 @@ th {
 .dropdown-menu > .active > a, .dropdown-menu > .active > a:hover {
   background:none;
     color: #0094ff;
-}
+}*/
 
 .btn-nav {
     border: 2px solid #0094ff;
@@ -583,9 +583,9 @@ ul > li > ul > li > ul > li > span {
     padding-right: 10px;
 }
 
-.dropdown-menu {
+/*.dropdown-menu {
     padding: 5px;
-}
+}*/
 
 .feature {
     margin-top: 100px;
@@ -658,4 +658,82 @@ ul > li > ul > li > ul > li > span {
 .setting-date-input.active {
     color: #122d45;
     font-weight: bold;
+}
+
+li.dropdown > a {
+     padding-top: 2px; 
+     padding-bottom: 2px;
+    margin-top: -1px;
+    margin-right: -1px;
+    color: #ffffff;
+}
+
+li.dropdown > a > .caret {
+        border-top-color: #fff;
+    border-bottom-color: #fff;
+}
+
+li.dropdown:hover > a {
+    background: #428bca;
+}
+
+.sidebar {
+    float: left;
+    height: 100%;
+    top: 42px;
+    width:225px;
+    background: #313131;    
+    position: fixed;
+    left: 0;
+}
+
+.sidebar > ul > li{
+    color: #fff;
+    padding-left: 13px;
+    font-size: 13px;
+}
+
+.sidebar > ul > li{
+    padding-top: 8px;
+    padding-bottom: 8px;
+}
+
+.sidebar > ul > li > i{
+    font-size: 20px;
+}
+
+.sidebar > ul > li.active,.sidebar > ul > li.active:hover{
+    background: #00bfff;
+    cursor: auto;
+}
+
+.sidebar > ul >li.divider {
+    padding: 0px;
+    border-bottom: 1px solid #838383;
+}
+
+.sidebar > ul > li:hover{
+    background: #636363;
+    cursor: pointer;
+}
+
+.sidebar-text {
+    vertical-align: super;
+    padding-left: 10px;
+}
+
+.sidebar.shrink > ul > li > .sidebar-text {
+    display: none;
+}
+
+.sidebar.shrink {
+    width:48px;
+}
+
+.container.shrink {
+    margin-left: 50px;
+}
+
+.container.no-shrink {
+    margin-left: 250px;
 }
