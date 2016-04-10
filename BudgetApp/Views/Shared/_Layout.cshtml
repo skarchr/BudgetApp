@@ -160,8 +160,8 @@
                                 {
                                     @Html.AntiForgeryToken()
                                     <ul class="nav navbar-nav navbar-right">
-                                        <li class="dropdown">
-                                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                                        <li class="dropdown" style="width:280px;">
+                                            <a style="text-align: right;" href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
                                                 @User.Identity.Name
                                                 <img gravatar-src="'@User.Identity.Name'" gravatar-size="36" style="padding-top: 2px; -ms-border-radius: 104px; border-radius: 104px;" /> <span class="caret"></span>
                                             </a>

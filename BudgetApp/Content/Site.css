@@ -1,5 +1,5 @@
 ﻿body {
-    padding-top: 80px;
+    padding-top: 58px;
     padding-bottom: 20px;
     font-family: Tahoma, Geneva, sans-serif !important;
 }
@@ -11,8 +11,7 @@
 /* Set padding to keep content from hitting the edges */
 .body-content {
     padding-left: 15px;
-    padding-right: 15px;
-    padding-top: 40px;
+    padding-right: 15px;    
 }
 
 /* Set width on the form input elements since they're 100% wide by default */
@@ -673,9 +672,10 @@ li.dropdown > a > .caret {
     border-bottom-color: #fff;
 }
 
-li.dropdown:hover > a {
-    background: #428bca;
+li.dropdown:hover > a,li.dropdown.open > a,li.dropdown.open:hover > a,li.dropdown.open > a:focus {
+    background: #618fb6;
 }
+
 
 .sidebar {
     float: left;
