@@ -634,6 +634,10 @@ ul > li > ul > li > ul > li > span {
     height: 300px;
 }
 
+.col-lg-12.col-graph > .graph,.col-lg-12.col-graph > .spinner {
+    width: 1190px;
+}
+
 .col-lg-8.col-graph > .graph,.col-lg-8.col-graph > .spinner {
     width: 790px;
 }

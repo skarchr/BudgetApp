@@ -86,7 +86,7 @@ namespace BudgetApp.Tests.Graphs
 
             var result = Prognosis.CreateChart(trans, "NOK");
 
-            result.Series.Count.Should().Be(2);
+            result.Series.Count.Should().Be(3);
 
             result.Series[1].Name.Should().Be(DateTime.Now.Year.ToString());
 
@@ -116,7 +116,7 @@ namespace BudgetApp.Tests.Graphs
 
             var result = Prognosis.CreateChart(trans, "NOK", true);
 
-            result.Series.Count.Should().Be(2);
+            result.Series.Count.Should().Be(3);
 
             result.Series[1].Name.Should().Be(DateTime.Now.Year.ToString());
 

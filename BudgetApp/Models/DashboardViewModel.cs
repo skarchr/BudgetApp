@@ -34,5 +34,7 @@ namespace BudgetApp.Models
         public Highchart BalanceGraph { get; set; }
         public Highchart Frequency { get; set; }
         public Highchart CategoryGraph { get; set; }
+        public Highchart MountainGraph { get; set; }
+        public Highchart DailyGraph { get; set; }
     }
 }

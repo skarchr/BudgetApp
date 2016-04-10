@@ -8,6 +8,86 @@ namespace BudgetApp.Extensions.Graphs
 {
     public class GraphGenerator
     {
+        //TODO: Create tests and remove plotlines at end of chart
+
+        public static Highchart CreateDailyGraph(List<Transaction> transactions)
+        {
+            var series = new List<Series>();
+            var categories = new List<string>();
+
+            if (transactions.Count > 0)
+            {
+                var days = new List<DayOfWeek>
+                {
+                    DayOfWeek.Monday,
+                    DayOfWeek.Tuesday,
+                    DayOfWeek.Wednesday,
+                    DayOfWeek.Thursday,
+                    DayOfWeek.Friday,
+                    DayOfWeek.Saturday,
+                    DayOfWeek.Sunday
+                };
+
+                categories = days.Select(s => s.ToString()).ToList();
+
+                var main = transactions.Select(s => s.MainCategory).Distinct();
+
+
+                foreach (var category in main)
+                {
+                    var data = new List<Data>();
+                    var index = 0;
+                    foreach (var dayOfWeek in days)
+                    {
+                        data.Add(new Data
+                        {
+                            X = index,
+                            Y =
+                                transactions.Where(s => s.MainCategory == category && s.Date.DayOfWeek == dayOfWeek)
+                                    .Sum(s => s.Amount),
+                            DataLabels = new DataLabels
+                            {
+                                Enabled = false
+                            }
+                        });
+                        index++;
+                    }
+
+                    series.Add(new Series
+                    {
+                        Color = HighchartUtilities.Colors[CategoryExt.GetCategoryColor(category)],
+                        Name = category,
+                        Data = data,
+                        Type = "column",
+                        
+                    });
+                }
+            }
+            return new Highchart
+            {
+                Type = "column",
+                Title = new Title
+                {
+                    Text = "Expenses by day of week"
+                },
+                XAxis = new List<Axis>
+                {
+                    new Axis
+                    {
+                        Categories = categories
+                    }
+                },
+                YAxis = new List<Axis>
+                {
+                    new Axis()
+                },
+                Series = series,
+                Legend = true,
+                Stacking = false
+                
+            };
+        }
+
         public static Highchart CreateMonthlyGraph(List<Transaction> transactions, string name, bool inOut = false)
         {
             var series = new List<Series>();

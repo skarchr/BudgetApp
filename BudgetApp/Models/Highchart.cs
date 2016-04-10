@@ -21,6 +21,7 @@ namespace BudgetApp.Models
 
         public List<Axis> XAxis { get; set; }
         public List<Axis> YAxis { get; set; }
+        public bool Stacking { get; set; }
     }
 
     public class Axis

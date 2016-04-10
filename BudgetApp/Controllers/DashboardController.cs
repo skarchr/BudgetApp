@@ -79,7 +79,9 @@ namespace BudgetApp.Controllers
                     TransactionGraph = GraphBuilder.DrilldownGraph(trans, "", "column", true),
                     BalanceGraph = GraphGenerator.CreateMonthlyGraph(trans, "Monthly income vs expenses by category", true),
                     Frequency = Frequency.CreateGraph(trans),
-                    CategoryGraph = GraphGenerator.CreateMonthlyGraph(trans,"Monthly expenses")
+                    CategoryGraph = GraphGenerator.CreateMonthlyGraph(trans,"Monthly expenses"),
+                    MountainGraph = BurnRate.CreateMountain(trans),
+                    DailyGraph = GraphGenerator.CreateDailyGraph(trans)
                 };
             }
                 
@@ -98,7 +100,9 @@ namespace BudgetApp.Controllers
                 TransactionGraph = GraphBuilder.DrilldownGraph(trans, "", "column", true),
                 BalanceGraph = GraphGenerator.CreateMonthlyGraph(trans, "Monthly income vs expenses by category", true),                
                 Frequency = Frequency.CreateGraph(exp),
-                CategoryGraph = GraphGenerator.CreateMonthlyGraph(exp, "Monthly expenses by category")
+                CategoryGraph = GraphGenerator.CreateMonthlyGraph(exp, "Monthly expenses by category"),
+                MountainGraph = BurnRate.CreateMountain(exp),
+                DailyGraph = GraphGenerator.CreateDailyGraph(exp)
             };
 
             return result;

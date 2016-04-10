@@ -97,16 +97,17 @@
                 restrict: 'A',
                 ngModel:'required',
                 scope: {
-                    model: '=ngModel'
+                    model: '=ngModel',
+                    width:'='
                 },
                 link: function(scope, elem, attrs) {
-                                  
+
                     var renderGraph = function(model) {
 
                         $(elem[0]).highcharts({
                             chart: {
                                 zoomType: 'x',
-                                width: 380,
+                                width: scope.width === undefined ? 380 : scope.width,
                                 height: 300
                             },
                             credits: false,
@@ -120,6 +121,7 @@
                                 plotLines: model.xAxis[0].plotLines
                             },
                             yAxis: {
+                                opposite: model.yAxis[0].opposite,
                                 title: {
                                     text: ' '
                                 },
@@ -129,6 +131,9 @@
                                 enabled: false
                             },
                             plotOptions: {
+                                series: {
+                                    turboThreshold : 100000
+                                },
                                 area: {
                                     marker: {
                                         radius: 0
@@ -265,7 +270,7 @@
                             },
                             tooltip: {
                                 enabled: true,
-                                pointFormat: '<span style="color:{point.color}">\u25CF</span> {series.name}: <b>{point.y:.1f} </b><br>',
+                                pointFormat: '<span style="color:{point.color}">\u25CF</span> {series.name}: <b>{point.y:,.1f} </b><br>',
                                 shared:true
                             },
                             legend: {
@@ -273,6 +278,9 @@
                             },
                             credits: false,
                             plotOptions: {
+                                column: {
+                                    stacking: model.stacking ? 'normal':undefined
+                                },
                                 series: {
                                     dataLabels: {
                                         enabled: false
@@ -284,7 +292,6 @@
                             xAxis: model.xAxis,
                             yAxis: model.yAxis
                         });
-
                     };
 
                     renderGraph(scope.model);

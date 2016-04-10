@@ -95,6 +95,29 @@
                 <span data-frequency-reload ng-model="model.variables.frequency"></span>
             </div>
         </div>
+
+        <div class="col-xs-12 col-md-6 col-lg-8 col-graph">
+            <div ng-show="spinner" class="spinner">
+                <div class="spinner">
+                    <div class="ball"></div>
+                    <p>LOADING</p>
+                </div>
+            </div>
+            <div ng-hide="spinner" class="graph">
+                <span data-spc-reload ng-model="model.variables.dailyGraph" width="780"></span>
+            </div>
+        </div>
+        <div class="col-xs-12 col-md-6 col-lg-12 col-graph">
+            <div ng-show="spinner" class="spinner">
+                <div class="spinner">
+                    <div class="ball"></div>
+                    <p>LOADING</p>
+                </div>
+            </div>
+            <div ng-hide="spinner" class="graph">
+                <span data-burn-rate-reload ng-model="model.variables.mountainGraph" width="1180"></span>
+            </div>
+        </div>
     </div>
     
     <div class="row" style="margin-top:30px;">

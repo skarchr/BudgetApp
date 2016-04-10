@@ -8,6 +8,73 @@ namespace BudgetApp.Extensions.Graphs
 {
     public class BurnRate
     {
+        public static Highchart CreateMountain(List<Transaction> transactions)
+        {
+            var series = new List<Series>();
+
+            if (transactions.Count > 0)
+            {
+                var startDate = transactions.OrderBy(s => s.Date).First().Date;
+                var lastDate = transactions.OrderBy(s => s.Date).Last().Date;
+
+                var data = new List<Data>();
+                var sum = 0.0;
+
+                while (startDate <= lastDate)
+                {
+                    sum = Math.Round(sum + transactions.Where(s => s.Date == startDate).Sum(s => s.Amount), 1);
+
+                    data.Add(new Data
+                    {
+                        X = GraphBuilder.ConvertDateToMilliSeconds(startDate),
+                        Y = sum,
+                        DataLabels = new DataLabels
+                        {
+                            Enabled = false
+                        }
+                    });
+
+                    startDate = startDate.AddDays(1);
+                }
+
+                var serie = new Series
+                {
+                    Name = "Mountain",
+                    Type = "area",
+                    Color = "#0094ff",
+                    NegativeColor = "#ff2a3e",                   
+                    Marker = new Marker
+                    {
+                        Radius = 0
+                    },
+                    Data = data
+                };
+
+                
+                series.Add(serie);
+            }
+
+            return new Highchart
+            {
+                Title = new Title
+                {
+                    Text = "Mountain"
+                },
+                Series = series,
+                XAxis = new List<Axis>
+                {
+                    new Axis()
+                },
+                YAxis = new List<Axis>
+                {
+                    new Axis
+                    {
+                        Opposite = true
+                    }
+                }
+            };
+        }
+
         public static Highchart CreateChart(List<Transaction> transactions, DateTime currentDate, double? expensesGoal, string currency)
         {
             var series = new List<Series>();
@@ -68,6 +135,10 @@ namespace BudgetApp.Extensions.Graphs
                             }
                         }
                     }
+                },
+                YAxis = new List<Axis>
+                {
+                    new Axis()
                 }
             };
         }
