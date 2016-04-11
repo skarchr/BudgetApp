@@ -61,7 +61,8 @@ namespace BudgetApp
                    "~/bower_components/animate.css/animate.css",
                    "~/bower_components/angular-toastr/dist/angular-toastr.css",
                    "~/Content/animations.css",
-                   "~/Content/site.css"));
+                   "~/Content/site.css",
+                   "~/Content/flexboxes.css"));
 
          // Set EnableOptimizations to false for debugging. For more information,
          // visit http://go.microsoft.com/fwlink/?LinkId=301862

@@ -509,6 +509,7 @@
     <Content Include="Content\animations.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\flexboxes.css" />
     <Content Include="Content\images\airplane73.png" />
     <Content Include="Content\images\apple55.png" />
     <Content Include="Content\images\atm2.png" />
@@ -525,6 +526,8 @@
     <Content Include="Content\images\googleplus.png" />
     <Content Include="Content\images\halloween282.png" />
     <Content Include="Content\images\hand132.png" />
+    <Content Include="Content\images\header_logo.svg" />
+    <Content Include="Content\images\header_logo_text.svg" />
     <Content Include="Content\images\home168.png" />
     <Content Include="Content\images\hot51.png" />
     <Content Include="Content\images\house121.png" />

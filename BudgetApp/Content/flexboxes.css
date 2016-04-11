@@ -1,0 +1,168 @@
+﻿/*Header*/
+
+#flex-header {
+    display: flex;
+    top: 0;
+    width: 100%;
+    padding: 3px;
+    padding-left: 5px;
+    position: fixed;
+    background: #0094ff;
+    z-index: 100;
+    height: 42px;
+    flex-wrap: wrap;
+    flex-direction: row;
+}
+
+#flex-header #header-logo {
+    flex-grow: 10;    
+}
+
+#header-search {
+    flex-grow: 1;    
+}
+
+#header-search  input{
+    width: 100%;
+    padding: 8px;
+    border: none;
+    padding-left: 30px;
+}
+
+#header-search  i{
+    position: absolute;
+    font-size: 22px;
+    color: #c0c0c0;
+    padding-top: 6px;
+    padding-left: 4px;
+}
+#header-profile {
+    flex-grow: 1;
+    text-align: right;
+    padding-right: 3px;
+}
+
+#header-profile a {
+    text-decoration: none;
+    color: #fff;
+}
+
+#header-profile:hover {
+    cursor: pointer;
+}
+
+#header-profile:hover a {
+    color: #034371;
+}
+
+#header-profile a img {
+    border:2px solid #0094ff;
+    margin-top: -2px;
+}
+
+#header-profile:hover a img {
+    border:2px solid #034371;
+}
+
+#header-profile ul {
+    display: block;
+    list-style-type: none;
+    text-align: left;
+    margin-top: 2px;
+    margin-left: 3px;
+    padding-left: 0;
+    background: #fff;
+    border: 1px solid #0094ff;
+}
+
+#header-profile ul li a{
+    display: block;
+    color: #0094ff;
+    padding: 10px;
+}
+
+#header-profile ul li:hover{
+    background: #ececec;
+}
+
+#header-profile ul li a i{
+    display: block;
+    color: black;
+}
+
+#header-profile ul li.divider{
+    border-bottom: 1px solid #c0c0c0;
+}
+
+
+@media only screen 
+  and (min-device-width: 320px) 
+  and (max-device-width: 480px)
+  and (-webkit-min-device-pixel-ratio: 2) {
+    #header-search,#logoText {
+        display: none;
+    }
+}
+
+
+/*Sidebar*/
+.sidebar {
+    float: left;
+    height: 100%;
+    top: 42px;
+    width:225px;
+    background: #313131;    
+    position: fixed;
+    left: 0;
+}
+
+.sidebar > ul > li{
+    color: #fff;
+    padding-left: 13px;
+    font-size: 13px;
+}
+
+.sidebar > ul > li{
+    padding-top: 8px;
+    padding-bottom: 8px;
+}
+
+.sidebar > ul > li > i{
+    font-size: 20px;
+}
+
+.sidebar > ul > li.active,.sidebar > ul > li.active:hover{
+    background: #00bfff;
+    cursor: auto;
+}
+
+.sidebar > ul >li.divider {
+    padding: 0px;
+    border-bottom: 1px solid #838383;
+}
+
+.sidebar > ul > li:hover{
+    background: #636363;
+    cursor: pointer;
+}
+
+.sidebar-text {
+    vertical-align: super;
+    padding-left: 10px;
+}
+
+.sidebar.shrink > ul > li > .sidebar-text {
+    display: none;
+}
+
+.sidebar.shrink {
+    width:48px;
+}
+
+.flex-container.shrink {
+    margin-left: 70px;
+}
+
+.flex-container.no-shrink {
+    margin-left: 250px;
+}

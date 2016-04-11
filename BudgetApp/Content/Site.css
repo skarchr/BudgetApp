@@ -8,12 +8,6 @@
     fill: none !important;
 }
 
-/* Set padding to keep content from hitting the edges */
-.body-content {
-    padding-left: 15px;
-    padding-right: 15px;    
-}
-
 /* Set width on the form input elements since they're 100% wide by default */
 input,
 select,
@@ -677,63 +671,3 @@ li.dropdown:hover > a,li.dropdown.open > a,li.dropdown.open:hover > a,li.dropdow
 }
 
 
-.sidebar {
-    float: left;
-    height: 100%;
-    top: 42px;
-    width:225px;
-    background: #313131;    
-    position: fixed;
-    left: 0;
-}
-
-.sidebar > ul > li{
-    color: #fff;
-    padding-left: 13px;
-    font-size: 13px;
-}
-
-.sidebar > ul > li{
-    padding-top: 8px;
-    padding-bottom: 8px;
-}
-
-.sidebar > ul > li > i{
-    font-size: 20px;
-}
-
-.sidebar > ul > li.active,.sidebar > ul > li.active:hover{
-    background: #00bfff;
-    cursor: auto;
-}
-
-.sidebar > ul >li.divider {
-    padding: 0px;
-    border-bottom: 1px solid #838383;
-}
-
-.sidebar > ul > li:hover{
-    background: #636363;
-    cursor: pointer;
-}
-
-.sidebar-text {
-    vertical-align: super;
-    padding-left: 10px;
-}
-
-.sidebar.shrink > ul > li > .sidebar-text {
-    display: none;
-}
-
-.sidebar.shrink {
-    width:48px;
-}
-
-.container.shrink {
-    margin-left: 50px;
-}
-
-.container.no-shrink {
-    margin-left: 250px;
-}
