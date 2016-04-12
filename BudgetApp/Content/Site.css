@@ -1,7 +1,7 @@
 ﻿body {
-    padding-top: 58px;
-    padding-bottom: 20px;
+    padding-top: 60px;
     font-family: Tahoma, Geneva, sans-serif !important;
+    overflow-x: hidden;
 }
 
 .highcharts-background {
@@ -422,37 +422,6 @@ th {
     max-width: 280px;
 }
 
-/*.dropdown-menu.header {
-    top: 23px;
-    border-radius: 20px;
-    margin-right: -5px;
-    box-shadow: none;
-    border-right: 2px solid #0094ff;
-    border-bottom: 2px solid #0094ff;
-    border-left: 2px solid #0094ff;
-    border-top: 2px solid #0094ff;
-}
-
-.dropdown-menu > li > a {
-    min-width: 250px;
-    font-size: 20px;
-}
-
-.dropdown-menu > li.divider {
-    background-color: #0094ff;
-    height: 2px;
-}
-
-.dropdown-menu > li > a:hover {
-    background: none;
-    color: #0094ff;
-}
-
-.dropdown-menu > .active > a, .dropdown-menu > .active > a:hover {
-  background:none;
-    color: #0094ff;
-}*/
-
 .btn-nav {
     border: 2px solid #0094ff;
     background-color: #0094ff;
@@ -602,7 +571,7 @@ ul > li > ul > li > ul > li > span {
     border: 1px solid #ececec;
 }
 
-.col-graph {
+/*.col-graph {
     min-height: 305px;
     height: 305px;
     padding: 0;
@@ -625,19 +594,8 @@ ul > li > ul > li > ul > li > span {
     width: 390px;
     min-height: 300px;
     height: 300px;
-}
+}*/
 
-.col-lg-12.col-graph > .graph,.col-lg-12.col-graph > .spinner {
-    width: 1190px;
-}
-
-.col-lg-8.col-graph > .graph,.col-lg-8.col-graph > .spinner {
-    width: 790px;
-}
-
-.col-lg-6.col-graph > .graph,.col-lg-6.col-graph > .spinner {
-    width: 590px;
-}
 
 .setting-date-input {
     -webkit-transition: all 0.5s;

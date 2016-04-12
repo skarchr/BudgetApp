@@ -1,6 +1,23 @@
 ﻿(function() {
     'use strict';
 
+    angular.module('budgetApp').service('sharedProperties',[function() {
+        var selected = 'charts';
+
+        return {
+
+            getSelected: function () {
+
+                return selected;
+            },
+            setSelected: function (name) {
+
+                selected = name;
+            }
+        };
+    }]);
+
+
     angular.module('budgetApp').factory('commonService', [function() {
 
         var getIconUrl = function (value) {

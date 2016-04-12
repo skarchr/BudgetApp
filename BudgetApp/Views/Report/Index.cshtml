@@ -7,161 +7,107 @@
     ViewBag.Title = "Download";
 }
 
-<div class="row" ng-controller="reportController">
+<div ng-controller="reportController">
 
-    <div class="col-xs-12" style="border:2px solid #0094FF; -ms-border-radius: 40px; border-radius: 40px;">
+    <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3" style="-ms-border-radius: 40px; border-radius: 40px;">
 
-        <ul class="list-unstyled list-inline" role="tablist" style="margin-top:-20px;">
-            <li role="presentation" class="active">
-                <a href="#chart" aria-controls="chart" role="tab" data-toggle="tab" class="btn btn-default btn-nav btn-sm btn-round text-center {{selected === 'charts' ? 'active':''}}" style="min-width: 40px;" ng-click="selected = 'charts'">
-                    <i class="glyphicon glyphicon-signal"></i>
-                </a>
-            </li>
-            <li role="presentation" style="margin-left: -10px;">
-                <a href="#table" aria-controls="table" role="tab" data-toggle="tab" class="btn btn-default btn-nav btn-sm btn-round text-center {{selected === 'tables' ? 'active':''}}" style="min-width: 40px;" ng-click="selected = 'tables'">
-                    <i class="glyphicon glyphicon-th"></i>
-                </a>
-            </li>
-        </ul>
-
-        @using (Html.BeginForm("DownloadExcelFile", "Report", FormMethod.Post, new { @class = "form-horizontal", @name = "chartForm" }))
+        @using (Html.BeginForm("DownloadExcelFile", "Report", FormMethod.Post, new { @name = "chartForm" }))
         {
 
+
             <div class="form-group">
-                <label class="col-sm-2 control-label">From</label>
-                <div class="col-sm-10">
-                    <div class="row">
-                        <div class="col-md-6">
-                            <p class="input-group">
-                                <input type="text" name="FromDate" id="FromDate" class="form-control" datepicker-popup="{{format}}" max-date="chartModel.toDate" ng-model="chartModel.fromDate" is-open="opened" datepicker-options="dateOptions" ng-required="true" close-text="Close" />
-                                <span class="input-group-btn" style="width:0;padding:0px !important;">
-                                    <button type="button" class="btn btn-default" ng-click="open($event)" style="padding-bottom: 7px;"><i class="glyphicon glyphicon-calendar"></i></button>
-                                </span>
-                            </p>
-                        </div>
-                    </div>                    
-                </div>
+                <label for="From">From</label>
+                <p class="input-group">
+                    <input type="text" name="FromDate" id="FromDate" class="form-control" datepicker-popup="{{format}}" max-date="chartModel.toDate" ng-model="chartModel.fromDate" is-open="opened" datepicker-options="dateOptions" ng-required="true" close-text="Close" />
+                    <span class="input-group-btn" style="width:0;padding:0px !important;">
+                        <button type="button" class="btn btn-default" ng-click="open($event)" style="padding-bottom: 7px;"><i class="glyphicon glyphicon-calendar"></i></button>
+                    </span>
+                </p>
             </div>
 
             <div class="form-group">
-                <label class="col-sm-2 control-label">To</label>
-                <div class="col-sm-10">
-                    <div class="row">
-                        <div class="col-md-6">
-                            <p class="input-group">
-                                <input type="text" name="ToDate" id="ToDate" class="form-control" datepicker-popup="{{format}}" ng-model="chartModel.toDate" is-open="opened2" min-date="chartModel.fromDate" max-date="today" datepicker-options="dateOptions" ng-required="true" close-text="Close" />
-                                <span class="input-group-btn" style="width:0;padding:0px !important;">
-                                    <button type="button" class="btn btn-default" ng-click="open2($event)" style="padding-bottom: 7px;"><i class="glyphicon glyphicon-calendar"></i></button>
-                                </span>
-                            </p>
-                        </div>
-                    </div>                    
-                </div>
+                <label for="To">To</label>
+                <p class="input-group">
+                    <input type="text" name="ToDate" id="ToDate" class="form-control" datepicker-popup="{{format}}" ng-model="chartModel.toDate" is-open="opened2" min-date="chartModel.fromDate" max-date="today" datepicker-options="dateOptions" ng-required="true" close-text="Close" />
+                    <span class="input-group-btn" style="width:0;padding:0px !important;">
+                        <button type="button" class="btn btn-default" ng-click="open2($event)" style="padding-bottom: 7px;"><i class="glyphicon glyphicon-calendar"></i></button>
+                    </span>
+                </p>
             </div>
 
             <div class="form-group" ng-show="selected !== 'tables' && selected !== 'search'">
-                <label class="col-sm-2 control-label">Choose chart</label>
-                <div class="col-sm-10">
-                    <ul class="list-unstyled">
-                        @foreach (var chart in Model.Charts)
-                        {
-                            <li>
-                                <div class="radio">
-                                    <label>
-                                        <input type="radio" name="Name" id="Name" ng-model="chartModel.name" value="@chart" />
-                                        @chart.Replace('_', ' ')
-                                    </label>
-                                </div>
-                            </li>
-                        }
-                    </ul>
+                <label for="exampleInputPassword1">Choose chart</label>
+                <ul class="list-unstyled">
+                    @foreach (var chart in Model.Charts)
+                    {
+                        <li>
+                            <div class="radio">
+                                <label>
+                                    <input type="radio" name="Name" id="Name" ng-model="chartModel.name" value="@chart" />
+                                    @chart.Replace('_', ' ')
+                                </label>
+                            </div>
+                        </li>
+                    }
+                </ul>
 
-                </div>
-            </div>          
+            </div>
 
             <div class="form-group">
-                <label class="col-sm-2 control-label">Categories</label>
-                <div class="col-sm-10 form-inline">
-                    <ul class="list-unstyled list-inline">
-                        
-                        @Html.DropDownListFor(s => s.Categories, new SelectList(Model.Categories.Select(x => new { Value = x, Text = CategoryExt.CamelCaseToNormal(x) }), "Value", "Text"), new { @multiple="multiple", @ng_model="chartModel.categories", @class="form-control", @style="height:200px;" })
+                <label for="Categories">Categories</label>
+                <ul class="list-unstyled list-inline">
 
-                    </ul>
+                    @Html.DropDownListFor(s => s.Categories, new SelectList(Model.Categories.Select(x => new { Value = x, Text = CategoryExt.CamelCaseToNormal(x) }), "Value", "Text"), new { @multiple = "multiple", @ng_model = "chartModel.categories", @class = "form-control", @style = "height:200px;" })
 
-                </div>
+                </ul>
             </div>
-
 
             <div class="form-group" ng-show="selected === 'tables'">
-                <label class="col-sm-2 control-label">Sheets by</label>
-                <div class="col-sm-10 form-inline">
-                    <div class="radio">
-                        <label>
-                            <input type="radio" name="ByYear" id="ByYear" ng-model="chartModel.byYear" value="true" checked="checked" />
-                            Year
-                        </label>
-                    </div>
-                    <div class="radio">
-                        <label>
-                            <input type="radio" name="ByYear" id="ByYear" ng-model="chartModel.byYear" value="false" />
-                            Category
-                        </label>
-                    </div>
+                <label for="sheetsby">Sheets by</label>
+                <div class="radio">
+                    <label>
+                        <input type="radio" name="ByYear" id="ByYear" ng-model="chartModel.byYear" value="true" checked="checked" />
+                        Year
+                    </label>
+                </div>
+                <div class="radio">
+                    <label>
+                        <input type="radio" name="ByYear" id="ByYear" ng-model="chartModel.byYear" value="false" />
+                        Category
+                    </label>
                 </div>
             </div>
-            
+
             <div class="form-group" ng-show="(chartModel.name === '@ReportController.SPC' || chartModel.name === '@ReportController.BoxPlot') && selected === 'charts'">
-                <label class="col-sm-2 control-label">Range</label>
-                <div class="col-sm-10 form-inline">
-                    <select name="Range" ng-model="chartModel.range" class="form-control">
-                        <option value="0">Daily</option>
-                        <option value="1">Weekly</option>
-                        <option value="2">Monthly</option>
-                    </select>
-                </div>
+                <label for="Range">Range</label>
+                <select name="Range" ng-model="chartModel.range" class="form-control">
+                    <option value="0">Daily</option>
+                    <option value="1">Weekly</option>
+                    <option value="2">Monthly</option>
+                </select>
             </div>
-
             <div class="form-group" ng-show="chartModel.name === '@ReportController.Drilldown' && selected === 'charts'">
-                <label class="col-sm-2 control-label">Chart type</label>
-                <div class="col-sm-10 form-inline">
-                    <select name="ChartType" ng-model="chartModel.chartType" class="form-control">
-                        <option value="column">Column</option>
-                        <option value="pie">Pie</option>
-                    </select>
-                </div>
+                <label for="Charttype">Chart type</label>
+                <select name="ChartType" ng-model="chartModel.chartType" class="form-control">
+                    <option value="column">Column</option>
+                    <option value="pie">Pie</option>
+                </select>
             </div>
 
-            <div class="form-group" ng-show="selected === 'charts'">
-                <div class="col-sm-offset-2 col-sm-10 form-inline">
-                    <button ng-disabled="chartForm.$invalid || chartModel.categories.length === 0" class="btn btn-primary" data-get-chart-view>Generate chart</button>
-                </div>
-            </div>
-            
-            <div class="form-group" ng-show="selected === 'tables'">
-                <div class="col-sm-offset-2 col-sm-10 form-inline">
-                    <button ng-disabled="chartModel.categories.length === 0" class="btn btn-primary" type="submit">
-                        Download Excel file
-                    </button>
-                </div>
-            </div>
+            <button type="submit" ng-show="selected === 'charts'" ng-disabled="chartForm.$invalid || chartModel.categories.length === 0" class="btn btn-primary" data-get-chart-view>Generate chart</button>
 
-            
+            <button type="submit" ng-show="selected === 'tables'" ng-disabled="chartModel.categories.length === 0" class="btn btn-primary" type="submit">
+                Download Excel file
+            </button>
+
         }
 
-        <!-- Tab panes -->
-        <div class="tab-content" style="margin-bottom: 40px;">
-            <div role="tabpanel" class="tab-pane active" id="chart">
-                <div id="chartView"></div>
-            </div>
-            <div role="tabpanel" class="tab-pane" id="table">
+    </div>
+    <div class="col-xs-12 col-sm-6 col-md-8 col-lg-9" ng-show="selected === 'charts'">
 
-            </div>
-            
-        </div>
-
+        <div id="chartView"></div>
 
     </div>
-
 </div>
 <script src="~/bower_components/highstock-release/modules/exporting.js"></script>
 <script src="~/js/directives/ReportDirectives.js"></script>
@@ -176,7 +122,7 @@
                     del: '@Url.Action("Delete", "Transactions")',
                     edit: '@Url.Action("Edit", "Transactions")'
                 }
-                };
+            };
         });
 
     })();

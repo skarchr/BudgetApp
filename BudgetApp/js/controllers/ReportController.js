@@ -1,13 +1,13 @@
 ﻿(function () {
     'use strict';
 
-    angular.module('budgetApp').controller('reportController', ['$scope', '$http', '$timeout', 'reportFactory', function ($scope,$http,$timeout,reportFactory) {
+    angular.module('budgetApp').controller('reportController', ['$scope', '$http', '$timeout', 'reportFactory', 'sharedProperties', function ($scope, $http, $timeout, reportFactory, sharedProperties) {
 
         $scope.disableButton = false;
 
         $scope.urls = reportFactory.urls;
 
-        $scope.selected = 'charts';
+        $scope.selected = sharedProperties.getSelected();
 
         $scope.chartModel = {
             name: reportFactory.model.name,
@@ -21,7 +21,11 @@
             searchString : ''
         };
 
-        
+        $scope.$watch(function () {
+            return sharedProperties.getSelected();
+        }, function (nv, ol) {
+            $scope.selected = nv;
+        },true);
 
         $scope.toggleCategory = function(category) {
 

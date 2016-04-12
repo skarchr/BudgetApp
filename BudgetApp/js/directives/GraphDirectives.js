@@ -31,8 +31,7 @@
                     restrict: 'A',
                     ngModel: 'required',
                     scope: {
-                        model: '=ngModel',
-                        width:'='
+                        model: '=ngModel'
                     },
                     link: function (scope, elem, attrs) {
 
@@ -46,8 +45,7 @@
                                     style: {
                                         fontFamily: "Tahoma, Geneva, sans-serif !important"
                                     },
-                                    width: scope.width === undefined ? 380:scope.width,
-                                    height: 300,
+                                    height: 300,                                    
                                     plotBackgroundColor: null,
                                     plotBorderWidth: null,
                                     plotShadow: false
@@ -97,8 +95,7 @@
                 restrict: 'A',
                 ngModel:'required',
                 scope: {
-                    model: '=ngModel',
-                    width:'='
+                    model: '=ngModel'
                 },
                 link: function(scope, elem, attrs) {
 
@@ -107,7 +104,6 @@
                         $(elem[0]).highcharts({
                             chart: {
                                 zoomType: 'x',
-                                width: scope.width === undefined ? 380 : scope.width,
                                 height: 300
                             },
                             credits: false,
@@ -178,7 +174,6 @@
                             chart: {
                                 type: 'bubble',
                                 plotBorderWidth: 2,
-                                width: 380,
                                 height: 300,
                                 zoomType: 'xy'
                             },
@@ -244,8 +239,7 @@
                 restrict: 'A',
                 ngModel: 'required',
                 scope: {
-                    model: '=ngModel',
-                    width:'='
+                    model: '=ngModel'
                 },
                 link:function(scope, elem) {
 
@@ -257,7 +251,6 @@
                                 style: {
                                     fontFamily: "Tahoma, Geneva, sans-serif !important"
                                 },
-                                width: scope.width === undefined ? 380:scope.width,
                                 height: 300,
                                 zoomType:'x'
                             },
@@ -309,8 +302,7 @@
                 restrict: 'A',
                 ngModel: 'required',
                 scope: {
-                    model: '=ngModel',
-                    width:'='
+                    model: '=ngModel'
                 },
                 link:function(scope, elem) {
 
@@ -336,7 +328,6 @@
                                 style: {
                                     fontFamily: "Tahoma, Geneva, sans-serif !important"
                                 },
-                                width: scope.width === undefined ? 380:scope.width,
                                 height: 300
                             },
                             rangeSelector : {
@@ -384,7 +375,6 @@
                                     style: {
                                         fontFamily: "Tahoma, Geneva, sans-serif !important"
                                     },
-                                    width: 380,
                                     height: 300,
                                     events: {
                                         drilldown: function (e) {
@@ -525,7 +515,6 @@
 
                             $(elem[0]).highcharts({
                                 chart: {
-                                    width:390,
                                     height:300,
                                     style: {
                                         fontFamily: "Tahoma, Geneva, sans-serif !important"
@@ -615,9 +604,6 @@
                                 },
                                 title: {
                                     text: 'Expenses'
-                                },
-                                subtitle: {
-                                    text: formatNumber(total)
                                 }
                             });
                         };
