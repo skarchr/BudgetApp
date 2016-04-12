@@ -3,27 +3,19 @@
 
     angular.module('budgetApp').controller('transactionController', ['$scope', 'transactionModel', 'commonService', function ($scope, transactionModel, commonService) {
 
-        $scope.filter = transactionModel.filter;
-
-        $scope.rangeElem = '';
-        
-        $scope.querystring = {};
-
         $scope.getIcon = function (input) {
 
             return commonService.getIconUrl(input);
 
         };
-        $scope.predicate = 'amount';
+        $scope.predicate = 'date';
         $scope.reverse = true;
 
         $scope.model = transactionModel.model;
 
         $scope.urls = transactionModel.urls;
 
-        $scope.overviewGraph = transactionModel.overview;
-
-        $scope.showBalance = false;
+        $scope.today = new Date();
 
         $scope.findMax = function(list) {
 
@@ -66,7 +58,7 @@
 
         $scope.currentPage = 1;
 
-        $scope.numPerPage = 25;
+        $scope.numPerPage = 50;
 
         $scope.maxSize = 8;
     }]);

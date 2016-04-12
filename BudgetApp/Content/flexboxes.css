@@ -248,3 +248,15 @@ footer {
     width: 100%;
     z-index: -1;
 }
+
+.pagination {
+    margin-bottom: 0;
+    margin-top: 0;
+}
+
+.new-today {
+    float: left;
+    position: absolute;
+    margin-left: -45px;
+    margin-top: 2px;
+}

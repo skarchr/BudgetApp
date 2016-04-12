@@ -25,47 +25,11 @@ namespace BudgetApp.Controllers
         // GET: Transactions
         public ActionResult Index()
         {
-            var allTransactions = db.Transactions.Where(s => s.UserName == User.Identity.Name).ToList();
-
-            var user = db.Users.First(s => s.UserName == User.Identity.Name);
-
-            var range = user != null ? user.Range : Range.Annual;
-
-            var rangeViewers = new List<RangeViewer>();
-
-            switch (range)
-            {
-                case Range.Annual:
-                    rangeViewers = RangeHelper.GetAnnual(allTransactions, user.Currency);
-                    break;
-                case Range.Month:
-                    rangeViewers = RangeHelper.GetMonth(allTransactions, user.Currency);
-                    break;
-                case Range.Week:
-                    rangeViewers = RangeHelper.GetWeek(allTransactions, user.Currency);
-                    break;
-
-            }
-
-            var totalPages = (int)Math.Ceiling((double)rangeViewers.Count / 12);
-
-            var pageViewer = rangeViewers.OrderByDescending(s => s.StartDate).Take(12).ToList();
-
-            var model = new TransactionsViewModel 
-            {
-                RangeViewers = pageViewer.OrderBy(s => s.StartDate).ToList(), 
-                Range = range,
-                Currency = user.Currency,
-                OverviewGraph = GraphBuilder.OverviewGraph(pageViewer.OrderBy(s => s.StartDate).ThenBy(f => f.Year).ToList(), user).ToJson(),
-                CurrentPage = totalPages,
-                TotalPages = totalPages,
-                TotalExpenses = allTransactions.Where(s => CategoryExt.GetMainCategory(s.Category.Value) != Categories.Income).Sum(s => s.Amount),
-                TotalIncome = allTransactions.Where(s => CategoryExt.GetMainCategory(s.Category.Value) == Categories.Income).Sum(s => s.Amount)
-            };
-
+            var allTransactions = db.Transactions.Where(s => s.UserName == User.Identity.Name).OrderByDescending(s => s.Date).ToList();
+           
             ViewBag.Success = TempData["Success"];
 
-            return View(model);
+            return View(allTransactions);
         }
 
         [HttpPost]

@@ -349,6 +349,7 @@
                                     fontFamily: "Tahoma, Geneva, sans-serif !important"
                                 },
                                 type: 'column',
+                                height: 400,
                                 plotBackgroundColor: null,
                                 plotBorderWidth: null,
                                 plotShadow: false,
