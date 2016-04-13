@@ -8,37 +8,82 @@
         ViewBag.Title = "Transactions";
     }
 
+    <div ng-controller="transactionController">               
 
-
-    <div ng-controller="transactionController">        
-        
         <div class="text-center">
             <div ng-show="(model).length > numPerPage" pagination data-items-per-page="numPerPage" total-items="(model).length" ng-model="currentPage" max-size="maxSize" boundary-links="true" rotate="false"></div>
         </div>
+        @using (Html.BeginForm("Create", "Transactions", FormMethod.Post, new {name = "addForm", @class = "form-horizontal"}))
+        {
+            @Html.AntiForgeryToken()
 
+            <table class="table table-condensed table-hover" style="margin-bottom: 0px;">
+                <thead>
+                    <tr class="fixed-width">
+                        <th class="hidden-xs" style="width: 50px !important;">#</th>
+                        <th class="hidden"></th>
+                        <th class="hidden"></th>
+                        <th class="hidden"></th>
+                        <th class="text-center" sortable-table-header="amount">Amount</th>
+                        <th class="text-left" sortable-table-header="category">Category</th>
+                        <th sortable-table-header="description" class="hidden-xs hidden-sm">Description</th>
+                        <th sortable-table-header="date" class="hidden-xs hidden-md hidden-sm">Date</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="form-row">
+                        <td class="visible-lg"></td>
+                        <td class="hidden"></td>
+                        <td class="hidden"></td>
+                        <td class="hidden"></td>
+                        <td class="visible-lg">
+                            <input id="Amount" name="Amount" type="text" ng-pattern="regexDouble" required="required" />                            
+                        </td>
+                        <td class="visible-lg">
+                            <select id="Category" name="Category" ng-model="newTransaction.category" required="required">
+                                <option ng-repeat="cat in categories" value="{{cat.value}}">
+                                    {{cat.text}}
+                                </option>
+                            </select>
+                        </td>
+                        <td class="visible-lg">
+                            <input id="Description" name="Description" ng-model="newTransaction.description" type="text" required="required" />
+                        </td>
+                        <td class="visible-lg">
+
+                            <input id="Date" name="Date" type="date" ng-model="tranDate" required="required" style="display: none;" />
+
+
+                            <span class="input-group ignore-table">
+                                <input style="width: 240px;" name="Date" id="Date" type="text" class="form-control" datepicker-popup="dd.MM.yyyy" max-date="today" ng-model="tranDate" is-open="opened" datepicker-options="dateOptions" ng-required="true" close-text="Close" />
+                                <span class="input-group-btn" style="width:0;padding:0px !important;">
+                                    <button type="button" class="btn btn-default" ng-click="open($event)" style="padding-bottom: 7px;"><i class="glyphicon glyphicon-calendar"></i></button>
+                                </span>
+
+                            </span>
+                        </td>
+                        <td class="text-right visible-lg">
+                            <button class="btn btn-primary" type="submit" ng-disabled="addForm.$invalid">
+                                <i class="glyphicon glyphicon-plus-sign"></i>
+                            </button>
+                        </td>
+
+
+                    </tr>
+                </tbody>
+            </table>
+        }
         <table class="table table-condensed table-hover">
-            <thead>
-                <tr>
-                    <th class="hidden-xs" style="width: 50px !important;">#</th>
-                    <th class="hidden"></th>
-                    <th class="hidden"></th>
-                    <th class="hidden"></th>
-                    <th sortable-table-header="amount">Amount</th>
-                    <th class="text-left" sortable-table-header="category">Category</th>
-                    <th sortable-table-header="description" class="hidden-xs hidden-sm">Description</th>
-                    <th sortable-table-header="date" class="hidden-xs hidden-md hidden-sm">Date</th>
-                    <th></th>
-                </tr>
-            </thead>
             <tbody>
-                <tr ng-repeat="row in model | orderBy:predicate:reverse | startFrom:(currentPage - 1)*numPerPage | limitTo:numPerPage" style="{{row.categoryType === 'Income' ? 'color:#1CA784;':''}}">
+                <tr class="fixed-width" ng-repeat="row in model | orderBy:predicate:reverse | startFrom:(currentPage - 1)*numPerPage | limitTo:numPerPage" style="{{row.categoryType === 'Income' ? 'color:#1CA784;':''}}">
                     <td class="hidden-xs">
 
                         <span class="percentage-row" ng-show="row.category !== 'Salary' && row.category !== 'OtherIncome'">
                             <svg set-width="{{calcRowPercentage(row.amount, findMax(model))}}" height="30">
                                 <rect set-width="{{calcRowPercentage(row.amount, findMax(model))}}" height="30" style="stroke-width:0;fill:{{row.color}};opacity:0.2" />
                             </svg>
-                        </span>                        
+                        </span>
                         {{model.length -((currentPage-1)*numPerPage + ($index))}}
                     </td>
                     <td class="hidden">{{row.mainCategory}}</td>
@@ -46,7 +91,7 @@
                     <td class="hidden">{{row.categoryType}}</td>
                     <td class="text-right" style="padding-right: 30px;width: 100px;">{{row.amount | currencyFormatter}}</td>
                     <td class="text-left" style="width: 220px;">
-                        <img class="hidden-xs hidden-sm" style="position: absolute;" height="20" ng-src="{{getIcon(row.category)}}" alt="{{row.category}}" />
+                        <img style="position: absolute;" height="20" ng-src="{{getIcon(row.category)}}" alt="{{row.category}}" />
                         <span style="padding-left: 30px;">{{row.category | camelCaseToNormal}}</span>
                     </td>
                     <td class="hidden-xs hidden-sm" style="text-align: left" title="{{row.description}}">
@@ -58,7 +103,7 @@
                         <a class="link edit-link" href="{{urls.edit}}/{{row.transactionId}}" title="Edit"><i class="glyphicon glyphicon-pencil"></i></a>
                         <a class="link delete-link" href="{{urls.del}}/{{row.transactionId}}" title="Delete">
                             <i class="glyphicon glyphicon-trash"></i>
-                        </a>                        
+                        </a>
                     </td>
                 </tr>
             </tbody>
@@ -77,12 +122,14 @@
         angular.module('budgetApp').factory('transactionModel', function() {
 
             return {
+                categories: @Html.Raw(Dropdownlist.GroupedCategories("").ToJson()),
                 model:@Html.Raw(Model.ToJson()),
                 urls: {
+                    createInline: '@Url.Action("CreateInline")',
                     del: '@Url.Action("Delete")',
                     edit: '@Url.Action("Edit")',
                     details: '@Url.Action("Details")'
-            }
+                }
         };
 
     });

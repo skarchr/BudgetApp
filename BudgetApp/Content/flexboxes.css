@@ -260,3 +260,51 @@ footer {
     margin-left: -45px;
     margin-top: 2px;
 }
+
+.ignore-table > ul >li >div> table > thead > tr >th,.ignore-table > ul >li >div> table > tbody > tr > td{
+    padding: 0px !important;
+    
+}
+
+.fixed-width > td:first-child,.fixed-width > th:first-child{
+    width: 50px;
+    min-width: 50px;
+}
+
+.fixed-width > td:nth-child(5),.fixed-width > th:nth-child(5){
+    width: 100px;
+    min-width: 100px;
+}
+
+.form-row > td:nth-child(5) > input{
+    width: 88px !important;
+    min-width: 88px !important;
+    height: 34px;
+}
+
+.fixed-width > td:nth-child(6),.fixed-width > th:nth-child(6){
+    width: 200px !important;
+    min-width: 200px;
+}
+
+.form-row > td:nth-child(6) > select{
+    width: 170px !important;
+    min-width: 170px !important;
+    height: 34px;
+}
+
+.fixed-width > td:nth-child(7),.fixed-width > th:nth-child(7){
+    width: 700px;
+    min-width: 700px;
+}
+
+.form-row > td:nth-child(7) > input{
+    width: 680px !important;
+    min-width: 680px !important;
+    height: 34px;
+}
+
+.form-row > td:nth-child(8) > span > input{
+    width: 100px !important;
+    min-width: 100px !important;
+}

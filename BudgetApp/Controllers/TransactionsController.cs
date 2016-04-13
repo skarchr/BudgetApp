@@ -25,58 +25,9 @@ namespace BudgetApp.Controllers
         // GET: Transactions
         public ActionResult Index()
         {
-            var allTransactions = db.Transactions.Where(s => s.UserName == User.Identity.Name).OrderByDescending(s => s.Date).ToList();
-           
             ViewBag.Success = TempData["Success"];
 
-            return View(allTransactions);
-        }
-
-        [HttpPost]
-        public ActionResult Index(TransactionsViewModel model)
-        {
-            var allTransactions = db.Transactions.Where(s => s.UserName == User.Identity.Name).ToList();
-
-            var user = db.Users.First(u => u.UserName == User.Identity.Name);
-
-            if (model.Range != user.Range)
-            {
-                user.Range = model.Range;
-                db.SaveChanges();
-            }
-
-            var rangeViewers = new List<RangeViewer>();
-
-            switch (model.Range)
-            {
-                case Range.Annual:
-                    rangeViewers = RangeHelper.GetAnnual(allTransactions, user.Currency);
-                    break;
-                case Range.Month:
-                    rangeViewers = RangeHelper.GetMonth(allTransactions, user.Currency);
-                    break;
-                case Range.Week:
-                    rangeViewers = RangeHelper.GetWeek(allTransactions, user.Currency);
-                    break;
-
-            }
-
-            var totalPages = (int)Math.Ceiling((double)rangeViewers.Count / 12);
-
-            if (model.CurrentPage == 0)
-                model.CurrentPage = totalPages;
-
-            var pageViewer = rangeViewers.OrderByDescending(s => s.StartDate).Skip(12 * (totalPages - model.CurrentPage)).Take(12).ToList();
-
-            model.RangeViewers = pageViewer.OrderBy(s => s.StartDate).ToList();
-            model.Currency = user.Currency;
-            model.OverviewGraph = GraphBuilder.OverviewGraph(pageViewer.OrderBy(s => s.StartDate).ThenBy(f => f.Year).ToList(), user).ToJson();
-            model.CurrentPage = model.CurrentPage;
-            model.TotalPages = totalPages;
-            model.TotalExpenses = allTransactions.Where(s => CategoryExt.GetMainCategory(s.Category.Value) != Categories.Income).Sum(s => s.Amount);
-            model.TotalIncome = allTransactions.Where(s => CategoryExt.GetMainCategory(s.Category.Value) == Categories.Income).Sum(s => s.Amount);
-
-            return View(model);
+            return View(db.Transactions.Where(s => s.UserName == User.Identity.Name).OrderByDescending(s => s.Date).ToList());
         }
 
         // GET: Transactions/Create
@@ -106,6 +57,23 @@ namespace BudgetApp.Controllers
             }
             ViewBag.Error = "Invalid input";
             return View(transaction);
+        }
+
+        [HttpPost]
+        public void CreateInline(Transaction transaction)
+        {
+
+            if (transaction.Category.HasValue && transaction.Description.Count() > 2 && transaction.Amount > 0.0)
+            {
+                transaction.UserName = User.Identity.Name;
+                transaction.Created = DateTime.Now;
+
+                db.Transactions.Add(transaction);
+                db.SaveChanges();
+
+                ViewBag.Success = "Transaction added";
+            }
+            ViewBag.Error = "Invalid input";
         }
 
         // GET: Transactions/Edit/5

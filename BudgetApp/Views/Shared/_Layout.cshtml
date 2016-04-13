@@ -84,7 +84,7 @@
                             <i class="glyphicon glyphicon-align-justify"></i>
                         </li>
                         <li role="separator" class="divider"></li>
-                        <li class="@(ViewBag.Title == "Add Transaction" ? "active" : "")" onclick="javascript: location.href = '@Url.Action("Create", "Transactions")';">
+                        <li class="@(ViewBag.Title == "Add Transaction" ? "active" : "") hidden-lg" onclick="javascript: location.href = '@Url.Action("Create", "Transactions")';">
                             <i class="glyphicon glyphicon-plus-sign"></i> <span class="sidebar-text">Add</span>
                         </li>
                         <li class="@(ViewBag.Title == "Upload Transactions" ? "active" : "")" onclick="javascript: location.href = '@Url.Action("Upload", "Transactions")';">
