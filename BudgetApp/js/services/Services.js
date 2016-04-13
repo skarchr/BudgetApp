@@ -97,6 +97,9 @@
                 case "Entertainment":
                     imageName = "videogame.png";
                     break;
+                case "Family":
+                    imageName = "three.png";
+                    break;
                 case "Gifts":
                     imageName = "gift2.png";
                     break;

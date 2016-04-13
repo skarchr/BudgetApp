@@ -34,6 +34,17 @@
                     <img src="../../Content/images/header_logo.svg" alt="" height="36" />
                     <img id="logoText" src="../../Content/images/header_logo_text.svg" alt="" height="24" />
                 </div>
+                
+                    @{
+                        if (ConfigurationManager.AppSettings["debugmode"] == "true")
+                        {
+                            <div id="header-debug">
+                                <p style="color: #fff;">Debug mode</p>
+                            </div>
+                        }
+                    }
+                
+
                 <div id="header-search">
                     <i class="glyphicon glyphicon-search"></i>                    
                     <input placeholder=" Search transactions" ng-model="$parent.searchString" @*style="height:40px;width:280px;background:#fff;border:2px solid #0094FF;padding-left: 10px;"*@ ng-keypress="$parent.keypressed($event)" />                    
@@ -80,48 +91,48 @@
             {
                 <div class="sidebar {{shrink ? 'shrink':''}}">
                     <ul class="list-unstyled">
-                        <li ng-click="toggleShrinkStatus()">
+                        <li ng-click="toggleShrinkStatus()" title="Toggle sidebar">
                             <i class="glyphicon glyphicon-align-justify"></i>
                         </li>
                         <li role="separator" class="divider"></li>
-                        <li class="@(ViewBag.Title == "Add Transaction" ? "active" : "") hidden-lg" onclick="javascript: location.href = '@Url.Action("Create", "Transactions")';">
+                        <li class="@(ViewBag.Title == "Add Transaction" ? "active" : "") hidden-lg" onclick="javascript: location.href = '@Url.Action("Create", "Transactions")';" title="Add transaction">
                             <i class="glyphicon glyphicon-plus-sign"></i> <span class="sidebar-text">Add</span>
                         </li>
-                        <li class="@(ViewBag.Title == "Upload Transactions" ? "active" : "")" onclick="javascript: location.href = '@Url.Action("Upload", "Transactions")';">
+                        <li class="@(ViewBag.Title == "Upload Transactions" ? "active" : "")" onclick="javascript: location.href = '@Url.Action("Upload", "Transactions")';" title="Upload transactions from excel file">
                             <i class="glyphicon glyphicon-upload"></i> <span class="sidebar-text">Upload</span>
                         </li>
                         <li role="separator" class="divider"></li>
                         @{
                             if (User.IsInRole("Administrators"))
                             {
-                                <li class="@(ViewBag.Title == "Admin" ? "active" : "")" onclick=" javascript: location.href = '@Url.Action("Index", "Admin")'; ">
+                                <li class="@(ViewBag.Title == "Admin" ? "active" : "")" onclick=" javascript: location.href = '@Url.Action("Index", "Admin")';" title="Administrator">
                                     <i class="glyphicon glyphicon-star-empty"></i> <span class="sidebar-text">Admin</span>
                                 </li>
                             }
                         }
 
-                        <li class="@(ViewBag.Title == "Dashboard" ? "active" : "")" onclick="javascript: location.href = '@Url.Action("Index","Dashboard")';">
+                        <li class="@(ViewBag.Title == "Dashboard" ? "active" : "")" onclick="javascript: location.href = '@Url.Action("Index","Dashboard")';" title="Dashboard">
                             <i class="glyphicon glyphicon-dashboard"></i> <span class="sidebar-text">Dashboard</span>
                         </li>
-                        <li class="@(ViewBag.Title == "Download" ? "active" : "")" onclick="javascript: location.href = '@Url.Action("Index","Report")';">
+                        <li class="@(ViewBag.Title == "Download" ? "active" : "")" onclick="javascript: location.href = '@Url.Action("Index","Report")';" title="Download charts and/or excel files">
                             <i class="glyphicon glyphicon-download"></i> <span class="sidebar-text">Download</span>
                         </li>
-                        <li class="tiny {{selected === 'charts' ? 'active':''}}" ng-show="@(ViewBag.Title == "Download" ? "true" : "false")" ng-click="go('charts')">
+                        <li class="tiny {{selected === 'charts' ? 'active':''}}" ng-show="@(ViewBag.Title == "Download" ? "true" : "false")" ng-click="go('charts')" title="Download charts">
                             <i class="glyphicon glyphicon-signal"></i><span class="sidebar-text">Charts</span>
                         </li>
-                        <li class="tiny {{selected === 'tables' ? 'active':''}}" ng-show="@(ViewBag.Title == "Download" ? "true" : "false")" ng-click="go('tables')">
+                        <li class="tiny {{selected === 'tables' ? 'active':''}}" ng-show="@(ViewBag.Title == "Download" ? "true" : "false")" ng-click="go('tables')" title="Download excel files">
                             <i class="glyphicon glyphicon-th"></i><span class="sidebar-text">Excel</span>
                         </li>
-                        <li class="@(ViewBag.Title == "Transactions" ? "active" : "")" onclick="javascript: location.href = '@Url.Action("Index","Transactions")';">
+                        <li class="@(ViewBag.Title == "Transactions" ? "active" : "")" onclick="javascript: location.href = '@Url.Action("Index","Transactions")';" title="See all added transactions">
                             <i class="glyphicon glyphicon-transfer"></i> <span class="sidebar-text">Transactions</span>
                         </li>
-                        <li class="@(ViewBag.Title == "Mappings" ? "active" : "")" onclick="javascript: location.href = '@Url.Action("Index","Mappings")';">
+                        <li class="@(ViewBag.Title == "Mappings" ? "active" : "")" onclick="javascript: location.href = '@Url.Action("Index","Mappings")';" title="Mappings">
                             <i class="glyphicon glyphicon-map-marker"></i> <span class="sidebar-text">Mappings</span>
                         </li>
-                        <li class="@(ViewBag.Title == "About" ? "active" : "")" onclick="javascript: location.href = '@Url.Action("About","Home")';">
+                        <li class="@(ViewBag.Title == "About" ? "active" : "")" onclick="javascript: location.href = '@Url.Action("About","Home")';" title="About">
                             <i class="glyphicon glyphicon-info-sign"></i> <span class="sidebar-text">About</span>
                         </li>
-                        <li onclick="window.open('https://github.com/skarchr/BudgetApp', '_blank')">
+                        <li onclick="window.open('https://github.com/skarchr/BudgetApp', '_blank')" title="Go to project's github page">
                             <img src="~/Content/images/github.svg" height="20" /><span class="sidebar-text" style="vertical-align: baseline;padding-left:14px;">GitHub</span>
                         </li>
                         
@@ -131,35 +142,14 @@
 
             }
             <div class="@(User.Identity.IsAuthenticated ? "flex-container {{shrink ? 'shrink':'no-shrink'}}" : "")">
-                @RenderBody()
+                @RenderBody()                
             </div>
             
             <footer class="text-center">
 
-                @{
-                    if (ConfigurationManager.AppSettings["debugmode"] == "true")
-                    {
-                        <p class="text-warning">Debug mode</p>
-                    }
-
-                    if (!String.IsNullOrEmpty(ViewBag.Link))
-                    {
-                        <p class="text-danger">
-                            For local debug only: confirmation link: <a href="@ViewBag.Link">link</a>
-                        </p>
-                    }
-                    if (!String.IsNullOrEmpty(ViewBag.Code))
-                    {
-                        <p class="text-danger">
-                            For local debug only: @ViewBag.Code
-                        </p>
-                    }
-                }
-                <br />
-                <br />
                 <div class="row" style="padding:0;">
                     <div class="col-xs-12">
-                        <span class="text-muted" style="font-size:10px;">Icons made by <a href="http://www.flaticon.com/authors/freepik" title="Freepik">Freepik</a> from <a href="http://www.flaticon.com" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0">CC BY 3.0</a></span>
+                        <span class="text-muted" style="font-size:12px;">Icons made by <a href="http://www.flaticon.com/authors/freepik" title="Freepik">Freepik</a> from <a href="http://www.flaticon.com" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0">CC BY 3.0</a></span>
                     </div>
                 </div>
 

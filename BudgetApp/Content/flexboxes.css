@@ -18,6 +18,14 @@
     flex-grow: 10;    
 }
 
+#header-debug {
+    flex-grow: 5;
+}
+
+#header-debug > p {
+    padding-top: 6px;
+}
+
 #header-search {
     flex-grow: 1;    
 }
