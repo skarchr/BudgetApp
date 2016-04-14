@@ -44,6 +44,7 @@ namespace BudgetApp
                    "~/js/services/Services.js",
                    "~/js/directives/Directives.js",
                    "~/js/filters/Filters.js",
+                   "~/js/controllers/SidebarController.js",
                    "~/js/controllers/TransactionController.js",
                    "~/js/controllers/GaugeController.js",
                    "~/js/controllers/CurrencyController.js",
@@ -60,7 +61,8 @@ namespace BudgetApp
                    "~/bower_components/animate.css/animate.css",
                    "~/bower_components/angular-toastr/dist/angular-toastr.css",
                    "~/Content/animations.css",
-                   "~/Content/site.css"));
+                   "~/Content/site.css",
+                   "~/Content/flexboxes.css"));
 
          // Set EnableOptimizations to false for debugging. For more information,
          // visit http://go.microsoft.com/fwlink/?LinkId=301862

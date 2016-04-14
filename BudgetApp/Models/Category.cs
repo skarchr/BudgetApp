@@ -82,6 +82,7 @@ namespace BudgetApp.Models
         [Description("ATM")]
         ATM,
         Workout,
-        Fuel
+        Fuel,
+        Family
     }
 }

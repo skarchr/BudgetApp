@@ -2,275 +2,119 @@
 @using BudgetApp.Extensions
 @using BudgetApp.Models
 @using Microsoft.Ajax.Utilities
-@model TransactionsViewModel
+@model List<Transaction>
 
-@{
-    ViewBag.Title = "Transactions";
-}
+    @{
+        ViewBag.Title = "Transactions";
+    }
 
+    <div ng-controller="transactionController">               
 
-
-<div class="row" style="margin-top: -10px;" ng-controller="transactionController">
-
-
-    <div class="col-xs-12" fade-in="200">
-        @using (Html.BeginForm("Index", "Transactions", FormMethod.Post))
+        <div class="text-center">
+            <div ng-show="(model).length > numPerPage" pagination data-items-per-page="numPerPage" total-items="(model).length" ng-model="currentPage" max-size="maxSize" boundary-links="true" rotate="false"></div>
+        </div>
+        @using (Html.BeginForm("Create", "Transactions", FormMethod.Post, new {name = "addForm", @class = "form-horizontal"}))
         {
+            @Html.AntiForgeryToken()
 
-            <div class="row" style="margin-top: 30px;">
-                <div class="col-xs-12 col-md-6 btn-paging">
-                    @if (Model.TotalPages > 1)
-                    {
+            <table class="table table-condensed table-hover" style="margin-bottom: 0px;">
+                <thead>
+                    <tr class="fixed-width">
+                        <th class="hidden-xs" style="width: 50px !important;">#</th>
+                        <th class="hidden"></th>
+                        <th class="hidden"></th>
+                        <th class="hidden"></th>
+                        <th class="text-center" sortable-table-header="amount">Amount</th>
+                        <th class="text-left" sortable-table-header="category">Category</th>
+                        <th sortable-table-header="description" class="hidden-xs hidden-sm">Description</th>
+                        <th sortable-table-header="date" class="hidden-xs hidden-md hidden-sm">Date</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="form-row">
+                        <td class="visible-lg"></td>
+                        <td class="hidden"></td>
+                        <td class="hidden"></td>
+                        <td class="hidden"></td>
+                        <td class="visible-lg">
+                            <input id="Amount" name="Amount" type="text" ng-pattern="regexDouble" required="required" />                            
+                        </td>
+                        <td class="visible-lg">
+                            <select id="Category" name="Category" ng-model="newTransaction.category" required="required">
+                                <option ng-repeat="cat in categories" value="{{cat.value}}">
+                                    {{cat.text}}
+                                </option>
+                            </select>
+                        </td>
+                        <td class="visible-lg">
+                            <input id="Description" name="Description" ng-model="newTransaction.description" type="text" required="required" />
+                        </td>
+                        <td class="visible-lg">
 
-                        <div class="btn-group" role="group">
-
-                            @if (Model.CurrentPage != 1)
-                            {
-                                <button type="button" set-page="@(Model.CurrentPage -1)" class="btn btn-default" style="margin-right:5px;padding: 6px 4px;">
-                                    <i class="glyphicon glyphicon-chevron-left"></i>
-                                </button>
-                            }
-
-                            @{
-                            var startPage = (Model.CurrentPage < 5) ? 1 : Model.CurrentPage - 2;
-                            var endPage = 4 + startPage;
-                            endPage = (Model.TotalPages < endPage) ? Model.TotalPages : endPage;
-
-                            var diff = startPage - endPage + 4;
-
-                            startPage -= (startPage - diff > 0) ? diff : 0;
-
-                            if (startPage > 1)
-                            {
-                                <button type="button" set-page="1" class="btn btn-default @(1 == Model.CurrentPage ? "active" : "")">
-                                    1
-                                </button>
-                            }
-
-                            if (Model.CurrentPage > 4 && Model.TotalPages > 6)
-                            {
-                                <button type="button" class="btn btn-default">
-                                    ...
-                                </button>
-                            }
-
-                            for (var i = startPage; i <= endPage; i++)
-                            {
-                                <button type="button" set-page="@i" class="btn btn-default @(i == Model.CurrentPage ? "active" : "")">
-                                    @i
-                                </button>
-                            }
-
-                            if (Model.CurrentPage <= (Model.TotalPages - 4) && Model.TotalPages > 6)
-                            {
-                                <button type="button" class="btn btn-default">
-                                    ...
-                                </button>
-                            }
-
-                            if (endPage < Model.TotalPages)
-                            {
-                                <button type="button" set-page="@Model.TotalPages" class="btn btn-default @(Model.TotalPages == Model.CurrentPage ? "active" : "")">
-                                    @Model.TotalPages
-                                </button>
-                            }
-
-                            }
-
-                            @if (Model.CurrentPage != Model.TotalPages)
-                            {
-                                <button type="button" set-page="@(Model.CurrentPage + 1)" class="btn btn-default" style="margin-left:5px;padding: 6px 4px;">
-                                    <i class="glyphicon glyphicon-chevron-right"></i>
-                                </button>
-                            }
-
-                        </div>
-                    }
-                </div>
+                            <input id="Date" name="Date" type="date" ng-model="tranDate" required="required" style="display: none;" />
 
 
+                            <span class="input-group ignore-table">
+                                <input style="width: 240px;" name="Date" id="Date" type="text" class="form-control" datepicker-popup="dd.MM.yyyy" max-date="today" ng-model="tranDate" is-open="opened" datepicker-options="dateOptions" ng-required="true" close-text="Close" />
+                                <span class="input-group-btn" style="width:0;padding:0px !important;">
+                                    <button type="button" class="btn btn-default" ng-click="open($event)" style="padding-bottom: 7px;"><i class="glyphicon glyphicon-calendar"></i></button>
+                                </span>
 
-                <div class="col-xs-12 col-md-6 text-right btn-range">
-
-                    @if (Model.RangeViewers.Any()) { 
-
-                    @Html.HiddenFor(s => s.Range)
-                    @Html.HiddenFor(s => s.CurrentPage)
-
-                    <div class="btn-group" role="group">
-
-                        <button type="button" set-range="@Range.Annual" class="btn btn-default @(Model.Range == Range.Annual ? "active":"")">
-                            Annual
-                        </button>
-                        <button type="button" set-range="@Range.Month" class="btn btn-default @(Model.Range == Range.Month ? "active":"")">
-                            Monthly
-                        </button>
-                        <button type="button" set-range="@Range.Week" class="btn btn-default @(Model.Range == Range.Week ? "active":"")">
-                            Weekly
-                        </button>
-                    </div>
-
-                    <input type="submit" id="submitBtn" class="hidden" />
-                    }
-                </div>
+                            </span>
+                        </td>
+                        <td class="text-right visible-lg">
+                            <button class="btn btn-primary" type="submit" ng-disabled="addForm.$invalid">
+                                <i class="glyphicon glyphicon-plus-sign"></i>
+                            </button>
+                        </td>
 
 
-            </div>
+                    </tr>
+                </tbody>
+            </table>
         }
+        <table class="table table-condensed table-hover">
+            <tbody>
+                <tr class="fixed-width" ng-repeat="row in model | orderBy:predicate:reverse | startFrom:(currentPage - 1)*numPerPage | limitTo:numPerPage" style="{{row.categoryType === 'Income' ? 'color:#1CA784;':''}}">
+                    <td class="hidden-xs">
 
+                        <span class="percentage-row" ng-show="row.category !== 'Salary' && row.category !== 'OtherIncome'">
+                            <svg set-width="{{calcRowPercentage(row.amount, findMax(model))}}" height="30">
+                                <rect set-width="{{calcRowPercentage(row.amount, findMax(model))}}" height="30" style="stroke-width:0;fill:{{row.color}};opacity:0.2" />
+                            </svg>
+                        </span>
+                        {{model.length -((currentPage-1)*numPerPage + ($index))}}
+                    </td>
+                    <td class="hidden">{{row.mainCategory}}</td>
+                    <td class="hidden">{{row.categoryText}}</td>
+                    <td class="hidden">{{row.categoryType}}</td>
+                    <td class="text-right" style="padding-right: 30px;width: 100px;">{{row.amount | currencyFormatter}}</td>
+                    <td class="text-left" style="width: 220px;">
+                        <img style="position: absolute;" height="20" ng-src="{{getIcon(row.category)}}" alt="{{row.category}}" />
+                        <span style="padding-left: 30px;">{{row.category | camelCaseToNormal}}</span>
+                    </td>
+                    <td class="hidden-xs hidden-sm" style="text-align: left" title="{{row.description}}">
+                        <span class="label label-success new-today" ng-show="(row.date | date : 'dd.MM.yy') === (today | date : 'dd.MM.yy')">New</span>
+                        {{row.description}}
+                    </td>
+                    <td class="hidden-md hidden-xs hidden-sm">{{row.date | date}}</td>
+                    <td class="text-right">
+                        <a class="link edit-link" href="{{urls.edit}}/{{row.transactionId}}" title="Edit"><i class="glyphicon glyphicon-pencil"></i></a>
+                        <a class="link delete-link" href="{{urls.del}}/{{row.transactionId}}" title="Delete">
+                            <i class="glyphicon glyphicon-trash"></i>
+                        </a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
 
-        @if (!Model.RangeViewers.Any())
-        {
-
-            <div class="jumbotron text-center" fade-in="100" style="margin-top:50px;background-color:white;">
-
-                <h3>You have no transactions registered yet!</h3>                
-
-            </div>
-
-
-        }
-        else
-        {
-
-            <div class="row">
-
-                <div class="col-xs-12">
-
-                    <span id="big" style="height:350px;width:1123px !important;" class="visible-lg" data-overview-highchart="{{overviewGraph}}" data-range="@Model.Range" data-currency="@Model.Currency"></span>
-
-                    <span id="medium" style="height:350px;width:923px !important;" class="visible-md" data-overview-highchart="{{overviewGraph}}" data-range="@Model.Range" data-currency="@Model.Currency"></span>
-
-                    <span id="small" style="height:350px;width:703px !important;" class="visible-sm" data-overview-highchart="{{overviewGraph}}" data-range="@Model.Range" data-currency="@Model.Currency"></span>
-
-                </div>
-
-                <div class="col-xs-12 visible-xs" style="padding:2px;">
-                    
-                    <table class="table table-striped">
-                        <thead>
-                            <tr>
-                                <th ng-hide="filter === 0">{{filter === 1 ? 'Month': 'Week'}}</th>
-                                <th>Year</th>
-                                <th class="text-right">Income</th>
-                                <th class="text-right">Expenses</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr ng-repeat="range in model">
-                                <td ng-hide="filter === 0">{{filter === 1 ? (range.title | monthName) : range.title }}</td>
-                                <td>{{range.year}}</td>
-                                <td class="text-right green">{{range.totalIncome | currencyFormatter}}</td>
-                                <td class="text-right red">{{range.totalExpenses | currencyFormatter}}</td>
-                            </tr>
-                        </tbody>
-                    </table>
-
-                </div>
-
-
-                <div class="col-xs-12" style="margin-top:10px;" ng-repeat="range in model" ng-show="rangeElem === $index">
-
-
-                    <div class="panel panel-default" style="border:2px solid #0094ff; -ms-border-radius: 40px; border-radius: 40px;">
-
-
-                        <div class="panel-body">
-
-                            <div class="row">
-
-                                <div class="col-xs-12 text-center">
-                                    <h2 style="margin-top: -7px;">
-                                        {{range.startDate | date : 'dd.MM.yyyy'}} - {{range.endDate | date: 'dd.MM.yyyy'}}
-                                    </h2>
-
-                                </div>
-
-                            </div>
-
-                            <div class="row" style="margin-top: 13px;">
-
-                                <div class="col-xs-12 hidden-xs">
-
-                                    <span style="height:350px;width:1123px !important;" class="visible-lg" data-highchart="{{range.graph}}" data-index="{{$index}}"></span>
-
-                                    <span style="height:350px;width:923px !important;" class="visible-md" data-highchart="{{range.graph}}" data-index="{{$index}}"></span>
-
-                                    <span style="height:350px;width:703px !important;" class="visible-sm" data-highchart="{{range.graph}}" data-index="{{$index}}"></span>
-
-                                </div>
-
-
-                            </div>
-                        </div>
-                        <table class="table table-condensed table-same-width table-hover" style="margin-top: 18px;">
-                            <thead>
-                                <tr>
-                                    <th colspan="7">
-                                        <input type="text" value="" class="form-control" placeholder="Search" ng-model="querystring[$index]" />
-                                        <span class="btn-remove" ng-show="querystring[$index] !== undefined" ng-click="querystring[$index] = undefined"><i class="glyphicon glyphicon-remove"></i></span>
-                                    </th>
-                                </tr>
-                                <tr>
-                                    <th class="hidden-xs" style="width: 50px !important;">#</th>
-                                    <th class="hidden"></th>
-                                    <th class="hidden"></th>
-                                    <th class="hidden"></th>
-                                    <th sortable-table-header="amount">Amount (@Model.Currency)</th>
-                                    <th sortable-table-header="category">Category</th>
-                                    <th sortable-table-header="description" class="hidden-xs hidden-sm">Description</th>
-                                    <th sortable-table-header="date" class="hidden-xs hidden-md hidden-sm">Date</th>
-                                    <th></th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr ng-repeat="row in range.transactions | orderBy:predicate:reverse | filter: querystring[$index] | startFrom:(currentPage - 1)*numPerPage | limitTo:numPerPage" style="{{row.categoryType === 'Income' ? 'color:#1CA784;':''}}">
-                                    <td class="hidden-xs">
-
-                                        <span class="percentage-row" ng-show="row.category !== 'Salary' && row.category !== 'OtherIncome'">
-                                            <svg set-width="{{calcRowPercentage(row.amount, findMax(range.transactions))}}" height="30">
-                                                <rect set-width="{{calcRowPercentage(row.amount, findMax(range.transactions))}}" height="30" style="stroke-width:0;fill:{{row.color}};opacity:0.2" />
-                                            </svg>
-                                        </span>
-
-                                        {{(currentPage-1)*numPerPage + ($index+1)}}
-                                    </td>
-                                    <td class="hidden">{{row.mainCategory}}</td>
-                                    <td class="hidden">{{row.categoryText}}</td>
-                                    <td class="hidden">{{row.categoryType}}</td>
-                                    <td>{{row.amount | currencyFormatter}}</td>
-                                    <td style="text-align:left;padding-left: 20px;">
-                                        <img class="hidden-xs hidden-sm" style="position: absolute;" height="20" ng-src="{{getIcon(row.category)}}" alt="{{row.category}}" />
-                                        <span style="padding-left: 30px;">{{row.category | camelCaseToNormal}}</span>
-                                    </td>
-                                    <td class="hidden-xs hidden-sm" style="text-align: left" title="{{row.description}}">{{row.description | maxLength : 70}}</td>
-                                    <td class="hidden-md hidden-xs hidden-sm">{{row.date | date}}</td>
-                                    <td class="text-right">
-                                        <a class="link edit-link" href="{{urls.edit}}/{{row.transactionId}}" title="Edit"><i class="glyphicon glyphicon-pencil"></i></a>
-                                        <a class="link delete-link" href="{{urls.del}}/{{row.transactionId}}" title="Delete">
-                                            <i class="glyphicon glyphicon-trash"></i>
-                                        </a>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                       
-                        <div class="text-center">
-                            <div ng-show="(range.transactions | filter: querystring[$index]).length > numPerPage" pagination data-items-per-page="numPerPage" total-items="(range.transactions | filter: querystring[$index] ).length" ng-model="currentPage" max-size="maxSize" boundary-links="true" rotate="false"></div>
-                        </div>
-                    </div>
-
-
-                </div>
-
-            </div>
-
-        }
+        <div class="text-center">
+            <div ng-show="(model).length > numPerPage" pagination data-items-per-page="numPerPage" total-items="(model).length" ng-model="currentPage" max-size="maxSize" boundary-links="true" rotate="false"></div>
+        </div>
     </div>
 
-</div>
-
-<script>
+    <script>
 
     (function() {
         'use strict';
@@ -278,18 +122,18 @@
         angular.module('budgetApp').factory('transactionModel', function() {
 
             return {
-                filter : @Html.Raw(Model.Range.ToJson()),
-                model: @Html.Raw(Model.RangeViewers.ToJson()),
-                overview : @Html.Raw(Model.OverviewGraph),
+                categories: @Html.Raw(Dropdownlist.GroupedCategories("").ToJson()),
+                model:@Html.Raw(Model.ToJson()),
                 urls: {
+                    createInline: '@Url.Action("CreateInline")',
                     del: '@Url.Action("Delete")',
                     edit: '@Url.Action("Edit")',
                     details: '@Url.Action("Details")'
                 }
-            };
+        };
 
-        });
+    });
 
     })();
 
-</script>
+    </script>

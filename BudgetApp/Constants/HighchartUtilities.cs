@@ -16,8 +16,14 @@ namespace BudgetApp.Constants
             "#48DDb8",
             "#F38630",
             "#A9DEF9",
-            "#009900"
-        }; 
+            "#009900",
+            "rgb(232, 124, 124)"
+        };
 
+
+        public static double ConvertToMilliseconds(DateTime date)
+        {
+            return date.Subtract(new DateTime(1970,1,1,0,0,0, DateTimeKind.Utc)).TotalMilliseconds;
+        }
     }
 }

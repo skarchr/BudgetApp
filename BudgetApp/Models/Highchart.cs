@@ -10,6 +10,7 @@ namespace BudgetApp.Models
             YAxis = null;
         }
 
+        public bool Legend { get; set; }
         public List<string> Categories { get; set; }
         public List<Series> Series { get; set; }
         public Drilldown Drilldown { get; set; }
@@ -20,6 +21,7 @@ namespace BudgetApp.Models
 
         public List<Axis> XAxis { get; set; }
         public List<Axis> YAxis { get; set; }
+        public bool Stacking { get; set; }
     }
 
     public class Axis
@@ -126,6 +128,7 @@ namespace BudgetApp.Models
         public int Year { get; set; }
         public double? Y { get; set; }
         public double X { get; set; }
+        public double Z { get; set; }
 
         public double? Q1 { get; set; }
         public double? Q3 { get; set; }
@@ -151,6 +154,7 @@ namespace BudgetApp.Models
             Visible = true;
             DashStyle = "Solid";
             Marker = new Marker();
+            DataGrouping = new DataGrouping();
         }
         
         public int? XAxis { get; set; }
@@ -164,7 +168,16 @@ namespace BudgetApp.Models
         public List<Data> Data { get; set; }
         public string DashStyle { get; set; }
         public Marker Marker { get; set; }
+        public DataGrouping DataGrouping { get; set; }
     }
+
+    public class DataGrouping
+    {
+        public string Approximation { get; set; }
+        public bool Enabled { get; set; }
+        public bool Forced { get; set; }
+    }
+
 
     public class Marker
     {

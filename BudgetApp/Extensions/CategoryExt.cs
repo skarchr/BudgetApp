@@ -66,6 +66,8 @@ namespace BudgetApp.Extensions
                     return 6;
                 case Categories.Atm:
                     return 4;
+                case "Expenses":
+                    return 8;
                 default:
                     return 0;
             }

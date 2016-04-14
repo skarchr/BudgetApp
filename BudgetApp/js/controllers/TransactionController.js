@@ -1,29 +1,41 @@
 ﻿(function() {
     'use strict';
 
-    angular.module('budgetApp').controller('transactionController', ['$scope', 'transactionModel', 'commonService', function ($scope, transactionModel, commonService) {
+    angular.module('budgetApp').controller('transactionController', ['$scope', '$http', 'transactionModel', 'commonService', function ($scope, $http, transactionModel, commonService) {
 
-        $scope.filter = transactionModel.filter;
+        $scope.tranDate = '';        
 
-        $scope.rangeElem = '';
-        
-        $scope.querystring = {};
+        $scope.categories = transactionModel.categories;
 
         $scope.getIcon = function (input) {
 
             return commonService.getIconUrl(input);
 
         };
-        $scope.predicate = 'amount';
+        $scope.predicate = 'date';
         $scope.reverse = true;
+
+        $scope.opened = false;
+
+        $scope.open = function ($event) {
+            $event.preventDefault();
+            $event.stopPropagation();
+            $scope.opened = true;
+        };
+
+        $scope.today = new Date();
+
+        $scope.dateOptions = {
+            formatYear: 'yy',
+            startingDay: 1
+        };
 
         $scope.model = transactionModel.model;
 
+
         $scope.urls = transactionModel.urls;
 
-        $scope.overviewGraph = transactionModel.overview;
-
-        $scope.showBalance = false;
+        $scope.today = new Date();
 
         $scope.findMax = function(list) {
 
@@ -66,9 +78,10 @@
 
         $scope.currentPage = 1;
 
-        $scope.numPerPage = 25;
+        $scope.numPerPage = 50;
 
         $scope.maxSize = 8;
+        $scope.regexDouble = /^(\d+(?:[\.]\d{1,2})?)$/;
     }]);
 
     angular.module('budgetApp').controller('addTransactionController', ['$scope', 'addTransactionModel', function ($scope, addTransactionModel) {

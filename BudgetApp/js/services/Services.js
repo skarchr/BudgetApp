@@ -1,7 +1,24 @@
 ﻿(function() {
     'use strict';
 
-    angular.module('budgetApp').factory('commonService', function() {
+    angular.module('budgetApp').service('sharedProperties',[function() {
+        var selected = 'charts';
+
+        return {
+
+            getSelected: function () {
+
+                return selected;
+            },
+            setSelected: function (name) {
+
+                selected = name;
+            }
+        };
+    }]);
+
+
+    angular.module('budgetApp').factory('commonService', [function() {
 
         var getIconUrl = function (value) {
 
@@ -80,6 +97,9 @@
                 case "Entertainment":
                     imageName = "videogame.png";
                     break;
+                case "Family":
+                    imageName = "three.png";
+                    break;
                 case "Gifts":
                     imageName = "gift2.png";
                     break;
@@ -154,6 +174,6 @@
 
         };
 
-    });
+    }]);
 
 })();

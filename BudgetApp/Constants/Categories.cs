@@ -52,6 +52,7 @@ namespace BudgetApp.Constants
                     {
                         Category.Appearance,
                         Category.Entertainment,
+                        Category.Family,
                         Category.Gifts,
                         Category.Hobby,
                         Category.Phone,

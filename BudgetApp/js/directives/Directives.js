@@ -22,7 +22,103 @@
         return (source.charAt(0).toUpperCase() + source.slice(1)).trim();
     }
 
-    angular.module('budgetApp')        
+    angular.module('budgetApp')
+        
+        .directive('setDateInactive', [function () {
+            return {
+                restrict: 'A',
+                link: function (scope, elem) {
+
+                    $(elem[0]).on('click', function() {
+                        $('.setting-date-input').each(function () {
+                            $(this).removeClass('active');
+                        });
+                    });
+
+                }
+            };
+        }])
+
+        .directive('setDateYear', ['$filter', function ($filter) {
+            return{
+                restrict: 'A',
+                scope: {
+                    setDateYear:'='
+                },
+                link:function(scope, elem) {
+
+                    $(elem[0]).attr('href', 'javscript:void(0)').addClass('setting-date-input');
+
+                    $(elem[0]).after('<span class="sep">|</span>');
+
+                    $(elem[0]).on('click', function () {
+
+                        $('.setting-date-input').each(function() {
+                            $(this).removeClass('active');
+                        });
+
+                        $(elem[0]).addClass('active');
+
+                        var from = $filter('date')(new Date(scope.setDateYear, 0, 1), 'MMMM d, y');
+                        var to = $filter('date')(new Date(scope.setDateYear, 11, 31), 'MMMM d, y');                       
+
+                        scope.$apply(function () {
+                            scope.$parent.model.toDate = to;
+                            scope.$parent.model.fromDate = from;
+
+                            scope.$parent.submit();
+                        });
+
+                    });
+                }
+            };
+        }])
+
+        .directive('setDate', ['$filter',function($filter) {
+            return {
+                restrict: 'A',
+                scope: {
+                    mode: '@setDate'
+                },
+                link:function(scope, elem) {
+
+                    $(elem[0]).attr('href', 'javscript:void(0)').addClass('setting-date-input');
+
+                    $(elem[0]).on('click', function () {
+
+                        $('.setting-date-input').each(function() {
+                            $(this).removeClass('active');
+                        });
+
+                        $(elem[0]).addClass('active');
+
+                            var today = $filter('date')(new Date(), 'MMMM d, y');
+                            
+                            var currentYear = new Date().getFullYear();
+                            var currentMonth = new Date().getMonth();
+                            var from;
+                            switch (scope.mode) {
+                                case 'All': 
+                                    from = $filter('date')(scope.$parent.first, 'MMMM d, y');                                    
+                                    break;
+                                case 'Month':                                    
+                                    from = $filter('date')(new Date(currentYear, currentMonth, 1), 'MMMM d, y');                                   
+                                    break;
+
+                            default:
+                            }
+                            scope.$apply(function () {
+
+                                scope.$parent.model.toDate = today;
+                                scope.$parent.model.fromDate = from;
+
+                                scope.$parent.submit();
+                            });
+                        });                                      
+                }
+            };
+        }])
+
         .directive('dropdown', function() {
             return {
                 restrict : 'C',
@@ -253,6 +349,7 @@
                                     fontFamily: "Tahoma, Geneva, sans-serif !important"
                                 },
                                 type: 'column',
+                                height: 400,
                                 plotBackgroundColor: null,
                                 plotBorderWidth: null,
                                 plotShadow: false,

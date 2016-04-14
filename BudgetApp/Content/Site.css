@@ -1,18 +1,11 @@
 ﻿body {
-    padding-top: 80px;
-    padding-bottom: 20px;
+    padding-top: 60px;
     font-family: Tahoma, Geneva, sans-serif !important;
+    /*overflow-x: hidden;*/
 }
 
 .highcharts-background {
     fill: none !important;
-}
-
-/* Set padding to keep content from hitting the edges */
-.body-content {
-    padding-left: 15px;
-    padding-right: 15px;
-    padding-top: 40px;
 }
 
 /* Set width on the form input elements since they're 100% wide by default */
@@ -247,7 +240,7 @@ textarea {
         min-width: 288px !important;
     }
 
-    .dropdown-menu.text-left  {
+    /*.dropdown-menu.text-left  {
         top: 10px !important;
         margin: 2px -267px 0 !important;
         width: 379px;
@@ -260,7 +253,7 @@ textarea {
 
     .dropdown-menu.text-left > li:first-child > a {
         padding-top: 30px;
-    }
+    }*/
 
     .btn-range {
         text-align: center;
@@ -283,9 +276,9 @@ textarea {
 
 @media (max-width: 320px) {
 
-    .dropdown-menu.text-left > li > a {
+    /*.dropdown-menu.text-left > li > a {
         padding-left: 60px;
-    }
+    }*/
 
     .btn-paging > .btn-group > .btn {
         padding: 6px 4px;
@@ -378,7 +371,7 @@ textarea {
     float: left;
     position: absolute;
     margin-top: -5px;
-    margin-left: -15px;
+    margin-left: -5px;
 }
 
 .chart-btn {
@@ -427,37 +420,6 @@ th {
 
 .reflow-chart {
     max-width: 280px;
-}
-
-.dropdown-menu.header {
-    top: 23px;
-    border-radius: 20px;
-    margin-right: -5px;
-    box-shadow: none;
-    border-right: 2px solid #0094ff;
-    border-bottom: 2px solid #0094ff;
-    border-left: 2px solid #0094ff;
-    border-top: 2px solid #0094ff;
-}
-
-.dropdown-menu > li > a {
-    min-width: 250px;
-    font-size: 20px;
-}
-
-.dropdown-menu > li.divider {
-    background-color: #0094ff;
-    height: 2px;
-}
-
-.dropdown-menu > li > a:hover {
-    background: none;
-    color: #0094ff;
-}
-
-.dropdown-menu > .active > a, .dropdown-menu > .active > a:hover {
-  background:none;
-    color: #0094ff;
 }
 
 .btn-nav {
@@ -583,9 +545,9 @@ ul > li > ul > li > ul > li > span {
     padding-right: 10px;
 }
 
-.dropdown-menu {
+/*.dropdown-menu {
     padding: 5px;
-}
+}*/
 
 .feature {
     margin-top: 100px;
@@ -594,3 +556,76 @@ ul > li > ul > li > ul > li > span {
 .feature > h1 {
     font-weight: bolder;
 }
+
+.datepicker {
+    width: 140px;
+    border: 1px solid #0094ff;
+}
+
+.sep {
+    padding-left: 4px;
+    padding-right: 4px;
+    color: #adadad;
+}
+.graph-container {
+    border: 1px solid #ececec;
+}
+
+/*.col-graph {
+    min-height: 305px;
+    height: 305px;
+    padding: 0;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.col-graph > .spinner {
+    min-height: 300px;
+    height: 300px;
+    border:1px solid #0094ff;
+    width: 390px;
+    padding-top: 140px;
+    margin-left: 0;
+    margin-top: 0;
+}
+
+.col-graph > .graph {
+    border:1px solid #0094ff;
+    width: 390px;
+    min-height: 300px;
+    height: 300px;
+}*/
+
+
+.setting-date-input {
+    -webkit-transition: all 0.5s;
+    -moz-transition: all 0.5s;
+    -ms-transition: all 0.5s;
+    -o-transition: all 0.5s;
+    transition: all 0.5s;
+    color: #428bca;
+}
+
+.setting-date-input.active {
+    color: #122d45;
+    font-weight: bold;
+}
+
+li.dropdown > a {
+     padding-top: 2px; 
+     padding-bottom: 2px;
+    margin-top: -1px;
+    margin-right: -1px;
+    color: #ffffff;
+}
+
+li.dropdown > a > .caret {
+        border-top-color: #fff;
+    border-bottom-color: #fff;
+}
+
+li.dropdown:hover > a,li.dropdown.open > a,li.dropdown.open:hover > a,li.dropdown.open > a:focus {
+    background: #618fb6;
+}
+
+

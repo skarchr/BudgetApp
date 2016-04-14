@@ -3,6 +3,8 @@
 
     angular.module('budgetApp').controller('toastrController', ['$scope', 'viewBags', 'toastr', function($scope, viewBags, toastr) {
 
+        $scope.profileDropdown = false;
+
         var viewbagList = viewBags.messages;
 
         $.each(viewbagList, function(i, val) {
