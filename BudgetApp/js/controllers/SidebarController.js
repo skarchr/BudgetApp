@@ -11,38 +11,17 @@
             sharedProperties.setSelected(item);
         };
 
-        $scope.shrink = false;
-
-        
-            $http({ method: 'GET', url: '/Home/GetShrinkStatus' })
-            .success(function (response) {
-                var result = false;
-                
-                if (response === 'True') {
-                    result = true;                    
-                }
-                $scope.shrink = result;
-            });
-        
-
+        $scope.shrink = true;
 
         $scope.toggleShrinkStatus = function () {
             
-            $scope.shrink = !$scope.shrink;
-            
-            $http({ method: 'POST', url: '/Home/SaveShrinkStatus' })
-            .success(function (response) {
-                console.log('saved');
-            }).error(function(response) {
-                console.log('error');
-            });
+            $scope.shrink = !$scope.shrink;            
 
             setTimeout(function() {
                 $(window).trigger('resize');
             }, 100);
 
         };
-
 
     }]);
 

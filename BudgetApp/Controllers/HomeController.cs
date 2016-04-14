@@ -93,28 +93,6 @@ namespace BudgetApp.Controllers
             return View("Index", model);
         }
 
-        [HttpGet]
-        public bool GetShrinkStatus()
-        {
-            if (User.Identity.IsAuthenticated)
-            {
-                return db.Users.First(s => s.UserName == User.Identity.Name).Shrink;
-            }
-            return false;
-        }
-
-        [HttpPost]
-        public void SaveShrinkStatus()
-        {
-            if (User.Identity.IsAuthenticated)
-            {
-                var user = db.Users.First(s => s.UserName == User.Identity.Name);
-
-                user.Shrink = !user.Shrink;
-                db.SaveChanges();
-            }
-        }
-
         [Authorize]
         public ActionResult DownloadCurrentYear()
         {
