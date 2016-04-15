@@ -47,7 +47,7 @@
 
                 <div id="header-search">
                     <i class="glyphicon glyphicon-search"></i>                    
-                    <input placeholder=" Search transactions" ng-model="$parent.searchString" @*style="height:40px;width:280px;background:#fff;border:2px solid #0094FF;padding-left: 10px;"*@ ng-keypress="$parent.keypressed($event)" />                    
+                    <input placeholder=" Search transactions" ng-model="$parent.searchString" ng-keypress="$parent.keypressed($event)" />                    
                 </div>
                 <div id="header-profile" ng-click="profileDropdown = !profileDropdown">
                     @if (Request.IsAuthenticated)
@@ -220,6 +220,8 @@
 
 
                 angular.module('budgetApp').controller('searchController', ['$scope', '$timeout', '$http', function ($scope, $timeout, $http) {
+
+                    $scope.showSearch = false;
 
                     $scope.searchResult = [];
                     $scope.searchStorage = [];

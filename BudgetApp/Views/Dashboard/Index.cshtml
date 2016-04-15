@@ -92,8 +92,13 @@
 
         angular.module('budgetApp').controller('dashboardController', ['$scope','$timeout','dashboardService',function($scope,$timeout,dashboardService) {
 
+            if (dashboardService.model === null)
+                return false;
+
+
             $scope.model = dashboardService.model;
 
+            
             $scope.first = new Date(dashboardService.model.first);
             $scope.last = new Date(dashboardService.model.toDate);
 
