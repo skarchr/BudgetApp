@@ -714,6 +714,7 @@
     <Content Include="Views\Report\_SPC.cshtml" />
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Dashboard\Index.cshtml" />
+    <Content Include="Views\Dashboard\Empty.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\uploads\" />

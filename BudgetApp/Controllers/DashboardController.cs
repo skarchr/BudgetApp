@@ -21,7 +21,7 @@ namespace BudgetApp.Controllers
             var transactions = db.Transactions.Where(s => s.UserName == User.Identity.Name).OrderBy(s => s.Date).ToList();
 
             if (transactions.Count == 0)
-                return View();
+                return View("Empty");
             var exp = transactions.Where(s => s.CategoryType == "Expenses").ToList();
             var timeSpan = 0;
             if ( exp.Count > 1)
