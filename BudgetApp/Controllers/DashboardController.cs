@@ -81,7 +81,8 @@ namespace BudgetApp.Controllers
                     Frequency = Frequency.CreateGraph(trans),
                     CategoryGraph = GraphGenerator.CreateMonthlyGraph(trans,"Monthly expenses"),
                     MountainGraph = BurnRate.CreateMountain(trans),
-                    DailyGraph = GraphGenerator.CreateDailyGraph(trans)
+                    DailyGraph = GraphGenerator.CreateDailyGraph(trans),
+                    DailyExpense = 0.0
                 };
             }
                 
@@ -90,6 +91,15 @@ namespace BudgetApp.Controllers
 
             var income = Math.Round(trans.Where(s => s.CategoryType == "Income").Sum(t => t.Amount), 1);
             var expenses = Math.Round(exp.Sum(t => t.Amount), 1);
+
+            var first = exp.OrderBy(s => s.Date).First().Date;
+            var sec = exp.OrderBy(s => s.Date).Last().Date;
+
+            double days = (sec - first).Days;
+            var daily = 0.0;
+
+            if (days > 0)
+                daily = exp.Sum(s => s.Amount) / days;
 
             var result = new DashboardVariables
             {
@@ -102,7 +112,8 @@ namespace BudgetApp.Controllers
                 Frequency = Frequency.CreateGraph(exp),
                 CategoryGraph = GraphGenerator.CreateMonthlyGraph(exp, "Monthly expenses by category"),
                 MountainGraph = BurnRate.CreateMountain(exp),
-                DailyGraph = GraphGenerator.CreateDailyGraph(exp)
+                DailyGraph = GraphGenerator.CreateDailyGraph(exp),
+                DailyExpense = daily
             };
 
             return result;

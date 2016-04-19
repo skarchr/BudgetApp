@@ -28,6 +28,7 @@ namespace BudgetApp.Models
         public double Income { get; set; }
         public double Expenses { get; set; }
         public double Balance { get; set; }
+        public double DailyExpense { get; set; }
 
         public List<Treemap> TreemapChart { get; set; }
         public Highchart TransactionGraph { get; set; }

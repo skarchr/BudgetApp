@@ -629,3 +629,27 @@ li.dropdown:hover > a,li.dropdown.open > a,li.dropdown.open:hover > a,li.dropdow
 }
 
 
+.borderless-table {
+    width: 98%;
+    height: 100%;
+}
+.borderless-table > tbody > tr > td{
+    height: 60px;
+}
+
+.borderless-table > tbody > tr > td:first-child {
+    width: 40%;
+    font-weight: bold;
+    text-align: right;
+    font-size: 18px;
+    font-weight: lighter;
+}
+
+.borderless-table > tbody > tr > td:nth-child(2) {
+    width: 60%;
+    font-weight: bold;
+    text-align: right;
+    color: #E87C7C;
+    padding-right: 20%;
+    font-size: 22px;    
+}
