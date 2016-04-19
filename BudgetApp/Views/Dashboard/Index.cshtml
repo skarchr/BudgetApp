@@ -46,6 +46,32 @@
         <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 col-graph" data-frequency-reload ng-model="model.variables.frequency"></div>
         <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 col-graph" data-spc-reload ng-model="model.variables.dailyGraph"></div>
         <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 col-graph" data-burn-rate-reload ng-model="model.variables.mountainGraph"></div>
+        <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 col-graph" style="min-height: 302px;padding-top: 5px;">
+            
+
+            <div style="font-size: 18px;text-align: center;">Average expense</div>
+
+            
+            <table class="borderless-table">
+                <tr>
+                    <td>Daily</td>
+                    <td>{{model.variables.dailyExpense | currencyFormatter}}</td>
+                </tr>
+                <tr>
+                    <td>Weekly</td>
+                    <td>{{(model.variables.dailyExpense * 7) | currencyFormatter}}</td>
+                </tr>
+                <tr>
+                    <td>Monthly</td>
+                    <td>{{(model.variables.dailyExpense * 365 / 12) | currencyFormatter}}</td>
+                </tr>
+                <tr>
+                    <td>Annual</td>
+                    <td>{{(model.variables.dailyExpense * 365) | currencyFormatter}}</td>
+                </tr>
+            </table>
+
+        </div>
     </div>
     
     <div class="row" style="margin-top:30px;">
