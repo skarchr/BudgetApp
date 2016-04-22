@@ -58,7 +58,7 @@ namespace BudgetApp.Extensions.Graphs
             {
                 Title = new Title
                 {
-                    Text = "Mountain"
+                    Text = "Expense hill"
                 },
                 Series = series,
                 XAxis = new List<Axis>
