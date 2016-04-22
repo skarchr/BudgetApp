@@ -37,5 +37,8 @@ namespace BudgetApp.Models
         public Highchart CategoryGraph { get; set; }
         public Highchart MountainGraph { get; set; }
         public Highchart DailyGraph { get; set; }
+
+        public List<Transaction> Transactions { get; set; }
+        public int Nod { get; set; } 
     }
 }

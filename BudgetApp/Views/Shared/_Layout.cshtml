@@ -89,13 +89,13 @@
             
             @if (User.Identity.IsAuthenticated)
             {
-                <div class="sidebar {{shrink ? 'shrink':''}}">
+                <div class="sidebar shrink">
                     <ul class="list-unstyled">
-                        <li ng-click="toggleShrinkStatus()" title="Toggle sidebar">
+                        @*<li ng-click="toggleShrinkStatus()" title="Toggle sidebar">
                             <i class="glyphicon glyphicon-align-justify"></i>
                         </li>
-                        <li role="separator" class="divider"></li>
-                        <li class="@(ViewBag.Title == "Add Transaction" ? "active" : "") hidden-lg" onclick="javascript: location.href = '@Url.Action("Create", "Transactions")';" title="Add transaction">
+                        <li role="separator" class="divider"></li>*@
+                        <li class="@(ViewBag.Title == "Add Transaction" ? "active" : "")" onclick="javascript: location.href = '@Url.Action("Create", "Transactions")';" title="Add transaction">
                             <i class="glyphicon glyphicon-plus-sign"></i> <span class="sidebar-text">Add</span>
                         </li>
                         <li class="@(ViewBag.Title == "Upload Transactions" ? "active" : "")" onclick="javascript: location.href = '@Url.Action("Upload", "Transactions")';" title="Upload transactions from excel file">
@@ -141,7 +141,7 @@
                 </div>
 
             }
-            <div class="@(User.Identity.IsAuthenticated ? "flex-container {{shrink ? 'shrink':'no-shrink'}}" : "")">
+            <div class="@(User.Identity.IsAuthenticated ? "flex-container shrink" : "")">
                 @RenderBody()                
             </div>
             

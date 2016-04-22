@@ -11,17 +11,17 @@
             sharedProperties.setSelected(item);
         };
 
-        $scope.shrink = true;
+        //$scope.shrink = true;
 
-        $scope.toggleShrinkStatus = function () {
+        //$scope.toggleShrinkStatus = function () {
             
-            $scope.shrink = !$scope.shrink;            
+        //    $scope.shrink = !$scope.shrink;            
 
-            setTimeout(function() {
-                $(window).trigger('resize');
-            }, 100);
+        //    setTimeout(function() {
+        //        $(window).trigger('resize');
+        //    }, 100);
 
-        };
+        //};
 
     }]);
 

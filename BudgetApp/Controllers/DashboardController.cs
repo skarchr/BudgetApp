@@ -68,6 +68,8 @@ namespace BudgetApp.Controllers
         {
             var trans = transactions.Where(s => s.Date >= from && s.Date <= to).ToList();
 
+            var nod = (to - from).Days;
+
             if (trans.Count == 0)
             {
                 return new DashboardVariables
@@ -82,7 +84,9 @@ namespace BudgetApp.Controllers
                     CategoryGraph = GraphGenerator.CreateMonthlyGraph(trans,"Monthly expenses"),
                     MountainGraph = BurnRate.CreateMountain(trans),
                     DailyGraph = GraphGenerator.CreateDailyGraph(trans),
-                    DailyExpense = 0.0
+                    DailyExpense = 0.0,
+                    Transactions = null,
+                    Nod = nod
                 };
             }
                 
@@ -105,7 +109,7 @@ namespace BudgetApp.Controllers
             {
                 Income = income,
                 Expenses = expenses,
-                Balance = Math.Round(income - expenses, 0),
+                Balance = Math.Round(income - expenses, 1),
                 TreemapChart = TreemapGenerator.CreateChart(trans),
                 TransactionGraph = GraphBuilder.DrilldownGraph(trans, "", "column", true),
                 BalanceGraph = GraphGenerator.CreateMonthlyGraph(trans, "Monthly income vs expenses by category", true),                
@@ -113,7 +117,9 @@ namespace BudgetApp.Controllers
                 CategoryGraph = GraphGenerator.CreateMonthlyGraph(exp, "Monthly expenses by category"),
                 MountainGraph = BurnRate.CreateMountain(exp),
                 DailyGraph = GraphGenerator.CreateDailyGraph(exp),
-                DailyExpense = daily
+                DailyExpense = daily,
+                Transactions = trans.OrderByDescending(s => s.Date).ToList(),
+                Nod = nod
             };
 
             return result;
