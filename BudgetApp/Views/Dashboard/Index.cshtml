@@ -39,6 +39,7 @@
             
             <span style="font-size: 16px;padding-left: 20px;">Number of days: </span>
             <span style="font-size: 28px;"> {{model.variables.nod | currencyFormatter:true}}</span>
+            
         </div>
         <div class="col-xs-6 text-right visible-lg" style="font-size:20px;padding-top:12px;">
             <a href="#" ng-click="togTraClick()" title="Toggle transaction list" >
@@ -81,7 +82,7 @@
 
             </div>
         </div>
-        <div class="col-lg-5 col-graph visible-lg" style="padding:0;height:1208px;" ng-show="toggleTrans">
+        <div class="col-lg-5 col-graph visible-lg" style="padding:0;height:1208px;max-height: 1208px;overflow: auto;" ng-show="toggleTrans">
 
             <table class="table table-condensed table-hover">
                 <thead>
@@ -95,7 +96,7 @@
                 </thead>
                 <tbody>
                     <tr style="color:{{row.mainCategory === 'Income' ? '#3CAF92':''}}" class="fixed-width" ng-repeat="row in model.variables.transactions | orderBy:predicate:reverse | startFrom:(currentPage - 1)*numPerPage | limitTo:numPerPage">
-                        <td style="background:{{row.color}};" class="text-center" title="{{row.category | camelCaseToNormal}}">
+                        <td style="background:{{row.color}};vertical-align:middle;" class="text-center" title="{{row.category | camelCaseToNormal}}">
                             <img height="20" ng-src="{{getIcon(row.category)}}" alt="{{row.category}}" />
                             @*<span style="padding-left: 30px;">{{row.category | camelCaseToNormal}}</span>*@
                         </td>

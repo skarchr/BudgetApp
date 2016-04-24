@@ -32,37 +32,39 @@ namespace BudgetApp.Controllers
 
             ViewBag.Success = TempData["Success"];
 
-            var transactions = db.Transactions.Where(s => s.UserName == User.Identity.Name).ToList();
-            var user = db.Users.First(u => u.UserName == User.Identity.Name);
+            return RedirectToAction("Index", "Dashboard");
 
-            var expenses = transactions.Where(s => (CategoryExt.GetMainCategory(s.Category.Value) != Categories.Income)).OrderBy(s => s.Date);
+            //var transactions = db.Transactions.Where(s => s.UserName == User.Identity.Name).ToList();
+            //var user = db.Users.First(u => u.UserName == User.Identity.Name);
 
-            var timeSpan = 0;
-            
-            if(expenses.Count() > 1)
-                timeSpan = (expenses.Last().Date - expenses.First().Date).Days;
+            //var expenses = transactions.Where(s => (CategoryExt.GetMainCategory(s.Category.Value) != Categories.Income)).OrderBy(s => s.Date);
 
-            var range = timeSpan >= 700 ?
-                ChartRange.Monthly :
-                    timeSpan >= 175 ?
-                    ChartRange.Weekly :
-                    ChartRange.Daily;
+            //var timeSpan = 0;
 
-            var model = new HomeViewModel
-            {
-                ChartRange = range,
-                Transactions = transactions,
-                DailyExpensesGraph = GraphBuilder.DailyExpensesGraph(transactions, user.Currency).ToJson(),
-                TransactionDrilldownGraph = GraphBuilder.TransactionDrilldownGraph(transactions, user.Currency, "bar", true).ToJson(),
-                DrilldownGraphTot = GraphBuilder.DrilldownGraph(transactions, user.Currency, "column", true).ToJson(),
-                DrilldownGraphYtd = GraphBuilder.DrilldownGraph(transactions.Where(s => s.Date.Year == DateTime.Now.Year).ToList(), user.Currency, "column", true).ToJson(),
-                ScpExpensesChart = GraphBuilder.SpcGraph(transactions, user.Currency, range).ToJson(),
-                ExpensesGoal = user.MonthlyExpensesGoal,
-                SavingGoal = user.MonthlySavingGoal,
-                Currency = user.Currency
-            };
+            //if(expenses.Count() > 1)
+            //    timeSpan = (expenses.Last().Date - expenses.First().Date).Days;
 
-            return View("Index", model);
+            //var range = timeSpan >= 700 ?
+            //    ChartRange.Monthly :
+            //        timeSpan >= 175 ?
+            //        ChartRange.Weekly :
+            //        ChartRange.Daily;
+
+            //var model = new HomeViewModel
+            //{
+            //    ChartRange = range,
+            //    Transactions = transactions,
+            //    DailyExpensesGraph = GraphBuilder.DailyExpensesGraph(transactions, user.Currency).ToJson(),
+            //    TransactionDrilldownGraph = GraphBuilder.TransactionDrilldownGraph(transactions, user.Currency, "bar", true).ToJson(),
+            //    DrilldownGraphTot = GraphBuilder.DrilldownGraph(transactions, user.Currency, "column", true).ToJson(),
+            //    DrilldownGraphYtd = GraphBuilder.DrilldownGraph(transactions.Where(s => s.Date.Year == DateTime.Now.Year).ToList(), user.Currency, "column", true).ToJson(),
+            //    ScpExpensesChart = GraphBuilder.SpcGraph(transactions, user.Currency, range).ToJson(),
+            //    ExpensesGoal = user.MonthlyExpensesGoal,
+            //    SavingGoal = user.MonthlySavingGoal,
+            //    Currency = user.Currency
+            //};
+
+            //return View("Index", model);
         }
 
         [HttpGet]
