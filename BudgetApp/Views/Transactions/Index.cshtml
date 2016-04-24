@@ -95,7 +95,7 @@
                         <span style="padding-left: 30px;">{{row.category | camelCaseToNormal}}</span>
                     </td>
                     <td class="hidden-xs hidden-sm" style="text-align: left" title="{{row.description}}">
-                        <span class="label label-success new-today" ng-show="(row.date | date : 'dd.MM.yy') === (today | date : 'dd.MM.yy')">New</span>
+                        <span class="label label-success" ng-show="(row.created | date : 'dd.MM.yy') === (today | date : 'dd.MM.yy')">New</span>
                         {{row.description}}
                     </td>
                     <td class="hidden-md hidden-xs hidden-sm">{{row.date | date}}</td>
